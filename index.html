@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绊谈 · 科技名片</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+            background: #0a0e1a;
+            color: #c8d6e5;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                linear-gradient(rgba(74, 144, 217, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 144, 217, 0.05) 1px, transparent 1px),
+                radial-gradient(ellipse at 20% 50%, rgba(74, 144, 217, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(91, 139, 239, 0.06) 0%, transparent 50%);
+            background-size: 60px 60px, 60px 60px, 100% 100%, 100% 100%;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridPulse 8s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(2px 2px at 15% 20%, rgba(74, 144, 217, 0.3), transparent),
+                radial-gradient(2px 2px at 45% 45%, rgba(74, 144, 217, 0.1), transparent),
+                radial-gradient(2px 2px at 75% 75%, rgba(91, 139, 239, 0.2), transparent),
+                radial-gradient(2px 2px at 90% 40%, rgba(74, 144, 217, 0.3), transparent);
+            background-size: 100% 100%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatParticles 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes gridPulse { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+        @keyframes floatParticles { 0% { transform: translateY(0px); opacity: 0.5; } 100% { transform: translateY(-20px); opacity: 1; } }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(10, 14, 30, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 32px;
+            border: 1px solid rgba(74, 144, 217, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(74, 144, 217, 0.1);
+            padding: 32px 36px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid rgba(74, 144, 217, 0.1); margin-bottom: 30px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 26px; font-weight: 700; color: #4A90D9; }
+        .logo-badge { font-size: 10px; background: rgba(74, 144, 217, 0.15); color: #4A90D9; padding: 0 8px; border-radius: 20px; }
+
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a { text-decoration: none; font-weight: 500; font-size: 15px; color: #94a3b8; padding: 4px 0; border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: #4A90D9; border-bottom-color: #4A90D9; }
+
+        .section-content { display: none; animation: fadeIn 0.6s ease-in-out; }
+        .section-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero { text-align: center; margin-bottom: 32px; }
+        
+        .avatar-link { display: inline-block; text-decoration: none; border-radius: 50%; transition: all 0.3s; }
+        .avatar-link:hover { transform: scale(1.05); }
+
+        .avatar-custom {
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at 30% 30%, rgba(74,144,217,0.2), rgba(10,14,30,0.95) 70%);
+            border: 1px solid rgba(74, 144, 217, 0.5);
+            box-shadow: 0 0 60px rgba(74, 144, 217, 0.3), inset 0 0 40px rgba(74, 144, 217, 0.1);
+            position: relative; overflow: hidden; cursor: pointer; transition: all 0.3s;
+        }
+        .avatar-custom::before {
+            content: '';
+            position: absolute; top: -50%; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(180deg, transparent, rgba(74, 144, 217, 0.2), transparent);
+            animation: scanLine 3s linear infinite; z-index: 1;
+        }
+        @keyframes scanLine { 0% { top: -50%; } 100% { top: 100%; } }
+        .avatar-custom::after {
+            content: '';
+            position: absolute; inset: -8px; border-radius: 50%;
+            background: conic-gradient(transparent, #4A90D9, transparent, #5B8DEF, transparent, #00ffff, transparent);
+            z-index: -1; animation: spinGlow 3s linear infinite; opacity: 0.9;
+            filter: blur(6px);
+            mask: radial-gradient(farthest-side, transparent 60%, black 100%);
+            -webkit-mask: radial-gradient(farthest-side, transparent 60%, black 100%);
+        }
+        @keyframes spinGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .avatar-custom:hover { box-shadow: 0 0 100px rgba(0, 255, 255, 0.4); }
+        .ban-text {
+            font-size: 100px; font-weight: 900;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            background: linear-gradient(180deg, #ffffff 0%, #4A90D9 40%, #5B8DEF 60%, #00ffff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.8));
+            animation: banHolo 4s ease-in-out infinite alternate;
+            transform: perspective(200px) rotateX(10deg) rotateZ(-5deg);
+            position: relative; z-index: 2;
+        }
+        @keyframes banHolo {
+            0% { filter: drop-shadow(0 0 15px rgba(74, 144, 217, 0.6)); transform: perspective(200px) rotateX(10deg) rotateZ(-5deg) scale(1); }
+            100% { filter: drop-shadow(0 0 40px rgba(0, 255, 255, 1)); transform: perspective(200px) rotateX(10deg) rotateZ(-5deg) scale(1.08); }
+        }
+        .nickname { font-size: 32px; font-weight: 600; background: linear-gradient(135deg, #e2e8f0, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { font-size: 17px; color: #64748b; margin-top: 4px; }
+        .tagline span { color: #4A90D9; font-weight: 400; }
+
+        /* 联系区 */
+        .contact-card { background: rgba(74, 144, 217, 0.04); padding: 22px 28px; border-radius: 18px; margin: 28px 0 24px; border: 1px solid rgba(74, 144, 217, 0.08); border-left: 3px solid #4A90D9; text-align: center; }
+        .contact-card .contact-label { font-size: 13px; color: #4A90D9; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 6px; }
+        .contact-card .contact-text { font-size: 18px; font-weight: 600; color: #e2e8f0; margin-bottom: 12px; }
+        .contact-card .contact-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .contact-card .highlight { color: #4A90D9; background: rgba(74, 144, 217, 0.1); padding: 5px 14px; border-radius: 8px; font-family: 'SF Mono', 'Consolas', monospace; font-weight: 500; letter-spacing: 1px; }
+        .contact-card .contact-sub { font-size: 14px; color: #64748b; margin-top: 10px; }
+
+        /* 工具分类标题栏 */
+        .category-title {
+            font-size: 14px; font-weight: 700; color: #4A90D9;
+            letter-spacing: 2px; text-transform: uppercase;
+            margin: 26px 0 14px; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(74, 144, 217, 0.15);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .category-title::before { content: ''; width: 6px; height: 6px; background: #4A90D9; border-radius: 50%; box-shadow: 0 0 10px #4A90D9; }
+
+        .tools-section h2 { font-size: 18px; font-weight: 600; color: #e2e8f0; margin-bottom: 18px; }
+        .tools-section h2 span { color: #4A90D9; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+        
+        .tool-card {
+            background: rgba(74, 144, 217, 0.04); border-radius: 16px; padding: 16px 10px; text-align: center; 
+            border: 1px solid rgba(74, 144, 217, 0.06); transition: all 0.3s; position: relative;
+        }
+        .tool-card:hover { background: rgba(74, 144, 217, 0.08); border-color: rgba(74, 144, 217, 0.15); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); z-index: 10; }
+        .tool-card a { text-decoration: none; color: #c8d6e5; font-weight: 500; font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tool-card .tool-icon { font-size: 28px; }
+        .tool-card .tool-name { color: #e2e8f0; font-weight: 600; }
+        .tool-card .tool-domain { font-size: 10px; color: #4A90D9; opacity: 0.6; margin-top: 2px; word-break: break-all; }
+        .tool-card .tool-note { font-size: 10px; color: #e74c3c; opacity: 0.8; margin-top: 2px; font-weight: bold; }
+
+        .tool-card .tool-desc {
+            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
+            width: 220px; background: rgba(10, 14, 30, 0.98); border: 1px solid rgba(74, 144, 217, 0.4);
+            border-radius: 10px; padding: 10px; font-size: 11px; color: #c8d6e5; text-align: left;
+            opacity: 0; visibility: hidden; transition: all 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 100; line-height: 1.5; pointer-events: none;
+        }
+        .tool-card .tool-desc strong { color: #4A90D9; display: block; margin-bottom: 4px; font-size: 12px; }
+        .tool-card:hover .tool-desc { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+        .footer { margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(74, 144, 217, 0.06); font-size: 13px; color: #475569; text-align: center; display: flex; justify-content: center; gap: 20px; }
+        .footer .status-dot { display: inline-block; width: 6px; height: 6px; background: #4A90D9; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 10px rgba(74, 144, 217, 0.3); animation: dotPulse 2s ease-in-out infinite; }
+        @keyframes dotPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px 16px 28px; }
+            .navbar { flex-direction: column; align-items: center; gap: 14px; }
+            .avatar-custom { width: 150px; height: 150px; }
+            .ban-text { font-size: 75px; }
+            .tools-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="navbar">
+        <a href="javascript:void(0)" class="logo">
+            <span style="font-size: 32px; color:#4A90D9;">绊</span>
+            <span class="logo-badge">v2.1</span>
+        </a>
+        <nav class="nav-links" id="navLinks">
+            <a class="active" data-target="home">首页</a>
+            <a data-target="contact">联系我</a>
+            <a data-target="tools">工具箱</a>
+        </nav>
+    </header>
+
+    <!-- 首页（点击头像跳转抖音） -->
+    <section class="section-content active" id="home">
+        <div class="hero">
+            <a href="https://www.douyin.com/user/self?from_tab_name=main" target="_blank" class="avatar-link" title="点击进入我的抖音主页">
+                <div class="avatar-custom">
+                    <span class="ban-text">绊</span>
+                </div>
+            </a>
+            <div class="nickname">绊谈</div>
+            <p class="tagline">⚡ 嗨嗨，这里是 <span>绊谈</span> 的工具箱，一起玩耍吧~</p>
+        </div>
+    </section>
+
+    <!-- 联系我（QQ和微信都写上） -->
+    <section class="section-content" id="contact">
+        <div class="contact-card">
+            <div class="contact-label">📡 免费远程电脑优化</div>
+            <div class="contact-text">
+                <div class="contact-row">
+                    <span>QQ：<span class="highlight">1429616034</span></span>
+                    <span>微信：<span class="highlight">1429616034</span></span>
+                </div>
+            </div>
+            <div class="contact-sub">提供远程电脑优化服务 · 欢迎咨询</div>
+        </div>
+    </section>
+
+    <!-- 工具箱（保持重要程度排序） -->
+    <section class="section-content" id="tools">
+        <div class="tools-section">
+            <h2>🧰 <span>工具箱</span></h2>
+            
+            <!-- 核心生产力 -->
+            <div class="category-title">核心生产力</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <a href="https://www.deepseek.com/" target="_blank">
+                        <span class="tool-icon">🧠</span><span class="tool-name">DeepSeek</span><span class="tool-domain">deepseek.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>国产领先开源大模型。V4版本支持百万字超长上下文，性能比肩顶级闭源模型。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.doubao.com/chat/" target="_blank">
+                        <span class="tool-icon">🤖</span><span class="tool-name">豆包</span><span class="tool-domain">doubao.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>字节跳动AI助手。集成技能商店、连接器等超200项技能，可协同完成复杂任务。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.maicong.cn/" target="_blank">
+                        <span class="tool-icon">⌨️</span><span class="tool-name">迈丛</span><span class="tool-domain">maicong.cn</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>定制化高性能外设品牌，配备高品质机械键盘与电竞装备。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.wps.cn/" target="_blank">
+                        <span class="tool-icon">📄</span><span class="tool-name">WPS Office</span><span class="tool-domain">wps.cn</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>轻量办公三件套。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.huorong.cn/" target="_blank">
+                        <span class="tool-icon">🛡️</span><span class="tool-name">火绒安全</span><span class="tool-domain">huorong.cn</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>极简无弹窗的安全软件。</div>
+                </div>
+            </div>
+
+            <!-- 游戏与娱乐 -->
+            <div class="category-title">游戏与娱乐</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <a href="https://df.qq.com/" target="_blank">
+                        <span class="tool-icon">🎮</span><span class="tool-name">三角洲行动</span><span class="tool-domain">df.qq.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>免费战术射击游戏，“全面战场”与“烽火地带”双模式。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://val.qq.com/" target="_blank">
+                        <span class="tool-icon">🔫</span><span class="tool-name">无畏契约</span><span class="tool-domain">val.qq.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>5v5战术竞技，精准枪法决定战局。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://music.163.com/" target="_blank">
+                        <span class="tool-icon">🎵</span><span class="tool-name">网易云音乐</span><span class="tool-domain">music.163.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>乐评社区，重度用户的首选。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.qishui.com/download" target="_blank">
+                        <span class="tool-icon">🥤</span><span class="tool-name">汽水音乐</span><span class="tool-domain">qishui.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>字节跳动出品，算法驱动的短视频系音乐。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://download.kugou.com/pc.html" target="_blank">
+                        <span class="tool-icon">🐶</span><span class="tool-name">酷狗音乐</span><span class="tool-domain">download.kugou.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>老牌曲库，支持K歌与听歌识曲。</div>
+                </div>
+            </div>
+
+            <!-- 加速器与网络 -->
+            <div class="category-title">加速器与网络</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <a href="https://uu.163.com/" target="_blank">
+                        <span class="tool-icon">🚀</span><span class="tool-name">网易UU加速器</span><span class="tool-domain">uu.163.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>官方老牌，支持主机/PC/手游全平台。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.leigod.com/" target="_blank">
+                        <span class="tool-icon">⚡</span><span class="tool-name">雷神加速器</span><span class="tool-domain">leigod.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>按分钟计费的“可暂停”模式。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://steampp.net/" target="_blank">
+                        <span class="tool-icon">🛠️</span><span class="tool-name">Steam++</span><span class="tool-domain">steampp.net</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>网络加速与账号切换工具。</div>
+                </div>
+            </div>
+
+            <!-- 硬件与系统 -->
+            <div class="category-title">硬件与系统</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <a href="https://gamepp.com/download.html" target="_blank">
+                        <span class="tool-icon">📊</span><span class="tool-name">游戏加加</span><span class="tool-domain">gamepp.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>硬件监控与游戏性能检测神器。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.nvidia.cn/geforce/technologies/frameview/" target="_blank">
+                        <span class="tool-icon">🟢</span><span class="tool-name">NVIDIA FrameView</span><span class="tool-domain">nvidia.cn</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>英伟达官方帧率与功耗监控工具。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://store.steampowered.com/app/431960/Wallpaper_Engine/" target="_blank">
+                        <span class="tool-icon">🖼️</span><span class="tool-name">Wallpaper Engine</span><span class="tool-note">备注：需购买</span><span class="tool-domain">steampowered.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>Steam必备动态壁纸（需购买）。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.tbtool.cn/" target="_blank">
+                        <span class="tool-icon">🔧</span><span class="tool-name">图吧工具箱</span><span class="tool-domain">tbtool.cn</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>装机必备系统维护工具箱。</div>
+                </div>
+            </div>
+
+            <!-- 外设驱动 -->
+            <div class="category-title">外设驱动</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <a href="https://www.logitechg.com/zh-cn/software/ghub" target="_blank">
+                        <span class="tool-icon">🖱️</span><span class="tool-name">罗技驱动</span><span class="tool-domain">logitechg.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>鼠标宏、灯光设置专用软件。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://steelseries.com/gg" target="_blank">
+                        <span class="tool-icon">🎧</span><span class="tool-name">赛睿驱动</span><span class="tool-domain">steelseries.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>支持赛睿全系外设。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://cn.razerzone.com/pc/software" target="_blank">
+                        <span class="tool-icon">🐍</span><span class="tool-name">雷蛇驱动</span><span class="tool-domain">cn.razerzone.com</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>雷蛇外设云配置平台。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://wooting.io/zh-CN/wootility" target="_blank">
+                        <span class="tool-icon">⌨️</span><span class="tool-name">Wooting驱动</span><span class="tool-domain">wooting.io</span>
+                    </a>
+                    <div class="tool-desc"><strong>官方说明</strong>磁轴键盘设置软件，支持快速触发。</div>
+                </div>
+            </div>
+
+            <!-- 社交与工具 -->
+            <div class="category-title">通讯与备用</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <a href="https://www.douyin.com/" target="_blank"><span class="tool-icon">📱</span><span class="tool-name">抖音</span><span class="tool-domain">douyin.com</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>短视频社交平台。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://weixin.qq.com/" target="_blank"><span class="tool-icon">💬</span><span class="tool-name">微信</span><span class="tool-domain">weixin.qq.com</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>即时通讯软件。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://im.qq.com/" target="_blank"><span class="tool-icon">🐧</span><span class="tool-name">QQ</span><span class="tool-domain">im.qq.com</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>腾讯即时通讯软件。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://hibit-uninstaller.com/" target="_blank"><span class="tool-icon">🧹</span><span class="tool-name">HiBit</span><span class="tool-domain">hibit.com</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>强力卸载工具。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.wegame.com.cn/" target="_blank"><span class="tool-icon">🕹️</span><span class="tool-name">WeGame</span><span class="tool-domain">wegame.com.cn</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>腾讯游戏平台。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.7-zip.org/" target="_blank"><span class="tool-icon">📦</span><span class="tool-name">7-Zip</span><span class="tool-domain">7-zip.org</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>开源压缩解压工具。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://memreduct.org/" target="_blank"><span class="tool-icon">⚡</span><span class="tool-name">Mem Reduct</span><span class="tool-domain">memreduct.org</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>后台内存清理工具。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://www.kookapp.cn/" target="_blank"><span class="tool-icon">🔊</span><span class="tool-name">KOOK</span><span class="tool-domain">kookapp.cn</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>语音通讯软件。</div>
+                </div>
+                <div class="tool-card">
+                    <a href="https://uuyc.163.com/" target="_blank"><span class="tool-icon">🖥️</span><span class="tool-name">UU远程</span><span class="tool-domain">uuyc.163.com</span></a>
+                    <div class="tool-desc"><strong>官方说明</strong>提供不限速传文件的远程控制软件。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <span><span class="status-dot"></span> © 2026 绊谈 · 科技名片</span>
+        <span class="update-log"><strong>📡 系统状态：</strong> 在线 · v2.1</span>
+    </div>
+</div>
+
+<script>
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('.section-content');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const targetId = this.getAttribute('data-target');
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
