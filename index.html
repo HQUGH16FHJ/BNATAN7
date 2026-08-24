@@ -3,173 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绊谈 · 量子核心</title>
+    <title>绊谈 · 绊谈的工具箱</title>
     <style>
-        :root { --bg: #02030a; --text: #e2e8f0; --sub: #94a3b8; --accent: #00ffff; --accent2: #8a2be2; --border: rgba(255,255,255,0.1); --glass: rgba(8, 12, 30, 0.5); }
+        :root {
+            --bg: #02030a;
+            --text: #e2e8f0;
+            --sub: #94a3b8;
+            --accent: #00ffff;
+            --accent2: #8a2be2;
+            --border: rgba(255,255,255,0.1);
+            --glass: rgba(8, 12, 30, 0.5);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
         #universe-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; }
         ::selection { background: var(--accent); color: #000; }
 
-        /* 呼吸灯动画 */
-        @keyframes breathe { 0%, 100% { text-shadow: 0 0 5px rgba(0,255,255,0.3); } 50% { text-shadow: 0 0 20px rgba(0,255,255,0.9); } }
-        @keyframes breatheBorder { 0%, 100% { box-shadow: 0 0 5px rgba(0,255,255,0.1); } 50% { box-shadow: 0 0 30px rgba(0,255,255,0.4); } }
-        .breath { animation: breathe 3s infinite; }
-        .breath-border { animation: breatheBorder 4s infinite; }
+        /* ================= 呼吸灯动画效果 ================= */
+        @keyframes breatheText {
+            0%, 100% { text-shadow: 0 0 5px rgba(0,255,255,0.3); opacity: 0.9; }
+            50% { text-shadow: 0 0 20px rgba(0,255,255,0.9); opacity: 1; }
+        }
+        @keyframes breatheBorder {
+            0%, 100% { box-shadow: 0 0 10px rgba(0,255,255,0.1), inset 0 0 5px rgba(0,255,255,0.05); }
+            50% { box-shadow: 0 0 30px rgba(0,255,255,0.4), inset 0 0 10px rgba(0,255,255,0.1); }
+        }
+        .breath { animation: breatheText 3s ease-in-out infinite; }
+        .breath-border { animation: breatheBorder 4s ease-in-out infinite; }
 
-        /* 登录界面 */
-        #login-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(2,3,10,0.98); backdrop-filter: blur(20px); z-index: 99999; display: flex; justify-content: center; align-items: center; }
-        .login-card { width: 90%; max-width: 420px; background: var(--glass); border: 1px solid var(--accent); border-radius: 24px; padding: 40px 30px; text-align: center; animation: breatheBorder 4s infinite; }
-        .login-card h1 { font-size: 40px; font-weight: 900; color: #fff; letter-spacing: 8px; margin-bottom: 10px; background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: breathe 3s infinite; }
-        .login-card p { font-size: 14px; color: var(--sub); margin-bottom: 20px; font-family: monospace; }
-
-        .login-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 12px; padding: 16px; color: #fff; outline: none; font-size: 16px; text-align: center; margin-bottom: 15px; }
-        .login-input:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(0,255,255,0.3); }
-
-        #password-section { display: none; }
-        #login-pwd { border-color: #FFD700; animation: breatheGold 3s infinite; }
-        @keyframes breatheGold { 0%, 100% { text-shadow: 0 0 5px gold; } 50% { text-shadow: 0 0 20px gold; } }
-
-        .btn-login { width: 100%; background: var(--accent); color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 900; font-size: 16px; cursor: pointer; box-shadow: 0 0 15px rgba(0,255,255,0.3); }
-        .btn-login:hover { background: #fff; }
-
-        /* 主站 */
         .container { max-width: 1100px; width: 95%; margin: 0 auto; padding: 20px; position: relative; z-index: 2; }
-        .nav { position: sticky; top: 15px; z-index: 100; background: rgba(2, 3, 10, 0.75); backdrop-filter: blur(25px); border: 1px solid rgba(0,255,255,0.2); border-radius: 24px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .logo { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: 1px; cursor: pointer; animation: breathe 3s infinite; }
+        .nav { position: sticky; top: 15px; z-index: 100; background: rgba(2, 3, 10, 0.75); backdrop-filter: blur(25px) saturate(180%); border: 1px solid rgba(0,255,255,0.2); border-radius: 24px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; animation: breatheBorder 4s ease-in-out infinite; }
+        .logo { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: 1px; cursor: pointer; animation: breatheText 3s ease-in-out infinite; }
+        .quantum-tag { font-size: 12px; color: var(--accent); margin-left: 15px; padding: 4px 10px; border: 1px solid rgba(0,255,255,0.3); border-radius: 15px; animation: breatheText 2s infinite; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--sub); font-weight: 700; font-size: 15px; cursor: pointer; border-bottom: 2px solid transparent; padding: 5px 0; }
-        .nav-links a.active, .nav-links a:hover { color: #fff; border-bottom-color: var(--accent); }
-        
-        .user-area { display: flex; align-items: center; gap: 12px; }
-        .user-id { font-size: 14px; color: var(--accent); border: 1px solid rgba(0,255,255,0.3); border-radius: 15px; padding: 4px 12px; background: rgba(0,255,255,0.1); font-family: monospace; font-weight: 900; animation: breathe 3s infinite; }
-        .boss-id { font-size: 15px; color: gold; border: 1px solid gold; border-radius: 15px; padding: 4px 15px; background: rgba(255,215,0,0.1); font-family: monospace; font-weight: 900; animation: breatheGold 3s infinite; }
-        .logout-btn { font-size: 12px; color: var(--sub); cursor: pointer; text-decoration: underline; }
+        .nav-links a { text-decoration: none; color: var(--sub); font-weight: 700; font-size: 15px; cursor: pointer; border-bottom: 2px solid transparent; padding: 5px 0; transition: 0.3s; }
+        .nav-links a.active, .nav-links a:hover { color: #fff; border-bottom-color: var(--accent); text-shadow: 0 0 15px var(--accent); animation: breatheText 1.5s infinite; }
 
-        .section { display: none; animation: fadeUp 0.6s ease; }
+        .section { display: none; animation: fadeUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .section.active { display: block; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 20px; backdrop-filter: blur(20px); animation: breatheBorder 4s infinite; }
-        .hero { text-align: center; padding: 30px 0 20px; }
-        .hero h1 { font-size: 60px; font-weight: 900; background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 8px; animation: breathe 3s infinite; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        input, select { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 10px; padding: 10px; color: #fff; outline: none; font-size: 14px; }
-        .btn { background: var(--accent); color: #000; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 900; cursor: pointer; }
-        .btn:hover { background: #fff; }
-        .cat-title { font-size: 16px; font-weight: 900; color: var(--accent); letter-spacing: 3px; margin: 30px 0 15px; text-transform: uppercase; animation: breathe 3s infinite; }
-        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .tool-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0,255,255,0.2); }
-        .tool-card .name { font-size: 14px; font-weight: 900; color: #fff; animation: breathe 4s infinite; }
+        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 25px; margin-bottom: 25px; backdrop-filter: blur(20px); transition: 0.3s; }
+        .glass-card:hover { animation: breatheBorder 3s infinite; }
+
+        .hero { text-align: center; padding: 40px 0 30px; }
+        .hero h1 { font-size: 70px; font-weight: 900; background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 10px; margin-bottom: 15px; animation: breatheText 3s infinite; }
+        .search-row { display: flex; gap: 8px; align-items: center; max-width: 500px; margin: 0 auto; }
+        input, select { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; color: #fff; outline: none; transition: 0.3s; font-size: 14px; }
+        input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,255,255,0.2); }
+        .btn { background: var(--accent); color: #000; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,255,255,0.2); }
+        .btn:hover { background: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
+
+        .trans-btn { text-align: center; color: var(--accent); cursor: pointer; font-size: 14px; margin-top: 20px; animation: breatheText 3s infinite; }
+        .trans-panel { display: none; margin-top: 15px; }
+        .trans-box { display: flex; gap: 15px; flex-wrap: wrap; }
+        textarea { flex: 1; min-width: 200px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: #fff; resize: none; }
+
+        .weather-row { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .stats-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+        .stat { flex: 1; min-width: 80px; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,255,255,0.1); border-radius: 12px; padding: 10px; text-align: center; animation: breatheBorder 5s infinite; }
+        .stat-label { font-size: 9px; color: var(--sub); }
+        .stat-value { font-size: 20px; font-weight: 900; color: var(--accent); font-family: monospace; animation: breatheText 3s infinite; }
         
+        /* 首页新增模块 */
+        .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 15px; }
+        .quick-item { background: rgba(0,255,255,0.05); border: 1px solid var(--border); border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; animation: breatheBorder 4s infinite; }
+        .quick-item:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 0 20px rgba(0,255,255,0.2); }
+        .quote-box { margin-top: 15px; background: rgba(138,43,226,0.1); border: 1px solid rgba(138,43,226,0.3); border-radius: 12px; padding: 15px; text-align: center; font-size: 14px; color: var(--sub); font-style: italic; animation: breatheBorder 4s infinite; }
+        .quote-box span { color: var(--accent); font-weight: 900; font-style: normal; animation: breatheText 3s infinite; }
+
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
-        .service-info, .profile-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; animation: breatheBorder 4s infinite; }
-        
-        #toast { position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 10px 20px; border-radius: 20px; font-weight: 900; opacity: 0; z-index: 10000; transition: 0.3s; }
-        #toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+        .service-info, .profile-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; animation: breatheBorder 5s infinite; }
+        .service-info h2 { color: var(--accent); margin-bottom: 10px; font-size: 22px; animation: breatheText 3s infinite; }
+        .service-info p { color: var(--sub); font-size: 14px; line-height: 1.8; }
+        .price { font-size: 32px; font-weight: 900; color: #fff; margin-top: 10px; animation: breatheText 3s infinite; }
+        .price span { font-size: 14px; color: var(--sub); }
+        .profile-card { text-align: center; }
+        .profile-card .avatar { font-size: 50px; filter: drop-shadow(0 0 20px rgba(0,255,255,0.3)); animation: breatheText 3s infinite; }
+        .profile-card .name { font-size: 24px; font-weight: 900; margin-top: 8px; animation: breatheText 3s infinite; }
+        .profile-card .status { font-size: 13px; color: var(--accent); margin-top: 6px; animation: breatheText 3s infinite; }
 
-        @media (max-width: 768px) { .nav { flex-direction: column; gap: 10px; } }
+        .contact-btn-wrap { text-align: center; margin: 20px 0; }
+        .big-contact-btn { background: rgba(0,255,255,0.1); border: 2px solid var(--accent); color: var(--accent); padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: 900; cursor: pointer; transition: 0.3s; animation: breatheText 3s infinite; }
+        .big-contact-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px rgba(0,255,255,0.5); }
+
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+        .service-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; text-align: center; transition: 0.3s; animation: breatheBorder 4s infinite; }
+        .service-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 0 20px rgba(0,255,255,0.2); }
+        .service-card .icon { font-size: 28px; animation: breatheText 3s infinite; }
+        .service-card .title { font-weight: 900; color: #fff; margin-top: 8px; animation: breatheText 3s infinite; }
+        
+        .contact-section { margin-top: 30px; scroll-margin-top: 100px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .contact-item { background: rgba(0,255,255,0.05); border: 1px solid var(--border); border-radius: 20px; padding: 25px; text-align: center; transition: 0.3s; animation: breatheBorder 4s infinite; }
+        .contact-item:hover { transform: translateY(-5px); border-color: var(--accent); background: rgba(0,255,255,0.1); }
+        .contact-item .value { font-size: 20px; font-weight: 900; color: #fff; margin: 10px 0; word-break: break-all; animation: breatheText 3s infinite; }
+        .contact-item .label { font-size: 13px; color: var(--sub); }
+        .copy-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 900; box-shadow: 0 0 10px rgba(0,255,255,0.2); }
+        .copy-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px rgba(0,255,255,0.4); }
+
+        .cat-title { font-size: 14px; font-weight: 900; color: var(--sub); letter-spacing: 3px; margin: 30px 0 15px; text-transform: uppercase; animation: breatheText 3s infinite; }
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .tool-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .tool-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 0 20px rgba(0,255,255,0.2); }
+        .tool-card .icon { font-size: 32px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.3)); }
+        .tool-card .name { font-size: 14px; font-weight: 900; color: #fff; animation: breatheText 4s infinite; }
+        .tool-card .desc { font-size: 11px; color: var(--sub); margin-top: 5px; }
+
+        #toast { position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 10px 20px; border-radius: 20px; font-weight: 900; opacity: 0; z-index: 10000; transition: 0.3s; box-shadow: 0 0 20px rgba(0,255,255,0.4); }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+        
+        @media (max-width: 768px) {
+            .nav { flex-direction: column; gap: 10px; padding: 15px; }
+            .nav-links { width: 100%; justify-content: space-between; gap: 10px; }
+            .hero h1 { font-size: 40px; letter-spacing: 5px; }
+            .quantum-tag { margin-left: 0; margin-top: 5px; }
+        }
     </style>
 </head>
 <body>
-
-<!-- 登录界面 -->
-<div id="login-screen">
-    <div class="login-card">
-        <h1>绊谈</h1>
-        <p>量子身份验证系统</p>
-        <input type="text" class="login-input" id="username-input" placeholder="随便输入昵称即可进入" oninput="checkBossInput()" onkeypress="if(event.key==='Enter') login()">
-        <div id="password-section">
-            <input type="password" class="login-input" id="login-pwd" placeholder="大哥专属密码" onkeypress="if(event.key==='Enter') login()">
-            <p style="font-size: 12px; color: #FFD700; margin-top: -8px; margin-bottom: 10px;">检测到大哥（绊谈），请输入专属密码</p>
-        </div>
-        <button class="btn-login" id="login-btn" onclick="login()">注册 / 登录</button>
-    </div>
-</div>
 
 <canvas id="universe-canvas"></canvas>
 
 <div class="container">
     <header class="nav">
-        <a class="logo">绊谈的工具箱 (量子核心)</a>
+        <a class="logo">绊谈的工具箱 <span class="quantum-tag">【量子核心】</span></a>
         <nav class="nav-links">
             <a class="active" data-target="home">首页</a>
             <a data-target="contact">关于我</a>
             <a data-target="tools">工具箱</a>
         </nav>
-        <div class="user-area">
-            <span class="user-id" id="user-quantum-id">未知编号</span>
-            <span class="logout-btn" onclick="logout()">退出/切换</span>
-        </div>
     </header>
 
+    <!-- 首页 -->
     <section class="section active" id="home">
-        <div class="hero"><h1>绊 谈</h1></div>
+        <div class="hero">
+            <h1>绊 谈</h1>
+        </div>
         <div class="glass-card">
             <div class="search-row">
                 <select id="search_engine"><option value="baidu">百度</option><option value="bing">必应</option><option value="doubao">豆包</option></select>
                 <input id="search_input" placeholder="搜索极客资源...">
                 <button class="btn" onclick="doSearch()">搜索</button>
             </div>
-            <div class="cat-title breath" onclick="toggleTrans()">[ 开启全语言翻译终端 ]</div>
-            <div class="trans-panel" id="trans-panel" style="display:none; margin-top:10px;">
-                <textarea id="translate-input" placeholder="输入任意句子..." style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:12px; padding:12px; color:#fff;"></textarea>
-                <div style="display:flex; gap:10px; margin-top:10px;">
-                    <select id="target-lang"><option value="en">英文</option><option value="ja">日文</option><option value="ko">韩文</option></select>
-                    <button class="btn" onclick="translateText()">翻译</button>
+            <div class="trans-btn" onclick="toggleTrans()">[ 开启全语言翻译终端 ]</div>
+            <div class="trans-panel" id="trans-panel">
+                <div class="trans-box">
+                    <textarea id="translate-input" placeholder="输入任意句子..."></textarea>
+                    <div style="display:flex;flex-direction:column;gap:10px;justify-content:center">
+                        <select id="target-lang"><option value="en">英文</option><option value="ja">日文</option><option value="ko">韩文</option><option value="zh-HK">粤语</option></select>
+                        <button class="btn" onclick="translateText()">翻译</button>
+                    </div>
+                    <textarea id="translate-output" readonly placeholder="结果..."></textarea>
                 </div>
-                <textarea id="translate-output" readonly placeholder="结果..." style="width:100%; margin-top:10px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:12px; padding:12px; color:#fff;"></textarea>
             </div>
-            <div class="cat-title breath" id="quote-box">今日极客心声：加载中...</div>
-            <div style="display:flex; justify-content:space-between; margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px;">
-                <div>城市: <b class="breath" id="weather-loc">定位中</b></div>
-                <div>温度: <b class="breath" style="color:var(--accent)" id="weather-temp">--</b></div>
+            <div class="quick-grid">
+                <div class="quick-item" onclick="window.open('https://www.deepseek.com/','_blank')"><div class="q-icon">🧠</div><div class="q-name">DeepSeek</div></div>
+                <div class="quick-item" onclick="window.open('https://www.doubao.com/chat/','_blank')"><div class="q-icon">🤖</div><div class="q-name">豆包</div></div>
+                <div class="quick-item" onclick="window.open('https://www.wegame.com.cn/','_blank')"><div class="q-icon">🕹️</div><div class="q-name">WeGame</div></div>
+                <div class="quick-item" onclick="document.querySelector('.nav-links a[data-target=tools]').click()"><div class="q-icon">🧰</div><div class="q-name">工具箱</div></div>
             </div>
+            <div class="quote-box" id="quote-box">今日极客心声：<span>加载中...</span></div>
+            <div class="weather-row">
+                <div><div style="font-size:12px;color:var(--sub)">城市</div><div style="font-size:20px;font-weight:900;color:#fff" id="weather-loc">定位中...</div></div>
+                <div><div style="font-size:12px;color:var(--sub)">温度</div><div style="font-size:20px;font-weight:900;color:var(--accent)" id="weather-temp">--</div></div>
+            </div>
+        </div>
+        <div class="stats-row">
+            <div class="stat"><div class="stat-label">温度</div><div class="stat-value" id="s-temp">26°C</div></div>
+            <div class="stat"><div class="stat-label">延迟</div><div class="stat-value" id="s-delay">3ms</div></div>
+            <div class="stat"><div class="stat-label">内存</div><div class="stat-value" id="s-mem">68%</div></div>
+            <div class="stat"><div class="stat-label">帧率</div><div class="stat-value" id="s-fps">144</div></div>
         </div>
     </section>
 
+    <!-- 关于我：点击按钮滚动到联系方式 -->
     <section class="section" id="contact">
         <div class="about-grid">
             <div class="service-info">
-                <h2 class="breath">💻 免费远程电脑优化</h2>
-                <p>专属量子用户 <b id="about-user-name" style="color:#fff;"></b>（<span id="about-user-id" style="color:var(--accent);"></span>），专注解决系统卡顿、驱动安装等问题。</p>
+                <h2>💻 免费远程电脑优化</h2>
+                <p>专注解决系统卡顿、软件配置、驱动安装、网络加速等问题，提供一对一远程支持。</p>
+                <div class="price">完全免费<span> / 直接联系</span></div>
             </div>
             <div class="profile-card">
-                <div style="font-size:50px;">🛸</div>
-                <div class="name" style="font-size:24px;font-weight:900;margin-top:8px;">绊谈</div>
-                <div class="status breath" style="font-size:13px;color:var(--accent);margin-top:6px;">🟢 当前在线：可接单</div>
+                <div class="avatar">🛸</div>
+                <div class="name">绊谈</div>
+                <div class="status">🟢 当前在线：可接单</div>
             </div>
+        </div>
+
+        <div class="contact-btn-wrap">
+            <button class="big-contact-btn" onclick="scrollToContact()">📞 联系我，获取支持</button>
+        </div>
+
+        <div class="contact-section" id="contact-section">
+            <div class="cat-title">📡 我的联系方式</div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="label">💬 微信</div>
+                    <div class="value">HQUGH16FHJ</div>
+                    <button class="copy-btn" onclick="copyText('HQUGH16FHJ','微信')">一键复制</button>
+                </div>
+                <div class="contact-item">
+                    <div class="label">🐧 QQ</div>
+                    <div class="value">1429616034</div>
+                    <button class="copy-btn" onclick="copyText('1429616034','QQ')">一键复制</button>
+                </div>
+                <div class="contact-item" onclick="window.open('https://www.douyin.com/user/self?from_tab_name=main','_blank')">
+                    <div class="label">🎵 抖音主页</div>
+                    <div class="value">点击直达</div>
+                    <button class="copy-btn">前往</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-grid">
+            <div class="service-card"><div class="icon">⚡</div><div class="title">极速响应</div><div class="desc">消息秒回</div></div>
+            <div class="service-card"><div class="icon">🛡️</div><div class="title">安全可靠</div><div class="desc">不碰隐私</div></div>
+            <div class="service-card"><div class="icon">🔄</div><div class="title">永久售后</div><div class="desc">不止一次</div></div>
+            <div class="service-card"><div class="icon">💯</div><div class="title">真人服务</div><div class="desc">一对一解答</div></div>
         </div>
     </section>
 
+    <!-- 工具箱 -->
     <section class="section" id="tools">
-        <div class="glass-card"><input type="text" id="tool-search" placeholder="🔍 搜索工具..." style="width:100%;" oninput="filterTools()"></div>
+        <div class="glass-card">
+            <input type="text" id="tool-search" placeholder="🔍 搜索工具..." style="width:100%;margin-bottom:15px" oninput="filterTools()">
+        </div>
         <div class="cat-title">AI与生产力</div>
         <div class="tool-grid">
-            <div class="tool-card" onclick="window.open('https://www.deepseek.com/')"><span class="icon">🧠</span><div class="name">DeepSeek</div></div>
-            <div class="tool-card" onclick="window.open('https://www.doubao.com/chat/')"><span class="icon">🤖</span><div class="name">豆包</div></div>
-            <div class="tool-card" onclick="window.open('https://tongyi.aliyun.com/')"><span class="icon">🗣️</span><div class="name">通义千问</div></div>
-            <div class="tool-card" onclick="window.open('https://kimi.moonshot.cn/')"><span class="icon">📚</span><div class="name">Kimi</div></div>
-            <div class="tool-card" onclick="window.open('https://www.wps.cn/')"><span class="icon">📄</span><div class="name">WPS</div></div>
-            <div class="tool-card" onclick="window.open('https://www.huorong.cn/')"><span class="icon">🛡️</span><div class="name">火绒</div></div>
+            <div class="tool-card" onclick="window.open('https://www.deepseek.com/')"><span class="icon">🧠</span><div class="name">DeepSeek</div><div class="desc">大模型</div></div>
+            <div class="tool-card" onclick="window.open('https://www.doubao.com/chat/')"><span class="icon">🤖</span><div class="name">豆包</div><div class="desc">字节AI</div></div>
+            <div class="tool-card" onclick="window.open('https://tongyi.aliyun.com/')"><span class="icon">🗣️</span><div class="name">通义千问</div><div class="desc">阿里AI</div></div>
+            <div class="tool-card" onclick="window.open('https://kimi.moonshot.cn/')"><span class="icon">📚</span><div class="name">Kimi</div><div class="desc">文档解析</div></div>
+            <div class="tool-card" onclick="window.open('https://www.wps.cn/')"><span class="icon">📄</span><div class="name">WPS</div><div class="desc">办公</div></div>
+            <div class="tool-card" onclick="window.open('https://www.huorong.cn/')"><span class="icon">🛡️</span><div class="name">火绒</div><div class="desc">安全</div></div>
         </div>
         <div class="cat-title">游戏与娱乐</div>
         <div class="tool-grid">
-            <div class="tool-card" onclick="window.open('https://df.qq.com/')"><span class="icon">🎮</span><div class="name">三角洲</div></div>
-            <div class="tool-card" onclick="window.open('https://val.qq.com/')"><span class="icon">🔫</span><div class="name">无畏契约</div></div>
-            <div class="tool-card" onclick="window.open('https://music.163.com/')"><span class="icon">🎵</span><div class="name">网易云</div></div>
-            <div class="tool-card" onclick="window.open('https://www.qishui.com/download')"><span class="icon">🥤</span><div class="name">汽水</div></div>
-            <div class="tool-card" onclick="window.open('https://download.kugou.com/pc.html')"><span class="icon">🐶</span><div class="name">酷狗</div></div>
+            <div class="tool-card" onclick="window.open('https://df.qq.com/')"><span class="icon">🎮</span><div class="name">三角洲</div><div class="desc">射击</div></div>
+            <div class="tool-card" onclick="window.open('https://val.qq.com/')"><span class="icon">🔫</span><div class="name">无畏契约</div><div class="desc">FPS</div></div>
+            <div class="tool-card" onclick="window.open('https://www.wegame.com.cn/')"><span class="icon">🕹️</span><div class="name">WeGame</div><div class="desc">游戏平台</div></div>
+            <div class="tool-card" onclick="window.open('https://music.163.com/')"><span class="icon">🎵</span><div class="name">网易云</div><div class="desc">音乐</div></div>
+            <div class="tool-card" onclick="window.open('https://www.qishui.com/download')"><span class="icon">🥤</span><div class="name">汽水</div><div class="desc">音乐</div></div>
+            <div class="tool-card" onclick="window.open('https://download.kugou.com/pc.html')"><span class="icon">🐶</span><div class="name">酷狗</div><div class="desc">音乐</div></div>
         </div>
         <div class="cat-title">网络与系统</div>
         <div class="tool-grid">
-            <div class="tool-card" onclick="window.open('https://uu.163.com/')"><span class="icon">🚀</span><div class="name">UU加速</div></div>
-            <div class="tool-card" onclick="window.open('https://www.leigod.com/')"><span class="icon">⚡</span><div class="name">雷神</div></div>
-            <div class="tool-card" onclick="window.open('https://www.voidtools.com/')"><span class="icon">🔍</span><div class="name">Everything</div></div>
-            <div class="tool-card" onclick="window.open('https://www.7-zip.org/')"><span class="icon">📦</span><div class="name">7-Zip</div></div>
-            <div class="tool-card" onclick="window.open('https://geekuninstaller.com/')"><span class="icon">🧹</span><div class="name">Geek</div></div>
+            <div class="tool-card" onclick="window.open('https://uu.163.com/')"><span class="icon">🚀</span><div class="name">UU加速</div><div class="desc">加速器</div></div>
+            <div class="tool-card" onclick="window.open('https://www.leigod.com/')"><span class="icon">⚡</span><div class="name">雷神</div><div class="desc">加速</div></div>
+            <div class="tool-card" onclick="window.open('https://www.voidtools.com/')"><span class="icon">🔍</span><div class="name">Everything</div><div class="desc">文件秒搜</div></div>
+            <div class="tool-card" onclick="window.open('https://www.7-zip.org/')"><span class="icon">📦</span><div class="name">7-Zip</div><div class="desc">解压</div></div>
+            <div class="tool-card" onclick="window.open('https://geekuninstaller.com/')"><span class="icon">🧹</span><div class="name">Geek</div><div class="desc">卸载</div></div>
+        </div>
+        <div class="cat-title">外设驱动</div>
+        <div class="tool-grid">
+            <div class="tool-card" onclick="window.open('https://www.maicong.cn/')"><span class="icon">⌨️</span><div class="name">迈丛</div><div class="desc">外设</div></div>
+            <div class="tool-card" onclick="window.open('https://www.logitechg.com/zh-cn/software/ghub')"><span class="icon">🖱️</span><div class="name">罗技</div><div class="desc">驱动</div></div>
+            <div class="tool-card" onclick="window.open('https://steelseries.com/gg')"><span class="icon">🎧</span><div class="name">赛睿</div><div class="desc">驱动</div></div>
+            <div class="tool-card" onclick="window.open('https://cn.razerzone.com/pc/software')"><span class="icon">🐍</span><div class="name">雷蛇</div><div class="desc">驱动</div></div>
         </div>
     </section>
 
@@ -179,109 +273,101 @@
 <div id="toast"></div>
 
 <script>
-    // 检测输入绊谈
-    function checkBossInput() {
-        var name = document.getElementById('username-input').value.trim();
-        if (name === '绊谈') {
-            document.getElementById('password-section').style.display = 'block';
-            document.getElementById('login-btn').textContent = '👑 大哥身份验证';
-        } else {
-            document.getElementById('password-section').style.display = 'none';
-            document.getElementById('login-btn').textContent = '注册 / 登录';
-        }
-    }
-
-    // 登录逻辑（绝对修复，无省略号，必定能进！）
-    function login() {
-        var name = document.getElementById('username-input').value.trim();
-        var pwd = document.getElementById('login-pwd').value;
-
-        if (!name) { alert("请输入昵称！"); return; }
-
-        var id;
-        // 如果是大哥绊谈，必须密码正确
-        if (name === '绊谈') {
-            if (pwd !== 'BANTAN7') { alert("大哥密码错误！"); return; }
-            id = 'BT-0';
-        } else {
-            // 普通用户，随便注册，无密码！
-            id = 'BT-' + Math.random().toString(16).substring(2, 6).toUpperCase();
-        }
-
-        // 保存身份，直接进入！
-        localStorage.setItem('bantan_user', JSON.stringify({ name: name, id: id }));
-        
-        // 模拟点击刷新页面，确保100%跳转成功！
-        location.reload();
-    }
-
-    // 初始化
-    function initializeUser() {
-        var stored = localStorage.getItem('bantan_user');
-        if (stored) {
-            // 已经登录成功，隐藏登录界面，显示主站！
-            document.getElementById('login-screen').style.display = 'none';
-            var userObj = JSON.parse(stored);
-            
-            if (userObj.name === '绊谈') {
-                document.getElementById('user-quantum-id').innerHTML = '👑 大哥 · ' + userObj.id;
-                document.getElementById('user-quantum-id').className = 'boss-id';
-            } else {
-                document.getElementById('user-quantum-id').textContent = '量子ID: ' + userObj.id;
-                document.getElementById('user-quantum-id').className = 'user-id';
-            }
-            document.getElementById('about-user-name').textContent = userObj.name;
-            document.getElementById('about-user-id').textContent = userObj.id;
-        } else {
-            // 未登录，强制显示登录界面
-            document.getElementById('login-screen').style.display = 'flex';
-        }
-    }
-
-    function logout() {
-        localStorage.removeItem('bantan_user');
-        document.getElementById('login-screen').style.display = 'flex';
-        document.getElementById('username-input').value = '';
-        document.getElementById('login-pwd').value = '';
-        checkBossInput();
-    }
-
-    // 宇宙背景
+    // 宇宙视差背景
     (function initUniverse() {
-        const canvas = document.getElementById('universe-canvas'); const ctx = canvas.getContext('2d');
-        let stars = []; let meteors = []; const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
+        const canvas = document.getElementById('universe-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let meteors = [];
+        const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
         function resize() { canvas.width = innerWidth; canvas.height = innerHeight; initStars(); }
-        function initStars() { stars = []; for (let i = 0; i < 200; i++) stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 }); }
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor(canvas.width * canvas.height / 3000);
+            for (let i = 0; i < starCount; i++) stars.push({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height, z: Math.random() * 0.8 + 0.2,
+                r: Math.random() * 1.5, color: Math.random() > 0.8 ? '#00ffff' : (Math.random() > 0.9 ? '#8a2be2' : '#ffffff'),
+                twinkleSpeed: Math.random() * 0.02 + 0.01, twinklePhase: Math.random() * Math.PI * 2
+            });
+        }
+        function spawnMeteor() {
+            if (Math.random() < 0.005 && meteors.length < 3) meteors.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height * 0.5, len: Math.random() * 200 + 100, speed: Math.random() * 10 + 5, angle: Math.PI * 0.75, life: 1 });
+        }
+        function drawNebula() {
+            let g = ctx.createRadialGradient(canvas.width * 0.8, canvas.height * 0.2, 0, canvas.width * 0.8, canvas.height * 0.2, canvas.width * 0.6);
+            g.addColorStop(0, 'rgba(138,43,226,0.15)'); g.addColorStop(0.5, 'rgba(0,255,255,0.05)'); g.addColorStop(1, 'transparent');
+            ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            let g2 = ctx.createRadialGradient(canvas.width * 0.2, canvas.height * 0.8, 0, canvas.width * 0.2, canvas.height * 0.8, canvas.width * 0.5);
+            g2.addColorStop(0, 'rgba(0,255,255,0.1)'); g2.addColorStop(1, 'transparent');
+            ctx.fillStyle = g2; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < stars.length; i++) { let s = stars[i]; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill(); }
+            drawNebula();
+            const offsetX = (mouse.x - innerWidth / 2) / innerWidth;
+            const offsetY = (mouse.y - innerHeight / 2) / innerHeight;
+            for (let i = 0; i < stars.length; i++) {
+                let s = stars[i];
+                ctx.globalAlpha = 0.5 + 0.5 * Math.sin(s.twinklePhase + Date.now() * s.twinkleSpeed);
+                ctx.fillStyle = s.color;
+                ctx.beginPath();
+                ctx.arc(s.x - offsetX * s.z * 20, s.y - offsetY * s.z * 20, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+            for (let i = meteors.length - 1; i >= 0; i--) {
+                let m = meteors[i];
+                ctx.beginPath(); ctx.moveTo(m.x, m.y);
+                ctx.lineTo(m.x - m.len * Math.cos(m.angle), m.y - m.len * Math.sin(m.angle));
+                ctx.strokeStyle = 'rgba(0,255,255,' + m.life + ')'; ctx.lineWidth = 2; ctx.stroke();
+                m.x += m.speed * Math.cos(m.angle); m.y += m.speed * Math.sin(m.angle); m.life -= 0.02;
+                if (m.life <= 0 || m.x > canvas.width || m.y > canvas.height) meteors.splice(i, 1);
+            }
+            spawnMeteor();
             requestAnimationFrame(animate);
         }
-        window.addEventListener('resize', resize); resize(); animate();
+        window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        resize(); animate();
     })();
 
     // 导航切换
-    document.querySelectorAll('.nav-links a').forEach(a => a.onclick = () => {
+    document.querySelectorAll('.nav-links a').forEach(a => a.onclick = (e) => {
         document.querySelectorAll('.nav-links a').forEach(x => x.classList.remove('active'));
         a.classList.add('active');
         document.querySelectorAll('.section').forEach(x => x.classList.remove('active'));
         document.getElementById(a.dataset.target).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    const quotes = ["代码是写给人看的。", "极客的浪漫就是创造不可能。", "保持热爱，奔赴山海。", "宇宙的终极答案可能是42。"];
-    document.getElementById('quote-box').textContent = "今日极客心声：" + quotes[Math.floor(Math.random() * quotes.length)];
+    // 核心新功能：点击按钮滚动到联系方式
+    function scrollToContact() {
+        const section = document.getElementById('contact-section');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
 
-    function toggleTrans() { const p = document.getElementById('trans-panel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
-    function translateText() { const input = document.getElementById('translate-input').value, tlang = document.getElementById('target-lang').value, out = document.getElementById('translate-output'); if (!input.trim()) return; fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=zh|${tlang}`).then(r => r.json()).then(data => out.value = data.responseData.translatedText).catch(() => out.value = '网络错误'); }
+    // 首页极客心声
+    const quotes = ["代码是写给人看的，顺便让机器运行。", "极客的浪漫，就是把不可能变成可能。", "在键盘上敲击的是未来，在屏幕上显示的是宇宙。", "保持热爱，奔赴下一场山海。", "宇宙的终极答案，可能只是42。"];
+    document.querySelector('#quote-box span').textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-    function doSearch() { const q = document.getElementById('search_input').value, e = document.getElementById('search_engine').value; const url = e === 'baidu' ? 'https://www.baidu.com/s?wd=' : 'https://cn.bing.com/search?q='; window.open(url + q, '_blank'); }
-
+    function toggleTrans() { const p = document.getElementById('trans-panel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; document.querySelector('.trans-btn').textContent = p.style.display === 'block' ? '[ 关闭翻译终端 ]' : '[ 开启全语言翻译终端 ]'; }
+    function translateText() { const input = document.getElementById('translate-input').value, tlang = document.getElementById('target-lang').value, out = document.getElementById('translate-output'); if (!input.trim()) { out.value = ''; return; } const pair = 'zh|' + tlang; fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=${pair}`).then(r => r.json()).then(data => out.value = data.responseData.translatedText || '翻译失败').catch(() => out.value = '网络错误'); }
+    function doSearch() { const q = document.getElementById('search_input').value, e = document.getElementById('search_engine').value; const url = e === 'baidu' ? 'https://www.baidu.com/s?wd=' : (e === 'bing' ? 'https://cn.bing.com/search?q=' : 'https://www.doubao.com/chat/?q='); window.open(url + q, '_blank'); }
+    function copyText(t, l) { navigator.clipboard.writeText(t).then(() => showToast(l + ' 已复制')); }
+    function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+    function fetchWeather() { fetch('https://ipwho.is/').then(r => r.json()).then(d => { if (d.success) { document.getElementById('weather-loc').textContent = d.city; fetch('https://wttr.in/' + d.city + '?format=j1').then(r => r.json()).then(w => document.getElementById('weather-temp').textContent = w.current_condition[0].temp_C + '°C'); } }).catch(() => { document.getElementById('weather-loc').textContent = '离线'; document.getElementById('weather-temp').textContent = '--'; }); }
     function filterTools() { const q = document.getElementById('tool-search').value.toLowerCase(); document.querySelectorAll('.tool-card').forEach(c => c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none'); }
 
-    function fetchWeather() { fetch('https://ipwho.is/').then(r => r.json()).then(d => { if (d.success) { document.getElementById('weather-loc').textContent = d.city; } }).catch(() => {}); }
+    setInterval(() => {
+        document.getElementById('s-temp').textContent = (24 + Math.random() * 4).toFixed(1) + '°C';
+        document.getElementById('s-delay').textContent = (2 + Math.random() * 3).toFixed(1) + 'ms';
+        document.getElementById('s-mem').textContent = (60 + Math.random() * 10).toFixed(1) + '%';
+        document.getElementById('s-fps').textContent = Math.floor(140 + Math.random() * 30);
+    }, 1500);
 
-    window.onload = function() { initializeUser(); fetchWeather(); };
+    window.onload = function() { fetchWeather(); };
 </script>
 </body>
-</html>
 </html>
