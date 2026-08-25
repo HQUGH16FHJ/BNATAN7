@@ -31,6 +31,34 @@
             --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
             --nav-height: 56px;
             --neon-glow: 0 0 10px rgba(var(--glow-color), 0.5), 0 0 20px rgba(var(--glow-color), 0.3), 0 0 40px rgba(var(--glow-color), 0.1);
+            /* 高级视觉增强变量 */
+            --aurora-1: linear-gradient(135deg, rgba(0,245,255,0.06), rgba(124,58,237,0.04), rgba(244,114,182,0.03));
+            --aurora-2: linear-gradient(225deg, rgba(0,255,136,0.04), rgba(0,245,255,0.06), rgba(251,191,36,0.03));
+            --glass-reflection: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.03) 100%);
+            --edge-glow: 0 0 0 1px rgba(var(--glow-color),0.06), 0 0 20px rgba(var(--glow-color),0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+            --deep-glow: 0 0 30px rgba(var(--glow-color),0.08), 0 0 60px rgba(124,58,237,0.04), 0 0 90px rgba(244,114,182,0.03);
+            --tech-grid: linear-gradient(rgba(var(--glow-color),0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--glow-color),0.015) 1px, transparent 1px);
+            --tech-grid-size: 24px 24px;
+            --glass-shine: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 45%, transparent 50%);
+            /* —— 视觉增强变量（科技感升级） —— */
+            /* 彩虹渐变：用于卡片悬停边框光效 */
+            --rainbow-grad: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6, #fbbf24, #00ff88, #00f5ff);
+            --rainbow-conic: conic-gradient(from 0deg, #00f5ff, #7c3aed, #f472b6, #fbbf24, #00ff88, #00f5ff);
+            /* 光泽扫过：用于按钮高光动画 */
+            --shine-grad: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.35) 50%, transparent 75%);
+            /* 多层辉光：用于卡片/导航悬停强发光 */
+            --glow-strong: 0 0 16px rgba(var(--glow-color), 0.55), 0 0 36px rgba(var(--glow-color), 0.35), 0 0 70px rgba(var(--glow-color), 0.18);
+            --glow-purple: 0 0 18px rgba(124, 58, 237, 0.4), 0 0 40px rgba(124, 58, 237, 0.2);
+            /* 装饰性渐变线条：用于分类标题前缀 */
+            --deco-line: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent5));
+            /* 顶部彩色渐变线：用于迷你卡片顶部装饰 */
+            --top-grad-line: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 30%, var(--accent3) 65%, var(--accent5) 100%);
+            /* 英雄区多层光晕 */
+            --hero-aura: radial-gradient(circle, rgba(var(--glow-color), 0.12) 0%, rgba(124, 58, 237, 0.06) 40%, transparent 70%);
+            /* 玻璃高光斜纹：用于卡片表面反光 */
+            --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.03) 100%);
+            /* 深度阴影：用于卡片浮起立体感 */
+            --depth-shadow: 0 24px 80px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.2);
         }
         [data-theme="light"] {
             --bg: #e4e8f0;
@@ -60,12 +88,18 @@
         body {
             font-family: var(--font);
             background: var(--bg);
+            background-image:
+                radial-gradient(ellipse at 20% 0%, rgba(0,245,255,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 10%, rgba(124,58,237,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(244,114,182,0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 0% 60%, rgba(0,255,136,0.03) 0%, transparent 50%);
+            background-attachment: fixed;
             color: var(--text);
             font-size: 16px;
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
-            transition: background 1s ease, color 0.6s ease;
+            transition: background 1s ease, color 0.6s ease, background-image 2s ease;
             -webkit-tap-highlight-color: transparent;
         }
         body::after {
@@ -205,14 +239,28 @@
 
         /* ===== 玻璃卡片 ===== */
         .glass-card {
-            background: var(--glass-bg);
+            background:
+                /* 玻璃斜向高光：增加反光层次 */
+                linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 35%, transparent 65%, rgba(255, 255, 255, 0.025) 100%),
+                /* 极光叠加 + 玻璃反射，增强高级感 */
+                var(--glass-reflection), var(--aurora-1),
+                var(--glass-bg);
             backdrop-filter: blur(60px) saturate(280%);
             -webkit-backdrop-filter: blur(60px) saturate(280%);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             padding: clamp(14px, 2.5vw, 28px);
             margin-bottom: clamp(14px, 2vw, 20px);
-            box-shadow: 0 8px 50px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            /* 多层边缘高光：顶部亮边 + 底/侧暗边 + 内部微辉光，营造立体玻璃质感 */
+            box-shadow:
+                0 8px 50px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.10),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+                inset 1px 0 0 rgba(255, 255, 255, 0.04),
+                inset -1px 0 0 rgba(0, 0, 0, 0.15),
+                inset 0 0 30px rgba(var(--glow-color), 0.03),
+                /* 边缘辉光：环形微光 + 顶部高光 */
+                var(--edge-glow);
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
@@ -259,7 +307,7 @@
         }
         .glass-card:hover {
             transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 25px 100px rgba(0, 0, 0, 0.2), 0 0 80px rgba(var(--glow-color), 0.06);
+            box-shadow: 0 25px 100px rgba(0, 0, 0, 0.2), 0 0 80px rgba(var(--glow-color), 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -1px 0 rgba(0, 0, 0, 0.25), inset 0 0 40px rgba(var(--glow-color), 0.05);
         }
         @keyframes spinBorder {
             to {
@@ -269,7 +317,8 @@
 
         /* ===== 按钮 ===== */
         .btn {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+            background-size: 200% 200%;
             color: #fff;
             border: none;
             padding: clamp(10px, 1.2vw, 16px) clamp(20px, 2.5vw, 36px);
@@ -290,9 +339,27 @@
             touch-action: manipulation;
             user-select: none;
         }
+        /* 光泽扫过：悬停时一道高光斜向划过按钮表面 */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: var(--shine-grad);
+            transform: skewX(-20deg);
+            transition: left 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .btn:hover::after {
+            left: 150%;
+        }
         .btn:hover {
             transform: translateY(-4px) scale(1.04);
-            box-shadow: 0 0 80px rgba(var(--glow-color), 0.15);
+            /* 悬停辉光增强：多层青色光晕 */
+            box-shadow: 0 0 24px rgba(var(--glow-color), 0.25), 0 0 48px rgba(var(--glow-color), 0.18), 0 0 80px rgba(var(--glow-color), 0.12);
         }
         .btn:active {
             transform: scale(0.92);
@@ -331,6 +398,34 @@
             opacity: 0;
             pointer-events: none;
             transform: scale(1.2);
+        }
+        /* 空间站启动终端文字 */
+        .boot-terminal {
+            position: absolute;
+            bottom: clamp(20px, 10vh, 80px);
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Courier New', monospace;
+            font-size: clamp(10px, 1vw, 13px);
+            color: var(--accent);
+            text-align: left;
+            width: min(90vw, 400px);
+            opacity: 0;
+            transition: opacity 0.5s ease 0.3s;
+        }
+        #boot-screen:not(.hidden) .boot-terminal {
+            opacity: 0.7;
+        }
+        .boot-line {
+            opacity: 0;
+            animation: bootLineIn 0.3s ease forwards;
+            line-height: 1.8;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        @keyframes bootLineIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 0.8; transform: translateX(0); }
         }
         .boot-reactor {
             width: clamp(120px, 20vw, 180px);
@@ -421,9 +516,12 @@
             top: clamp(8px, 1.5vh, 12px);
             z-index: 100;
             background: var(--glass-bg);
-            backdrop-filter: blur(80px) saturate(300%);
-            border: 1px solid rgba(var(--glow-color), 0.08);
-            border-radius: 40px;
+            backdrop-filter: blur(40px) saturate(150%);
+            /* 边框：青色微光 + 玻璃描边，更精致 */
+            border: 1px solid rgba(var(--glow-color), 0.1);
+            /* 表面斜纹高光 + 细光带反光，增加玻璃质感 */
+            background-image: var(--glass-sheen), var(--glass-shine);
+            border-radius: 44px;
             padding: clamp(6px, 0.8vw, 12px) clamp(14px, 2vw, 28px);
             display: flex;
             flex-wrap: wrap;
@@ -431,8 +529,14 @@
             align-items: center;
             gap: clamp(4px, 1vw, 16px);
             margin-bottom: clamp(16px, 3vw, 28px);
-            box-shadow: 0 8px 80px rgba(0, 0, 0, 0.08), 0 0 40px rgba(var(--glow-color), 0.04);
+            /* 多层阴影：深色投影 + 青色辉光 + 紫色漫射，科技悬浮感 */
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.18), 0 0 48px rgba(var(--glow-color), 0.06), 0 0 80px rgba(124, 58, 237, 0.05);
             transition: all var(--transition);
+        }
+        /* 导航栏悬停：整体辉光增强，边框更亮 */
+        .nav:hover {
+            border-color: rgba(var(--glow-color), 0.22);
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.22), var(--glow-strong);
         }
         .nav::before {
             content: '';
@@ -567,7 +671,26 @@
         }
         .nav-links a.active {
             color: var(--accent);
-            text-shadow: 0 0 8px var(--accent);
+            text-shadow: 0 0 8px var(--accent), 0 0 16px rgba(0, 245, 255, 0.4);
+            letter-spacing: 0.05em;
+        }
+        /* 科技感指示器：左侧脉冲信号点 */
+        .nav-links a.active::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent), 0 0 12px var(--accent);
+            animation: navPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes navPulse {
+            0%, 100% { opacity: 0.4; transform: translateY(-50%) scale(0.8); }
+            50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
         }
         .theme-toggle {
             background: var(--card-bg);
@@ -644,15 +767,9 @@
             animation: cosmicFade 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
         @keyframes cosmicFade {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
-            }
+            0% { opacity: 0; transform: translateY(20px) scale(0.97) perspective(600px) rotateX(2deg); filter: blur(4px); }
+            50% { opacity: 0.5; filter: blur(1px); }
+            100% { opacity: 1; transform: translateY(0) scale(1) perspective(600px) rotateX(0); filter: blur(0); }
         }
         .container {
             max-width: 1280px;
@@ -680,12 +797,17 @@
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: clamp(300px, 50vw, 600px);
-            height: clamp(300px, 50vw, 600px);
-            background: radial-gradient(circle, rgba(var(--glow-color), 0.08) 0%, transparent 70%);
+            width: clamp(320px, 56vw, 680px);
+            height: clamp(320px, 56vw, 680px);
+            /* 多层光晕叠加：青色核心 + 紫色漫射 + 粉色边缘，营造全息氛围 */
+            background:
+                radial-gradient(circle, rgba(var(--glow-color), 0.12) 0%, transparent 55%),
+                radial-gradient(circle, rgba(124, 58, 237, 0.08) 25%, transparent 70%),
+                radial-gradient(circle, rgba(244, 114, 182, 0.05) 45%, transparent 75%);
             border-radius: 50%;
             pointer-events: none;
             animation: heroPulse 6s ease-in-out infinite;
+            filter: blur(8px);
         }
         .hero::after {
             content: '';
@@ -703,6 +825,11 @@
             0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
             50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
         }
+        /* 标题发光脉动：光晕随时间强弱呼吸 */
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(var(--glow-color), 0.18)) drop-shadow(0 0 40px rgba(124, 58, 237, 0.12)); }
+            50% { filter: drop-shadow(0 0 28px rgba(var(--glow-color), 0.35)) drop-shadow(0 0 60px rgba(124, 58, 237, 0.22)); }
+        }
         .hero h1 {
             font-size: clamp(32px, 10vw, 100px);
             font-weight: 900;
@@ -712,21 +839,24 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradientShift 8s ease infinite;
+            /* 渐变流动 + 发光呼吸 双动画叠加 */
+            animation: gradientShift 8s ease infinite, titleGlow 4.5s ease-in-out infinite;
             letter-spacing: 0.02em;
             line-height: 1.02;
             position: relative;
             text-shadow: 0 0 40px rgba(var(--glow-color), 0.3);
-            filter: drop-shadow(0 0 20px rgba(var(--glow-color), 0.15));
+            /* 多层发光：青色辉光 + 紫色漫射，标题更立体 */
+            filter: drop-shadow(0 0 20px rgba(var(--glow-color), 0.3)) drop-shadow(0 0 40px rgba(124,58,237,0.15));
         }
         .hero .subtitle {
             font-size: clamp(11px, 1.6vw, 20px);
             color: var(--accent);
             letter-spacing: 0.4em;
             font-weight: 400;
-            opacity: 0.6;
+            opacity: 0.7;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(var(--glow-color), 0.3);
+            /* 副标题多层光晕，增强科技感 */
+            text-shadow: 0 0 8px rgba(var(--glow-color), 0.45), 0 0 18px rgba(var(--glow-color), 0.25), 0 0 32px rgba(124, 58, 237, 0.15);
         }
         /* 科技感数据条 */
         .tech-bar {
@@ -744,23 +874,29 @@
         .holo-card {
             position: relative;
             background: var(--glass-bg);
-            backdrop-filter: blur(80px) saturate(300%);
+            backdrop-filter: blur(40px) saturate(150%);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             overflow: hidden;
             transition: all 0.4s;
+            /* 表面斜纹高光，增强全息玻璃质感 */
+            background-image: var(--glass-sheen);
         }
         .holo-card::before {
             content: '';
             position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(var(--glow-color), 0.06), transparent);
-            transition: left 0.6s;
+            /* 多色扫光：青→紫→粉，更丰富的全息流光 */
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.08), rgba(124, 58, 237, 0.06), rgba(244, 114, 182, 0.05), transparent);
+            transition: left 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
         }
         .holo-card:hover::before { left: 100%; }
         .holo-card:hover {
-            border-color: rgba(var(--glow-color), 0.25);
-            box-shadow: var(--neon-glow);
+            /* 悬停：边框彩虹微光 + 上浮 + 多层辉光，立体悬浮 */
+            border-color: rgba(var(--glow-color), 0.3);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: var(--neon-glow), var(--depth-shadow);
         }
         /* 数字时钟大屏 */
         .big-clock {
@@ -938,6 +1074,18 @@
             width: 100%;
             font-family: var(--font);
             min-height: 44px;
+        }
+        input[type="number"] {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
         input:focus,
         select:focus,
@@ -1147,17 +1295,37 @@
             color: var(--accent);
             letter-spacing: 0.16em;
             margin: clamp(16px, 2vw, 24px) 0 clamp(10px, 1.2vw, 16px);
+            padding-bottom: clamp(8px, 1vw, 14px);
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(var(--glow-color), 0.15);
+            /* 发光增强：多层光晕，标题更醒目 */
+            text-shadow: 0 0 10px rgba(var(--glow-color), 0.2), 0 0 20px rgba(var(--glow-color), 0.12), 0 0 40px rgba(124, 58, 237, 0.06);
             display: flex;
             align-items: center;
             gap: clamp(8px, 1vw, 16px);
+            /* 标题下方科技感分割线：青→紫渐变细线 */
+            background-image: linear-gradient(90deg, rgba(var(--glow-color), 0.6) 0%, rgba(124, 58, 237, 0.3) 45%, transparent 85%);
+            background-size: 100% 1px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+        /* 空间站前缀图标：发光菱形 + 呼吸动画 */
+        .cat-title::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            background: var(--deco-line);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+            box-shadow: 0 0 8px rgba(var(--glow-color), 0.7), 0 0 16px rgba(var(--glow-color), 0.4);
+            animation: titlePulse 2.6s ease-in-out infinite;
         }
         .cat-title::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, rgba(var(--glow-color), 0.15), transparent);
+            /* 后缀线：青紫渐变，过渡更柔和 */
+            background: linear-gradient(90deg, rgba(var(--glow-color), 0.22), rgba(124, 58, 237, 0.1), transparent);
         }
         .tool-grid {
             display: grid;
@@ -1173,7 +1341,12 @@
             }
         }
         .tool-card {
-            background: linear-gradient(145deg, rgba(10, 10, 30, 0.15), rgba(0, 0, 0, 0.2));
+            background-image:
+                /* 主题网格纹理：增强科技感 */
+                var(--tech-grid),
+                /* 原底色渐变 */
+                linear-gradient(145deg, rgba(10, 10, 30, 0.15), rgba(0, 0, 0, 0.2));
+            background-size: var(--tech-grid-size), 100% 100%;
             backdrop-filter: blur(20px);
             border: 1px solid rgba(var(--glow-color), 0.04);
             border-radius: 22px;
@@ -1193,18 +1366,47 @@
             position: absolute;
             inset: 0;
             border-radius: 22px;
-            background: radial-gradient(circle at 30% 20%, rgba(var(--glow-color), 0.06), transparent 70%);
+            background:
+                /* 全息扫描线：悬停时横向移动的高亮条 */
+                linear-gradient(180deg, transparent 0%, rgba(var(--glow-color), 0.18) 46%, rgba(255, 255, 255, 0.30) 50%, rgba(var(--glow-color), 0.18) 54%, transparent 100%),
+                /* 原径向光晕 */
+                radial-gradient(circle at 30% 20%, rgba(var(--glow-color), 0.06), transparent 70%);
+            background-size: 100% 26px, 100% 100%;
+            background-position: 0 -26px, 0 0;
+            background-repeat: no-repeat;
             opacity: 0;
             transition: opacity 0.6s;
             pointer-events: none;
         }
         .tool-card:hover::before {
             opacity: 1;
+            animation: cardScan 2.2s linear infinite;
+        }
+        /* 彩虹边框光效：悬停时显现旋转的彩虹描边 */
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            padding: 1.5px;
+            background: var(--rainbow-conic);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.6s;
+            pointer-events: none;
+            animation: spinBorder 6s linear infinite;
+        }
+        .tool-card:hover::after {
+            opacity: 1;
         }
         .tool-card:hover {
             border-color: rgba(var(--glow-color), 0.2);
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 40px rgba(var(--glow-color), 0.08);
+            /* 悬停：深色投影 + 多色辉光（青/紫/粉），彩虹环绕氛围 */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), 0 0 22px rgba(0, 245, 255, 0.12), 0 0 44px rgba(124, 58, 237, 0.1), 0 0 66px rgba(244, 114, 182, 0.08);
         }
         .tool-card:active {
             transform: scale(0.94);
@@ -1257,6 +1459,26 @@
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
+            isolation: isolate;
+            z-index: 1;
+        }
+        .mini-card input,
+        .mini-card select,
+        .mini-card textarea {
+            position: relative;
+            z-index: 2;
+        }
+        .mini-card input[type="text"],
+        .mini-card input[type="number"],
+        .mini-card input[type="date"],
+        .mini-card input[type="password"],
+        .mini-card input[type="color"],
+        .mini-card input[type="file"],
+        .mini-card input[type="range"],
+        .mini-card textarea {
+            -webkit-user-select: text;
+            user-select: text;
+            -webkit-user-modify: read-write;
         }
         .mini-card::before {
             content: '';
@@ -1271,9 +1493,28 @@
         .mini-card:hover::before {
             opacity: 1;
         }
+        /* 顶部彩色渐变线装饰：青→紫→粉→绿，点亮卡片顶部 */
+        .mini-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--top-grad-line);
+            opacity: 0.65;
+            transition: opacity 0.6s, height 0.4s ease, box-shadow 0.6s;
+            pointer-events: none;
+        }
+        .mini-card:hover::after {
+            opacity: 1;
+            height: 4px;
+            box-shadow: 0 0 12px rgba(var(--glow-color), 0.5);
+        }
         .mini-card:hover {
             border-color: rgba(var(--glow-color), 0.15);
-            box-shadow: 0 0 50px rgba(var(--glow-color), 0.06);
+            /* 悬停辉光增强 + 上浮 */
+            box-shadow: 0 0 22px rgba(var(--glow-color), 0.1), 0 0 50px rgba(var(--glow-color), 0.06);
             transform: translateY(-4px);
         }
         .mini-card .title {
@@ -1317,6 +1558,256 @@
         .flex-row>* {
             flex: 1 1 auto;
             min-width: 60px;
+        }
+
+        /* ============================================================
+           教育页面 · 空间站控制台风格 (Space Station Console)
+           全部样式限定在 #edu 作用域内，不影响其它页面
+           ============================================================ */
+
+        /* 自定义角度属性：用于卡片边框扫描光带旋转动画 */
+        @property --edu-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        /* 教育页面容器定位，让背景装饰层位于内容之下 */
+        #edu {
+            position: relative;
+        }
+        /* 所有直接子元素上浮，确保内容在背景装饰层之上 */
+        #edu > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 空间站科技网格背景：细密网格线 + 上下渐隐遮罩 */
+        #edu::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(var(--glow-color), 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--glow-color), 0.025) 1px, transparent 1px);
+            background-size: 34px 34px;
+            -webkit-mask: linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask: linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        }
+
+        /* HUD 抬头显示角标：四角 L 形高亮 + 边框框架 */
+        #edu::after {
+            content: '';
+            position: absolute;
+            inset: clamp(4px, 1vw, 10px);
+            pointer-events: none;
+            z-index: 0;
+            border: 1px solid rgba(var(--glow-color), 0.06);
+            border-radius: 18px;
+            opacity: 0.55;
+            background:
+                /* 左上角 L 形（青） */
+                linear-gradient(var(--accent), var(--accent)) top left / 24px 2px no-repeat,
+                linear-gradient(var(--accent), var(--accent)) top left / 2px 24px no-repeat,
+                /* 右上角 L 形（绿） */
+                linear-gradient(var(--accent5), var(--accent5)) top right / 24px 2px no-repeat,
+                linear-gradient(var(--accent5), var(--accent5)) top right / 2px 24px no-repeat,
+                /* 左下角 L 形（粉） */
+                linear-gradient(var(--accent3), var(--accent3)) bottom left / 24px 2px no-repeat,
+                linear-gradient(var(--accent3), var(--accent3)) bottom left / 2px 24px no-repeat,
+                /* 右下角 L 形（紫） */
+                linear-gradient(var(--accent2), var(--accent2)) bottom right / 24px 2px no-repeat,
+                linear-gradient(var(--accent2), var(--accent2)) bottom right / 2px 24px no-repeat;
+        }
+
+        /* ---- 教育主标题：旋转轨道环 + 扫描线 ---- */
+        #edu-title {
+            position: relative;
+        }
+        /* 隐藏主标题原有的彩虹短杠，改用轨道环装饰 */
+        #edu-title.cat-title::before {
+            display: none;
+        }
+        /* 旋转的科技感轨道环 */
+        .edu-orbital {
+            width: clamp(20px, 2vw, 28px);
+            height: clamp(20px, 2vw, 28px);
+            border-radius: 50%;
+            border: 2px solid rgba(var(--glow-color), 0.25);
+            border-top-color: var(--accent);
+            border-right-color: var(--accent5);
+            flex-shrink: 0;
+            position: relative;
+            animation: eduSpin 3s linear infinite;
+            box-shadow: 0 0 10px rgba(var(--glow-color), 0.3);
+        }
+        /* 轨道环中心核 */
+        .edu-orbital::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+        }
+        @keyframes eduSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 标题扫描线：自上而下扫过的光带 */
+        .edu-scanline {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .edu-scanline::before {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--accent5), transparent);
+            box-shadow: 0 0 8px rgba(var(--glow-color), 0.6);
+            animation: eduScan 3.5s ease-in-out infinite;
+        }
+        @keyframes eduScan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* ---- 教育页子标题：发光指示灯 + 数据流线条 ---- */
+        /* 左侧发光指示灯（呼吸闪烁），替代原有彩虹短杠 */
+        #edu .cat-title:not(#edu-title)::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent5);
+            box-shadow: 0 0 8px var(--accent5), 0 0 14px rgba(0, 255, 136, 0.4);
+            flex-shrink: 0;
+            animation: eduBlink 2s ease-in-out infinite;
+        }
+        @keyframes eduBlink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent5), 0 0 14px rgba(0, 255, 136, 0.4); }
+            50% { opacity: 0.45; box-shadow: 0 0 4px var(--accent5), 0 0 7px rgba(0, 255, 136, 0.2); }
+        }
+        /* 数据流线条：流动的虚线，替代原有静态渐变线 */
+        #edu .cat-title:not(#edu-title)::after {
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(var(--glow-color), 0.3) 0 6px,
+                transparent 6px 14px
+            );
+            background-size: 28px 1px;
+            animation: eduDataflow 1.2s linear infinite;
+        }
+        @keyframes eduDataflow {
+            to { background-position: 28px 0; }
+        }
+
+        /* ---- 教育页工具网格：网格背景线（电路板感） ---- */
+        #edu .mini-grid {
+            background-image:
+                linear-gradient(rgba(var(--glow-color), 0.022) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--glow-color), 0.022) 1px, transparent 1px);
+            background-size: 42px 42px;
+            background-position: center;
+        }
+
+        /* ---- 教育页工具卡片增强 ---- */
+        /* 顶部状态指示条：小圆点 LED 指示灯（叠加在卡片背景上） */
+        #edu .mini-card {
+            background-color: var(--card-bg);
+            background-image:
+                /* 左侧绿色状态灯（激活态） */
+                radial-gradient(circle at 14px 7px, var(--accent5) 0 2px, transparent 2.5px),
+                /* 左侧青色状态灯（次级） */
+                radial-gradient(circle at 24px 7px, rgba(var(--glow-color), 0.6) 0 1.5px, transparent 2px);
+            background-repeat: no-repeat;
+        }
+
+        /* 悬停时边框扫描光带动画（替代原有的径向辉光） */
+        #edu .mini-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--edu-angle),
+                transparent 0%,
+                rgba(var(--glow-color), 0.85) 8%,
+                var(--accent5) 14%,
+                var(--accent2) 20%,
+                transparent 28%,
+                transparent 100%
+            );
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 3;
+            animation: eduBorderRotate 3s linear infinite;
+        }
+        #edu .mini-card:hover::before {
+            opacity: 1;
+        }
+        @keyframes eduBorderRotate {
+            to { --edu-angle: 360deg; }
+        }
+
+        /* 重要卡片 HUD 角标装饰（四角 L 形高亮） */
+        #edu .mini-card .edu-corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            pointer-events: none;
+            z-index: 3;
+        }
+        #edu .mini-card .edu-corner.tl {
+            top: 6px; left: 6px;
+            border-top: 2px solid var(--accent5);
+            border-left: 2px solid var(--accent5);
+            border-top-left-radius: 4px;
+            box-shadow: -1px -1px 6px rgba(0, 255, 136, 0.3);
+        }
+        #edu .mini-card .edu-corner.tr {
+            top: 6px; right: 6px;
+            border-top: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+            border-top-right-radius: 4px;
+            box-shadow: 1px -1px 6px rgba(var(--glow-color), 0.3);
+        }
+        #edu .mini-card .edu-corner.bl {
+            bottom: 6px; left: 6px;
+            border-bottom: 2px solid var(--accent3);
+            border-left: 2px solid var(--accent3);
+            border-bottom-left-radius: 4px;
+            box-shadow: -1px 1px 6px rgba(244, 114, 182, 0.3);
+        }
+        #edu .mini-card .edu-corner.br {
+            bottom: 6px; right: 6px;
+            border-bottom: 2px solid var(--accent2);
+            border-right: 2px solid var(--accent2);
+            border-bottom-right-radius: 4px;
+            box-shadow: 1px 1px 6px rgba(124, 58, 237, 0.3);
+        }
+
+        /* 移动端：减弱扫描动画以节省性能 */
+        @media (max-width: 600px) {
+            #edu .mini-card::before { animation-duration: 5s; }
+            .edu-orbital { animation-duration: 4s; }
+            .edu-scanline::before { animation-duration: 5s; }
         }
 
         /* ===== 待办 ===== */
@@ -1478,11 +1969,14 @@
             background: var(--bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(var(--glow-color), 0.04);
+            background: linear-gradient(180deg, rgba(var(--glow-color), 0.25), rgba(var(--glow-color), 0.1));
             border-radius: 10px;
+            /* 滚动条发光：多层辉光，悬浮交互更高级 */
+            box-shadow: 0 0 6px rgba(var(--glow-color), 0.2), 0 0 12px rgba(var(--glow-color), 0.1), inset 0 0 0 1px rgba(var(--glow-color), 0.08);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(var(--glow-color), 0.08);
+            background: linear-gradient(180deg, rgba(var(--glow-color), 0.45), rgba(var(--glow-color), 0.2));
+            box-shadow: 0 0 10px rgba(var(--glow-color), 0.35), 0 0 20px rgba(var(--glow-color), 0.18), inset 0 0 0 1px rgba(var(--glow-color), 0.15);
         }
 
         /* ===== 塔罗三张牌（响应式） ===== */
@@ -1588,17 +2082,24 @@
 
         /* ===== 底部 ===== */
         .footer {
+            position: relative;
             text-align: center;
             font-size: clamp(10px, 0.9vw, 14px);
-            opacity: 0.35;
+            opacity: 0.6;
             margin: clamp(16px, 2vh, 28px) 0 clamp(8px, 1vh, 12px);
-            letter-spacing: 0.1em;
-            transition: opacity 0.4s ease;
-            padding: clamp(10px, 2vh, 18px) 0;
-            border-top: 1px solid var(--border);
+            letter-spacing: 0.14em;
+            transition: opacity 0.4s ease, box-shadow 0.4s ease;
+            padding: clamp(12px, 2vh, 20px) clamp(12px, 2vw, 24px);
+            border-top: 1px solid rgba(var(--glow-color), 0.18);
+            border-bottom: 1px solid rgba(var(--glow-color), 0.10);
+            /* 终端风控制台底栏背景 */
+            background: linear-gradient(180deg, rgba(var(--glow-color), 0.04), transparent);
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
         .footer:hover {
-            opacity: 0.8;
+            opacity: 0.95;
+            box-shadow: 0 0 30px rgba(var(--glow-color), 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
         .footer kbd {
             background: rgba(255, 255, 255, 0.01);
@@ -1607,6 +2108,178 @@
             border: 1px solid var(--border);
             font-size: 11px;
         }
+
+        /* ============================================================
+         空间站控制台 · 通用组件
+         ============================================================ */
+        /* HUD 四角 L 型装饰：用于任意需要控制台边框的容器 */
+        .hud-corners { position: relative; }
+        .hud-corners::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            pointer-events: none;
+            z-index: 6;
+            color: var(--accent);
+            background:
+                linear-gradient(currentColor, currentColor) top left / 22px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) top left / 2px 22px no-repeat,
+                linear-gradient(currentColor, currentColor) top right / 22px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) top right / 2px 22px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom left / 22px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom left / 2px 22px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom right / 22px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom right / 2px 22px no-repeat;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 4px currentColor);
+        }
+        /* 科技感分割线：渐变 + 端点光斑，用于标题/区块下方 */
+        .tech-divider {
+            display: block;
+            height: 1px;
+            width: 100%;
+            border: none;
+            background:
+                radial-gradient(circle, rgba(var(--glow-color), 0.8) 0, rgba(var(--glow-color), 0) 3px) left center / 6px 1px no-repeat,
+                linear-gradient(90deg, rgba(var(--glow-color), 0.55) 0%, rgba(124, 58, 237, 0.3) 45%, transparent 100%);
+            margin: 6px 0 10px;
+            opacity: 0.7;
+        }
+        /* 状态指示灯：呼吸闪烁的小圆点 */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent5);
+            box-shadow: 0 0 6px var(--accent5), 0 0 12px rgba(0, 255, 136, 0.5);
+            vertical-align: middle;
+            animation: statusBlink 1.6s ease-in-out infinite;
+        }
+        .status-dot[data-status="online"] { background: var(--accent5); box-shadow: 0 0 6px var(--accent5), 0 0 12px rgba(0, 255, 136, 0.5); }
+        .status-dot[data-status="alert"]  { background: var(--accent4); box-shadow: 0 0 6px var(--accent4), 0 0 12px rgba(251, 191, 36, 0.5); }
+        .status-dot[data-status="error"]  { background: #ff4757; box-shadow: 0 0 6px #ff4757, 0 0 12px rgba(255, 71, 87, 0.5); }
+        /* 数据条装饰：终端风刻度线 */
+        .data-strip {
+            display: flex;
+            gap: 2px;
+            height: 10px;
+            align-items: flex-end;
+            opacity: 0.5;
+        }
+        .data-strip i {
+            flex: 1;
+            background: linear-gradient(180deg, var(--accent), rgba(var(--glow-color), 0.2));
+            border-radius: 1px;
+        }
+        .data-strip i:nth-child(odd)  { height: 60%; }
+        .data-strip i:nth-child(even) { height: 100%; }
+        .data-strip i:nth-child(3n)   { height: 40%; }
+
+        /* —— 通用动画关键帧 —— */
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%      { opacity: 0.35; transform: scale(0.7); }
+        }
+        @keyframes titlePulse {
+            0%, 100% { box-shadow: 0 0 8px rgba(var(--glow-color), 0.7), 0 0 16px rgba(var(--glow-color), 0.4); }
+            50%      { box-shadow: 0 0 12px rgba(var(--glow-color), 0.9), 0 0 26px rgba(var(--glow-color), 0.55); }
+        }
+        @keyframes cardScan {
+            0%   { background-position: 0 -26px, 0 0; }
+            100% { background-position: 0 calc(100% + 26px), 0 0; }
+        }
+
+        /* ============================================================
+         空间站控制台 · 各页面专属色调与 HUD 角标
+         （关于我 #contact / 工具箱 #tools / 影音 #media / 开发 #dev / 更多 #more）
+         ============================================================ */
+        .section.active { position: relative; }
+        #contact.active { --section-accent: #fbbf24; --section-tint: rgba(251, 191, 36, 0.06); }
+        #tools.active   { --section-accent: #00f5ff; --section-tint: rgba(0, 245, 255, 0.06); }
+        #media.active   { --section-accent: #7c3aed; --section-tint: rgba(124, 58, 237, 0.07); }
+        #dev.active     { --section-accent: #00ff88; --section-tint: rgba(0, 255, 136, 0.06); }
+        #more.active    { --section-accent: #f472b6; --section-tint: rgba(244, 114, 182, 0.07); }
+
+        /* 页面背景色调：顶部径向光晕，营造控制台氛围（置于内容之下） */
+        #contact.active::after,
+        #tools.active::after,
+        #media.active::after,
+        #dev.active::after,
+        #more.active::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, var(--section-tint, transparent), transparent 60%);
+        }
+        /* 四角 HUD L 型装饰线（叠加于内容之上，控制台取景框） */
+        #contact.active::before,
+        #tools.active::before,
+        #media.active::before,
+        #dev.active::before,
+        #more.active::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            pointer-events: none;
+            z-index: 5;
+            color: var(--section-accent, var(--accent));
+            background:
+                linear-gradient(currentColor, currentColor) top left / 24px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) top left / 2px 24px no-repeat,
+                linear-gradient(currentColor, currentColor) top right / 24px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) top right / 2px 24px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom left / 24px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom left / 2px 24px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom right / 24px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) bottom right / 2px 24px no-repeat;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 4px currentColor);
+        }
+        @media (max-width: 600px) {
+            /* 移动端：缩小 HUD 角标，避免遮挡卡片内容 */
+            #contact.active::before,
+            #tools.active::before,
+            #media.active::before,
+            #dev.active::before,
+            #more.active::before {
+                inset: 4px;
+                background-size: 18px 2px, 2px 18px, 18px 2px, 2px 18px, 18px 2px, 2px 18px, 18px 2px, 2px 18px;
+                opacity: 0.32;
+            }
+        }
+
+        /* 关于我页面主标题：空间站发光 + 下方科技感分割线 */
+        #contact-title {
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.35), 0 0 22px rgba(251, 191, 36, 0.18);
+            padding-bottom: clamp(8px, 1vw, 14px);
+            background-image: linear-gradient(90deg, rgba(251, 191, 36, 0.6) 0%, rgba(124, 58, 237, 0.3) 45%, transparent 85%);
+            background-size: 100% 1px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+
+        /* 页脚状态栏：空间站底部控制台 */
+        .footer-statusbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(6px, 1.2vw, 14px);
+            font-size: clamp(9px, 0.85vw, 12px);
+            letter-spacing: 0.18em;
+            color: var(--accent5);
+            padding-bottom: clamp(6px, 1vh, 10px);
+            margin-bottom: clamp(6px, 1vh, 10px);
+            border-bottom: 1px dashed rgba(var(--glow-color), 0.12);
+        }
+        .footer-statusbar .footer-syslabel {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .footer-main { opacity: 0.85; }
 
         /* ===== 回到顶部按钮 ===== */
         #back-to-top {
@@ -1824,8 +2497,11 @@
         .tilt-card .tilt-inner { transform: translateZ(30px); }
 
         /* ===== 页面转场动画 ===== */
-        .section.active { animation: pageSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-        @keyframes pageSlideIn { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .section.active { animation: pageSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        @keyframes pageSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.96) perspective(800px) rotateX(3deg); filter: blur(6px); }
+            to { opacity: 1; transform: translateY(0) scale(1) perspective(800px) rotateX(0); filter: blur(0); }
+        }
 
         /* ===== 数字滚动动画 ===== */
         .count-up { display: inline-block; transition: opacity 0.3s; }
@@ -1975,12 +2651,487 @@
             }
             body::after { display: none !important; }
         }
+
+        /* ===== 空间站高级过渡动画系统 ===== */
+
+        /* 1. 页面3D翻转过渡 */
+        .section {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 100vh;
+        }
+        .section.active {
+            animation: stationWarp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @keyframes stationWarp {
+            0% { opacity: 0; transform: rotateY(-12deg) translateZ(-100px) scale(0.92); filter: blur(8px); }
+            40% { opacity: 0.6; transform: rotateY(-4deg) translateZ(-20px) scale(0.98); filter: blur(2px); }
+            100% { opacity: 1; transform: rotateY(0) translateZ(0) scale(1); filter: blur(0); }
+        }
+
+        /* 2. 空间站HUD仪表盘 */
+        .station-hud {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: clamp(6px, 0.8vw, 10px);
+            margin: clamp(8px, 1.5vh, 14px) 0;
+        }
+        .hud-gauge {
+            position: relative;
+            background: linear-gradient(145deg, rgba(10,10,30,0.5), rgba(0,0,0,0.3));
+            /* 网格纹理 + 玻璃反光，叠加在底色之上，增强科技仪表感 */
+            background-image: var(--tech-grid), var(--glass-reflection), linear-gradient(145deg, rgba(10,10,30,0.5), rgba(0,0,0,0.3));
+            background-size: var(--tech-grid-size), 100% 100%, 100% 100%;
+            border: 1px solid rgba(var(--glow-color), 0.08);
+            border-radius: 14px;
+            padding: clamp(8px, 1vw, 12px);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .hud-gauge:hover {
+            border-color: rgba(var(--glow-color), 0.2);
+            box-shadow: 0 0 20px rgba(var(--glow-color), 0.08);
+            transform: translateY(-2px);
+        }
+        .hud-gauge::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(var(--glow-color), 0.4), transparent);
+        }
+        .hud-gauge-label {
+            font-size: clamp(8px, 0.7vw, 10px);
+            color: var(--sub);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 4px;
+        }
+        .hud-gauge-value {
+            font-size: clamp(14px, 1.6vw, 20px);
+            font-weight: 900;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+            display: flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+        .hud-gauge-unit {
+            font-size: clamp(8px, 0.7vw, 10px);
+            color: var(--sub);
+            font-weight: 400;
+        }
+        .hud-bar {
+            height: 3px;
+            background: rgba(var(--glow-color), 0.08);
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hud-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent5), var(--accent));
+            border-radius: 2px;
+            transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 6px rgba(var(--glow-color), 0.3);
+        }
+        .hud-bar-fill.warn { background: linear-gradient(90deg, var(--accent4), #f97316); }
+        .hud-bar-fill.crit { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+        /* 3. 空间站轨道环装饰 */
+        .station-orbital {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.08;
+        }
+        .station-orbital::before,
+        .station-orbital::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid var(--accent);
+        }
+        .station-orbital::before {
+            width: clamp(400px, 80vw, 800px);
+            height: clamp(400px, 80vw, 800px);
+            animation: orbitalRotate1 60s linear infinite;
+            border-style: dashed;
+            border-color: rgba(var(--glow-color), 0.06);
+            will-change: transform;
+        }
+        .station-orbital::after {
+            width: clamp(600px, 100vw, 1200px);
+            height: clamp(600px, 100vw, 1200px);
+            animation: orbitalRotate2 80s linear infinite reverse;
+            border-style: dotted;
+            border-color: rgba(124, 58, 237, 0.04);
+            will-change: transform;
+        }
+        @keyframes orbitalRotate1 {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes orbitalRotate2 {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* 4. 数据流粒子线 */
+        .data-stream {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(var(--glow-color), 0.06), transparent);
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .data-stream::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -2px;
+            width: 5px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: streamFall 6s linear infinite;
+            animation-play-state: paused;
+        }
+        .data-stream:nth-child(1) { left: 12%; animation-delay: 0s; }
+        .data-stream:nth-child(2) { left: 28%; animation-delay: 1.5s; }
+        .data-stream:nth-child(3) { left: 45%; animation-delay: 3s; }
+        .data-stream:nth-child(4) { left: 62%; animation-delay: 0.8s; }
+        .data-stream:nth-child(5) { left: 78%; animation-delay: 2.2s; }
+        .data-stream:nth-child(6) { left: 90%; animation-delay: 3.5s; }
+        .data-stream:nth-child(1)::before { animation-delay: 0s; }
+        .data-stream:nth-child(2)::before { animation-delay: 1.5s; }
+        .data-stream:nth-child(3)::before { animation-delay: 3s; }
+        .data-stream:nth-child(4)::before { animation-delay: 0.8s; }
+        .data-stream:nth-child(5)::before { animation-delay: 2.2s; }
+        .data-stream:nth-child(6)::before { animation-delay: 3.5s; }
+        @keyframes streamFall {
+            0% { top: -10px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        /* 量子浮动效果已移除——所有卡片同时动画导致严重卡顿，改用悬停时触发 */
+        /* .holo-card, .glass-card, .mini-card { animation: quantumFloat 8s ease-in-out infinite; } */
+        @keyframes quantumFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-1px); }
+        }
+
+        /* 6. 科技感分割线 */
+        .station-divider {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: clamp(12px, 2vh, 20px) 0;
+            padding: 0;
+        }
+        .station-divider::before {
+            content: '◆';
+            color: var(--accent);
+            font-size: 8px;
+            opacity: 0.6;
+            text-shadow: 0 0 6px var(--accent);
+        }
+        .station-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(var(--glow-color), 0.2), rgba(var(--glow-color), 0.02), transparent);
+        }
+        .station-divider-text {
+            font-size: clamp(9px, 0.8vw, 11px);
+            color: var(--sub);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 0 8px;
+        }
+
+        /* 7. 警告/通知标签 */
+        .station-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid rgba(var(--glow-color), 0.12);
+            background: rgba(var(--glow-color), 0.04);
+            color: var(--accent);
+        }
+        .station-badge::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent5);
+            box-shadow: 0 0 4px var(--accent5);
+            animation: badgePulse 2s infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        /* 8. 全息投影扫描线效果 */
+        .hologram-scan {
+            position: relative;
+            overflow: hidden;
+        }
+        .hologram-scan::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(var(--glow-color), 0.6), transparent);
+            box-shadow: 0 0 12px rgba(var(--glow-color), 0.4);
+            animation: holoScan 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+        @keyframes holoScan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* 9. 导航链接科技感增强 */
+        .nav-links a {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 8px rgba(var(--glow-color), 0.4);
+        }
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 80%;
+        }
+
+        /* 10. 移动端禁用重型动画 */
+        @media (max-width: 768px) {
+            .station-orbital { display: none; }
+            .data-stream { display: none; }
+            .holo-card, .glass-card, .mini-card { animation: none; }
+            .section.active { animation: stationWarp 0.3s ease; }
+            @keyframes stationWarp {
+                0% { opacity: 0; transform: translateY(10px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+        }
+
+        /* ===== 手机/平板高级适配优化 ===== */
+
+        /* 平板专属优化 */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            /* HUD仪表盘适配平板 */
+            .station-hud { grid-template-columns: repeat(3, 1fr); }
+            .hud-gauge { padding: 8px 6px; }
+            /* 工具卡片间距优化 */
+            .tool-grid { gap: 8px; }
+            .tool-card { min-height: 80px; padding: 10px 6px; }
+            /* mini-card 双列优化 */
+            .mini-grid { gap: 8px; }
+            /* 导航栏紧凑化 */
+            .nav { padding: 8px 16px; border-radius: 32px; }
+            .nav-links { gap: 2px; }
+            .nav-links a { font-size: 13px; padding: 6px 10px; }
+            /* hero标题适配 */
+            .hero h1 { font-size: clamp(36px, 7vw, 64px); }
+            .hero .subtitle { font-size: clamp(10px, 1.4vw, 14px); letter-spacing: 0.3em; }
+            /* 快捷导航适配 */
+            .glass-card[style*="grid-template-columns"] { gap: 6px !important; }
+            /* 按钮紧凑化 */
+            .btn { padding: 10px 18px; font-size: 13px; }
+            .btn-sm { padding: 6px 12px; font-size: 11px; }
+            /* 输入框适配 */
+            input, textarea, select { min-height: 40px; padding: 8px 14px; }
+            /* 科技分割线 */
+            .station-divider { margin: 12px 0; }
+        }
+
+        /* 手机大屏优化 (481-600px) */
+        @media (min-width: 481px) and (max-width: 600px) {
+            /* HUD仪表盘双列 */
+            .station-hud { grid-template-columns: repeat(2, 1fr); }
+            .hud-gauge { padding: 8px; border-radius: 12px; }
+            .hud-gauge-value { font-size: 16px; }
+            .hud-gauge-label { font-size: 9px; }
+            /* 工具卡片优化 */
+            .tool-card { padding: 8px 4px; min-height: 76px; }
+            .tool-card .name { font-size: 12px; }
+            .tool-card .desc { font-size: 9px; }
+            /* hero区精简 */
+            .hero { padding: 16px 0 12px; }
+            .hero h1 { font-size: clamp(36px, 11vw, 56px); }
+            .tech-bar { font-size: 10px; gap: 4px; }
+            /* 导航栏 */
+            .nav { border-radius: 24px; padding: 8px 14px; }
+            /* 按钮间距 */
+            .flex-row { gap: 6px; }
+            .btn-sm { padding: 6px 10px; font-size: 11px; min-height: 32px; }
+            /* 输入框 */
+            input, textarea, select { min-height: 38px; padding: 8px 12px; font-size: 14px; }
+            /* 结果区域 */
+            .mini-card .content .result { font-size: 12px; padding: 8px; }
+        }
+
+        /* 手机小屏优化 (≤480px) */
+        @media (max-width: 480px) {
+            /* HUD仪表盘单列堆叠 */
+            .station-hud { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+            .hud-gauge { padding: 6px 4px; border-radius: 10px; min-height: auto; }
+            .hud-gauge-value { font-size: 14px; }
+            .hud-gauge-label { font-size: 8px; letter-spacing: 0.08em; }
+            .hud-gauge-unit { font-size: 8px; }
+            .hud-bar { height: 2px; }
+            /* hero精简 */
+            .hero { padding: 12px 0 8px; }
+            .hero h1 { font-size: clamp(32px, 13vw, 48px); letter-spacing: 0; }
+            .hero .subtitle { font-size: 9px; letter-spacing: 0.2em; }
+            .tech-bar { font-size: 9px; gap: 3px; flex-wrap: wrap; }
+            /* 导航栏紧凑 */
+            .nav { border-radius: 20px; padding: 6px 12px; margin-bottom: 12px; }
+            .logo { font-size: 16px; gap: 4px; }
+            .quantum-tag { font-size: 8px; padding: 1px 6px; }
+            /* 工具卡片紧凑 */
+            .tool-card { padding: 6px 2px; min-height: 68px; border-radius: 16px; }
+            .tool-card .name { font-size: 10px; }
+            .tool-card .desc { font-size: 8px; }
+            .tool-card > div:first-child { font-size: clamp(18px, 6vw, 24px) !important; }
+            /* mini-card紧凑 */
+            .mini-card { padding: 10px; border-radius: 16px; }
+            .mini-card .title { font-size: 13px; margin-bottom: 4px; }
+            .mini-card .content { font-size: 11px; }
+            .mini-card .content .result { font-size: 11px; padding: 6px; border-radius: 12px; min-height: 28px; }
+            /* 按钮 */
+            .btn { padding: 8px 14px; font-size: 12px; min-height: 36px; border-radius: 40px; }
+            .btn-sm { padding: 5px 10px; font-size: 10px; min-height: 30px; border-radius: 30px; }
+            .btn-outline { padding: 6px 10px; }
+            /* 输入框 */
+            input, textarea, select { min-height: 36px; padding: 6px 10px; font-size: 13px; border-radius: 12px; }
+            input[type="number"] { min-height: 30px; padding: 4px 6px; }
+            /* flex-row */
+            .flex-row { gap: 4px; }
+            .flex-row > * { min-width: 50px; }
+            /* cat-title */
+            .cat-title { font-size: 14px; letter-spacing: 0.08em; margin: 12px 0 8px; }
+            /* stat */
+            .stat { padding: 8px 6px; border-radius: 12px; }
+            .stat .num { font-size: clamp(16px, 4vw, 22px); }
+            .stat .label { font-size: 9px; }
+            /* footer */
+            .footer { padding: 12px 8px; font-size: 10px; }
+            .footer-statusbar { font-size: 8px; gap: 4px; padding: 3px 6px; }
+            /* toast */
+            #toast { font-size: 11px; padding: 8px 16px; bottom: 50px; }
+            /* 命令面板 */
+            #cmd-panel { border-radius: 16px; }
+            #cmd-input { padding: 12px 16px; font-size: 15px; min-height: 48px; }
+            /* 快捷键面板 */
+            #shortcut-panel { border-radius: 20px; padding: 16px; }
+            /* HUD移动端禁用全息扫描 */
+            .hologram-scan::after { display: none; }
+            /* 站标签 */
+            .station-badge { font-size: 8px; padding: 1px 8px; }
+            /* 科技分割线 */
+            .station-divider { margin: 10px 0; }
+            .station-divider-text { font-size: 8px; padding: 0 4px; }
+        }
+
+        /* 超小屏优化 (≤360px) */
+        @media (max-width: 360px) {
+            .station-hud { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+            .hero .subtitle { font-size: 8px; }
+            .tool-card > div:first-child { font-size: 16px !important; }
+            .tool-card .name { font-size: 9px; }
+            .nav { border-radius: 16px; padding: 5px 10px; }
+            .logo { font-size: 14px; }
+            .btn-sm { padding: 4px 8px; font-size: 9px; min-height: 28px; }
+            input, textarea, select { min-height: 34px; padding: 5px 8px; font-size: 12px; }
+            .mini-card { padding: 8px; }
+            .mini-card .title { font-size: 12px; }
+            .cat-title { font-size: 12px; }
+        }
+
+        /* ===== 横屏适配 ===== */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { padding: 8px 0 6px; }
+            .hero h1 { font-size: clamp(24px, 6vw, 40px); }
+            .hero .subtitle { font-size: 9px; }
+            .station-hud { grid-template-columns: repeat(6, 1fr); }
+            .hud-gauge { padding: 4px; }
+            .nav { margin-bottom: 8px; padding: 4px 12px; }
+            .container { padding: 4px 0 8px; }
+        }
+
+        /* ===== 安全区域适配（刘海屏/底部条） ===== */
+        @media (max-width: 820px) {
+            .nav { margin-top: env(safe-area-inset-top, 0px); }
+            #toast { bottom: calc(50px + env(safe-area-inset-bottom, 0px)); }
+            #back-to-top { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+            .footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+        }
+
+        /* ===== 性能优化：GPU加速和动画合并 ===== */
+        .nav::before, .holo-card::before, .tool-card::after, .mini-card::after,
+        .station-orbital::before, .station-orbital::after,
+        .hero::before, .hero h1, .gradient-text, .cat-title::before {
+            will-change: transform, opacity;
+        }
+        .holo-card, .glass-card, .mini-card, .tool-card, .hud-gauge {
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        /* 使用 transform 代替 top/left 做动画 */
+        .data-stream, .data-stream::before, .holo-card::before {
+            will-change: transform;
+        }
     </style>
 </head>
 <body>
 
     <!-- ===== 开机 ===== -->
     <div id="boot-screen" aria-hidden="true" class="hidden">
+        <div class="boot-terminal" aria-hidden="true">
+            <div class="boot-line" style="animation-delay:0s;">&gt; ORBITAL STATION INITIALIZING...</div>
+            <div class="boot-line" style="animation-delay:0.2s;">&gt; Loading core systems... <span style="color:var(--accent5);">[OK]</span></div>
+            <div class="boot-line" style="animation-delay:0.4s;">&gt; Connecting to satellite network... <span style="color:var(--accent5);">[OK]</span></div>
+            <div class="boot-line" style="animation-delay:0.6s;">&gt; Calibrating navigation systems... <span style="color:var(--accent5);">[OK]</span></div>
+            <div class="boot-line" style="animation-delay:0.8s;">&gt; Activating HUD interface... <span style="color:var(--accent5);">[OK]</span></div>
+            <div class="boot-line" style="animation-delay:1s;">&gt; Energy core at <span style="color:var(--accent);">98%</span></div>
+            <div class="boot-line" style="animation-delay:1.2s;">&gt; Welcome aboard, Commander.</div>
+        </div>
         <div class="boot-reactor" role="img" aria-label="开机动画">
             <div class="ring"></div>
             <div class="ring"></div>
@@ -2001,6 +3152,16 @@
     <div class="cosmic-orb"></div>
     <div class="cosmic-orb"></div>
     <div class="cosmic-orb"></div>
+
+    <!-- 空间站轨道环装饰 -->
+    <div class="station-orbital" aria-hidden="true"></div>
+    <!-- 数据流粒子线 -->
+    <div class="data-stream" aria-hidden="true"></div>
+    <div class="data-stream" aria-hidden="true"></div>
+    <div class="data-stream" aria-hidden="true"></div>
+    <div class="data-stream" aria-hidden="true"></div>
+    <div class="data-stream" aria-hidden="true"></div>
+    <div class="data-stream" aria-hidden="true"></div>
 
     <!-- ===== 系统字幕 ===== -->
     <div id="system-caption" role="status" aria-live="polite" class="">✦ 塔罗三牌版 · 全屏适配 ✦</div>
@@ -2039,6 +3200,7 @@
                 <a data-target="media" onclick="navigate('media')" role="button" tabindex="0">影音</a>
                 <a data-target="dev" onclick="navigate('dev')" role="button" tabindex="0">开发</a>
                 <a data-target="more" onclick="navigate('more')" role="button" tabindex="0">更多</a>
+                <a data-target="edu" onclick="navigate('edu')" role="button" tabindex="0">教育</a>
             </div>
         </header>
 
@@ -2054,6 +3216,40 @@
                     <span id="hero-uptime">UPTIME 0s</span>
                     <span style="opacity:.3;">|</span>
                     <span id="hero-tools-count">73 TOOLS</span>
+                </div>
+            </div>
+
+            <!-- 空间站HUD仪表盘 -->
+            <div class="station-hud hologram-scan">
+                <div class="hud-gauge">
+                    <div class="hud-gauge-label">⚙ CPU 使用率</div>
+                    <div class="hud-gauge-value"><span id="hud-cpu">0</span><span class="hud-gauge-unit">%</span></div>
+                    <div class="hud-bar"><div class="hud-bar-fill" id="hud-cpu-bar" style="width:0%"></div></div>
+                </div>
+                <div class="hud-gauge">
+                    <div class="hud-gauge-label">💾 内存</div>
+                    <div class="hud-gauge-value"><span id="hud-mem">0</span><span class="hud-gauge-unit">MB</span></div>
+                    <div class="hud-bar"><div class="hud-bar-fill" id="hud-mem-bar" style="width:0%"></div></div>
+                </div>
+                <div class="hud-gauge">
+                    <div class="hud-gauge-label">🌐 网络</div>
+                    <div class="hud-gauge-value"><span id="hud-net">0</span><span class="hud-gauge-unit">KB/s</span></div>
+                    <div class="hud-bar"><div class="hud-bar-fill" id="hud-net-bar" style="width:0%"></div></div>
+                </div>
+                <div class="hud-gauge">
+                    <div class="hud-gauge-label">🛰 轨道速度</div>
+                    <div class="hud-gauge-value"><span id="hud-orbit">7.66</span><span class="hud-gauge-unit">km/s</span></div>
+                    <div class="hud-bar"><div class="hud-bar-fill" style="width:76%"></div></div>
+                </div>
+                <div class="hud-gauge">
+                    <div class="hud-gauge-label">🔋 系统能量</div>
+                    <div class="hud-gauge-value"><span id="hud-power">98</span><span class="hud-gauge-unit">%</span></div>
+                    <div class="hud-bar"><div class="hud-bar-fill" id="hud-power-bar" style="width:98%"></div></div>
+                </div>
+                <div class="hud-gauge">
+                    <div class="hud-gauge-label">📡 信号强度</div>
+                    <div class="hud-gauge-value"><span id="hud-signal">5</span><span class="hud-gauge-unit">/5</span></div>
+                    <div class="hud-bar"><div class="hud-bar-fill" style="width:100%"></div></div>
                 </div>
             </div>
 
@@ -2082,7 +3278,12 @@
                 <div onclick="navigate('more')" role="button" tabindex="0" style="text-align:center;padding:10px 4px;border-radius:12px;background:rgba(var(--glow-color),0.04);cursor:pointer;transition:0.3s;" onmouseover="this.style.background='rgba(var(--glow-color),0.1)'" onmouseout="this.style.background='rgba(var(--glow-color),0.04)'">
                     <div style="font-size:clamp(20px,2.4vw,28px);">✦</div>
                     <div style="font-size:clamp(11px,1.1vw,14px);font-weight:700;color:var(--accent);">更多</div>
-                    <div style="font-size:9px;opacity:.4;">工具 · 塔罗 · 师生</div>
+                    <div style="font-size:9px;opacity:.4;">工具 · 塔罗</div>
+                </div>
+                <div onclick="navigate('edu')" role="button" tabindex="0" style="text-align:center;padding:10px 4px;border-radius:12px;background:rgba(var(--glow-color),0.04);cursor:pointer;transition:0.3s;" onmouseover="this.style.background='rgba(var(--glow-color),0.1)'" onmouseout="this.style.background='rgba(var(--glow-color),0.04)'">
+                    <div style="font-size:clamp(20px,2.4vw,28px);">📚</div>
+                    <div style="font-size:clamp(11px,1.1vw,14px);font-weight:700;color:var(--accent);">教育</div>
+                    <div style="font-size:9px;opacity:.4;">师生 · 成绩</div>
                 </div>
             </div>
 
@@ -2586,12 +3787,13 @@
                     </div>
                 </div>
 
+
             </div>
         </section>
 
         <!-- ===== 更多（42工具 + 塔罗三牌） ===== -->
         <section class="section" id="more" aria-labelledby="more-title">
-            <div class="cat-title" id="more-title">✦ 宇宙工具集 · 163 合 1 ✦ 塔罗星座全能版</div>
+            <div class="cat-title" id="more-title">✦ 宇宙工具集 · 分类导航 ✦ 塔罗星座全能版</div>
             <div class="mini-grid">
 
                 <!-- ===== 🔮 塔罗占卜（多牌阵） ===== -->
@@ -2612,6 +3814,11 @@
                             <button type="button" class="btn btn-sm btn-outline" onclick="shareTarot()">📤 分享结果</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- ===== 🛠️ 日常实用工具 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">🛠️ 日常实用工具 · 10 合 1</div>
                 </div>
 
                 <!-- ===== 密码生成 ===== -->
@@ -2699,6 +3906,11 @@
                         <button type="button" class="btn btn-sm" onclick="copyColor()">复制 HEX</button>
                     </div>
                 </div>
+                <!-- ===== 📝 文本与编码工具 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">📝 文本与编码工具 · 7 合 1</div>
+                </div>
+
                 <!-- JSON -->
                 <div class="mini-card">
                     <div class="title">📋 JSON 格式化</div>
@@ -2739,6 +3951,10 @@
                         <div class="result" id="uuid-result">点击生成</div>
                     </div>
                 </div>
+                <!-- ===== 🔒 安全与信息工具 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">🔒 安全与信息工具 · 6 合 1</div>
+                </div>
                 <!-- 剪贴板历史 -->
                 <div class="mini-card">
                     <div class="title">📋 剪贴板历史</div>
@@ -2746,6 +3962,10 @@
                         <div id="clipboard-history" style="max-height:100px;overflow-y:auto;">暂无记录</div>
                         <button type="button" class="btn btn-sm" onclick="clearClipboardHistory()" style="margin-top:4px;">清空</button>
                     </div>
+                </div>
+                <!-- ===== ⏰ 效率与时间工具 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">⏰ 效率与时间工具 · 7 合 1</div>
                 </div>
                 <!-- 朗读 -->
                 <div class="mini-card">
@@ -2791,6 +4011,10 @@
                         <button type="button" class="btn btn-sm" onclick="toggleFullscreen()">切换全屏</button>
                         <span id="fullscreen-status" style="margin-left:10px;color:var(--sub);">未全屏</span>
                     </div>
+                </div>
+                <!-- ===== 🏠 生活计算工具 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">🏠 生活计算工具 · 6 合 1</div>
                 </div>
                 <!-- 房贷 -->
                 <div class="mini-card">
@@ -2891,6 +4115,10 @@
                         <button type="button" class="btn btn-sm" onclick="dateToTimestamp()" style="margin-top:4px;">当前时间戳</button>
                         <div class="result" id="timestamp-result">输入时间戳</div>
                     </div>
+                </div>
+                <!-- ===== 🔧 综合工具集 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">🔧 综合工具集 · 14 合 1</div>
                 </div>
                 <!-- 高级密码 -->
                 <div class="mini-card">
@@ -3416,10 +4644,76 @@
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- ===== 📚 师生工具集 ===== -->
-            <div class="cat-title">📚 师生工具集 · 初中高中</div>
+        <!-- ===== 教育 ===== -->
+        <section class="section" id="edu" aria-labelledby="edu-title">
+            <div class="cat-title" id="edu-title" style="font-size:clamp(16px,2vw,26px);"><span class="edu-orbital" aria-hidden="true"></span><span class="edu-title-text">📚 师生教育工具集 · 初中高中全能版</span><span class="edu-scanline" aria-hidden="true"></span></div>
+            <div style="font-size:clamp(11px,1.1vw,14px);color:var(--sub);opacity:.6;margin-bottom:12px;text-align:center;">专为初中、高中师生打造 · 涵盖计算、统计、几何、化学、物理、考试管理、成绩分析等全方位工具</div>
+
+            <!-- 在线教育平台 -->
+            <div class="cat-title" style="font-size:clamp(12px,1.2vw,16px);opacity:.5;">在线教育平台 · K12辅导</div>
+            <div class="tool-grid">
+                <a href="https://www.zybang.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📚</div><div class="name">作业帮</div><div class="desc">AI搜题学习</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.xiaoyuankousuan.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🐒</div><div class="name">小猿AI</div><div class="desc">搜题答疑</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.yangcongxueyuan.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🧅</div><div class="name">洋葱学园</div><div class="desc">全科动画课</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.yuanfudao.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🎓</div><div class="name">猿辅导</div><div class="desc">在线直播课</div></a>
+                <a href="https://www.koolearn.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📖</div><div class="name">新东方在线</div><div class="desc">综合辅导</div></a>
+                <a href="https://www.101edu.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">💯</div><div class="name">101教育</div><div class="desc">同步课堂</div></a>
+                <a href="https://www.zhangmen.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">👨‍🏫</div><div class="name">掌门1对1</div><div class="desc">一对一辅导</div></a>
+                <a href="https://www.xiwangxue.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🌟</div><div class="name">希望学</div><div class="desc">在线学习</div></a>
+            </div>
+
+            <!-- 搜题答疑工具 -->
+            <div class="cat-title" style="font-size:clamp(12px,1.2vw,16px);opacity:.5;">搜题答疑 · 题库组卷</div>
+            <div class="tool-grid">
+                <a href="https://www.zxxk.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📋</div><div class="name">学科网</div><div class="desc">教学资源</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.jyeoo.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🏆</div><div class="name">菁优网</div><div class="desc">组卷刷题</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.daxuesouti.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🔍</div><div class="name">大学搜题酱</div><div class="desc">大学搜题</div></a>
+                <a href="https://www.zujuan.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📝</div><div class="name">组卷网</div><div class="desc">在线组卷</div></a>
+                <a href="https://www.gaosan.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📊</div><div class="name">高三网</div><div class="desc">高考复习</div></a>
+            </div>
+
+            <!-- 查字词工具 -->
+            <div class="cat-title" style="font-size:clamp(12px,1.2vw,16px);opacity:.5;">查字词 · 语文学习</div>
+            <div class="tool-grid">
+                <a href="https://dict.youdao.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📖</div><div class="name">有道词典</div><div class="desc">翻译查词</div><span class="hot-tag">🔥</span></a>
+                <a href="https://hanyu.baidu.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🔤</div><div class="name">百度汉语</div><div class="desc">汉字诗词</div></a>
+                <a href="https://www.gushiwen.cn/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📜</div><div class="name">古诗文网</div><div class="desc">古诗词</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.zuowen.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">✍️</div><div class="name">作文网</div><div class="desc">作文素材</div></a>
+                <a href="https://www.kuaidict.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📔</div><div class="name">快词典</div><div class="desc">成语词典</div></a>
+            </div>
+
+            <!-- 官方平台 -->
+            <div class="cat-title" style="font-size:clamp(12px,1.2vw,16px);opacity:.5;">官方教育平台 · 在线课程</div>
+            <div class="tool-grid">
+                <a href="https://basic.smartedu.cn/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🏛️</div><div class="name">国家智慧教育</div><div class="desc">官方平台</div><span class="hot-tag">🔥</span></a>
+                <a href="https://www.xuexi.cn/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🔴</div><div class="name">学习强国</div><div class="desc">综合学习</div></a>
+                <a href="https://www.icourse163.org/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🎓</div><div class="name">中国大学MOOC</div><div class="desc">大学课程</div></a>
+                <a href="https://open.163.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🎬</div><div class="name">网易公开课</div><div class="desc">免费课程</div></a>
+                <a href="https://www.khanacademy.org/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📐</div><div class="name">可汗学院</div><div class="desc">免费教育</div></a>
+                <a href="https://www.bilibili.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">📺</div><div class="name">B站学习区</div><div class="desc">视频教程</div></a>
+            </div>
+
+            <div class="cat-title" style="font-size:clamp(12px,1.2vw,16px);opacity:.5;margin-top:12px;">内嵌教育工具 · 可直接使用</div>
             <div class="mini-grid">
+
+                <!-- 课程表（第一排） -->
+                <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);grid-column:1 / -1;" id="schedule-card">
+                    <span class="edu-corner tl" aria-hidden="true"></span><span class="edu-corner tr" aria-hidden="true"></span><span class="edu-corner bl" aria-hidden="true"></span><span class="edu-corner br" aria-hidden="true"></span>
+                    <div class="title">📅 课程表 · 周计划</div>
+                    <div class="content">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
+                            <span style="font-size:11px;color:var(--sub);opacity:.7;">点击格子直接输入课程名，自动保存到本地</span>
+                            <div style="display:flex;gap:4px;">
+                                <button type="button" class="btn btn-sm btn-outline" onclick="exportSchedule()" style="font-size:10px;padding:4px 8px;">📥 导出</button>
+                                <button type="button" class="btn btn-sm btn-outline" onclick="clearSchedule()" style="font-size:10px;padding:4px 8px;">🗑️ 清空</button>
+                            </div>
+                        </div>
+                        <div id="schedule-table" style="overflow-x:auto;"></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>可编辑的周课程表（周一至周日，8节课），点击格子直接输入课程名称，自动保存到本地。支持导出和清空，适合学生和老师管理每日课程安排。</div>
+                    </div>
+                </div>
 
                 <!-- 科学计算器 -->
                 <div class="mini-card">
@@ -3432,6 +4726,7 @@
                         </div>
                         <div class="result" id="sci-result"><span style="color:var(--sub);">结果...</span></div>
                         <div style="font-size:11px;color:var(--sub);margin-top:4px;">支持: + - * / ^ % sin cos tan log ln sqrt abs π e</div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>支持三角函数、对数、指数、开方等高级运算，适合初高中数学、物理计算。输入表达式后按回车或点击计算即可获得结果，角度自动转换为弧度。</div>
                     </div>
                 </div>
 
@@ -3452,6 +4747,7 @@
                             <button type="button" class="btn btn-sm" onclick="calcGpa()">计算GPA</button>
                         </div>
                         <div class="result" id="gpa-result"><span style="color:var(--sub);">添加科目后点击计算</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>按学分加权计算GPA绩点，支持4.0制和百分制。输入各科分数和学分，系统自动计算加权平均分和GPA等级（A/B/C/D/F），适合学期末成绩评估。</div>
                     </div>
                 </div>
 
@@ -3467,6 +4763,7 @@
                         </div>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="calcPct()">计算百分比</button>
                         <div class="result" id="pct-result"><span style="color:var(--sub);">输入数值和总数</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>计算一个数值占另一个数值的百分比，同时显示增减百分比。适合考试成绩分析、折扣计算、增长率计算等场景。</div>
                     </div>
                 </div>
 
@@ -3490,6 +4787,7 @@
                         </div>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="calcFraction()">计算</button>
                         <div class="result" id="frac-result"><span style="color:var(--sub);">输入分数后计算</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>分数的四则运算（加减乘除），自动通分、约分并显示最简分数形式和小数值。适合初中有理数运算、分数化简等数学课程。</div>
                     </div>
                 </div>
 
@@ -3510,6 +4808,7 @@
                         <div id="geo-inputs"></div>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="calcGeo()">计算</button>
                         <div class="result" id="geo-result"><span style="color:var(--sub);">选择图形并输入参数</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>计算圆、矩形、三角形、梯形、立方体、球体、圆柱、圆锥等常见几何图形的面积、周长、体积和表面积。输入对应参数即可一键计算，适合初高中几何课程。</div>
                     </div>
                 </div>
 
@@ -3530,6 +4829,7 @@
                         </div>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="calcTrig()">计算</button>
                         <div class="result" id="trig-result"><span style="color:var(--sub);">输入角度(度)后计算</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>计算正弦、余弦、正切及其反函数值。输入角度（度数），自动转换为弧度计算。适合高中三角函数章节学习，支持sin/cos/tan/arcsin/arccos/arctan。</div>
                     </div>
                 </div>
 
@@ -3540,6 +4840,7 @@
                         <textarea id="stat-input" placeholder="输入数据，用逗号分隔 如: 85,90,78,92,88" style="width:100%;min-height:50px;"></textarea>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="calcStats()">计算统计量</button>
                         <div class="result" id="stat-result"><span style="color:var(--sub);">输入数据后计算</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>一键计算平均值、中位数、众数、极差、方差、标准差等统计量。适合高中数学统计与概率章节，分析考试成绩分布、科学实验数据等。</div>
                     </div>
                 </div>
 
@@ -3557,6 +4858,92 @@
                         </div>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="solveQuadratic()">求解</button>
                         <div class="result" id="eq-result"><span style="color:var(--sub);">输入系数 a, b, c</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>求解一元二次方程 ax²+bx+c=0，自动使用判别式判断根的情况（两个不等实根/相等实根/无实根），并给出求根公式过程。适合初中九年级一元二次方程章节。</div>
+                    </div>
+                </div>
+
+                <!-- 全班成绩分析 -->
+                <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);grid-column:1 / -1;" id="class-grade-card">
+                    <span class="edu-corner tl" aria-hidden="true"></span><span class="edu-corner tr" aria-hidden="true"></span><span class="edu-corner bl" aria-hidden="true"></span><span class="edu-corner br" aria-hidden="true"></span>
+                    <div class="title">📊 全班成绩分析 · 等级评估</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">输入全班学生成绩（每行一个学生：姓名,分数 或仅输入分数），系统自动统计等级分布、平均分、及格率、排名等</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <div>
+                                <textarea id="class-grades-input" rows="8" style="width:100%;font-size:11px;font-family:monospace;" placeholder="输入格式（每行一个）：
+张三,85
+李四,92
+王五,78
+赵六,65
+或仅输入分数：
+85,92,78,65,88,73,95,60">张三,85
+李四,92
+王五,78
+赵六,65
+孙七,88
+周八,73
+吴九,95
+郑十,60</textarea>
+                                <div class="flex-row" style="margin-top:4px;">
+                                    <button type="button" class="btn btn-sm" onclick="analyzeClassGrades()">📊 分析成绩</button>
+                                    <button type="button" class="btn btn-sm btn-outline" onclick="document.getElementById('class-grades-input').value='';document.getElementById('class-grade-result').innerHTML='&lt;span style=color:var(--sub);&gt;输入成绩后分析&lt;/span&gt;'">清空</button>
+                                    <button type="button" class="btn btn-sm btn-outline" onclick="loadSampleGrades()">示例</button>
+                                </div>
+                                <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">满分默认100分，及格线60分</div>
+                                <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                                    <label style="font-size:10px;color:var(--sub);">满分:</label>
+                                    <input type="number" id="grade-full" value="100" style="width:60px;font-size:12px;min-height:32px;padding:4px 8px;border-radius:10px;">
+                                    <label style="font-size:10px;color:var(--sub);margin-left:4px;">及格线:</label>
+                                    <input type="number" id="grade-pass" value="60" style="width:50px;font-size:12px;min-height:32px;padding:4px 8px;border-radius:10px;">
+                                </div>
+                            </div>
+                            <div id="class-grade-result" style="max-height:320px;overflow-y:auto;font-size:11px;">
+                                <span style="color:var(--sub);">输入成绩后点击分析</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 全班进步追踪分析 -->
+                <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);grid-column:1 / -1;" id="progress-track-card">
+                    <span class="edu-corner tl" aria-hidden="true"></span><span class="edu-corner tr" aria-hidden="true"></span><span class="edu-corner bl" aria-hidden="true"></span><span class="edu-corner br" aria-hidden="true"></span>
+                    <div class="title">📈 全班进步追踪 · 谁需要努力</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">输入每位学生多次考试的成绩（格式：姓名,第一次分数,第二次分数,...），系统自动分析总分、平均分、进步/退步、需要努力的学生</div>
+                        <textarea id="progress-input" rows="8" style="width:100%;font-size:11px;font-family:monospace;" placeholder="输入格式（每行一个学生）：
+张三,85,90,88
+李四,92,78,95
+王五,70,75,80">张三,85,90,88
+李四,92,78,95
+王五,70,75,80
+赵六,60,55,58
+孙七,88,82,85
+周八,75,80,78</textarea>
+                        <div class="flex-row" style="margin-top:4px;flex-wrap:wrap;gap:4px;">
+                            <button type="button" class="btn btn-sm" onclick="analyzeProgress()">📊 进步分析</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="document.getElementById('progress-input').value='';document.getElementById('progress-result').innerHTML='&lt;span style=color:var(--sub);&gt;输入成绩后分析&lt;/span&gt;'">清空</button>
+                            <label style="font-size:10px;color:var(--sub);display:flex;align-items:center;gap:4px;">满分:<input type="number" id="prog-full" value="100" style="width:55px;font-size:12px;min-height:30px;padding:4px 8px;border-radius:10px;"></label>
+                            <label style="font-size:10px;color:var(--sub);display:flex;align-items:center;gap:4px;">及格线:<input type="number" id="prog-pass" value="60" style="width:50px;font-size:12px;min-height:30px;padding:4px 8px;border-radius:10px;"></label>
+                        </div>
+                        <div class="result" id="progress-result" style="max-height:400px;overflow-y:auto;"><span style="color:var(--sub);">输入成绩后点击分析</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>输入每位学生多次考试成绩，系统自动计算总分、平均分，分析谁进步了、谁退步了、谁需要努力。通过趋势分析识别进步最大和退步最大的学生，方便老师针对性辅导。</div>
+                    </div>
+                </div>
+
+                <!-- 预估分数 -->
+                <div class="mini-card">
+                    <div class="title">🎯 考试预估分数</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">输入近期多次模拟考试成绩，预测下次考试可能得分范围</div>
+                        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                            <label style="font-size:10px;color:var(--sub);">满分:</label>
+                            <input type="number" id="pred-full" value="100" style="width:60px;font-size:12px;min-height:32px;padding:4px 8px;border-radius:10px;">
+                        </div>
+                        <textarea id="pred-scores" rows="4" style="width:100%;margin-top:4px;font-size:11px;" placeholder="输入历次考试成绩，逗号分隔
+如: 85,78,92,80,88">85,78,92,80,88</textarea>
+                        <button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="predictScore()">🎯 预估分数</button>
+                        <div class="result" id="pred-result"><span style="color:var(--sub);">输入成绩后预估</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>基于历史考试成绩，使用加权平均（近期成绩权重更高）和趋势分析，预测下次考试分数区间。显示预估最低分、最高分、最可能分数，并给出提升建议。适合考前估分和目标设定。</div>
                     </div>
                 </div>
 
@@ -3569,6 +4956,7 @@
                         </div>
                         <div id="periodic-table" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:3px;"></div>
                         <div class="result" id="element-detail" style="margin-top:6px;min-height:40px;"><span style="color:var(--sub);">点击元素查看详情</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>完整化学元素周期表，包含原子序数、元素符号、名称、原子量、元素类别（金属/非金属/稀有气体等）。支持搜索和点击查看详细信息，适合初中九年级化学和高中化学必修课程。</div>
                     </div>
                 </div>
 
@@ -3583,6 +4971,7 @@
                             <option value="thermal">热学</option>
                         </select>
                         <div class="result" id="phys-result" style="min-height:100px;"></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>分类查看初高中物理常用公式，涵盖力学（速度、加速度、牛顿定律、功和能）、电学（欧姆定律、电功率、电阻）、光学（折射、反射）、热学（比热容、热值）。适合考试复习和作业参考。</div>
                     </div>
                 </div>
 
@@ -3596,6 +4985,40 @@
                             <button type="button" class="btn btn-sm" onclick="addExam()">添加</button>
                         </div>
                         <div id="exam-list" style="margin-top:6px;"></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>添加考试名称和日期，自动计算距离考试还有多少天。支持多个考试同时倒计时，数据本地保存，适合期中期末考试、中考高考倒计时管理。</div>
+                    </div>
+                </div>
+
+                <!-- 做题时间倒计时 -->
+                <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);grid-column:1 / -1;">
+                    <div class="title">⏱️ 做题时间倒计时 · 带响声</div>
+                    <div class="content">
+                        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;">
+                            <div style="text-align:center;">
+                                <div id="exam-timer-display" style="font-size:clamp(36px,6vw,56px);font-weight:900;color:var(--accent);font-family:monospace;text-shadow:0 0 20px rgba(var(--glow-color),0.3);">00:00</div>
+                                <div style="font-size:10px;color:var(--sub);opacity:.5;">⏰ 剩余时间</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+                            <label style="font-size:11px;color:var(--sub);">做题时长(分):</label>
+                            <select id="exam-timer-mins" style="font-size:12px;padding:4px 8px;">
+                                <option value="5">5分钟</option>
+                                <option value="10">10分钟</option>
+                                <option value="15">15分钟</option>
+                                <option value="20">20分钟</option>
+                                <option value="30" selected="">30分钟</option>
+                                <option value="45">45分钟</option>
+                                <option value="60">60分钟</option>
+                                <option value="90">90分钟</option>
+                                <option value="120">120分钟</option>
+                            </select>
+                            <button type="button" class="btn btn-sm" onclick="startExamTimer()">▶ 开始</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="pauseExamTimer()">⏸ 暂停</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="stopExamTimer()">⏹ 停止</button>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:6px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;text-align:center;">
+                            📝 <b>用途说明：</b>模拟考试做题计时器，设定时间后开始倒计时。最后10秒每秒响一声提示音，时间到连续响5声警报。适合课堂限时练习、模拟考试等场景。颜色提示：绿色(剩余&gt;50%)、黄色(剩余20-50%)、红色(剩余&lt;20%)。
+                        </div>
                     </div>
                 </div>
 
@@ -3606,14 +5029,7 @@
                         <textarea id="name-list" placeholder="输入名字，每行一个..." style="width:100%;min-height:60px;"></textarea>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="rollName()">🎲 随机点名</button>
                         <div class="result" id="name-result" style="text-align:center;font-size:clamp(18px,2vw,24px);min-height:40px;"><span style="color:var(--sub);">输入名单后点名</span></div>
-                    </div>
-                </div>
-
-                <!-- 课程表模板 -->
-                <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);">
-                    <div class="title">📅 课程表</div>
-                    <div class="content">
-                        <div id="schedule-table" style="overflow-x:auto;"></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>输入全班学生名单，随机抽取一名学生。适合课堂提问、值日安排、分组抽签等场景，确保公平公正。</div>
                     </div>
                 </div>
 
@@ -3637,6 +5053,7 @@
                         </div>
                         <button type="button" class="btn btn-sm" style="margin-top:6px;" onclick="convertEduUnit()">换算</button>
                         <div class="result" id="edu-unit-result"><span style="color:var(--sub);">选择类型和单位</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>支持长度、重量、温度、面积、体积、速度六大类单位换算。涵盖国际单位和常用单位，适合物理实验数据处理、数学应用题单位转换等场景。</div>
                     </div>
                 </div>
 
@@ -3653,13 +5070,145 @@
                         </select>
                         <button type="button" class="btn btn-sm" onclick="convertBase()">转换</button>
                         <div class="result" id="base-result"><span style="color:var(--sub);">输入数字后转换</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>二进制、八进制、十进制、十六进制之间的相互转换。适合高中信息技术课程中的数制转换学习，也适用于计算机基础和编程入门。</div>
+                    </div>
+                </div>
+                <!-- ===== 📖 语文与背诵工具 ===== -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.08);">
+                    <div class="title gradient-text">📖 语文与背诵工具 · 6 合 1</div>
+                </div>
+
+                <!-- 古诗词速查 -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.12);" id="poem-card">
+                    <div class="title">📜 古诗词速查 · 必背名句</div>
+                    <div class="content">
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;">
+                            <select id="poem-grade" onchange="showPoems()" style="flex:1;min-width:100px;font-size:11px;min-height:32px;padding:2px 6px;">
+                                <option value="all">全部年级</option>
+                                <option value="7">七年级</option>
+                                <option value="8">八年级</option>
+                                <option value="9">九年级</option>
+                                <option value="10">高一</option>
+                                <option value="11">高二</option>
+                                <option value="12">高三</option>
+                            </select>
+                            <input type="text" id="poem-search" placeholder="搜索诗词关键词..." style="flex:2;min-width:100px;font-size:11px;min-height:32px;" oninput="showPoems()">
+                        </div>
+                        <div id="poem-list" style="max-height:280px;overflow-y:auto;font-size:12px;"></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>收录中小学必背古诗词名句，按年级分类，支持搜索。点击诗句可展开全文，适合背诵复习和考试默写准备。</div>
+                    </div>
+                </div>
+
+                <!-- 成语词典 -->
+                <div class="mini-card" id="idiom-card">
+                    <div class="title">🔤 成语词典</div>
+                    <div class="content">
+                        <input type="text" id="idiom-input" placeholder="输入成语查询..." style="font-size:11px;min-height:32px;" onkeydown="if(event.key==='Enter')searchIdiom()">
+                        <button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="searchIdiom()">🔍 查询</button>
+                        <button type="button" class="btn btn-sm btn-outline" style="margin-top:4px;" onclick="randomIdiom()">🎲 随机成语</button>
+                        <div class="result" id="idiom-result" style="min-height:50px;"><span style="color:var(--sub);">输入成语或点击随机</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>查询成语的释义、出处和例句，支持随机抽取成语用于成语接龙或积累。适合语文写作和基础知识积累。</div>
+                    </div>
+                </div>
+
+                <!-- 错题本 -->
+                <div class="mini-card" style="grid-column:1/-1;border-color:rgba(var(--glow-color),0.12);" id="mistake-book-card">
+                    <div class="title">📕 错题本 · 智能管理</div>
+                    <div class="content">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+                            <select id="mistake-subject" style="font-size:11px;min-height:32px;padding:2px 6px;">
+                                <option value="数学">数学</option>
+                                <option value="语文">语文</option>
+                                <option value="英语">英语</option>
+                                <option value="物理">物理</option>
+                                <option value="化学">化学</option>
+                                <option value="生物">生物</option>
+                                <option value="历史">历史</option>
+                                <option value="地理">地理</option>
+                                <option value="政治">政治</option>
+                            </select>
+                            <select id="mistake-level" style="font-size:11px;min-height:32px;padding:2px 6px;">
+                                <option value="简单">⭐ 简单</option>
+                                <option value="中等">⭐⭐ 中等</option>
+                                <option value="困难" selected="">⭐⭐⭐ 困难</option>
+                            </select>
+                        </div>
+                        <textarea id="mistake-question" rows="2" placeholder="输入错题题目..." style="width:100%;font-size:11px;min-height:40px;"></textarea>
+                        <textarea id="mistake-answer" rows="2" placeholder="输入正确答案和解析..." style="width:100%;margin-top:4px;font-size:11px;min-height:40px;"></textarea>
+                        <div class="flex-row" style="margin-top:4px;">
+                            <button type="button" class="btn btn-sm" onclick="addMistake()">➕ 添加错题</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="showMistakes()">📋 查看全部</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="clearMistakes()">🗑️ 清空</button>
+                        </div>
+                        <div class="result" id="mistake-result" style="max-height:250px;overflow-y:auto;"><span style="color:var(--sub);">添加错题后查看</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>按科目和难度分类管理错题，支持添加题目、正确答案和解析，自动保存到本地。适合考前复习查漏补缺，避免重复犯错。</div>
+                    </div>
+                </div>
+
+                <!-- 英语单词卡 -->
+                <div class="mini-card" id="vocab-card">
+                    <div class="title">🔤 英语单词卡</div>
+                    <div class="content">
+                        <div style="text-align:center;padding:10px;border-radius:12px;background:rgba(var(--glow-color),0.04);margin-bottom:6px;">
+                            <div id="vocab-word" style="font-size:clamp(18px,2vw,24px);font-weight:900;color:var(--accent);">点击开始</div>
+                            <div id="vocab-phonetic" style="font-size:12px;color:var(--sub);margin-top:2px;">/ — /</div>
+                            <div id="vocab-meaning" style="font-size:13px;color:var(--text);margin-top:4px;display:none;">—</div>
+                        </div>
+                        <div class="flex-row" style="justify-content:center;">
+                            <button type="button" class="btn btn-sm" onclick="nextVocab()">⏭️ 下一个</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="toggleVocabMeaning()">👁️ 显示/隐藏释义</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="speakVocab()">🔊 朗读</button>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>初中高频英语单词记忆卡，支持显示/隐藏释义和语音朗读。适合课前预习、课后复习和碎片时间记忆。</div>
+                    </div>
+                </div>
+
+                <!-- 学习计划表 -->
+                <div class="mini-card" id="study-plan-card">
+                    <div class="title">📋 学习计划表</div>
+                    <div class="content">
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;">
+                            <input type="text" id="plan-task" placeholder="学习任务" style="flex:2;min-width:80px;font-size:11px;min-height:32px;">
+                            <input type="number" id="plan-mins" placeholder="分钟" style="flex:1;min-width:50px;font-size:11px;min-height:32px;" value="30">
+                            <button type="button" class="btn btn-sm" onclick="addPlanTask()">➕</button>
+                        </div>
+                        <div id="plan-list" style="max-height:180px;overflow-y:auto;"></div>
+                        <div class="flex-row" style="margin-top:4px;">
+                            <button type="button" class="btn btn-sm btn-outline" onclick="clearPlan()">🗑️ 清空</button>
+                            <span id="plan-total" style="font-size:11px;color:var(--sub);margin-left:auto;">总计 0 分钟</span>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>制定每日学习计划，设置每个任务的预计时间，自动统计总时长。适合时间管理和提高学习效率。</div>
+                    </div>
+                </div>
+
+                <!-- 考试倒计时日历 -->
+                <div class="mini-card" id="exam-countdown-card">
+                    <div class="title">📅 考试倒计时日历</div>
+                    <div class="content">
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;">
+                            <input type="text" id="exam-name" placeholder="考试名称" style="flex:2;min-width:80px;font-size:11px;min-height:32px;">
+                            <input type="date" id="exam-date" style="flex:1;min-width:100px;font-size:11px;min-height:32px;">
+                            <button type="button" class="btn btn-sm" onclick="addExamDate()">➕</button>
+                        </div>
+                        <div id="exam-countdown-list" style="max-height:200px;overflow-y:auto;"></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>添加考试日期，自动计算距离考试还有多少天。适合中考、高考、期末考等重要考试的倒计时提醒。</div>
                     </div>
                 </div>
 
             </div>
         </section>
         <div class="footer">
-            © 2026 绊谈 · 终极版 &nbsp;|&nbsp; <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp; <kbd>空格</kbd> 换名言 &nbsp;|&nbsp; <kbd>F</kbd> 搜索 &nbsp;|&nbsp; <kbd>M</kbd> 翻译
+            <div class="footer-statusbar">
+                <span class="status-dot" data-status="online"></span>
+                <span class="footer-syslabel">SYSTEM ONLINE</span>
+                <span style="opacity:.3">|</span>
+                <span>NODE ORBIT-01</span>
+                <span style="opacity:.3">|</span>
+                <span>BUILD 2026.ULT</span>
+            </div>
+            <div class="footer-main">
+                © 2026 绊谈 · 终极版 &nbsp;|&nbsp; <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp; <kbd>空格</kbd> 换名言 &nbsp;|&nbsp; <kbd>F</kbd> 搜索 &nbsp;|&nbsp; <kbd>M</kbd> 翻译
+            </div>
         </div>
     </div>
 
@@ -3741,6 +5290,46 @@
                 document.getElementById('hamburgerBtn').textContent = '☰';
             }
         }
+
+        // ============================================================
+        // 空间站HUD仪表盘实时更新
+        // ============================================================
+        (function initStationHUD() {
+            function updateHUD() {
+                // CPU 模拟
+                const cpu = Math.floor(15 + Math.random() * 35);
+                const cpuEl = document.getElementById('hud-cpu');
+                const cpuBar = document.getElementById('hud-cpu-bar');
+                if (cpuEl) cpuEl.textContent = cpu;
+                if (cpuBar) {
+                    cpuBar.style.width = cpu + '%';
+                    cpuBar.className = 'hud-bar-fill' + (cpu > 70 ? ' warn' : '') + (cpu > 85 ? ' crit' : '');
+                }
+                // 内存模拟
+                const mem = Math.floor(2000 + Math.random() * 1500);
+                const memEl = document.getElementById('hud-mem');
+                const memBar = document.getElementById('hud-mem-bar');
+                if (memEl) memEl.textContent = mem;
+                if (memBar) memBar.style.width = Math.floor(mem / 50) + '%';
+                // 网络模拟
+                const net = Math.floor(50 + Math.random() * 500);
+                const netEl = document.getElementById('hud-net');
+                const netBar = document.getElementById('hud-net-bar');
+                if (netEl) netEl.textContent = net;
+                if (netBar) netBar.style.width = Math.min(100, Math.floor(net / 6)) + '%';
+                // 系统能量缓慢下降
+                const powerEl = document.getElementById('hud-power');
+                const powerBar = document.getElementById('hud-power-bar');
+                if (powerEl) {
+                    let p = parseInt(powerEl.textContent) || 98;
+                    p = Math.max(85, p - Math.random() * 0.1);
+                    powerEl.textContent = p.toFixed(0);
+                    if (powerBar) powerBar.style.width = p + '%';
+                }
+            }
+            setInterval(updateHUD, 5000);
+            updateHUD();
+        })();
 
         // ============================================================
         // 导航切换
@@ -5101,6 +6690,23 @@
                 { icon: '📅', label: '日历', cat: '功能', action: () => { navigate('more'); } },
                 { icon: '🌤️', label: '天气信息', cat: '功能', action: () => { navigate('home'); } },
                 { icon: '⌨️', label: '快捷键面板', cat: '功能', action: () => document.getElementById('shortcut-panel').classList.add('show') },
+                // 教育工具
+                { icon: '📊', label: '全班成绩分析', cat: '教育', action: () => { navigate('edu'); setTimeout(analyzeClassGrades, 300); } },
+                { icon: '📈', label: '全班进步追踪', cat: '教育', action: () => { navigate('edu'); setTimeout(analyzeProgress, 300); } },
+                { icon: '🎯', label: '考试预估分数', cat: '教育', action: () => { navigate('edu'); setTimeout(predictScore, 300); } },
+                { icon: '⏱️', label: '做题时间倒计时', cat: '教育', action: () => { navigate('edu'); setTimeout(startExamTimer, 300); } },
+                { icon: '🔢', label: '科学计算器', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '📊', label: 'GPA成绩计算器', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '🧪', label: '化学元素周期表', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '⚡', label: '物理公式参考', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '🎲', label: '随机点名器', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '📅', label: '课程表', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '📜', label: '古诗词速查', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '🔤', label: '成语词典', cat: '教育', action: () => { navigate('edu'); setTimeout(randomIdiom, 300); } },
+                { icon: '📕', label: '错题本', cat: '教育', action: () => { navigate('edu'); setTimeout(showMistakes, 300); } },
+                { icon: '🔤', label: '英语单词卡', cat: '教育', action: () => { navigate('edu'); setTimeout(nextVocab, 300); } },
+                { icon: '📋', label: '学习计划表', cat: '教育', action: () => { navigate('edu'); } },
+                { icon: '📅', label: '考试倒计时日历', cat: '教育', action: () => { navigate('edu'); } },
                 // 开发者工具
                 { icon: '⚡', label: 'HTML/CSS/JS实时预览', cat: '开发', action: () => { navigate('dev'); setTimeout(runPreview, 300); } },
                 { icon: '📡', label: 'HTTP状态码查询', cat: '开发', action: () => { navigate('dev'); } },
@@ -6123,10 +7729,6 @@
             initPopulation();
 
             updateTime();
-            setInterval(() => {
-                const homeVisible = document.getElementById('home').classList.contains('active');
-                if (homeVisible || !_isMobile) updateTime();
-            }, 1000);
 
             // 工具数量 (tool-card + mini-card + quick-item)
             const toolCount = document.querySelectorAll('.tool-card, .mini-card').length;
@@ -6136,8 +7738,11 @@
             updateWorldClock();
             setInterval(() => {
                 const homeVisible = document.getElementById('home').classList.contains('active');
-                if (homeVisible || !_isMobile) updateWorldClock();
-            }, 1000);
+                if (homeVisible || !_isMobile) {
+                    updateTime();
+                    updateWorldClock();
+                }
+            }, _isMobile ? 3000 : 1000);
 
             loadTodos();
             loadNote();
@@ -6270,6 +7875,11 @@
             updateEduUnitOptions();
             loadExams();
             setInterval(updateExamCountdowns, 60000);
+            // 新增工具初始化
+            showPoems();
+            showMistakes();
+            renderPlan();
+            renderExamCountdown();
         };
 
         // ============================================================
@@ -6636,17 +8246,17 @@
             const container = document.getElementById('schedule-table');
             if (!container) return;
             const saved = JSON.parse(localStorage.getItem('schedule') || '{}');
-            const days = ['节/日','周一','周二','周三','周四','周五'];
-            let html = '<table style="width:100%;border-collapse:collapse;font-size:clamp(10px,1vw,13px);"><tr>';
-            days.forEach(d => { html += `<th style="padding:4px 2px;border:1px solid rgba(var(--glow-color),0.06);background:rgba(var(--glow-color),0.02);color:var(--accent);font-size:clamp(9px,0.9vw,12px);">${d}</th>`; });
+            const days = ['节/日','周一','周二','周三','周四','周五','周六','周日'];
+            let html = '<table style="width:100%;border-collapse:collapse;font-size:clamp(10px,1vw,13px);min-width:400px;"><tr>';
+            days.forEach(d => { html += `<th style="padding:6px 4px;border:1px solid rgba(var(--glow-color),0.1);background:rgba(var(--glow-color),0.04);color:var(--accent);font-size:clamp(9px,0.9vw,12px);font-weight:700;">${d}</th>`; });
             html += '</tr>';
             for (let p = 1; p <= 8; p++) {
                 html += '<tr>';
-                html += `<td style="padding:3px 2px;border:1px solid rgba(var(--glow-color),0.06);text-align:center;color:var(--sub);font-size:clamp(9px,0.9vw,12px);">第${p}节</td>`;
-                for (let d = 1; d <= 5; d++) {
+                html += `<td style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;color:var(--sub);font-size:clamp(9px,0.9vw,12px);font-weight:700;background:rgba(var(--glow-color),0.02);">第${p}节</td>`;
+                for (let d = 1; d <= 7; d++) {
                     const key = `${d}-${p}`;
                     const val = saved[key] || '';
-                    html += `<td style="padding:2px;border:1px solid rgba(var(--glow-color),0.06);text-align:center;"><input type="text" value="${val}" placeholder="-" style="width:100%;border:none;background:transparent;text-align:center;color:var(--text);font-size:clamp(9px,0.9vw,12px);min-height:24px;" onchange="saveScheduleCell(${d},${p},this.value)"></td>`;
+                    html += `<td style="padding:2px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;"><input type="text" value="${val}" placeholder="—" style="width:100%;border:none;background:transparent;text-align:center;color:var(--text);font-size:clamp(9px,0.9vw,12px);min-height:28px;outline:none;padding:4px 2px;" oninput="saveScheduleCell(${d},${p},this.value)" onfocus="this.style.background='rgba(var(--glow-color),0.06)'" onblur="this.style.background='transparent'"></td>`;
                 }
                 html += '</tr>';
             }
@@ -6657,6 +8267,37 @@
             const schedule = JSON.parse(localStorage.getItem('schedule') || '{}');
             schedule[`${d}-${p}`] = val;
             localStorage.setItem('schedule', JSON.stringify(schedule));
+        };
+        window.exportSchedule = function() {
+            const schedule = JSON.parse(localStorage.getItem('schedule') || '{}');
+            if (Object.keys(schedule).length === 0) {
+                showToast('课程表为空');
+                return;
+            }
+            const days = ['','周一','周二','周三','周四','周五','周六','周日'];
+            let csv = '节次,' + days.slice(1).join(',') + '\n';
+            for (let p = 1; p <= 8; p++) {
+                let row = `第${p}节`;
+                for (let d = 1; d <= 7; d++) {
+                    row += ',' + (schedule[`${d}-${p}`] || '');
+                }
+                csv += row + '\n';
+            }
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '课程表.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('课程表已导出');
+        };
+        window.clearSchedule = function() {
+            if (confirm('确定清空课程表吗？')) {
+                localStorage.removeItem('schedule');
+                renderSchedule();
+                showToast('课程表已清空');
+            }
         };
 
         // 单位换算
@@ -6710,6 +8351,833 @@
             } catch(e) {
                 document.getElementById('base-result').innerHTML = '<span style="color:#ff6b81;">输入无效</span>';
             }
+        };
+
+        // ============================================================
+        // 古诗词速查
+        // ============================================================
+        const poemData = [
+            { grade: 7, title: '观沧海', author: '曹操', lines: '东临碣石，以观沧海。水何澹澹，山岛竦峙。', quote: '日月之行，若出其中；星汉灿烂，若出其里。' },
+            { grade: 7, title: '闻王昌龄左迁龙标遥有此寄', author: '李白', lines: '杨花落尽子规啼，闻道龙标过五溪。', quote: '我寄愁心与明月，随君直到夜郎西。' },
+            { grade: 7, title: '次北固山下', author: '王湾', lines: '客路青山外，行舟绿水前。', quote: '海日生残夜，江春入旧年。乡书何处达？归雁洛阳边。' },
+            { grade: 7, title: '天净沙·秋思', author: '马致远', lines: '枯藤老树昏鸦，小桥流水人家，古道西风瘦马。', quote: '夕阳西下，断肠人在天涯。' },
+            { grade: 8, title: '酬乐天扬州初逢席上见赠', author: '刘禹锡', lines: '巴山楚水凄凉地，二十三年弃置身。', quote: '怀旧空吟闻笛赋，到乡翻似烂柯人。沉舟侧畔千帆过，病树前头万木春。' },
+            { grade: 8, title: '赤壁', author: '杜牧', lines: '折戟沉沙铁未销，自将磨洗认前朝。', quote: '东风不与周郎便，铜雀春深锁二乔。' },
+            { grade: 8, title: '水调歌头', author: '苏轼', lines: '明月几时有？把酒问青天。', quote: '但愿人长久，千里共婵娟。' },
+            { grade: 9, title: '行路难', author: '李白', lines: '金樽清酒斗十千，玉盘珍羞直万钱。', quote: '长风破浪会有时，直挂云帆济沧海。' },
+            { grade: 9, title: '茅屋为秋风所破歌', author: '杜甫', lines: '八月秋高风怒号，卷我屋上三重茅。', quote: '安得广厦千万间，大庇天下寒士俱欢颜！' },
+            { grade: 9, title: '白雪歌送武判官归京', author: '岑参', lines: '北风卷地白草折，胡天八月即飞雪。', quote: '忽如一夜春风来，千树万树梨花开。' },
+            { grade: 10, title: '沁园春·长沙', author: '毛泽东', lines: '独立寒秋，湘江北去，橘子洲头。', quote: '问苍茫大地，谁主沉浮？' },
+            { grade: 10, title: '念奴娇·赤壁怀古', author: '苏轼', lines: '大江东去，浪淘尽，千古风流人物。', quote: '人生如梦，一尊还酹江月。' },
+            { grade: 11, title: '琵琶行', author: '白居易', lines: '浔阳江头夜送客，枫叶荻花秋瑟瑟。', quote: '同是天涯沦落人，相逢何必曾相识！' },
+            { grade: 11, title: '蜀道难', author: '李白', lines: '噫吁嚱，危乎高哉！蜀道之难，难于上青天！', quote: '一夫当关，万夫莫开。' },
+            { grade: 12, title: '离骚', author: '屈原', lines: '帝高阳之苗裔兮，朕皇考曰伯庸。', quote: '路漫漫其修远兮，吾将上下而求索。' },
+            { grade: 12, title: '逍遥游', author: '庄子', lines: '北冥有鱼，其名为鲲。', quote: '鹏之徙于南冥也，水击三千里，抟扶摇而上者九万里。' }
+        ];
+        window.showPoems = function() {
+            const grade = document.getElementById('poem-grade')?.value || 'all';
+            const search = (document.getElementById('poem-search')?.value || '').trim().toLowerCase();
+            let filtered = poemData;
+            if (grade !== 'all') filtered = filtered.filter(p => p.grade === parseInt(grade));
+            if (search) filtered = filtered.filter(p => 
+                p.title.toLowerCase().includes(search) || 
+                p.author.toLowerCase().includes(search) || 
+                p.quote.toLowerCase().includes(search)
+            );
+            const container = document.getElementById('poem-list');
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="text-align:center;color:var(--sub);padding:10px;">未找到相关诗词</div>';
+                return;
+            }
+            container.innerHTML = filtered.map((p, i) => `
+                <div style="padding:8px;margin-bottom:4px;border-radius:10px;background:rgba(var(--glow-color),0.03);border:1px solid rgba(var(--glow-color),0.06);cursor:pointer;" onclick="togglePoem(${i})" id="poem-item-${i}">
+                    <div style="font-weight:700;color:var(--accent);font-size:13px;">《${p.title}》 <span style="font-size:10px;color:var(--sub);font-weight:400;">— ${p.author}</span> <span style="font-size:9px;background:rgba(var(--glow-color),0.08);padding:1px 6px;border-radius:8px;color:var(--sub);">${p.grade}年级</span></div>
+                    <div style="font-size:11px;color:var(--sub);margin-top:3px;opacity:.7;">${p.quote}</div>
+                    <div style="display:none;margin-top:4px;padding-top:4px;border-top:1px dashed rgba(var(--glow-color),0.1);font-size:11px;color:var(--text);" id="poem-detail-${i}"><b>名句：</b>${p.quote}<br><b>前句：</b>${p.lines}</div>
+                </div>
+            `).join('');
+        };
+        window.togglePoem = function(idx) {
+            const detail = document.getElementById('poem-detail-' + idx);
+            if (detail) detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+        };
+
+        // ============================================================
+        // 成语词典
+        // ============================================================
+        const idiomData = [
+            { word: '守株待兔', meaning: '比喻死守经验，不知变通。', source: '《韩非子·五蠹》', example: '我们不能守株待兔，要主动出击。' },
+            { word: '刻舟求剑', meaning: '比喻拘泥固执，不懂得根据实际情况处理事情。', source: '《吕氏春秋·察今》', example: '情况变了，你还用老办法，真是刻舟求剑。' },
+            { word: '亡羊补牢', meaning: '比喻出了问题以后想办法补救，可以防止继续受损失。', source: '《战国策·楚策》', example: '虽然迟了，但亡羊补牢为时未晚。' },
+            { word: '画蛇添足', meaning: '比喻做多余的事，反而把事情弄糟。', source: '《战国策·齐策》', example: '文章已经很完整了，再加就是画蛇添足。' },
+            { word: '井底之蛙', meaning: '比喻见识短浅的人。', source: '《庄子·秋水》', example: '他没见过世面，真是井底之蛙。' },
+            { word: '掩耳盗铃', meaning: '比喻自己欺骗自己，明明掩盖不住的事情偏要想法子掩盖。', source: '《吕氏春秋·自知》', example: '你这样做不过是掩耳盗铃罢了。' },
+            { word: '杞人忧天', meaning: '比喻不必要的或缺乏根据的忧虑和担心。', source: '《列子·天瑞》', example: '别杞人忧天了，事情没那么严重。' },
+            { word: '班门弄斧', meaning: '比喻在行家面前卖弄本领，不自量力。', source: '《蓬轩别记》', example: '在专家面前谈这个，真是班门弄斧。' },
+            { word: '邯郸学步', meaning: '比喻模仿别人不到家，反把原来自己会的东西忘了。', source: '《庄子·秋水》', example: '学别人没学好，自己也不会了，真是邯郸学步。' },
+            { word: '滥竽充数', meaning: '比喻没有真才实学的人混在行家里面充数。', source: '《韩非子·内储说》', example: '他没有真本事，只是滥竽充数而已。' },
+            { word: '自相矛盾', meaning: '比喻自己说话做事前后抵触。', source: '《韩非子·难一》', example: '你的说法自相矛盾，不能自圆其说。' },
+            { word: '破釜沉舟', meaning: '比喻下决心，不顾一切干到底。', source: '《史记·项羽本纪》', example: '他破釜沉舟，决心背水一战。' },
+            { word: '卧薪尝胆', meaning: '形容人刻苦自励，发愤图强。', source: '《史记·越王勾践世家》', example: '经过卧薪尝胆，他终于成功了。' },
+            { word: '草木皆兵', meaning: '形容惊慌时疑神疑鬼。', source: '《晋书·苻坚载记》', example: '不要草木皆兵，自己吓自己。' },
+            { word: '一鼓作气', meaning: '比喻趁劲头大的时候一下子把事情做完。', source: '《左传·庄公十年》', example: '我们要一鼓作气，拿下这个项目。' },
+            { word: '愚公移山', meaning: '比喻坚持不懈地改造自然和改造世界。', source: '《列子·汤问》', example: '只要有愚公移山的精神，没有办不成的事。' }
+        ];
+        window.searchIdiom = function() {
+            const query = document.getElementById('idiom-input').value.trim();
+            if (!query) { randomIdiom(); return; }
+            const found = idiomData.find(i => i.word.includes(query) || query.includes(i.word));
+            const container = document.getElementById('idiom-result');
+            if (found) {
+                container.innerHTML = `<div style="font-weight:900;color:var(--accent);font-size:14px;">${found.word}</div><div style="font-size:11px;margin-top:3px;"><b>释义：</b>${found.meaning}</div><div style="font-size:11px;margin-top:2px;"><b>出处：</b>${found.source}</div><div style="font-size:11px;margin-top:2px;"><b>例句：</b>${found.example}</div>`;
+            } else {
+                container.innerHTML = '<span style="color:#ff6b81;">未找到该成语，试试随机成语</span>';
+            }
+        };
+        window.randomIdiom = function() {
+            const i = Math.floor(Math.random() * idiomData.length);
+            const found = idiomData[i];
+            document.getElementById('idiom-input').value = found.word;
+            document.getElementById('idiom-result').innerHTML = `<div style="font-weight:900;color:var(--accent);font-size:14px;">${found.word}</div><div style="font-size:11px;margin-top:3px;"><b>释义：</b>${found.meaning}</div><div style="font-size:11px;margin-top:2px;"><b>出处：</b>${found.source}</div><div style="font-size:11px;margin-top:2px;"><b>例句：</b>${found.example}</div>`;
+        };
+
+        // ============================================================
+        // 错题本
+        // ============================================================
+        window.addMistake = function() {
+            const subject = document.getElementById('mistake-subject').value;
+            const level = document.getElementById('mistake-level').value;
+            const question = document.getElementById('mistake-question').value.trim();
+            const answer = document.getElementById('mistake-answer').value.trim();
+            if (!question) { showToast('请输入错题题目'); return; }
+            const mistakes = JSON.parse(localStorage.getItem('mistakes') || '[]');
+            mistakes.push({ subject, level, question, answer, date: new Date().toLocaleDateString() });
+            localStorage.setItem('mistakes', JSON.stringify(mistakes));
+            document.getElementById('mistake-question').value = '';
+            document.getElementById('mistake-answer').value = '';
+            showMistakes();
+            showToast('错题已添加');
+        };
+        window.showMistakes = function() {
+            const mistakes = JSON.parse(localStorage.getItem('mistakes') || '[]');
+            const container = document.getElementById('mistake-result');
+            if (mistakes.length === 0) {
+                container.innerHTML = '<span style="color:var(--sub);">暂无错题记录</span>';
+                return;
+            }
+            const levelColors = { '简单': '#22c55e', '中等': '#f59e0b', '困难': '#ef4444' };
+            container.innerHTML = mistakes.map((m, i) => `
+                <div style="padding:6px;margin-bottom:4px;border-radius:8px;background:rgba(var(--glow-color),0.03);border-left:3px solid ${levelColors[m.level]||'#999'};">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-weight:700;font-size:11px;color:var(--accent);">[${m.subject}] ${m.level}</span>
+                        <button type="button" onclick="deleteMistake(${i})" style="background:none;border:none;color:#ff6b81;cursor:pointer;font-size:12px;">✕</button>
+                    </div>
+                    <div style="font-size:11px;margin-top:2px;">${m.question}</div>
+                    ${m.answer ? `<div style="font-size:10px;color:var(--sub);margin-top:2px;">✅ ${m.answer}</div>` : ''}
+                    <div style="font-size:9px;color:var(--sub);opacity:.5;margin-top:2px;">${m.date}</div>
+                </div>
+            `).join('');
+        };
+        window.deleteMistake = function(idx) {
+            const mistakes = JSON.parse(localStorage.getItem('mistakes') || '[]');
+            mistakes.splice(idx, 1);
+            localStorage.setItem('mistakes', JSON.stringify(mistakes));
+            showMistakes();
+        };
+        window.clearMistakes = function() {
+            if (confirm('确定清空所有错题吗？')) {
+                localStorage.removeItem('mistakes');
+                showMistakes();
+                showToast('错题本已清空');
+            }
+        };
+
+        // ============================================================
+        // 英语单词卡
+        // ============================================================
+        const vocabData = [
+            { word: 'abandon', phonetic: '/əˈbændən/', meaning: 'v. 放弃，抛弃' },
+            { word: 'benefit', phonetic: '/ˈbenɪfɪt/', meaning: 'n. 利益，好处 v. 有益于' },
+            { word: 'challenge', phonetic: '/ˈtʃælɪndʒ/', meaning: 'n. 挑战 v. 向...挑战' },
+            { word: 'determine', phonetic: '/dɪˈtɜːmɪn/', meaning: 'v. 决定，确定' },
+            { word: 'environment', phonetic: '/ɪnˈvaɪrənmənt/', meaning: 'n. 环境' },
+            { word: 'frequent', phonetic: '/ˈfriːkwənt/', meaning: 'adj. 频繁的，经常的' },
+            { word: 'generate', phonetic: '/ˈdʒenəreɪt/', meaning: 'v. 产生，生成' },
+            { word: 'horizon', phonetic: '/həˈraɪzn/', meaning: 'n. 地平线，视野' },
+            { word: 'illustrate', phonetic: '/ˈɪləstreɪt/', meaning: 'v. 说明，阐明' },
+            { word: 'journal', phonetic: '/ˈdʒɜːnl/', meaning: 'n. 日记，杂志' },
+            { word: 'knowledge', phonetic: '/ˈnɒlɪdʒ/', meaning: 'n. 知识，学识' },
+            { word: 'laboratory', phonetic: '/ləˈbɒrətri/', meaning: 'n. 实验室' },
+            { word: 'maintain', phonetic: '/meɪnˈteɪn/', meaning: 'v. 维持，保养' },
+            { word: 'necessary', phonetic: '/ˈnesəsəri/', meaning: 'adj. 必要的，必需的' },
+            { word: 'opportunity', phonetic: '/ˌɒpəˈtjuːnəti/', meaning: 'n. 机会，时机' },
+            { word: 'participate', phonetic: '/pɑːˈtɪsɪpeɪt/', meaning: 'v. 参加，参与' },
+            { word: 'quality', phonetic: '/ˈkwɒləti/', meaning: 'n. 质量，品质' },
+            { word: 'recognize', phonetic: '/ˈrekəɡnaɪz/', meaning: 'v. 认出，承认' },
+            { word: 'significant', phonetic: '/sɪɡˈnɪfɪkənt/', meaning: 'adj. 重要的，有意义的' },
+            { word: 'technology', phonetic: '/tekˈnɒlədʒi/', meaning: 'n. 技术，工艺' }
+        ];
+        let vocabIdx = -1;
+        window.nextVocab = function() {
+            vocabIdx = (vocabIdx + 1) % vocabData.length;
+            const v = vocabData[vocabIdx];
+            document.getElementById('vocab-word').textContent = v.word;
+            document.getElementById('vocab-phonetic').textContent = v.phonetic;
+            document.getElementById('vocab-meaning').textContent = v.meaning;
+            document.getElementById('vocab-meaning').style.display = 'none';
+        };
+        window.toggleVocabMeaning = function() {
+            const el = document.getElementById('vocab-meaning');
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        };
+        window.speakVocab = function() {
+            const word = document.getElementById('vocab-word').textContent;
+            if (word && word !== '点击开始') {
+                if ('speechSynthesis' in window) {
+                    const u = new SpeechSynthesisUtterance(word);
+                    u.lang = 'en-US';
+                    speechSynthesis.speak(u);
+                }
+            }
+        };
+
+        // ============================================================
+        // 学习计划表
+        // ============================================================
+        window.addPlanTask = function() {
+            const task = document.getElementById('plan-task').value.trim();
+            const mins = parseInt(document.getElementById('plan-mins').value) || 0;
+            if (!task) { showToast('请输入学习任务'); return; }
+            const plans = JSON.parse(localStorage.getItem('studyPlans') || '[]');
+            plans.push({ task, mins, done: false });
+            localStorage.setItem('studyPlans', JSON.stringify(plans));
+            document.getElementById('plan-task').value = '';
+            renderPlan();
+        };
+        window.renderPlan = function() {
+            const plans = JSON.parse(localStorage.getItem('studyPlans') || '[]');
+            const container = document.getElementById('plan-list');
+            let total = 0;
+            container.innerHTML = plans.map((p, i) => {
+                total += p.mins;
+                return `<div style="display:flex;align-items:center;gap:4px;padding:4px 6px;margin-bottom:3px;border-radius:8px;background:rgba(var(--glow-color),0.03);">
+                    <input type="checkbox" ${p.done ? 'checked' : ''} onchange="togglePlanDone(${i})" style="width:auto;min-height:auto;">
+                    <span style="flex:1;font-size:11px;${p.done ? 'text-decoration:line-through;opacity:.5;' : ''}">${p.task}</span>
+                    <span style="font-size:10px;color:var(--sub);">${p.mins}分钟</span>
+                    <button type="button" onclick="deletePlanTask(${i})" style="background:none;border:none;color:#ff6b81;cursor:pointer;font-size:12px;">✕</button>
+                </div>`;
+            }).join('');
+            document.getElementById('plan-total').textContent = `总计 ${total} 分钟`;
+        };
+        window.togglePlanDone = function(idx) {
+            const plans = JSON.parse(localStorage.getItem('studyPlans') || '[]');
+            plans[idx].done = !plans[idx].done;
+            localStorage.setItem('studyPlans', JSON.stringify(plans));
+            renderPlan();
+        };
+        window.deletePlanTask = function(idx) {
+            const plans = JSON.parse(localStorage.getItem('studyPlans') || '[]');
+            plans.splice(idx, 1);
+            localStorage.setItem('studyPlans', JSON.stringify(plans));
+            renderPlan();
+        };
+        window.clearPlan = function() {
+            if (confirm('确定清空学习计划吗？')) {
+                localStorage.removeItem('studyPlans');
+                renderPlan();
+                showToast('学习计划已清空');
+            }
+        };
+
+        // ============================================================
+        // 考试倒计时日历
+        // ============================================================
+        window.addExamDate = function() {
+            const name = document.getElementById('exam-name').value.trim();
+            const date = document.getElementById('exam-date').value;
+            if (!name || !date) { showToast('请填写考试名称和日期'); return; }
+            const exams = JSON.parse(localStorage.getItem('examDates') || '[]');
+            exams.push({ name, date });
+            localStorage.setItem('examDates', JSON.stringify(exams));
+            document.getElementById('exam-name').value = '';
+            document.getElementById('exam-date').value = '';
+            renderExamCountdown();
+        };
+        window.renderExamCountdown = function() {
+            const exams = JSON.parse(localStorage.getItem('examDates') || '[]');
+            const container = document.getElementById('exam-countdown-list');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (exams.length === 0) {
+                container.innerHTML = '<span style="color:var(--sub);">暂无考试安排</span>';
+                return;
+            }
+            exams.sort((a, b) => new Date(a.date) - new Date(b.date));
+            container.innerHTML = exams.map((e, i) => {
+                const examDate = new Date(e.date);
+                examDate.setHours(0, 0, 0, 0);
+                const diff = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+                let status, color;
+                if (diff < 0) { status = '已结束'; color = 'var(--sub)'; }
+                else if (diff === 0) { status = '今天！'; color = '#ef4444'; }
+                else if (diff <= 7) { status = `还有${diff}天`; color = '#f59e0b'; }
+                else { status = `还有${diff}天`; color = '#22c55e'; }
+                return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;margin-bottom:4px;border-radius:8px;background:rgba(var(--glow-color),0.03);border-left:3px solid ${color};">
+                    <div>
+                        <div style="font-weight:700;font-size:12px;color:var(--accent);">${e.name}</div>
+                        <div style="font-size:10px;color:var(--sub);">${e.date}</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-weight:900;font-size:14px;color:${color};">${status}</div>
+                        <button type="button" onclick="deleteExamDate(${i})" style="background:none;border:none;color:#ff6b81;cursor:pointer;font-size:10px;">删除</button>
+                    </div>
+                </div>`;
+            }).join('');
+        };
+        window.deleteExamDate = function(idx) {
+            const exams = JSON.parse(localStorage.getItem('examDates') || '[]');
+            exams.splice(idx, 1);
+            localStorage.setItem('examDates', JSON.stringify(exams));
+            renderExamCountdown();
+        };
+
+        // ============================================================
+        // 全班成绩分析
+        // ============================================================
+        window.analyzeClassGrades = function() {
+            const raw = document.getElementById('class-grades-input').value.trim();
+            if (!raw) {
+                document.getElementById('class-grade-result').innerHTML = '<span style="color:#ff6b81;">请输入成绩数据</span>';
+                return;
+            }
+            const fullScore = parseInt(document.getElementById('grade-full').value) || 100;
+            const passScore = parseInt(document.getElementById('grade-pass').value) || 60;
+            // 解析输入
+            const students = [];
+            const lines = raw.split(/[\n,，]/).map(s => s.trim()).filter(s => s);
+            let idx = 0;
+            while (idx < lines.length) {
+                const line = lines[idx];
+                // 检查是否是 "姓名,分数" 格式
+                if (idx + 1 < lines.length && !isNaN(parseFloat(lines[idx + 1]))) {
+                    const name = line;
+                    const score = parseFloat(lines[idx + 1]);
+                    if (!isNaN(score)) {
+                        students.push({ name, score, rank: 0 });
+                    }
+                    idx += 2;
+                } else {
+                    // 仅数字
+                    const score = parseFloat(line);
+                    if (!isNaN(score)) {
+                        students.push({ name: '学生' + (students.length + 1), score, rank: 0 });
+                    }
+                    idx++;
+                }
+            }
+            if (students.length === 0) {
+                document.getElementById('class-grade-result').innerHTML = '<span style="color:#ff6b81;">未解析到有效成绩</span>';
+                return;
+            }
+            // 排序并排名
+            students.sort((a, b) => b.score - a.score);
+            students.forEach((s, i) => s.rank = i + 1);
+            // 统计
+            const scores = students.map(s => s.score);
+            const sum = scores.reduce((a, b) => a + b, 0);
+            const avg = sum / scores.length;
+            const max = Math.max(...scores);
+            const min = Math.min(...scores);
+            const passCount = scores.filter(s => s >= passScore).length;
+            const passRate = (passCount / scores.length * 100).toFixed(1);
+            const excellent = scores.filter(s => s >= fullScore * 0.85).length;
+            const good = scores.filter(s => s >= fullScore * 0.7 && s < fullScore * 0.85).length;
+            const medium = scores.filter(s => s >= fullScore * 0.6 && s < fullScore * 0.7).length;
+            const fail = scores.filter(s => s < passScore).length;
+            // 方差标准差
+            const variance = scores.reduce((sum, s) => sum + Math.pow(s - avg, 2), 0) / scores.length;
+            const stdDev = Math.sqrt(variance);
+            // 等级分布
+            const gradeA = scores.filter(s => s >= fullScore * 0.9).length;
+            const gradeB = scores.filter(s => s >= fullScore * 0.8 && s < fullScore * 0.9).length;
+            const gradeC = scores.filter(s => s >= fullScore * 0.7 && s < fullScore * 0.8).length;
+            const gradeD = scores.filter(s => s >= fullScore * 0.6 && s < fullScore * 0.7).length;
+            const gradeF = scores.filter(s => s < passScore).length;
+
+            // 中位数
+            const sorted = [...scores].sort((a, b) => a - b);
+            const median = sorted.length % 2 === 0
+                ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
+                : sorted[Math.floor(sorted.length / 2)];
+
+            let html = '<div style="font-weight:900;color:var(--accent);margin-bottom:6px;font-size:13px;">📊 全班成绩分析报告</div>';
+            // 基础统计
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px;">';
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">班级人数</div><div style="font-weight:700;font-size:14px;">${students.length}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">平均分</div><div style="font-weight:700;font-size:14px;color:var(--accent);">${avg.toFixed(1)}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">最高分</div><div style="font-weight:700;font-size:14px;color:#22c55e;">${max}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">最低分</div><div style="font-weight:700;font-size:14px;color:#ef4444;">${min}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">中位数</div><div style="font-weight:700;font-size:14px;">${median.toFixed(1)}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">标准差</div><div style="font-weight:700;font-size:14px;">${stdDev.toFixed(1)}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">及格率</div><div style="font-weight:700;font-size:14px;color:${passRate >= 80 ? '#22c55e' : passRate >= 60 ? '#f59e0b' : '#ef4444'};">${passRate}%</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;"><div style="font-size:10px;color:var(--sub);">优秀率</div><div style="font-weight:700;font-size:14px;color:var(--accent2);">${(excellent / students.length * 100).toFixed(1)}%</div></div>`;
+            html += '</div>';
+
+            // 等级分布柱状图
+            html += '<div style="font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;">等级分布</div>';
+            const grades = [
+                { label: 'A(≥90%)', count: gradeA, color: '#22c55e' },
+                { label: 'B(80-89%)', count: gradeB, color: '#3b82f6' },
+                { label: 'C(70-79%)', count: gradeC, color: '#a855f7' },
+                { label: 'D(60-69%)', count: gradeD, color: '#f59e0b' },
+                { label: 'F(<60%)', count: gradeF, color: '#ef4444' }
+            ];
+            grades.forEach(g => {
+                const pct = (g.count / students.length * 100).toFixed(0);
+                html += `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;font-size:10px;">
+                    <span style="width:60px;color:var(--sub);">${g.label}</span>
+                    <div style="flex:1;height:14px;background:rgba(var(--glow-color),0.06);border-radius:7px;overflow:hidden;">
+                        <div style="width:${pct}%;height:100%;background:${g.color};border-radius:7px;transition:width 0.5s;"></div>
+                    </div>
+                    <span style="width:30px;text-align:right;font-weight:700;">${g.count}人</span>
+                </div>`;
+            });
+
+            // 分数段分布
+            html += '<div style="font-weight:700;color:var(--accent);margin:8px 0 4px;font-size:12px;">分数段分布</div>';
+            const ranges = [
+                { label: '90-100', min: fullScore * 0.9, max: fullScore + 1 },
+                { label: '80-89', min: fullScore * 0.8, max: fullScore * 0.9 },
+                { label: '70-79', min: fullScore * 0.7, max: fullScore * 0.8 },
+                { label: '60-69', min: passScore, max: fullScore * 0.7 },
+                { label: '0-59', min: -1, max: passScore }
+            ];
+            ranges.forEach(r => {
+                const count = scores.filter(s => s >= r.min && s < r.max).length;
+                const pct = (count / students.length * 100).toFixed(0);
+                html += `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;font-size:10px;">
+                    <span style="width:50px;color:var(--sub);">${r.label}</span>
+                    <div style="flex:1;height:12px;background:rgba(var(--glow-color),0.06);border-radius:6px;overflow:hidden;">
+                        <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px;"></div>
+                    </div>
+                    <span style="width:30px;text-align:right;">${count}人</span>
+                </div>`;
+            });
+
+            // 排名表
+            html += '<div style="font-weight:700;color:var(--accent);margin:8px 0 4px;font-size:12px;">学生排名</div>';
+            html += '<div style="max-height:120px;overflow-y:auto;">';
+            students.forEach(s => {
+                let rankColor = s.rank <= 3 ? '#ffd700' : s.rank <= students.length / 2 ? 'var(--accent)' : 'var(--sub)';
+                let scoreColor = s.score >= fullScore * 0.85 ? '#22c55e' : s.score >= passScore ? 'var(--accent)' : '#ef4444';
+                let gradeLabel = s.score >= fullScore * 0.9 ? 'A' : s.score >= fullScore * 0.8 ? 'B' : s.score >= fullScore * 0.7 ? 'C' : s.score >= passScore ? 'D' : 'F';
+                html += `<div style="display:flex;align-items:center;gap:4px;padding:3px 4px;border-radius:6px;background:${s.rank <= 3 ? 'rgba(255,215,0,0.06)' : 'transparent'};font-size:10px;">
+                    <span style="width:24px;font-weight:900;color:${rankColor};">${s.rank}</span>
+                    <span style="flex:1;">${s.name}</span>
+                    <span style="font-weight:700;color:${scoreColor};width:30px;text-align:right;">${s.score}</span>
+                    <span style="width:20px;text-align:center;font-weight:700;color:${scoreColor};">${gradeLabel}</span>
+                </div>`;
+            });
+            html += '</div>';
+
+            document.getElementById('class-grade-result').innerHTML = html;
+            showToast('成绩分析完成');
+        };
+
+        window.loadSampleGrades = function() {
+            document.getElementById('class-grades-input').value = '张三,95\n李四,88\n王五,76\n赵六,92\n孙七,65\n周八,80\n吴九,55\n郑十,78\n陈一,89\n林二,70\n黄三,63\n高四,98';
+            document.getElementById('class-grade-result').innerHTML = '<span style="color:var(--sub);">已加载示例数据，点击分析</span>';
+        };
+
+        // ============================================================
+        // 全班进步追踪分析
+        // ============================================================
+        window.analyzeProgress = function() {
+            const raw = document.getElementById('progress-input').value.trim();
+            if (!raw) {
+                document.getElementById('progress-result').innerHTML = '<span style="color:#ff6b81;">请输入成绩数据</span>';
+                return;
+            }
+            const fullScore = parseInt(document.getElementById('prog-full')?.value) || 100;
+            const passScore = parseInt(document.getElementById('prog-pass')?.value) || 60;
+            const lines = raw.split('\n').map(s => s.trim()).filter(s => s);
+            const students = [];
+            lines.forEach(line => {
+                const parts = line.split(/[,，]/).map(s => s.trim());
+                if (parts.length >= 2) {
+                    const name = parts[0];
+                    const scores = parts.slice(1).map(s => parseFloat(s)).filter(s => !isNaN(s));
+                    if (scores.length > 0) {
+                        const total = scores.reduce((a, b) => a + b, 0);
+                        const avg = total / scores.length;
+                        const first = scores[0];
+                        const last = scores[scores.length - 1];
+                        const diff = last - first;
+                        // 趋势分析
+                        const n = scores.length;
+                        const xs = scores.map((_, i) => i);
+                        const sumX = xs.reduce((a, b) => a + b, 0);
+                        const sumY = scores.reduce((a, b) => a + b, 0);
+                        const sumXY = xs.reduce((sum, x, i) => sum + x * scores[i], 0);
+                        const sumX2 = xs.reduce((sum, x) => sum + x * x, 0);
+                        const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+                        students.push({ name, scores, total, avg, first, last, diff, slope });
+                    }
+                }
+            });
+            if (students.length === 0) {
+                document.getElementById('progress-result').innerHTML = '<span style="color:#ff6b81;">未解析到有效数据</span>';
+                return;
+            }
+            // 全班总分和平均分
+            const classTotal = students.reduce((sum, s) => sum + s.total, 0);
+            const classAvg = classTotal / students.length;
+            // 全班平均分排名
+            students.sort((a, b) => b.avg - a.avg);
+
+            let html = '<div style="font-weight:900;color:var(--accent);margin-bottom:6px;font-size:13px;">📈 全班进步分析报告</div>';
+
+            // 全班总览
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px;">';
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;text-align:center;"><div style="font-size:10px;color:var(--sub);">全班总分</div><div style="font-weight:700;font-size:14px;">${classTotal.toFixed(0)}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;text-align:center;"><div style="font-size:10px;color:var(--sub);">全班平均分</div><div style="font-weight:700;font-size:14px;color:var(--accent);">${classAvg.toFixed(1)}</div></div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:6px;border-radius:8px;text-align:center;"><div style="font-size:10px;color:var(--sub);">学生人数</div><div style="font-weight:700;font-size:14px;">${students.length}</div></div>`;
+            html += '</div>';
+
+            // 进步学生
+            const improved = students.filter(s => s.diff > 0).sort((a, b) => b.diff - a.diff);
+            const declined = students.filter(s => s.diff < 0).sort((a, b) => a.diff - b.diff);
+            const needHelp = students.filter(s => s.avg < classAvg || s.last < passScore);
+
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">';
+            // 进步学生
+            html += '<div style="background:rgba(34,197,94,0.06);padding:8px;border-radius:10px;border-left:3px solid #22c55e;">';
+            html += '<div style="font-weight:700;color:#22c55e;font-size:11px;margin-bottom:4px;">📈 进步学生</div>';
+            if (improved.length > 0) {
+                improved.forEach(s => {
+                    html += `<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">
+                        <span>${s.name}</span>
+                        <span style="color:#22c55e;font-weight:700;">+${s.diff}分</span>
+                    </div>`;
+                });
+            } else {
+                html += '<div style="font-size:10px;color:var(--sub);">暂无进步学生</div>';
+            }
+            html += '</div>';
+
+            // 退步学生
+            html += '<div style="background:rgba(239,68,68,0.06);padding:8px;border-radius:10px;border-left:3px solid #ef4444;">';
+            html += '<div style="font-weight:700;color:#ef4444;font-size:11px;margin-bottom:4px;">📉 退步学生</div>';
+            if (declined.length > 0) {
+                declined.forEach(s => {
+                    html += `<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">
+                        <span>${s.name}</span>
+                        <span style="color:#ef4444;font-weight:700;">${s.diff}分</span>
+                    </div>`;
+                });
+            } else {
+                html += '<div style="font-size:10px;color:var(--sub);">暂无退步学生</div>';
+            }
+            html += '</div>';
+            html += '</div>';
+
+            // 需要努力的学生
+            html += '<div style="background:rgba(245,158,11,0.06);padding:8px;border-radius:10px;border-left:3px solid #f59e0b;margin-bottom:8px;">';
+            html += '<div style="font-weight:700;color:#f59e0b;font-size:11px;margin-bottom:4px;">💪 需要努力的学生（低于平均分或不及格）</div>';
+            if (needHelp.length > 0) {
+                needHelp.forEach(s => {
+                    const gap = (classAvg - s.avg).toFixed(1);
+                    html += `<div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;margin-bottom:3px;padding:2px 4px;border-radius:4px;background:rgba(245,158,11,0.04);">
+                        <span style="font-weight:700;">${s.name}</span>
+                        <span style="color:var(--sub);">平均${s.avg.toFixed(1)}分</span>
+                        <span style="color:#f59e0b;font-weight:700;">差${gap}分</span>
+                    </div>`;
+                });
+            } else {
+                html += '<div style="font-size:10px;color:var(--sub);">全员达到或超过班级平均分！🎉</div>';
+            }
+            html += '</div>';
+
+            // 详细成绩表
+            html += '<div style="font-weight:700;color:var(--accent);font-size:11px;margin-bottom:4px;">📋 详细成绩表</div>';
+            html += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:10px;min-width:300px;">';
+            html += '<tr><th style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);color:var(--accent);">排名</th><th style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);color:var(--accent);">姓名</th>';
+            // 动态表头
+            const maxExams = Math.max(...students.map(s => s.scores.length));
+            for (let i = 1; i <= maxExams; i++) {
+                html += `<th style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);color:var(--accent);">第${i}次</th>`;
+            }
+            html += '<th style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);color:var(--accent);">总分</th>';
+            html += '<th style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);color:var(--accent);">平均</th>';
+            html += '<th style="padding:4px;border:1px solid rgba(var(--glow-color),0.1);color:var(--accent);">变化</th>';
+            html += '</tr>';
+            students.forEach((s, idx) => {
+                html += '<tr>';
+                html += `<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;font-weight:700;color:${idx < 3 ? '#ffd700' : 'var(--sub)'};">${idx + 1}</td>`;
+                html += `<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);font-weight:700;">${s.name}</td>`;
+                for (let i = 0; i < maxExams; i++) {
+                    const score = s.scores[i];
+                    if (score !== undefined) {
+                        html += `<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;color:${score >= classAvg ? '#22c55e' : 'var(--text)'};">${score}</td>`;
+                    } else {
+                        html += '<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;color:var(--sub);">—</td>';
+                    }
+                }
+                html += `<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;font-weight:700;">${s.total}</td>`;
+                html += `<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;color:${s.avg >= classAvg ? '#22c55e' : '#f59e0b'};font-weight:700;">${s.avg.toFixed(1)}</td>`;
+                const diffColor = s.diff > 0 ? '#22c55e' : s.diff < 0 ? '#ef4444' : 'var(--sub)';
+                const diffIcon = s.diff > 0 ? '↑' : s.diff < 0 ? '↓' : '→';
+                html += `<td style="padding:3px 4px;border:1px solid rgba(var(--glow-color),0.1);text-align:center;color:${diffColor};font-weight:700;">${diffIcon} ${s.diff > 0 ? '+' : ''}${s.diff}</td>`;
+                html += '</tr>';
+            });
+            html += '</table></div>';
+
+            // 进步最大和退步最大
+            if (students.length > 0) {
+                html += '<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;">';
+                const topImproved = improved[0];
+                const topDeclined = declined[0];
+                if (topImproved) {
+                    html += `<div style="background:rgba(34,197,94,0.06);padding:6px;border-radius:8px;text-align:center;">
+                        <div style="font-size:10px;color:var(--sub);">🏆 进步最大</div>
+                        <div style="font-weight:900;font-size:14px;color:#22c55e;">${topImproved.name}</div>
+                        <div style="font-size:10px;color:#22c55e;">+${topImproved.diff}分</div>
+                    </div>`;
+                }
+                if (topDeclined) {
+                    html += `<div style="background:rgba(239,68,68,0.06);padding:6px;border-radius:8px;text-align:center;">
+                        <div style="font-size:10px;color:var(--sub);">⚠️ 退步最大</div>
+                        <div style="font-weight:900;font-size:14px;color:#ef4444;">${topDeclined.name}</div>
+                        <div style="font-size:10px;color:#ef4444;">${topDeclined.diff}分</div>
+                    </div>`;
+                }
+                html += '</div>';
+            }
+
+            document.getElementById('progress-result').innerHTML = html;
+            showToast('进步分析完成');
+        };
+
+        // ============================================================
+        // 考试预估分数
+        // ============================================================
+        window.predictScore = function() {
+            const raw = document.getElementById('pred-scores').value.trim();
+            if (!raw) {
+                document.getElementById('pred-result').innerHTML = '<span style="color:#ff6b81;">请输入历次成绩</span>';
+                return;
+            }
+            const fullScore = parseInt(document.getElementById('pred-full').value) || 100;
+            const scores = raw.split(/[,，\s\n]+/).map(s => parseFloat(s.trim())).filter(s => !isNaN(s));
+            if (scores.length < 2) {
+                document.getElementById('pred-result').innerHTML = '<span style="color:#ff6b81;">至少需要2次成绩才能预估</span>';
+                return;
+            }
+            // 加权平均（近期成绩权重更高）
+            let weightedSum = 0;
+            let weightTotal = 0;
+            scores.forEach((s, i) => {
+                const w = i + 1; // 越近权重越大
+                weightedSum += s * w;
+                weightTotal += w;
+            });
+            const weightedAvg = weightedSum / weightTotal;
+            // 简单平均
+            const simpleAvg = scores.reduce((a, b) => a + b, 0) / scores.length;
+            // 趋势分析（线性回归斜率）
+            const n = scores.length;
+            const xs = scores.map((_, i) => i);
+            const sumX = xs.reduce((a, b) => a + b, 0);
+            const sumY = scores.reduce((a, b) => a + b, 0);
+            const sumXY = xs.reduce((sum, x, i) => sum + x * scores[i], 0);
+            const sumX2 = xs.reduce((sum, x) => sum + x * x, 0);
+            const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            // 预测下次分数（基于趋势）
+            const trendPredict = weightedAvg + slope * 1.5;
+            // 标准差
+            const variance = scores.reduce((sum, s) => sum + Math.pow(s - simpleAvg, 2), 0) / scores.length;
+            const stdDev = Math.sqrt(variance);
+            // 预估范围
+            const predicted = Math.max(0, Math.min(fullScore, trendPredict));
+            const lowBound = Math.max(0, Math.min(fullScore, predicted - stdDev));
+            const highBound = Math.max(0, Math.min(fullScore, predicted + stdDev));
+            // 等级
+            const pct = predicted / fullScore;
+            let grade, gradeColor, advice;
+            if (pct >= 0.9) { grade = 'A (优秀)'; gradeColor = '#22c55e'; advice = '保持当前学习状态，继续冲刺高分！'; }
+            else if (pct >= 0.8) { grade = 'B (良好)'; gradeColor = '#3b82f6'; advice = '基础扎实，建议攻克薄弱环节提升到A等级。'; }
+            else if (pct >= 0.7) { grade = 'C (中等)'; gradeColor = '#a855f7'; advice = '需要加强基础知识的巩固，多做练习题。'; }
+            else if (pct >= 0.6) { grade = 'D (及格)'; gradeColor = '#f59e0b'; advice = '建议系统复习基础知识，查漏补缺。'; }
+            else { grade = 'F (不及格)'; gradeColor = '#ef4444'; advice = '需要重点复习基础概念，建议寻求老师或同学帮助。'; }
+
+            const trendIcon = slope > 1 ? '📈' : slope < -1 ? '📉' : '➡️';
+            const trendText = slope > 1 ? '上升趋势' : slope < -1 ? '下降趋势' : '平稳';
+
+            let html = '<div style="font-weight:900;color:var(--accent);margin-bottom:6px;font-size:13px;">🎯 预估结果</div>';
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">';
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:8px;border-radius:10px;text-align:center;">
+                <div style="font-size:10px;color:var(--sub);">预估分数</div>
+                <div style="font-weight:900;font-size:20px;color:${gradeColor};">${predicted.toFixed(1)}</div>
+                <div style="font-size:10px;color:${gradeColor};font-weight:700;">${grade}</div>
+            </div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:8px;border-radius:10px;text-align:center;">
+                <div style="font-size:10px;color:var(--sub);">分数区间</div>
+                <div style="font-weight:700;font-size:14px;color:var(--accent2);">${lowBound.toFixed(0)} ~ ${highBound.toFixed(0)}</div>
+                <div style="font-size:10px;color:var(--sub);">置信范围</div>
+            </div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:8px;border-radius:10px;text-align:center;">
+                <div style="font-size:10px;color:var(--sub);">趋势分析 ${trendIcon}</div>
+                <div style="font-weight:700;font-size:12px;color:${slope > 0 ? '#22c55e' : slope < 0 ? '#ef4444' : 'var(--sub)'};">${trendText}</div>
+                <div style="font-size:10px;color:var(--sub);">斜率: ${slope.toFixed(2)}/次</div>
+            </div>`;
+            html += `<div style="background:rgba(var(--glow-color),0.04);padding:8px;border-radius:10px;text-align:center;">
+                <div style="font-size:10px;color:var(--sub);">波动程度</div>
+                <div style="font-weight:700;font-size:12px;color:${stdDev < 5 ? '#22c55e' : stdDev < 10 ? '#f59e0b' : '#ef4444'};">${stdDev < 5 ? '稳定' : stdDev < 10 ? '一般' : '波动大'}</div>
+                <div style="font-size:10px;color:var(--sub);">标准差: ${stdDev.toFixed(1)}</div>
+            </div>`;
+            html += '</div>';
+
+            // 成绩走势图
+            html += '<div style="margin-top:8px;font-weight:700;color:var(--accent);font-size:11px;">成绩走势</div>';
+            const maxScore = Math.max(...scores, fullScore);
+            const minScore = Math.min(...scores, 0);
+            const range = maxScore - minScore || 1;
+            html += '<div style="display:flex;align-items:flex-end;gap:2px;height:60px;margin-top:4px;border-bottom:1px solid var(--border);">';
+            scores.forEach((s, i) => {
+                const h = ((s - minScore) / range) * 50 + 10;
+                const color = i === scores.length - 1 ? 'var(--accent)' : 'rgba(var(--glow-color),0.3)';
+                html += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+                    <div style="font-size:8px;color:var(--sub);margin-bottom:2px;">${s}</div>
+                    <div style="width:100%;height:${h}px;background:${color};border-radius:3px 3px 0 0;min-height:8px;"></div>
+                    <div style="font-size:8px;color:var(--sub);margin-top:2px;">第${i+1}次</div>
+                </div>`;
+            });
+            // 预测点
+            const predH = ((predicted - minScore) / range) * 50 + 10;
+            html += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+                <div style="font-size:8px;color:${gradeColor};font-weight:700;margin-bottom:2px;">${predicted.toFixed(0)}</div>
+                <div style="width:100%;height:${predH}px;background:${gradeColor};border-radius:3px 3px 0 0;min-height:8px;border:1px dashed ${gradeColor};opacity:0.6;"></div>
+                <div style="font-size:8px;color:${gradeColor};margin-top:2px;">预测</div>
+            </div>`;
+            html += '</div>';
+
+            // 建议
+            html += `<div style="margin-top:8px;padding:8px;background:rgba(var(--glow-color),0.04);border-radius:8px;border-left:3px solid ${gradeColor};">
+                <div style="font-size:10px;color:var(--sub);">💡 提升建议</div>
+                <div style="font-size:11px;margin-top:2px;">${advice}</div>
+            </div>`;
+
+            document.getElementById('pred-result').innerHTML = html;
+            showToast('预估完成');
+        };
+
+        // ============================================================
+        // 做题时间倒计时（带响声）
+        // ============================================================
+        let examTimerInterval = null;
+        let examTimerSeconds = 0;
+        let examTimerTotal = 0;
+
+        window.startExamTimer = function() {
+            const mins = parseInt(document.getElementById('exam-timer-mins').value) || 30;
+            examTimerTotal = mins * 60;
+            examTimerSeconds = examTimerTotal;
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            updateExamTimerDisplay();
+            examTimerInterval = setInterval(function() {
+                examTimerSeconds--;
+                updateExamTimerDisplay();
+                if (examTimerSeconds <= 0) {
+                    clearInterval(examTimerInterval);
+                    examTimerInterval = null;
+                    playTimerAlarm();
+                    document.getElementById('exam-timer-display').style.color = '#ef4444';
+                    document.getElementById('exam-timer-display').textContent = '⏰ 时间到！';
+                    showToast('⏰ 做题时间结束！');
+                }
+                // 最后10秒每秒响一声
+                if (examTimerSeconds > 0 && examTimerSeconds <= 10) {
+                    playBeep(800, 0.1);
+                }
+            }, 1000);
+            showToast('⏱️ 倒计时已开始');
+        };
+
+        window.pauseExamTimer = function() {
+            if (examTimerInterval) {
+                clearInterval(examTimerInterval);
+                examTimerInterval = null;
+                showToast('⏸️ 已暂停');
+            } else if (examTimerSeconds > 0) {
+                examTimerInterval = setInterval(function() {
+                    examTimerSeconds--;
+                    updateExamTimerDisplay();
+                    if (examTimerSeconds <= 0) {
+                        clearInterval(examTimerInterval);
+                        examTimerInterval = null;
+                        playTimerAlarm();
+                        document.getElementById('exam-timer-display').style.color = '#ef4444';
+                        document.getElementById('exam-timer-display').textContent = '⏰ 时间到！';
+                        showToast('⏰ 做题时间结束！');
+                    }
+                    if (examTimerSeconds > 0 && examTimerSeconds <= 10) {
+                        playBeep(800, 0.1);
+                    }
+                }, 1000);
+                showToast('▶️ 已继续');
+            }
+        };
+
+        window.stopExamTimer = function() {
+            if (examTimerInterval) {
+                clearInterval(examTimerInterval);
+                examTimerInterval = null;
+            }
+            examTimerSeconds = 0;
+            examTimerTotal = 0;
+            document.getElementById('exam-timer-display').style.color = 'var(--accent)';
+            document.getElementById('exam-timer-display').textContent = '00:00';
+            showToast('⏹️ 已停止');
+        };
+
+        function updateExamTimerDisplay() {
+            const m = Math.floor(examTimerSeconds / 60);
+            const s = examTimerSeconds % 60;
+            const display = document.getElementById('exam-timer-display');
+            if (display) {
+                display.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+                const pct = examTimerTotal > 0 ? (examTimerSeconds / examTimerTotal) : 0;
+                if (pct < 0.2) display.style.color = '#ef4444';
+                else if (pct < 0.5) display.style.color = '#f59e0b';
+                else display.style.color = 'var(--accent)';
+            }
+        }
+
+        function playBeep(freq, duration) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = freq || 880;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + (duration || 0.2));
+                osc.start();
+                osc.stop(ctx.currentTime + (duration || 0.2));
+            } catch(e) {}
+        }
+
+        function playTimerAlarm() {
+            // 连续响5声
+            let count = 0;
+            const alarmInterval = setInterval(function() {
+                playBeep(1000, 0.3);
+                setTimeout(() => playBeep(800, 0.3), 350);
+                count++;
+                if (count >= 5) clearInterval(alarmInterval);
+            }, 700);
         };
 
         // ============================================================
