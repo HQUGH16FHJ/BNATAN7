@@ -27,7 +27,7 @@
             --border: rgba(255, 255, 255, 0.1);
             --glow-color: 0, 245, 255;
             --radius: 24px;
-            --transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
             --nav-height: 56px;
             --neon-glow: 0 0 10px rgba(var(--glow-color), 0.5), 0 0 20px rgba(var(--glow-color), 0.3), 0 0 40px rgba(var(--glow-color), 0.1);
@@ -84,6 +84,7 @@
         }
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
         body {
             font-family: var(--font);
@@ -101,6 +102,8 @@
             overflow-x: hidden;
             transition: background 1s ease, color 0.6s ease, background-image 2s ease;
             -webkit-tap-highlight-color: transparent;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: none;
         }
         body::after {
             content: '';
@@ -2482,6 +2485,24 @@
         ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, rgba(var(--glow-color), 0.5), rgba(var(--glow-color), 0.25)); background-clip: padding-box; }
         * { scrollbar-width: thin; scrollbar-color: rgba(var(--glow-color), 0.3) transparent; }
 
+        /* 触摸交互优化 */
+        a, button, [onclick], input, select, textarea {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        @media (hover: hover) {
+            .tool-card:hover, .mini-card:hover, .btn:hover {
+                transform: translateY(-2px);
+                transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+        }
+        @media (hover: none) {
+            .tool-card:active, .mini-card:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+        }
+
         /* ===== 渐变文字动画 ===== */
         .gradient-text {
             background: linear-gradient(135deg, var(--accent), var(--accent3), var(--accent4), var(--accent));
@@ -3117,6 +3138,195 @@
         .data-stream, .data-stream::before, .holo-card::before {
             will-change: transform;
         }
+        /* ===== 电竞优化页面专属样式 ===== */
+        #game .mini-card { border-left: 3px solid rgba(0,255,136,0.15); }
+        #game .hud-gauge { border-color: rgba(0,255,136,0.08); }
+        #game::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(0,255,136,0.008) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.008) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: inherit;
+        }
+        #game .cat-title { color: #00ff88; }
+        #game .cat-title::before { background: linear-gradient(90deg, #00ff88, #00f5ff); box-shadow: 0 0 8px #00ff88; }
+        /* FPS图表画布 */
+        #fps-chart { image-rendering: crisp-edges; }
+        /* 延迟测试框 */
+        #latency-box.ready { background: rgba(0,255,136,0.15); border-color: #00ff88; color: #00ff88; }
+        #latency-box.waiting { background: rgba(239,68,68,0.15); border-color: #ef4444; color: #ef4444; }
+        /* 优化清单 */
+        .opt-item { display: flex; align-items: flex-start; gap: 6px; padding: 6px 8px; border-radius: 10px; transition: all 0.3s ease; cursor: pointer; }
+        .opt-item:hover { background: rgba(0,255,136,0.04); }
+        .opt-item.done { opacity: 0.5; }
+        .opt-item.done .opt-text { text-decoration: line-through; }
+        .opt-checkbox { width: 16px; height: 16px; border: 2px solid rgba(0,255,136,0.3); border-radius: 4px; flex-shrink: 0; margin-top: 1px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+        .opt-item.done .opt-checkbox { background: #00ff88; border-color: #00ff88; color: #000; }
+        .opt-text { font-size: 11px; color: var(--text); line-height: 1.5; }
+        .opt-text small { color: var(--sub); opacity: 0.6; }
+
+        /* ===== 全局丝滑度优化 ===== */
+        /* 消除滚动卡顿 */
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        /* GPU加速 */
+        .tool-card, .mini-card, .holo-card, .glass-card, .hud-gauge, .nav, .btn {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        /* 消除闪烁 */
+        .section {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        /* 图片渲染优化 */
+        img, canvas {
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        /* 链接和按钮触摸优化 */
+        a, button, [role="button"], input, select, textarea {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            touch-action: manipulation;
+        }
+        /* 滚动条丝滑 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(var(--glow-color), 0.15);
+            border-radius: 3px;
+            -webkit-transition: background 0.3s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(var(--glow-color), 0.3);
+        }
+        /* Mac视网膜优化 */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            body { -webkit-font-smoothing: subpixel-antialiased; }
+            .holo-card, .glass-card { -webkit-backdrop-filter: saturate(180%) blur(30px); }
+        }
+        /* 平板触控优化 */
+        @media (pointer: coarse) {
+            .tool-card, .mini-card, .btn {
+                touch-action: manipulation;
+                -webkit-touch-callout: none;
+            }
+        }
+        /* 大屏优化 */
+        @media (min-width: 1920px) {
+            .container { max-width: 1600px; margin: 0 auto; }
+            .tool-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .station-hud { grid-template-columns: repeat(6, 1fr); }
+        }
+        @media (min-width: 2560px) {
+            .container { max-width: 2000px; }
+            body { font-size: 18px; }
+        }
+        /* 动画性能优化 */
+        @media (prefers-reduced-motion: no-preference) {
+            * { scroll-behavior: smooth; }
+        }
+        /* 减少重绘 */
+        .tool-grid, .mini-grid {
+            contain: layout style paint;
+        }
+        /* 输入框聚焦优化 */
+        input:focus, textarea:focus, select:focus {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        /* 选择高亮优化 */
+        ::selection {
+            background: rgba(var(--glow-color), 0.2);
+            color: var(--accent);
+        }
+        /* ===== 额外丝滑度优化 v2 ===== */
+        /* 响应式内容加载优化 */
+        .section:not(.active) {
+            content-visibility: auto;
+            contain-intrinsic-size: 200px;
+        }
+        /* will-change 仅对活跃元素 */
+        .section.active .tool-card,
+        .section.active .mini-card {
+            will-change: transform;
+        }
+        /* 移动端禁用hover效果减少重绘 */
+        @media (hover: none) {
+            .tool-card:hover, .mini-card:hover {
+                transform: none;
+                box-shadow: inherit;
+            }
+        }
+        /* 动画帧率限制 */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        /* 大屏适配 4K */
+        @media (min-width: 3840px) {
+            .container { max-width: 2800px; }
+            body { font-size: 20px; }
+            .tool-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+        /* 超宽屏 21:9 */
+        @media (min-aspect-ratio: 21/9) and (min-width: 1920px) {
+            .container { max-width: 1800px; }
+            .mini-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        /* 平板横屏优化 */
+        @media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+            .container { max-width: 100%; padding: 0 12px; }
+            .tool-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+        }
+        /* iPhone安全区域 */
+        @supports (padding: env(safe-area-inset-top)) {
+            .nav { padding-top: env(safe-area-inset-top, 0); }
+            body { padding-bottom: env(safe-area-inset-bottom, 0); }
+        }
+        /* 触摸反馈优化 */
+        .btn:active, .tool-card:active {
+            transform: scale(0.97);
+            transition: transform 0.1s ease-out;
+        }
+        /* 焦点环优化 */
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        /* 防止文字选择闪烁 */
+        .opt-item, .tool-card {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        /* 输入框保持可选 */
+        input, textarea {
+            -webkit-user-select: text !important;
+            user-select: text !important;
+        }
     </style>
 </head>
 <body>
@@ -3201,6 +3411,8 @@
                 <a data-target="dev" onclick="navigate('dev')" role="button" tabindex="0">开发</a>
                 <a data-target="more" onclick="navigate('more')" role="button" tabindex="0">更多</a>
                 <a data-target="edu" onclick="navigate('edu')" role="button" tabindex="0">教育</a>
+                <a data-target="game" onclick="navigate('game')" role="button" tabindex="0">电竞</a>
+                <a data-target="nav" onclick="navigate('nav')" role="button" tabindex="0">导航</a>
             </div>
         </header>
 
@@ -3284,6 +3496,11 @@
                     <div style="font-size:clamp(20px,2.4vw,28px);">📚</div>
                     <div style="font-size:clamp(11px,1.1vw,14px);font-weight:700;color:var(--accent);">教育</div>
                     <div style="font-size:9px;opacity:.4;">师生 · 成绩</div>
+                </div>
+                <div onclick="navigate('game')" role="button" tabindex="0" style="text-align:center;padding:10px 4px;border-radius:12px;background:rgba(var(--glow-color),0.04);cursor:pointer;transition:0.3s;" onmouseover="this.style.background='rgba(var(--glow-color),0.1)'" onmouseout="this.style.background='rgba(var(--glow-color),0.04)'">
+                    <div style="font-size:clamp(20px,2.4vw,28px);">🎮</div>
+                    <div style="font-size:clamp(11px,1.1vw,14px);font-weight:700;color:var(--accent);">电竞</div>
+                    <div style="font-size:9px;opacity:.4;">帧率 · 延迟 · 性能</div>
                 </div>
             </div>
 
@@ -4646,6 +4863,365 @@
             </div>
         </section>
 
+        <!-- ===== 电竞优化（冠军调试风格） ===== -->
+        <section class="section" id="game" aria-labelledby="game-title">
+            <div class="cat-title" id="game-title">🎮 电竞优化 · 性能检测 · 冠军调试工具集</div>
+            <div class="mini-grid">
+
+                <!-- 帧率测试器 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);grid-column:1/-1;">
+                    <div class="title">📊 实时帧率测试器 · FPS Monitor</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">点击开始测试，实时显示当前浏览器渲染帧率。模拟游戏中的FPS监控。60FPS=流畅，120FPS=电竞级，240FPS=专业级。</div>
+                        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
+                            <button type="button" class="btn btn-sm" id="fps-start-btn" onclick="startFPSTest()">▶️ 开始测试</button>
+                            <button type="button" class="btn btn-sm btn-outline" onclick="stopFPSTest()">⏹️ 停止</button>
+                        </div>
+                        <div id="fps-display" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;">
+                            <div style="text-align:center;padding:10px;background:rgba(0,255,136,0.04);border-radius:12px;">
+                                <div style="font-size:10px;color:var(--sub);">当前FPS</div>
+                                <div style="font-size:clamp(24px,3vw,36px);font-weight:900;color:#00ff88;" id="fps-current">0</div>
+                            </div>
+                            <div style="text-align:center;padding:10px;background:rgba(0,245,255,0.04);border-radius:12px;">
+                                <div style="font-size:10px;color:var(--sub);">平均FPS</div>
+                                <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--accent);" id="fps-avg">0</div>
+                            </div>
+                            <div style="text-align:center;padding:10px;background:rgba(244,114,182,0.04);border-radius:12px;">
+                                <div style="font-size:10px;color:var(--sub);">最低FPS</div>
+                                <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:#f472b6;" id="fps-min">0</div>
+                            </div>
+                            <div style="text-align:center;padding:10px;background:rgba(251,191,36,0.04);border-radius:12px;">
+                                <div style="font-size:10px;color:var(--sub);">最高FPS</div>
+                                <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:#fbbf24;" id="fps-max">0</div>
+                            </div>
+                        </div>
+                        <canvas id="fps-chart" width="400" height="80" style="width:100%;height:60px;margin-top:8px;border-radius:10px;background:rgba(0,0,0,0.15);"></canvas>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:6px;">📝 <b>用途：</b>实时监测浏览器渲染帧率，评估设备性能等级。FPS越高说明设备性能越好，游戏体验越流畅。</div>
+                    </div>
+                </div>
+
+                <!-- 输入延迟测试 -->
+                <div class="mini-card" style="border-color:rgba(0,245,255,0.12);">
+                    <div class="title">⚡ 输入延迟测试 · Input Lag</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">屏幕变绿时立即点击，测试你的反应延迟。电竞选手通常在150-250ms之间。</div>
+                        <div id="latency-box" onclick="handleLatencyClick()" style="width:100%;height:clamp(80px,15vh,120px);background:rgba(239,68,68,0.15);border:2px solid rgba(239,68,68,0.3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:clamp(14px,1.5vw,18px);font-weight:700;color:#ef4444;cursor:pointer;transition:all 0.15s ease;user-select:none;">点击开始</div>
+                        <div id="latency-result" style="text-align:center;margin-top:6px;font-size:13px;color:var(--sub);">等待测试...</div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>测试从屏幕变化到鼠标点击的反应时间，评估你的电竞反应速度。专业选手可达150ms以内。</div>
+                    </div>
+                </div>
+
+                <!-- 系统信息检测 -->
+                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);grid-column:1/-1;">
+                    <div class="title">💻 系统信息检测 · System Info</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">检测当前设备的硬件信息，包括CPU核心数、内存、GPU、屏幕分辨率等。</div>
+                        <button type="button" class="btn btn-sm" onclick="detectSystemInfo()">🔍 检测系统信息</button>
+                        <div class="result" id="sysinfo-result" style="min-height:28px;margin-top:6px;"><span style="color:var(--sub);">点击按钮开始检测</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>快速查看设备硬件配置，判断是否满足游戏运行需求。支持CPU核心、内存、GPU型号、屏幕参数检测。</div>
+                    </div>
+                </div>
+
+                <!-- 网络速度测试 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);">
+                    <div class="title">🌐 网络速度测试 · Speed Test</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">测试当前网络下载速度，评估在线游戏延迟是否达标。</div>
+                        <button type="button" class="btn btn-sm" id="nettest-btn" onclick="startNetTest()">🚀 开始测速</button>
+                        <div id="nettest-result" style="text-align:center;margin-top:6px;">
+                            <div style="font-size:clamp(20px,2.5vw,28px);font-weight:900;color:var(--accent);" id="nettest-speed">—</div>
+                            <div style="font-size:10px;color:var(--sub);" id="nettest-status">等待测试</div>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>测试网络下载速度，判断是否适合在线游戏。建议20Mbps以上玩竞技游戏。</div>
+                    </div>
+                </div>
+
+                <!-- 游戏性能评分 -->
+                <div class="mini-card" style="border-color:rgba(251,191,36,0.12);">
+                    <div class="title">🎯 游戏性能评分 · Benchmark</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">通过WebGL渲染测试评估设备图形性能，给出游戏性能等级评分。</div>
+                        <button type="button" class="btn btn-sm" onclick="runBenchmark()">⚡ 跑分测试</button>
+                        <div id="benchmark-result" style="text-align:center;margin-top:6px;">
+                            <div style="font-size:clamp(24px,3vw,36px);font-weight:900;color:var(--accent);" id="benchmark-score">—</div>
+                            <div style="font-size:10px;color:var(--sub);" id="benchmark-level">等待测试</div>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>通过WebGL图形渲染压力测试评估设备游戏性能，给出综合评分。10000+为电竞级，5000+为流畅级。</div>
+                    </div>
+                </div>
+
+                <!-- 鼠标轮询率测试 -->
+                <div class="mini-card" style="border-color:rgba(244,114,182,0.12);">
+                    <div class="title">🖱️ 鼠标轮询率测试 · Polling Rate</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">在区域内快速移动鼠标，测试鼠标报告率和响应速度。电竞鼠标通常为1000Hz。</div>
+                        <div id="mouse-test-area" style="width:100%;height:clamp(60px,10vh,80px);background:rgba(244,114,182,0.06);border:1px solid rgba(244,114,182,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--sub);user-select:none;">在此区域内移动鼠标</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px;">
+                            <div style="text-align:center;padding:6px;background:rgba(0,0,0,0.1);border-radius:10px;">
+                                <div style="font-size:9px;color:var(--sub);">事件/秒</div>
+                                <div style="font-size:clamp(16px,2vw,22px);font-weight:700;color:#f472b6;" id="mouse-rate">0</div>
+                            </div>
+                            <div style="text-align:center;padding:6px;background:rgba(0,0,0,0.1);border-radius:10px;">
+                                <div style="font-size:9px;color:var(--sub);">估算Hz</div>
+                                <div style="font-size:clamp(16px,2vw,22px);font-weight:700;color:var(--accent);" id="mouse-hz">0</div>
+                            </div>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>估算鼠标报告率（轮询率），电竞鼠标通常支持1000Hz（1ms延迟），普通鼠标约125Hz（8ms延迟）。</div>
+                    </div>
+                </div>
+
+                <!-- 系统优化清单 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);grid-column:1/-1;">
+                    <div class="title">✅ 系统优化清单 · Optimization Checklist</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">游戏PC系统优化检查清单，参考冠军调试的优化方案。勾选已完成的项目，查看优化建议。</div>
+                        <div id="opt-checklist" style="display:grid;gap:4px;">
+                            <!-- 动态生成 -->
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding:8px 10px;background:rgba(0,255,136,0.04);border-radius:12px;">
+                            <span style="font-size:12px;font-weight:700;color:#00ff88;">优化完成度</span>
+                            <span style="font-size:clamp(16px,2vw,22px);font-weight:900;color:#00ff88;" id="opt-progress">0%</span>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>系统级游戏优化检查清单，涵盖进程调度、电源策略、驱动环境、延迟压缩等。参考冠军调试(championos.cn)专业方案。</div>
+                    </div>
+                </div>
+
+                <!-- 游戏设置推荐 -->
+                <div class="mini-card" style="border-color:rgba(0,245,255,0.12);grid-column:1/-1;">
+                    <div class="title">⚙️ 游戏设置推荐 · Settings Guide</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">根据你的设备性能，推荐最佳游戏画面和性能设置。</div>
+                        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px;">
+                            <select id="game-resolution" style="width:auto;font-size:11px;min-height:32px;padding:4px 8px;border-radius:10px;">
+                                <option value="1080">1920×1080 (1080p)</option>
+                                <option value="1440">2560×1440 (2K)</option>
+                                <option value="2160">3840×2160 (4K)</option>
+                            </select>
+                            <select id="game-fps-target" style="width:auto;font-size:11px;min-height:32px;padding:4px 8px;border-radius:10px;">
+                                <option value="60">目标60FPS</option>
+                                <option value="120">目标120FPS</option>
+                                <option value="144">目标144FPS</option>
+                                <option value="240">目标240FPS</option>
+                            </select>
+                            <button type="button" class="btn btn-sm" onclick="recommendSettings()">📋 推荐设置</button>
+                        </div>
+                        <div class="result" id="settings-result" style="min-height:28px;"><span style="color:var(--sub);">选择参数后点击推荐</span></div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>根据分辨率和目标帧率推荐游戏画面设置（阴影、纹理、抗锯齿等），帮助找到画质与性能的最佳平衡点。</div>
+                    </div>
+                </div>
+
+                <!-- 延迟知识科普 -->
+                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);">
+                    <div class="title">📚 延迟知识科普 · Latency Guide</div>
+                    <div class="content">
+                        <div style="font-size:11px;line-height:1.6;">
+                            <div style="margin-bottom:6px;"><b style="color:var(--accent);">端到端延迟</b> = 鼠标点击 → 系统处理 → 网络传输 → 服务器 → 画面渲染</div>
+                            <div style="display:grid;gap:3px;">
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(0,255,136,0.04);border-radius:6px;"><span>🖱️ 鼠标轮询率</span><span style="color:#00ff88;">1ms (1000Hz)</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(0,245,255,0.04);border-radius:6px;"><span>💻 系统处理</span><span style="color:var(--accent);">2-5ms</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(124,58,237,0.04);border-radius:6px;"><span>🌐 网络传输</span><span style="color:#a78bfa;">10-50ms</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(251,191,36,0.04);border-radius:6px;"><span>🖥️ 画面渲染</span><span style="color:#fbbf24;">4-16ms</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(244,114,182,0.04);border-radius:6px;"><span>📊 显示器</span><span style="color:#f472b6;">1-8ms</span></div>
+                            </div>
+                            <div style="margin-top:6px;padding:6px;background:rgba(0,255,136,0.06);border-radius:8px;font-size:10px;color:#00ff88;">💡 系统优化可降低2-10ms延迟，超频可降低5-15ms，两者叠加效果最佳</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 电竞优化方案展示 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);grid-column:1/-1;">
+                    <div class="title gradient-text">🏆 电竞优化方案 · 参考冠军调试</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:8px;">参考 championos.cn 冠军调试的专业系统优化方案，以下为优化项目展示（仅科普参考，非实际服务）</div>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;">
+                            <div style="padding:12px;background:linear-gradient(145deg,rgba(0,255,136,0.06),rgba(0,0,0,0.1));border:1px solid rgba(0,255,136,0.12);border-radius:14px;">
+                                <div style="font-size:12px;font-weight:700;color:#00ff88;margin-bottom:4px;">OS BASIC · 全民优化</div>
+                                <div style="font-size:10px;color:var(--sub);line-height:1.5;">
+                                    ✅ 专属优化模块部署<br>
+                                    ✅ 全局性能补丁补强<br>
+                                    ✅ DirectX运行库修复<br>
+                                    ✅ CPU-GPU协同优化<br>
+                                    ✅ 内存分页预取优化<br>
+                                    ✅ 手感校准与延迟优化<br>
+                                    ✅ 视觉渲染增强
+                                </div>
+                                <div style="font-size:9px;color:var(--sub);opacity:.5;margin-top:6px;">参考价：¥288 | 30-60min</div>
+                            </div>
+                            <div style="padding:12px;background:linear-gradient(145deg,rgba(0,245,255,0.06),rgba(0,0,0,0.1));border:1px solid rgba(0,245,255,0.12);border-radius:14px;">
+                                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px;">OS MAX · 魔王优化</div>
+                                <div style="font-size:10px;color:var(--sub);line-height:1.5;">
+                                    ✅ 定制纯净系统部署<br>
+                                    ✅ 150+项冗余指令剥离<br>
+                                    ✅ 全局性能补丁补强<br>
+                                    ✅ DirectX全链路修复<br>
+                                    ✅ 内存延迟极限压缩<br>
+                                    ✅ 端到端延迟优化<br>
+                                    ✅ 画质清晰度增强
+                                </div>
+                                <div style="font-size:9px;color:var(--sub);opacity:.5;margin-top:6px;">参考价：¥388 | 60-90min</div>
+                            </div>
+                            <div style="padding:12px;background:linear-gradient(145deg,rgba(124,58,237,0.06),rgba(0,0,0,0.1));border:1px solid rgba(124,58,237,0.12);border-radius:14px;">
+                                <div style="font-size:12px;font-weight:700;color:#a78bfa;margin-bottom:4px;">OC TUNING · 超频调校</div>
+                                <div style="font-size:10px;color:var(--sub);line-height:1.5;">
+                                    ✅ CPU降压超频<br>
+                                    ✅ 内存颗粒极限超频<br>
+                                    ✅ 功耗墙解锁调校<br>
+                                    ✅ 温控曲线优化<br>
+                                    ✅ AMD异步外频<br>
+                                    ✅ 防缩缸专项优化<br>
+                                    ✅ Low帧稳定性改善
+                                </div>
+                                <div style="font-size:9px;color:var(--sub);opacity:.5;margin-top:6px;">参考价：¥328起 | Intel/AMD</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:8px;padding:8px 10px;background:rgba(251,191,36,0.04);border-radius:10px;font-size:10px;color:#fbbf24;line-height:1.5;">⚠️ 以上方案信息参考自 championos.cn 冠军调试官方网站，仅作科普展示。实际系统优化服务请前往官方网站咨询。</div>
+                    </div>
+                </div>
+
+                <!-- 键盘按键测试器 -->
+                <div class="mini-card" style="border-color:rgba(0,245,255,0.12);">
+                    <div class="title">⌨️ 键盘按键测试 · Key Test</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">按下键盘任意键测试按键是否正常工作，支持N-Key Rollover多键同时按下检测。</div>
+                        <div id="keytest-area" style="width:100%;min-height:clamp(60px,10vh,80px);background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,1.2vw,16px);color:var(--sub);user-select:none;cursor:pointer;">点击此处后按键测试</div>
+                        <div id="keytest-result" style="text-align:center;margin-top:6px;font-size:11px;color:var(--sub);">等待按键输入...</div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>检测键盘每个按键是否正常响应，支持多键同时按下检测NKRO。游戏玩家必备检测工具。</div>
+                    </div>
+                </div>
+
+                <!-- 屏幕刷新率检测 -->
+                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);">
+                    <div class="title">🖥️ 屏幕刷新率检测 · Refresh Rate</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">通过动画帧计数检测屏幕实际刷新率。60Hz=普通，120Hz=高刷，144Hz=电竞，240Hz=专业电竞。</div>
+                        <button type="button" class="btn btn-sm" id="rr-start-btn" onclick="startRefreshTest()">🔍 开始检测</button>
+                        <div id="refresh-result" style="text-align:center;margin-top:6px;">
+                            <div style="font-size:clamp(20px,2.5vw,28px);font-weight:900;color:var(--accent);" id="refresh-hz">—</div>
+                            <div style="font-size:10px;color:var(--sub);" id="refresh-level">等待检测</div>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>检测屏幕实际刷新率，判断显示器是否运行在标称刷新率。电竞显示器应≥144Hz。</div>
+                    </div>
+                </div>
+
+                <!-- 鼠标DPI计算器 -->
+                <div class="mini-card" style="border-color:rgba(244,114,182,0.12);">
+                    <div class="title">📐 鼠标DPI计算器 · DPI Calc</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">在屏幕上水平移动鼠标一段距离，计算实际DPI。用于验证鼠标标称DPI是否准确。</div>
+                        <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-bottom:4px;">
+                            <span style="font-size:10px;color:var(--sub);">移动距离(cm):</span>
+                            <input type="number" id="dpi-distance" value="10" min="1" max="100" style="width:60px;font-size:11px;min-height:28px;padding:2px 4px;border-radius:8px;">
+                            <span style="font-size:10px;color:var(--sub);">像素数:</span>
+                            <input type="number" id="dpi-pixels" value="0" min="0" style="width:80px;font-size:11px;min-height:28px;padding:2px 4px;border-radius:8px;">
+                            <button type="button" class="btn btn-sm" onclick="calcDPI()">计算</button>
+                        </div>
+                        <div id="dpi-result" style="text-align:center;font-size:clamp(16px,2vw,22px);font-weight:700;color:#f472b6;">—</div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>通过物理移动距离和屏幕像素位移计算鼠标实际DPI，验证鼠标精度。DPI=像素/英寸。</div>
+                    </div>
+                </div>
+
+                <!-- 色彩感知测试 -->
+                <div class="mini-card" style="border-color:rgba(251,191,36,0.12);">
+                    <div class="title">🎨 色彩感知测试 · Color Test</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">在网格中找出颜色不同的方块，测试屏幕色彩还原能力和视觉敏感度。</div>
+                        <div id="color-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px;width:100%;max-width:200px;margin:0 auto;"></div>
+                        <div id="color-result" style="text-align:center;margin-top:6px;font-size:11px;color:var(--sub);">点击开始测试</div>
+                        <button type="button" class="btn btn-sm" onclick="startColorTest()">🎨 开始</button>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>测试屏幕色彩还原能力和视觉敏感度。能看清越高等级说明屏幕色彩表现越好。</div>
+                    </div>
+                </div>
+
+                <!-- 滚轮速度测试 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);">
+                    <div class="title">🔄 滚轮速度测试 · Scroll Test</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">在此区域快速滚动鼠标滚轮，测试滚轮响应速度和准确性。</div>
+                        <div id="scroll-test-area" style="width:100%;height:clamp(80px,12vh,100px);background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--sub);overflow:hidden;">在此区域滚动鼠标滚轮</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px;">
+                            <div style="text-align:center;padding:6px;background:rgba(0,0,0,0.1);border-radius:10px;">
+                                <div style="font-size:9px;color:var(--sub);">滚动次数</div>
+                                <div style="font-size:clamp(14px,1.8vw,20px);font-weight:700;color:#00ff88;" id="scroll-count">0</div>
+                            </div>
+                            <div style="text-align:center;padding:6px;background:rgba(0,0,0,0.1);border-radius:10px;">
+                                <div style="font-size:9px;color:var(--sub);">速度/秒</div>
+                                <div style="font-size:clamp(14px,1.8vw,20px);font-weight:700;color:var(--accent);" id="scroll-speed">0</div>
+                            </div>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>测试鼠标滚轮的响应速度和准确性。游戏滚轮通常支持无极滚动，电竞需要快速切枪。</div>
+                    </div>
+                </div>
+
+                <!-- 显示器坏点检测 -->
+                <div class="mini-card" style="border-color:rgba(239,68,68,0.12);grid-column:1/-1;">
+                    <div class="title">🔍 显示器坏点检测 · Dead Pixel</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">全屏显示纯色背景，检查显示器是否有坏点、亮点、暗点。点击切换颜色，ESC退出。</div>
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                            <button type="button" class="btn btn-sm" onclick="openDeadPixelTest('#ff0000')">🔴 红色</button>
+                            <button type="button" class="btn btn-sm" onclick="openDeadPixelTest('#00ff00')">🟢 绿色</button>
+                            <button type="button" class="btn btn-sm" onclick="openDeadPixelTest('#0000ff')">🔵 蓝色</button>
+                            <button type="button" class="btn btn-sm" onclick="openDeadPixelTest('#ffffff')">⚪ 白色</button>
+                            <button type="button" class="btn btn-sm" onclick="openDeadPixelTest('#000000')">⚫ 黑色</button>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>全屏纯色检测显示器坏点、亮点和暗点。购买新显示器或二手屏幕必备检测工具。按ESC退出。</div>
+                    </div>
+                </div>
+
+                <!-- 音频延迟测试 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);">
+                    <div class="title">🔊 音频延迟测试 · Audio Latency</div>
+                    <div class="content">
+                        <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">播放测试音并测量从触发到听到的延迟。评估音频设备和系统延迟。</div>
+                        <button type="button" class="btn btn-sm" onclick="startAudioTest()">🔊 开始测试</button>
+                        <div id="audio-latency-result" style="text-align:center;margin-top:6px;font-size:11px;color:var(--sub);">点击按钮开始测试，听到声音时立即点击</div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>测量音频输出延迟，评估声卡和驱动性能。游戏音频延迟应&lt;50ms。</div>
+                    </div>
+                </div>
+
+                <!-- 冠军调试服务链接 -->
+                <div class="mini-card" style="border-color:rgba(0,255,136,0.12);grid-column:1/-1;">
+                    <div class="title gradient-text">🔗 冠军调试官方链接</div>
+                    <div class="content">
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;">
+                            <a href="https://gjts.cn/" target="_blank" rel="noopener" class="tool-card" style="text-align:center;">
+                                <div style="font-size:24px;">🏠</div>
+                                <div class="name">冠军调试主页</div>
+                                <div class="desc">专业系统优化服务</div>
+                            </a>
+                            <a href="https://gjts.cn/about" target="_blank" rel="noopener" class="tool-card" style="text-align:center;">
+                                <div style="font-size:24px;">📖</div>
+                                <div class="name">关于我们</div>
+                                <div class="desc">了解冠军调试团队</div>
+                            </a>
+                            <a href="https://gjts.cn/service" target="_blank" rel="noopener" class="tool-card" style="text-align:center;">
+                                <div style="font-size:24px;">🛠️</div>
+                                <div class="name">服务列表</div>
+                                <div class="desc">查看全部优化方案</div>
+                            </a>
+                            <a href="https://gjts.cn/faq" target="_blank" rel="noopener" class="tool-card" style="text-align:center;">
+                                <div style="font-size:24px;">❓</div>
+                                <div class="name">常见问题</div>
+                                <div class="desc">优化FAQ解答</div>
+                            </a>
+                        </div>
+                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:6px;">⚠️ 以上链接指向 championos.cn 冠军调试官方网站，本站仅做导航参考，不提供实际系统优化服务。</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== 工具导航（500+在线工具） ===== -->
+        <section class="section" id="nav" aria-labelledby="nav-title">
+            <div class="cat-title" id="nav-title">🧭 在线工具导航 · 500+实用工具大全</div>
+            <div style="margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                <input type="text" id="nav-tool-search" placeholder="🔍 搜索工具名称..." style="width:auto;flex:1;min-width:120px;font-size:13px;min-height:38px;border-radius:12px;" oninput="filterNavTools()">
+                <button type="button" class="btn btn-sm" onclick="document.getElementById('nav-tool-search').value='';filterNavTools();">清除</button>
+            </div>
+            <div id="nav-tools-container"></div>
+        </section>
+
         <!-- ===== 教育 ===== -->
         <section class="section" id="edu" aria-labelledby="edu-title">
             <div class="cat-title" id="edu-title" style="font-size:clamp(16px,2vw,26px);"><span class="edu-orbital" aria-hidden="true"></span><span class="edu-title-text">📚 师生教育工具集 · 初中高中全能版</span><span class="edu-scanline" aria-hidden="true"></span></div>
@@ -5330,6 +5906,1018 @@
             setInterval(updateHUD, 5000);
             updateHUD();
         })();
+
+        // ============================================================
+        // 在线工具导航（500+工具）
+        // ============================================================
+        const navTools = [
+            // ===== AI工具 =====
+            { cat: 'AI工具', name: 'DeepSeek', url: 'https://chat.deepseek.com/', icon: '🤖', desc: '深度求索AI大模型对话' },
+            { cat: 'AI工具', name: '豆包AI', url: 'https://www.doubao.com/', icon: '🤖', desc: '字节跳动AI助手' },
+            { cat: 'AI工具', name: 'Gemini', url: 'https://gemini.google.com/', icon: '🤖', desc: '谷歌AI大模型对话' },
+            { cat: 'AI工具', name: 'Trae编程', url: 'https://www.trae.ai/', icon: '💻', desc: 'AI编程辅助工具' },
+            { cat: 'AI工具', name: 'AIPPT', url: 'https://www.aippt.cn/', icon: '📊', desc: 'AI免费生成PPT演示文稿' },
+            { cat: 'AI工具', name: '堆友AI', url: 'https://d.design/', icon: '🎨', desc: 'AI海报绘画视频生成' },
+            { cat: 'AI工具', name: 'LiblibAI', url: 'https://www.liblib.art/', icon: '🎨', desc: 'AI绘画视频创作平台' },
+
+            // ===== 在线转换 =====
+            { cat: '在线转换', name: '颜色转换', url: 'https://fly63.com/tool/color', icon: '🎨', desc: 'RGB/HEX/HSL颜色互转' },
+            { cat: '在线转换', name: '视频转GIF', url: 'https://fly63.com/tool/giftxt', icon: '🎬', desc: '视频快速转GIF动图' },
+            { cat: '在线转换', name: 'HTML/Markdown互转', url: 'https://fly63.com/tool/htmarkdown', icon: '📝', desc: 'HTML和Markdown格式互转' },
+            { cat: '在线转换', name: 'JSON/YAML转换', url: 'https://fly63.com/tool/jsonyaml', icon: '📄', desc: 'JSON与YAML格式互转' },
+            { cat: '在线转换', name: '单位换算', url: 'https://fly63.com/tool/unitable', icon: '📏', desc: '度量衡单位在线换算' },
+            { cat: '在线转换', name: '时间戳转换', url: 'https://fly63.com/tool/etc/#?id=4', icon: '⏰', desc: 'Unix时间戳与日期互转' },
+            { cat: '在线转换', name: 'URL编码解码', url: 'https://fly63.com/tool/etc/#?id=3', icon: '🔗', desc: 'URL网址编码解码' },
+            { cat: '在线转换', name: '进制转换', url: 'https://fly63.com/tool/radix', icon: '🔢', desc: '二进制八进制十进制十六进制互转' },
+            { cat: '在线转换', name: '人民币大写', url: 'https://fly63.com/tool/renmingbi', icon: '💰', desc: '数字金额转人民币大写' },
+            { cat: '在线转换', name: '中文转拼音', url: 'https://fly63.com/tool/pinyin', icon: '📖', desc: '汉字转拼音带声调' },
+            { cat: '在线转换', name: '简繁转换', url: 'https://fly63.com/tool/fantizi', icon: '📖', desc: '简体繁体字互转' },
+            { cat: '在线转换', name: 'ASCII艺术', url: 'https://fly63.com/tool/taag', icon: '🔤', desc: '文本转ASCII字符画' },
+            { cat: '在线转换', name: 'JSON转Go', url: 'https://fly63.com/tool/json2go', icon: '🔧', desc: 'JSON转Go struct对象' },
+            { cat: '在线转换', name: '大小写转换', url: 'https://fly63.com/tool/daxiaoxie', icon: '🔤', desc: '英文字母大小写空格驼峰转换' },
+            { cat: '在线转换', name: 'XML/JSON互转', url: 'https://fly63.com/tool/xml2json', icon: '📄', desc: 'XML与JSON格式互转' },
+            { cat: '在线转换', name: 'ASCII码转换', url: 'https://fly63.com/tool/asciiConvert', icon: '🔤', desc: 'ASCII码与字符互转' },
+            { cat: '在线转换', name: '图片转Base64', url: 'https://fly63.com/tool/base64', icon: '🖼️', desc: '图片转Base64编码数据' },
+            { cat: '在线转换', name: '原码反码补码', url: 'https://fly63.com/tool/numCode', icon: '🔢', desc: '计算机原码反码补码计算' },
+            { cat: '在线转换', name: '图片转PDF', url: 'https://fly63.com/tool/image-to-pdf', icon: '📄', desc: '在线图片转PDF文件' },
+            { cat: '在线转换', name: '位运算计算器', url: 'https://fly63.com/tool/bitwise', icon: '🔢', desc: '与或异或取反左移右移' },
+            { cat: '在线转换', name: '文本与二进制', url: 'https://fly63.com/tool/text_binary', icon: '🔢', desc: '文本与二进制互转' },
+            { cat: '在线转换', name: '存储单位换算', url: 'https://fly63.com/tool/storage_calculator', icon: '💾', desc: '计算机存储单位计算' },
+            { cat: '在线转换', name: 'CSV转Excel', url: 'https://fly63.com/tool/csv2excel', icon: '📊', desc: 'CSV格式转Excel文件' },
+            { cat: '在线转换', name: '文字转语音', url: 'https://fly63.com/tool/text_voice', icon: '🔊', desc: '文本在线语音朗读' },
+            { cat: '在线转换', name: '坐标转换', url: 'https://fly63.com/tool/coordinate', icon: '📍', desc: '地理坐标格式互转' },
+            { cat: '在线转换', name: '货币兑换', url: 'https://fly63.com/php/huilv', icon: '💰', desc: '国际货币汇率换算' },
+            { cat: '在线转换', name: '罗马数字', url: 'https://fly63.com/tool/num_roman', icon: '🔢', desc: '阿拉伯数字与罗马数字互转' },
+
+            // ===== 加密解密 =====
+            { cat: '加密解密', name: 'Base64/AES/DES', url: 'https://fly63.com/tool/cipher', icon: '🔒', desc: 'Base64 AES DES加密解密' },
+            { cat: '加密解密', name: 'JS加密混淆', url: 'https://fly63.com/tool/jsblur', icon: '🔒', desc: 'JavaScript代码加密混淆压缩' },
+            { cat: '加密解密', name: '文本隐藏加密', url: 'https://fly63.com/tool/txtencrypt', icon: '🔒', desc: '在文本中隐藏加密信息' },
+            { cat: '加密解密', name: 'DES加密', url: 'https://fly63.com/tool/des', icon: '🔒', desc: 'DES在线加密解密' },
+            { cat: '加密解密', name: 'MD5加密', url: 'https://fly63.com/tool/md5', icon: '🔒', desc: 'MD5在线哈希加密' },
+            { cat: '加密解密', name: '随机密码生成', url: 'https://fly63.com/tool/password', icon: '🔑', desc: '随机密码在线生成' },
+            { cat: '加密解密', name: '摩斯密码', url: 'https://fly63.com/tool/morse', icon: '📡', desc: '摩斯电码编码解码' },
+            { cat: '加密解密', name: '密码安全检测', url: 'https://fly63.com/tool/passafe', icon: '🔑', desc: '密码强度安全性在线检测' },
+            { cat: '加密解密', name: 'Punycode', url: 'https://fly63.com/tool/punycode', icon: '🔗', desc: 'Punycode编码解码' },
+            { cat: '加密解密', name: '2FA验证码', url: 'https://fly63.com/tool/2fa', icon: '🔐', desc: '双因素认证验证码管理' },
+            { cat: '加密解密', name: 'Base32', url: 'https://fly63.com/tool/base32', icon: '🔒', desc: 'Base32加密解密' },
+            { cat: '加密解密', name: 'Gzip压缩', url: 'https://fly63.com/tool/gzip', icon: '📦', desc: '文本Gzip压缩解压' },
+            { cat: '加密解密', name: 'RC4加密', url: 'https://fly63.com/tool/rc4', icon: '🔒', desc: 'RC4在线加密解密' },
+            { cat: '加密解密', name: '文件Hash', url: 'https://fly63.com/tool/filehash', icon: '📄', desc: '文件哈希值计算' },
+            { cat: '加密解密', name: 'RSA密钥', url: 'https://fly63.com/tool/rsakey', icon: '🔐', desc: 'RSA密钥生成与签名验证' },
+            { cat: '加密解密', name: 'CRC校验', url: 'https://fly63.com/tool/crc', icon: '✅', desc: 'CRC循环冗余校验计算' },
+            { cat: '加密解密', name: '凯撒密码', url: 'https://fly63.com/tool/caesarCipher', icon: '📜', desc: '凯撒密码加密解密' },
+            { cat: '加密解密', name: 'JWT解码', url: 'https://fly63.com/tool/jwt', icon: '🔑', desc: 'JWT公钥解密在线解码' },
+            { cat: '加密解密', name: '国密SM2', url: 'https://fly63.com/tool/sm2', icon: '🔒', desc: '国密SM2加密解密算法' },
+            { cat: '加密解密', name: '国密SM3', url: 'https://fly63.com/tool/sm3', icon: '🔒', desc: 'SM3散列哈希算法' },
+            { cat: '加密解密', name: '国密SM4', url: 'https://fly63.com/tool/sm4', icon: '🔒', desc: '国密SM4加密解密' },
+            { cat: '加密解密', name: 'Rot13', url: 'https://fly63.com/tool/rot13', icon: '🔒', desc: 'Rot13在线编码解码' },
+            { cat: '加密解密', name: '维吉尼亚密码', url: 'https://fly63.com/tool/vigenere', icon: '📜', desc: '维吉尼亚密码转换' },
+            { cat: '加密解密', name: 'Brotli压缩', url: 'https://fly63.com/tool/brotli', icon: '📦', desc: 'Brotli压缩解压算法' },
+            { cat: '加密解密', name: 'chmod权限', url: 'https://fly63.com/tool/chmod', icon: '🔧', desc: 'Linux chmod权限生成器' },
+            { cat: '加密解密', name: 'htpasswd', url: 'https://fly63.com/tool/htpasswd', icon: '🔑', desc: 'Apache htpasswd在线生成' },
+            { cat: '加密解密', name: 'HMAC', url: 'https://fly63.com/tool/hmac', icon: '🔒', desc: 'HMAC算法加密计算' },
+
+            // ===== 站长工具 =====
+            { cat: '站长工具', name: 'Markdown编辑器', url: 'https://fly63.com/tool/markdown', icon: '📝', desc: 'Markdown在线编辑预览' },
+            { cat: '站长工具', name: '域名IP查询', url: 'https://fly63.com/php/ipquery', icon: '🌐', desc: '域名IP地址查询' },
+            { cat: '站长工具', name: '网页预览', url: 'https://fly63.com/tool/preview', icon: '📱', desc: '自适应网页多端预览' },
+            { cat: '站长工具', name: 'Meta标签生成', url: 'https://fly63.com/tool/meta', icon: '🏷️', desc: 'HTML meta标签在线生成' },
+            { cat: '站长工具', name: '短链生成', url: 'https://fly63.com/php/shorturl', icon: '🔗', desc: '免费短链接生成还原' },
+            { cat: '站长工具', name: 'Robots生成', url: 'https://fly63.com/tool/robots', icon: '🤖', desc: 'Robots.txt文件生成器' },
+            { cat: '站长工具', name: 'Whois查询', url: 'https://fly63.com/php/whois', icon: '🌐', desc: '域名Whois信息查询' },
+            { cat: '站长工具', name: 'ICP备案查询', url: 'https://fly63.com/php/icp', icon: '📋', desc: '网站域名备案查询' },
+            { cat: '站长工具', name: 'UA检测', url: 'https://fly63.com/php/useragent', icon: '🔍', desc: '浏览器UserAgent检测' },
+            { cat: '站长工具', name: '301跳转生成', url: 'https://fly63.com/tool/redirect', icon: '↪️', desc: '网站301跳转代码生成' },
+            { cat: '站长工具', name: 'm3u8提取', url: 'https://fly63.com/tool/m3u8', icon: '🎬', desc: 'm3u8视频在线提取' },
+            { cat: '站长工具', name: '微信拦截检测', url: 'https://fly63.com/php/wxCheck', icon: '💬', desc: '微信域名拦截检测' },
+            { cat: '站长工具', name: '敏感词检测', url: 'https://fly63.com/tool/textcensoring', icon: '⚠️', desc: '敏感词违禁词检测' },
+            { cat: '站长工具', name: '桌面快捷方式', url: 'https://fly63.com/tool/shortcut', icon: '🖥️', desc: '生成网址桌面快捷方式' },
+            { cat: '站长工具', name: 'MAC地址生成', url: 'https://fly63.com/tool/mac-generate', icon: '🔧', desc: '物理MAC地址生成器' },
+            { cat: '站长工具', name: 'DNS解析查询', url: 'https://fly63.com/php/dns', icon: '🌐', desc: '域名DNS解析记录查询' },
+            { cat: '站长工具', name: 'SSL证书查询', url: 'https://fly63.com/php/sslquery', icon: '🔐', desc: 'SSL证书过期批量查询' },
+            { cat: '站长工具', name: 'CDN检测', url: 'https://fly63.com/tool/cdn_check', icon: '🌐', desc: '在线网站CDN检测' },
+            { cat: '站长工具', name: '关键词密度', url: 'https://fly63.com/tool/keyword_check', icon: '📊', desc: '网页关键词密度检测' },
+            { cat: '站长工具', name: 'Gzip检测', url: 'https://fly63.com/php/gzipcheck', icon: '📦', desc: '网页Gzip压缩检测' },
+            { cat: '站长工具', name: '蜘蛛模拟', url: 'https://fly63.com/tool/web_spider', icon: '🕷️', desc: '搜索引擎蜘蛛模拟抓取' },
+            { cat: '站长工具', name: '日志分析', url: 'https://fly63.com/tool/web_log', icon: '📊', desc: '网站日志解析流量分析' },
+            { cat: '站长工具', name: '文本相似度', url: 'https://fly63.com/tool/similar', icon: '📋', desc: '文章相似度检测' },
+            { cat: '站长工具', name: '百度搜索', url: 'https://fly63.com/tool/search_baidu', icon: '🔍', desc: '百度高级搜索工具' },
+            { cat: '站长工具', name: 'Google搜索', url: 'https://fly63.com/tool/search_google', icon: '🔍', desc: 'Google高级搜索工具' },
+            { cat: '站长工具', name: 'IP计算器', url: 'https://fly63.com/tool/ipnet_calculator', icon: '🌐', desc: '网络和IP地址计算' },
+            { cat: '站长工具', name: 'HTTP3检测', url: 'https://fly63.com/php/http3check', icon: '🌐', desc: '网站HTTP3协议检测' },
+            { cat: '站长工具', name: 'Sitemap提取', url: 'https://fly63.com/tool/sitemap_url', icon: '🗺️', desc: 'Sitemap URL提取器' },
+
+            // ===== 代码开发 =====
+            { cat: '代码开发', name: '在线IDE', url: 'https://fly63.com/tool/editoronline', icon: '💻', desc: '代码在线编辑器IDE' },
+            { cat: '代码开发', name: 'HTTP模拟', url: 'https://fly63.com/php/http', icon: '🌐', desc: 'HTTP在线模拟测试' },
+            { cat: '代码开发', name: '文本比较', url: 'https://fly63.com/tool/textdiff', icon: '📄', desc: 'Diff在线文本比较' },
+            { cat: '代码开发', name: 'HTML转JS', url: 'https://fly63.com/tool/html2js', icon: '🔧', desc: 'HTML转JavaScript代码' },
+            { cat: '代码开发', name: 'UUID生成', url: 'https://fly63.com/tool/uuid', icon: '🆔', desc: 'UUID唯一识别码生成' },
+            { cat: '代码开发', name: 'curl转代码', url: 'https://fly63.com/tool/curl2code', icon: '🔧', desc: 'curl命令转代码' },
+            { cat: '代码开发', name: 'SQL格式化', url: 'https://fly63.com/tool/sqlformat', icon: '🗄️', desc: 'SQL代码格式化美化' },
+            { cat: '代码开发', name: 'JSON解析', url: 'https://fly63.com/tool/JsonFormat', icon: '📄', desc: 'JSON在线解析格式化' },
+            { cat: '代码开发', name: '代码转图片', url: 'https://fly63.com/tool/code2img', icon: '📸', desc: '代码转图片代码截图' },
+            { cat: '代码开发', name: '正则调试', url: 'https://fly63.com/tool/regex', icon: '🔧', desc: '正则表达式调试工具' },
+            { cat: '代码开发', name: '正则测试', url: 'https://fly63.com/tool/regextest', icon: '🔧', desc: '正则表达式在线测试' },
+            { cat: '代码开发', name: '在线运行', url: 'https://fly63.com/tool/runcode', icon: '▶️', desc: 'HTML/CSS/JS在线运行' },
+            { cat: '代码开发', name: 'HTML压缩', url: 'https://fly63.com/tool/htmcpr', icon: '📦', desc: 'HTML在线压缩工具' },
+            { cat: '代码开发', name: 'Linux命令', url: 'https://fly63.com/tool/linux', icon: '🐧', desc: 'Linux常用命令查询' },
+            { cat: '代码开发', name: 'Crontab', url: 'https://fly63.com/tool/crontab', icon: '⏰', desc: 'Crontab表达式生成器' },
+            { cat: '代码开发', name: 'VIM模拟', url: 'https://fly63.com/tool/vim', icon: '📝', desc: 'VIM编辑器命令学习' },
+            { cat: '代码开发', name: '变量命名', url: 'https://fly63.com/php/codevar', icon: '🔤', desc: '程序员代码变量命名' },
+            { cat: '代码开发', name: 'JS代码片段', url: 'https://fly63.com/tool/1loc', icon: '📜', desc: '275个简洁JS代码片段' },
+            { cat: '代码开发', name: 'WebSocket', url: 'https://fly63.com/tool/websocket', icon: '🔌', desc: 'WebSocket在线测试' },
+            { cat: '代码开发', name: 'XML格式化', url: 'https://fly63.com/tool/xml', icon: '📄', desc: 'XML格式化压缩解析' },
+            { cat: '代码开发', name: 'URL解析', url: 'https://fly63.com/tool/urlAnal', icon: '🔗', desc: 'URL地址参数解析' },
+            { cat: '代码开发', name: 'SQLite', url: 'https://fly63.com/tool/sqlite', icon: '🗄️', desc: 'SQLite数据库查看器' },
+            { cat: '代码开发', name: 'HTTP状态码', url: 'https://fly63.com/tool/httpCode', icon: '📋', desc: 'HTTP状态码在线查询' },
+            { cat: '代码开发', name: '端口查询', url: 'https://fly63.com/tool/port', icon: '🔌', desc: '常用端口及协议查询' },
+            { cat: '代码开发', name: '目录树', url: 'https://fly63.com/tool/folder_tree', icon: '📁', desc: '文件夹目录树生成' },
+            { cat: '代码开发', name: 'ADB命令', url: 'https://fly63.com/tool/adb', icon: '📱', desc: 'ADB常用命令大全' },
+            { cat: '代码开发', name: '语言代码', url: 'https://fly63.com/tool/langcodes', icon: '🌐', desc: '国家语言代码对照表' },
+            { cat: '代码开发', name: 'PHP函数', url: 'https://fly63.com/tool/phpfun', icon: '🐘', desc: 'PHP常用函数参考手册' },
+            { cat: '代码开发', name: 'VSCode快捷键', url: 'https://fly63.com/tool/shortcut_vscode', icon: '⌨️', desc: 'VSCode快捷键查询' },
+            { cat: '代码开发', name: 'HTML转义', url: 'https://fly63.com/tool/html_escape', icon: '🔧', desc: 'HTML代码字符转义' },
+            { cat: '代码开发', name: 'Python运行', url: 'https://fly63.com/tool/python3', icon: '🐍', desc: 'Python在线运行工具' },
+            { cat: '代码开发', name: 'CMD命令', url: 'https://fly63.com/tool/cmd_query', icon: '🖥️', desc: 'Windows CMD命令大全' },
+            { cat: '代码开发', name: 'Shell格式化', url: 'https://fly63.com/tool/shell', icon: '📜', desc: 'Shell脚本格式化压缩' },
+            { cat: '代码开发', name: 'GitHub加速', url: 'https://fly63.com/tool/github_proxy', icon: '🚀', desc: 'GitHub下载加速器' },
+
+            // ===== CSS样式 =====
+            { cat: 'CSS样式', name: 'CSS三角形', url: 'https://fly63.com/tool/cstriangle', icon: '▲', desc: 'CSS三角形生成器' },
+            { cat: 'CSS样式', name: '精灵图', url: 'https://fly63.com/tool/sprite', icon: '🎨', desc: 'CSS Sprite雪碧图生成' },
+            { cat: 'CSS样式', name: '路径裁剪', url: 'https://fly63.com/tool/clippath', icon: '✂️', desc: 'CSS clip-path路径裁剪' },
+            { cat: 'CSS样式', name: '渐变色', url: 'https://fly63.com/tool/gradient', icon: '🎨', desc: 'CSS渐变色生成器' },
+            { cat: 'CSS样式', name: 'SVG变形', url: 'https://fly63.com/tool/svgchange', icon: '🎨', desc: 'SVG图形路径变形' },
+            { cat: 'CSS样式', name: 'CSS3生成器', url: 'https://fly63.com/tool/cs3', icon: '🎨', desc: 'CSS3在线样式生成' },
+            { cat: 'CSS样式', name: '新拟态', url: 'https://fly63.com/tool/neumorphism', icon: '🎨', desc: 'Neumorphism新拟态设计' },
+            { cat: 'CSS样式', name: '玻璃拟物', url: 'https://fly63.com/tool/glassmorphism', icon: '🪟', desc: 'Glassmorphism玻璃拟物化' },
+            { cat: 'CSS样式', name: 'Flexbox', url: 'https://fly63.com/tool/flexbox', icon: '📐', desc: 'CSS3 Flexbox在线演示' },
+            { cat: 'CSS样式', name: '颜色取色器', url: 'https://fly63.com/tool/rgbcolor', icon: '🎨', desc: '网页颜色在线取色器' },
+            { cat: 'CSS样式', name: 'HTML5标签', url: 'https://fly63.com/tool/html5', icon: '📋', desc: 'HTML5标签元素周期表' },
+            { cat: 'CSS样式', name: 'Animate.css', url: 'https://fly63.com/tool/animate', icon: '✨', desc: 'Animate.css动画演示' },
+            { cat: 'CSS样式', name: 'CSS按钮', url: 'https://fly63.com/tool/csbtn', icon: '🔘', desc: 'CSS按钮生成器' },
+            { cat: 'CSS样式', name: '阴影', url: 'https://fly63.com/tool/shadow', icon: '🌑', desc: 'CSS box-shadow阴影' },
+            { cat: 'CSS样式', name: '配色表', url: 'https://fly63.com/tool/colorMatch', icon: '🎨', desc: '网页颜色搭配方案' },
+            { cat: 'CSS样式', name: 'Loading动画', url: 'https://fly63.com/tool/loading', icon: '⏳', desc: 'CSS loading加载动画' },
+            { cat: 'CSS样式', name: '分割线', url: 'https://fly63.com/tool/cssplit', icon: '➖', desc: 'CSS分割线在线制作' },
+            { cat: 'CSS样式', name: '气泡', url: 'https://fly63.com/tool/bubble', icon: '💬', desc: 'CSS三角边框气泡生成' },
+            { cat: 'CSS样式', name: '文字阴影', url: 'https://fly63.com/tool/text_shadow', icon: '📝', desc: 'CSS text-shadow生成器' },
+            { cat: 'CSS样式', name: '贝塞尔曲线', url: 'https://fly63.com/tool/cubic_bezier', icon: '📐', desc: 'CSS3贝塞尔曲线可视化' },
+            { cat: 'CSS样式', name: 'PX转REM', url: 'https://fly63.com/tool/px_rem', icon: '📏', desc: 'CSS PX转REM工具' },
+            { cat: 'CSS样式', name: '颜色代码表', url: 'https://fly63.com/tool/css_colorname', icon: '🎨', desc: 'CSS颜色代码对照表' },
+            { cat: 'CSS样式', name: 'SASS转CSS', url: 'https://fly63.com/tool/sass_css', icon: '🎨', desc: 'SASS/SCSS编译成CSS' },
+
+            // ===== 二维码 =====
+            { cat: '二维码', name: '二维码生成', url: 'https://fly63.com/tool/ewm', icon: '📱', desc: '二维码在线生成器' },
+            { cat: '二维码', name: '二维码解码', url: 'https://fly63.com/php/decoder', icon: '📱', desc: '二维码在线解码' },
+            { cat: '二维码', name: 'WIFI二维码', url: 'https://fly63.com/tool/wifiewm', icon: '📶', desc: 'WIFI二维码生成器' },
+            { cat: '二维码', name: '条形码', url: 'https://fly63.com/php/barcode', icon: '📊', desc: '条形码生成器' },
+            { cat: '二维码', name: '收款码合一', url: 'https://fly63.com/tool/alipay', icon: '💰', desc: '支付宝微信收款码二合一' },
+            { cat: '二维码', name: '公众号码', url: 'https://fly63.com/tool/wx_qrcode', icon: '💬', desc: '微信公众号二维码生成' },
+            { cat: '二维码', name: '图片提取码', url: 'https://fly63.com/tool/qrcode_extract', icon: '📱', desc: '图片二维码提取' },
+            { cat: '二维码', name: '批量生成', url: 'https://fly63.com/tool/qrcode_batch', icon: '📱', desc: '二维码批量生成器' },
+            { cat: '二维码', name: '条形码批量', url: 'https://fly63.com/tool/barcode_batch', icon: '📊', desc: '条形码批量生成' },
+
+            // ===== 图片相关 =====
+            { cat: '图片工具', name: '图片压缩', url: 'https://fly63.com/tool/picys', icon: '🖼️', desc: '图片批量压缩工具' },
+            { cat: '图片工具', name: '格式转换', url: 'https://fly63.com/tool/imgformat', icon: '🖼️', desc: 'webp/png/jpeg格式转换' },
+            { cat: '图片工具', name: 'PDF转图片', url: 'https://fly63.com/tool/pdf2img', icon: '📄', desc: 'PDF文件转图片' },
+            { cat: '图片工具', name: 'ASCII字符画', url: 'https://fly63.com/tool/img2char', icon: '🔤', desc: '图片转ASCII字符画' },
+            { cat: '图片工具', name: '主色调', url: 'https://fly63.com/tool/imagecolor', icon: '🎨', desc: '图片主色调获取' },
+            { cat: '图片工具', name: '占位图', url: 'https://fly63.com/tool/bitmap', icon: '🖼️', desc: '占位图在线生成' },
+            { cat: '图片工具', name: 'ICO图标', url: 'https://fly63.com/php/ico', icon: '🖼️', desc: '图片转ICO图标' },
+            { cat: '图片工具', name: '思维导图', url: 'https://fly63.com/tool/rmind', icon: '🧠', desc: '在线思维导图' },
+            { cat: '图片工具', name: '图片裁剪', url: 'https://fly63.com/tool/imgcut', icon: '✂️', desc: '在线图片裁剪' },
+            { cat: '图片工具', name: 'SVG编辑器', url: 'https://fly63.com/tool/svgeditor', icon: '🎨', desc: 'SVG在线编辑器' },
+            { cat: '图片工具', name: '加水印', url: 'https://fly63.com/tool/watermark', icon: '💧', desc: '图片加水印工具' },
+            { cat: '图片工具', name: '流程图', url: 'https://fly63.com/tool/drawsvg', icon: '📊', desc: '在线流程图时序图' },
+            { cat: '图片工具', name: '视频截图', url: 'https://fly63.com/tool/videoposter', icon: '🎬', desc: '在线视频截图' },
+            { cat: '图片工具', name: '九宫格', url: 'https://fly63.com/tool/jiugongge', icon: '🖼️', desc: '生成九宫格图片' },
+            { cat: '图片工具', name: 'GIF分解', url: 'https://fly63.com/tool/gifres', icon: '🎬', desc: 'GIF分解成序列帧' },
+            { cat: '图片工具', name: '滤镜', url: 'https://fly63.com/tool/imgfilter', icon: '🎨', desc: '照片加滤镜特效' },
+            { cat: '图片工具', name: '图片编辑', url: 'https://fly63.com/tool/imgedit', icon: '🖼️', desc: '在线图片编辑器' },
+            { cat: '图片工具', name: 'Favicon', url: 'https://fly63.com/tool/favicon', icon: '🖼️', desc: '网站Favicon图标制作' },
+            { cat: '图片工具', name: '文字提取', url: 'https://fly63.com/tool/tesseract', icon: '📝', desc: '图片文字OCR提取' },
+            { cat: '图片工具', name: '白板', url: 'https://fly63.com/tool/whiteboard', icon: '📋', desc: '在线画桌白板工具' },
+            { cat: '图片工具', name: '像素画', url: 'https://fly63.com/tool/pixeldraw', icon: '🎨', desc: '在线像素画板' },
+            { cat: '图片工具', name: '马赛克', url: 'https://fly63.com/tool/pixelit', icon: '🎨', desc: '照片转像素风格' },
+            { cat: '图片工具', name: '截图美化', url: 'https://fly63.com/tool/shotPhoto', icon: '📸', desc: '在线截图美化工具' },
+            { cat: '图片工具', name: '镜像翻转', url: 'https://fly63.com/tool/imgFlip', icon: '🔄', desc: '图片镜像翻转' },
+            { cat: '图片工具', name: '文字转图片', url: 'https://fly63.com/tool/textToImg', icon: '📝', desc: '文字生成图片' },
+            { cat: '图片工具', name: '修改DPI', url: 'https://fly63.com/tool/imgDpi', icon: '🖼️', desc: '在线修改图片DPI' },
+            { cat: '图片工具', name: '黑白转换', url: 'https://fly63.com/tool/imgGray', icon: '🖼️', desc: '彩色图片转黑白' },
+            { cat: '图片工具', name: '图片拼接', url: 'https://fly63.com/tool/imgStitching', icon: '🖼️', desc: '多张照片拼成一张' },
+            { cat: '图片工具', name: 'GIF制作', url: 'https://fly63.com/tool/gifmake', icon: '🎬', desc: 'GIF图片在线制作' },
+            { cat: '图片工具', name: 'EXIF查看', url: 'https://fly63.com/tool/imgexif', icon: '📋', desc: '照片EXIF信息查看' },
+            { cat: '图片工具', name: 'Mermaid', url: 'https://fly63.com/tool/mermaid', icon: '📊', desc: 'Mermaid流程图编辑器' },
+            { cat: '图片工具', name: '图片转SVG', url: 'https://fly63.com/tool/imgtosvg', icon: '🎨', desc: '图片转SVG格式' },
+            { cat: '图片工具', name: 'OCR识别', url: 'https://fly63.com/tool/img_ocr', icon: '📝', desc: 'OCR图片文字识别' },
+            { cat: '图片工具', name: '色盲检测', url: 'https://fly63.com/tool/color_blindness', icon: '👁️', desc: '红绿色盲色弱检测' },
+            { cat: '图片工具', name: '证件照排版', url: 'https://fly63.com/tool/print_img', icon: '🪪', desc: '证件照排版工具' },
+            { cat: '图片工具', name: '证件照裁剪', url: 'https://fly63.com/tool/print_cropper', icon: '🪪', desc: '标准证件照剪切' },
+            { cat: '图片工具', name: '故障艺术', url: 'https://fly63.com/tool/img_glitch', icon: '🎨', desc: 'Glitch Art故障风格图片' },
+            { cat: '图片工具', name: '哈希头像', url: 'https://fly63.com/tool/hash_avatar', icon: '👤', desc: '哈希头像生成器' },
+
+            // ===== 生活工具 =====
+            { cat: '生活工具', name: '公历农历', url: 'https://fly63.com/tool/calendar', icon: '📅', desc: '公历农历转换查询' },
+            { cat: '生活工具', name: '手机归属', url: 'https://fly63.com/php/mobile', icon: '📱', desc: '手机号码归属地查询' },
+            { cat: '生活工具', name: '亲戚计算', url: 'https://fly63.com/tool/relationship', icon: '👨‍👩‍👧‍👦', desc: '中国亲戚关系计算器' },
+            { cat: '生活工具', name: '区号时差', url: 'https://fly63.com/tool/areacode', icon: '🌍', desc: '世界各国区号时差查询' },
+            { cat: '生活工具', name: '年龄计算', url: 'https://fly63.com/tool/nianling', icon: '🎂', desc: '在线年龄计算器' },
+            { cat: '生活工具', name: '房贷计算', url: 'https://fly63.com/tool/fangdai', icon: '🏠', desc: '房贷计算器' },
+            { cat: '生活工具', name: '心理测试', url: 'https://fly63.com/tool/test', icon: '🧠', desc: '在线心理测试工具' },
+            { cat: '生活工具', name: '图表工具', url: 'https://fly63.com/tool/chart', icon: '📊', desc: '饼状折线柱状图生成' },
+            { cat: '生活工具', name: '元素周期表', url: 'https://fly63.com/tool/yuansu', icon: '🧪', desc: '化学元素周期表查询' },
+            { cat: '生活工具', name: '个税计算', url: 'https://fly63.com/tool/gerenshui', icon: '💰', desc: '个人所得税计算器' },
+            { cat: '生活工具', name: '复利计算', url: 'https://fly63.com/tool/fuli', icon: '💰', desc: '复利增值在线计算' },
+            { cat: '生活工具', name: '周公解梦', url: 'https://fly63.com/tool/dream', icon: '💭', desc: '周公解梦查询大全' },
+            { cat: '生活工具', name: '花语大全', url: 'https://fly63.com/tool/huayu', icon: '🌸', desc: '查询各种花的花语' },
+            { cat: '生活工具', name: '天数计算', url: 'https://fly63.com/tool/day', icon: '📅', desc: '时间天数间隔计算器' },
+            { cat: '生活工具', name: '垃圾分类', url: 'https://fly63.com/tool/garbage', icon: '🗑️', desc: '生活垃圾分类查询' },
+            { cat: '生活工具', name: '古诗词起名', url: 'https://fly63.com/tool/qiming', icon: '📖', desc: '古诗词在线起名取名' },
+            { cat: '生活工具', name: '邮政编码', url: 'https://fly63.com/tool/zipcode', icon: '📮', desc: '国内邮政编码大全' },
+            { cat: '生活工具', name: '世界时间', url: 'https://fly63.com/tool/worldtime', icon: '🌍', desc: '世界各地时间转换' },
+            { cat: '生活工具', name: '百家姓', url: 'https://fly63.com/tool/bjx', icon: '📖', desc: '百家姓排名查询' },
+            { cat: '生活工具', name: '银行卡查询', url: 'https://fly63.com/tool/bankinfo', icon: '💳', desc: '银行卡号归属地查询' },
+            { cat: '生活工具', name: '车牌查询', url: 'https://fly63.com/tool/chepai', icon: '🚗', desc: '车牌号码归属地查询' },
+            { cat: '生活工具', name: '秒表', url: 'https://fly63.com/tool/miaobiao', icon: '⏱️', desc: '在线秒表计时器' },
+            { cat: '生活工具', name: '血型遗传', url: 'https://fly63.com/tool/xuexing', icon: '🩸', desc: '子女血型遗传查询' },
+            { cat: '生活工具', name: '尺码对照', url: 'https://fly63.com/tool/size', icon: '👕', desc: '服装尺码对照表' },
+            { cat: '生活工具', name: '老黄历', url: 'https://fly63.com/tool/laohuangli', icon: '📅', desc: '老黄历吉日查询' },
+            { cat: '生活工具', name: '白噪音', url: 'https://fly63.com/tool/relax', icon: '🎵', desc: '白噪音自然声音' },
+            { cat: '生活工具', name: '食物嘌呤', url: 'https://fly63.com/tool/purine', icon: '🍖', desc: '食物嘌呤查询' },
+            { cat: '生活工具', name: '营养成分', url: 'https://fly63.com/tool/food', icon: '🥗', desc: '食物营养成分查询' },
+            { cat: '生活工具', name: '饮水量', url: 'https://fly63.com/tool/heshui', icon: '💧', desc: '每日喝水量计算' },
+            { cat: '生活工具', name: '电话大全', url: 'https://fly63.com/tool/phone', icon: '📞', desc: '常用电话号码大全' },
+            { cat: '生活工具', name: '番茄钟', url: 'https://fly63.com/tool/tomato', icon: '🍅', desc: '番茄钟计时器' },
+            { cat: '生活工具', name: '抛硬币', url: 'https://fly63.com/tool/coin', icon: '🪙', desc: '抛硬币做决定' },
+            { cat: '生活工具', name: '节日大全', url: 'https://fly63.com/tool/jieri', icon: '🎉', desc: '世界节日查询' },
+            { cat: '生活工具', name: '简历制作', url: 'https://fly63.com/tool/vita', icon: '📄', desc: '简历模板在线制作' },
+            { cat: '生活工具', name: '生肖查询', url: 'https://fly63.com/tool/shengxiao', icon: '🐉', desc: '十二生肖查询' },
+            { cat: '生活工具', name: '万年历', url: 'https://fly63.com/tool/wannianli', icon: '📅', desc: '在线万年历查询' },
+            { cat: '生活工具', name: '冥想', url: 'https://fly63.com/tool/mingxiang', icon: '🧘', desc: '在线冥想减压助眠' },
+            { cat: '生活工具', name: '尺子', url: 'https://fly63.com/tool/chizi', icon: '📏', desc: '尺子在线测量' },
+            { cat: '生活工具', name: '在线时钟', url: 'https://fly63.com/tool/shizhong', icon: '🕐', desc: '模拟钟表在线时钟' },
+            { cat: '生活工具', name: '睡眠周期', url: 'https://fly63.com/tool/sleep', icon: '😴', desc: '睡眠周期计算器' },
+            { cat: '生活工具', name: '退休年龄', url: 'https://fly63.com/tool/retireAge', icon: '👴', desc: '在线退休年龄计算' },
+            { cat: '生活工具', name: '散点图', url: 'https://fly63.com/tool/chartScatter', icon: '📊', desc: '散点图在线制作' },
+            { cat: '生活工具', name: '雷达图', url: 'https://fly63.com/tool/chartRadar', icon: '📊', desc: '雷达图在线绘制' },
+            { cat: '生活工具', name: '桑基图', url: 'https://fly63.com/tool/chartSankey', icon: '📊', desc: '桑基图在线绘制' },
+            { cat: '生活工具', name: '树形图', url: 'https://fly63.com/tool/chartTree', icon: '📊', desc: '树形图制作工具' },
+            { cat: '生活工具', name: '点名器', url: 'https://fly63.com/tool/rollcall', icon: '🎯', desc: '随机点名器' },
+            { cat: '生活工具', name: '电子签名', url: 'https://fly63.com/tool/qianming', icon: '✍️', desc: '电子签名一键生成' },
+            { cat: '生活工具', name: '身高预测', url: 'https://fly63.com/tool/childheight', icon: '👨‍👦', desc: '孩子身高预测计算' },
+            { cat: '生活工具', name: '聚合翻译', url: 'https://fly63.com/tool/translate', icon: '🌐', desc: '在线聚合翻译工具' },
+            { cat: '生活工具', name: '安全期计算', url: 'https://fly63.com/tool/calcday', icon: '📅', desc: '女性安全期计算' },
+            { cat: '生活工具', name: '贷款计算', url: 'https://fly63.com/tool/daikuan', icon: '💰', desc: '按揭贷款利息计算' },
+            { cat: '生活工具', name: '存款收益', url: 'https://fly63.com/tool/cunkuan', icon: '💰', desc: '存款收益计算器' },
+            { cat: '生活工具', name: '证件照尺寸', url: 'https://fly63.com/tool/zhaopiansize', icon: '🪪', desc: '证件照规格尺寸大全' },
+            { cat: '生活工具', name: 'IRR计算', url: 'https://fly63.com/tool/irr', icon: '💰', desc: '内部收益率IRR计算' },
+            { cat: '生活工具', name: '学校查询', url: 'https://fly63.com/tool/college_info', icon: '🎓', desc: '全国高等学校名单' },
+            { cat: '生活工具', name: '体脂率', url: 'https://fly63.com/tool/bfr', icon: '💪', desc: 'BFR体脂率计算器' },
+            { cat: '生活工具', name: '基础代谢', url: 'https://fly63.com/tool/bmr', icon: '🔥', desc: 'BMR基础代谢率计算' },
+            { cat: '生活工具', name: '胎儿体重', url: 'https://fly63.com/tool/taiertizhong', icon: '👶', desc: '胎儿体重计算器' },
+            { cat: '生活工具', name: '随机分组', url: 'https://fly63.com/tool/team_group', icon: '👥', desc: '人员随机分组器' },
+            { cat: '生活工具', name: '地铁查询', url: 'https://fly63.com/tool/subway_search', icon: '🚇', desc: '全国地铁路线查询' },
+            { cat: '生活工具', name: '电费计算', url: 'https://fly63.com/tool/dianfei', icon: '⚡', desc: '在线电费计算器' },
+            { cat: '生活工具', name: '油耗计算', url: 'https://fly63.com/tool/oil_calculator', icon: '⛽', desc: '汽车油耗计算器' },
+            { cat: '生活工具', name: '食物热量', url: 'https://fly63.com/tool/food_calories', icon: '🍎', desc: '食物卡路里查询' },
+            { cat: '生活工具', name: '身份证解析', url: 'https://fly63.com/tool/idcard', icon: '🪪', desc: '身份证号码解析查询' },
+            { cat: '生活工具', name: '酒精浓度', url: 'https://fly63.com/tool/blood_alcohol', icon: '🍷', desc: '血液酒精浓度计算' },
+            { cat: '生活工具', name: '车贷计算', url: 'https://fly63.com/tool/chedai', icon: '🚗', desc: '车贷还款计算' },
+            { cat: '生活工具', name: '摸鱼日历', url: 'https://fly63.com/tool/myrl', icon: '🐟', desc: '摸鱼办日历提醒器' },
+            { cat: '生活工具', name: '科学计算', url: 'https://fly63.com/tool/calc', icon: '🔢', desc: '数学表达式计算器' },
+            { cat: '生活工具', name: '怀孕计算', url: 'https://fly63.com/tool/yunzhou', icon: '🤰', desc: '怀孕孕周期计算' },
+            { cat: '生活工具', name: '急救箱清单', url: 'https://fly63.com/tool/family-medicine', icon: '⚕️', desc: '家庭急救箱药品清单' },
+            { cat: '生活工具', name: '周易国学', url: 'https://fly63.com/tool/1agx', icon: '📜', desc: '周易起名解名运势' },
+            { cat: '生活工具', name: '文件解压', url: 'https://fly63.com/tool/unzip', icon: '📦', desc: 'ZIP/RAR/7Z在线解压' },
+            { cat: '生活工具', name: '文件压缩', url: 'https://fly63.com/tool/zip', icon: '📦', desc: '在线文件ZIP压缩' },
+
+            // ===== 娱乐工具 =====
+            { cat: '娱乐工具', name: '毒鸡汤', url: 'https://fly63.com/php/dujitang', icon: '💀', desc: '毒鸡汤语录大全' },
+            { cat: '娱乐工具', name: '经典语录', url: 'https://fly63.com/php/juzi', icon: '💬', desc: '经典语录大全' },
+            { cat: '娱乐工具', name: '翅膀昵称', url: 'http://fly63.com/tool/wing', icon: '🦋', desc: '微信翅膀昵称生成器' },
+            { cat: '娱乐工具', name: '微信整蛊', url: 'https://fly63.com/tool/wxCreate', icon: '😜', desc: '微信整蛊生成器' },
+            { cat: '娱乐工具', name: '历史上的今天', url: 'https://fly63.com/php/todayHistory', icon: '📜', desc: '历史上的今天事件' },
+            { cat: '娱乐工具', name: '今天吃什么', url: 'https://fly63.com/tool/chi', icon: '🍽️', desc: '解决每日吃啥难题' },
+            { cat: '娱乐工具', name: '表情包', url: 'https://fly63.com/php/emojiPkg', icon: '😂', desc: '常用表情包大全' },
+            { cat: '娱乐工具', name: '在线小游戏', url: 'https://fly63.com/tool/game', icon: '🎮', desc: '上班摸鱼在线小游戏' },
+            { cat: '娱乐工具', name: '恋爱计算', url: 'https://fly63.com/tool/papapa', icon: '💕', desc: '恋爱关系发展时间计算' },
+            { cat: '娱乐工具', name: '成语接龙', url: 'https://fly63.com/tool/cyjl', icon: '📖', desc: '成语接龙查询器' },
+            { cat: '娱乐工具', name: '歇后语', url: 'https://fly63.com/tool/xiehouyu', icon: '📖', desc: '歇后语查询工具' },
+            { cat: '娱乐工具', name: '民间谚语', url: 'https://fly63.com/tool/yanyu', icon: '📖', desc: '民间谚语在线查询' },
+            { cat: '娱乐工具', name: '脑筋急转弯', url: 'https://fly63.com/tool/naojin', icon: '🧠', desc: '脑筋急转弯查询' },
+            { cat: '娱乐工具', name: '土味情话', url: 'https://fly63.com/tool/love', icon: '💘', desc: '土味情话生成器' },
+            { cat: '娱乐工具', name: '绕口令', url: 'https://fly63.com/tool/rkl', icon: '🗣️', desc: '绕口令大全' },
+            { cat: '娱乐工具', name: '笑话大全', url: 'https://fly63.com/tool/joke', icon: '😂', desc: '笑话大全' },
+            { cat: '娱乐工具', name: '文章生成', url: 'https://fly63.com/tool/bullshitGenerator', icon: '📝', desc: '狗屁不通文章生成器' },
+            { cat: '娱乐工具', name: '彩虹屁', url: 'https://fly63.com/tool/rainbowfart', icon: '🌈', desc: '彩虹屁文章生成器' },
+            { cat: '娱乐工具', name: '每日古诗', url: 'https://fly63.com/php/poetry', icon: '📜', desc: '每日一首古诗词' },
+            { cat: '娱乐工具', name: '谷歌吉他', url: 'https://fly63.com/tool/guitar', icon: '🎸', desc: '谷歌吉他在线版' },
+            { cat: '娱乐工具', name: '舔狗语录', url: 'https://fly63.com/php/wedog', icon: '🐶', desc: '舔狗日记经典语录' },
+            { cat: '娱乐工具', name: '大转盘', url: 'https://fly63.com/tool/dazhuanpan', icon: '🎡', desc: '大转盘做决定' },
+            { cat: '娱乐工具', name: '塔罗牌意', url: 'https://fly63.com/tool/taluo', icon: '🔮', desc: '塔罗牌牌意解析大全' },
+            { cat: '娱乐工具', name: '人生模拟器', url: 'https://fly63.com/tool/rsckmnq', icon: '🎮', desc: '人生模拟器无限重开' },
+            { cat: '娱乐工具', name: '舒尔特方格', url: 'https://fly63.com/tool/shulte', icon: '🧠', desc: '注意力测试训练' },
+            { cat: '娱乐工具', name: '猜数字', url: 'https://fly63.com/tool/1a2b', icon: '🔢', desc: '1A2B猜数字游戏' },
+            { cat: '娱乐工具', name: '数字华容道', url: 'https://fly63.com/tool/n-puzzle', icon: '🧩', desc: '数字华容道在线玩' },
+            { cat: '娱乐工具', name: '扔骰子', url: 'https://fly63.com/tool/dice', icon: '🎲', desc: '在线模拟扔骰子' },
+            { cat: '娱乐工具', name: '电子木鱼', url: 'https://fly63.com/tool/muyu', icon: '🪵', desc: '电子木鱼敲木鱼' },
+            { cat: '娱乐工具', name: '双色球', url: 'https://fly63.com/tool/caipiao', icon: '🎰', desc: '双色球机选彩票' },
+            { cat: '娱乐工具', name: '俄罗斯方块', url: 'https://fly63.com/tool/game_els', icon: '🎮', desc: '经典俄罗斯方块' },
+            { cat: '娱乐工具', name: '2048', url: 'https://fly63.com/tool/game_2048', icon: '🎮', desc: '2048数字游戏' },
+            { cat: '娱乐工具', name: '星座匹配', url: 'https://fly63.com/tool/xingzuo', icon: '⭐', desc: '男女星座匹配度查询' },
+            { cat: '娱乐工具', name: '贪吃蛇', url: 'https://fly63.com/tool/snake', icon: '🐍', desc: '贪吃蛇网页版' },
+            { cat: '娱乐工具', name: '反应测试', url: 'https://fly63.com/tool/fanying', icon: '⚡', desc: '反应速度测试' },
+            { cat: '娱乐工具', name: 'CPS手速', url: 'https://fly63.com/tool/checkcps', icon: '👆', desc: '鼠标点击速度测试' },
+            { cat: '娱乐工具', name: '石头剪刀布', url: 'https://fly63.com/tool/game_rps', icon: '✊', desc: '石头剪刀布游戏' },
+            { cat: '娱乐工具', name: '捏泡泡', url: 'https://fly63.com/tool/niepaopao', icon: '🫧', desc: '捏泡泡纸解压' },
+            { cat: '娱乐工具', name: '放烟花', url: 'https://fly63.com/tool/fireworks', icon: '🎆', desc: '放烟花模拟器' },
+            { cat: '娱乐工具', name: '魔方', url: 'https://fly63.com/tool/mofang', icon: '🧊', desc: '在线魔方模拟器' },
+            { cat: '娱乐工具', name: '黑白棋', url: 'https://fly63.com/tool/reversi', icon: '⚫', desc: '黑白棋网页版' },
+            { cat: '娱乐工具', name: '古诗接龙', url: 'https://fly63.com/tool/poetry_chains', icon: '📜', desc: '古诗词填空接龙' },
+            { cat: '娱乐工具', name: '恐龙快跑', url: 'https://fly63.com/tool/dinosaur', icon: '🦖', desc: '恐龙快跑小游戏' },
+            { cat: '娱乐工具', name: '小黑屋', url: 'https://fly63.com/tool/adarkroom', icon: '🏠', desc: 'RPG文字冒险游戏' },
+            { cat: '娱乐工具', name: '工作性价比', url: 'https://fly63.com/tool/job_calculator', icon: '💼', desc: '工作性价比计算器' },
+            { cat: '娱乐工具', name: '扫雷', url: 'https://fly63.com/tool/saolei', icon: '💣', desc: '在线扫雷小游戏' },
+            { cat: '娱乐工具', name: '五子棋', url: 'https://fly63.com/tool/wuziqi', icon: '⚫', desc: '五子棋AI对弈' },
+            { cat: '娱乐工具', name: '中国象棋', url: 'https://fly63.com/tool/chinesechess', icon: '♟️', desc: '中国象棋人机对战' },
+            { cat: '娱乐工具', name: '记忆数字', url: 'https://fly63.com/tool/number_memory', icon: '🧠', desc: '数字记忆力测试' },
+            { cat: '娱乐工具', name: 'N-Back', url: 'https://fly63.com/tool/n_back', icon: '🧠', desc: 'N-Back记忆力训练' },
+            { cat: '娱乐工具', name: '拼图', url: 'https://fly63.com/tool/puzzle', icon: '🧩', desc: '在线拼图游戏' },
+            { cat: '娱乐工具', name: '幸运色', url: 'https://fly63.com/tool/jinri_color', icon: '🌈', desc: '星座幸运色幸运数字' },
+            { cat: '娱乐工具', name: '节拍器', url: 'https://fly63.com/tool/metronome', icon: '🎵', desc: '音乐节拍器在线' },
+            { cat: '娱乐工具', name: '真心话大冒险', url: 'https://fly63.com/tool/totd', icon: '🎲', desc: '真心话大冒险在线' },
+
+            // ===== 5670.cn 生活工具补充 =====
+            { cat: '生活工具', name: 'BMI计算', url: 'https://www.5670.cn/toolsbox/shengaotizhong.html', icon: '⚖️', desc: '身高体重BMI指数计算' },
+            { cat: '生活工具', name: '五行穿衣', url: 'https://www.5670.cn/toolsbox/wuxingchuanyis.html', icon: '👕', desc: '每日幸运色穿衣指南' },
+            { cat: '生活工具', name: '退休年龄', url: 'https://www.5670.cn/toolsbox/calc_retireage.html', icon: '👴', desc: '法定退休年龄计算' },
+            { cat: '生活工具', name: '今天吃什么', url: 'https://www.5670.cn/toolsbox/chifans.html', icon: '🍽️', desc: '解决吃啥难题' },
+            { cat: '生活工具', name: '老黄历', url: 'https://www.5670.cn/toolsbox/laohuangli.html', icon: '📅', desc: '在线老黄历查询' },
+            { cat: '生活工具', name: '思维导图', url: 'https://www.5670.cn/toolsbox/mine.html', icon: '🧠', desc: '在线思维导图工具' },
+            { cat: '生活工具', name: '在线白板', url: 'https://www.5670.cn/toolsbox/baiban.html', icon: '📋', desc: '支持压感的在线白板' },
+            { cat: '生活工具', name: 'IP查询', url: 'https://www.5670.cn/toolsbox/ip.html', icon: '🌐', desc: 'IP地址归属地查询' },
+            { cat: '生活工具', name: '在线计算器', url: 'https://www.5670.cn/toolsbox/calculator.html', icon: '🔢', desc: '便捷在线计算器' },
+            { cat: '生活工具', name: '日期大写', url: 'https://www.5670.cn/toolsbox/datatozhs.html', icon: '📅', desc: '数字日期转大写' },
+            { cat: '娱乐工具', name: '双色球', url: 'https://www.5670.cn/toolsbox/caipiao_shuangse.html', icon: '🎰', desc: '双色球机选选号' },
+            { cat: '娱乐工具', name: '2048', url: 'https://www.5670.cn/toolsbox/play_2048.html', icon: '🎮', desc: '在线2048数字游戏' },
+            { cat: '娱乐工具', name: '五子棋', url: 'https://www.5670.cn/toolsbox/wuziqis.html', icon: '⚫', desc: 'AI五子棋对抗' },
+            { cat: '生活工具', name: '喇叭清灰', url: 'https://www.5670.cn/toolsbox/phoneqinghui.html', icon: '🔊', desc: '手机扬声器清灰' },
+            { cat: '娱乐工具', name: '假装升级', url: 'https://www.5670.cn/toolsbox/systemupdatas.html', icon: '🖥️', desc: '摸鱼神器伪装系统更新' },
+            { cat: '生活工具', name: '安全期计算', url: 'https://www.5670.cn/toolsbox/calc_nvanquan.html', icon: '📅', desc: '女性安全期排卵期计算' },
+            { cat: '生活工具', name: '在线录屏', url: 'https://www.5670.cn/toolsbox/lvpings.html', icon: '🎬', desc: '在线录屏无需下载' },
+            { cat: '生活工具', name: '放假安排', url: 'https://www.5670.cn/toolsbox/jiaqi_2025.html', icon: '📅', desc: '2025年放假安排' },
+            { cat: '生活工具', name: '花语', url: 'https://www.5670.cn/toolsbox/huayus.html', icon: '🌸', desc: '查询各种花的含义' },
+            { cat: '生活工具', name: '随机点名', url: 'https://www.5670.cn/toolsbox/randianming.html', icon: '🎯', desc: '在线随机点名工具' },
+            { cat: '生活工具', name: '临时笔记本', url: 'https://www.5670.cn/toolsbox/txt_books.html', icon: '📝', desc: '在线临时记录信息' },
+            { cat: '生活工具', name: '标语头像', url: 'https://www.5670.cn/toolsbox/biaoyutouxiangs.html', icon: '👤', desc: '生成带标语的头像' },
+            { cat: '教育', name: '高考倒计时', url: 'https://www.5670.cn/toolsbox/gaokao.html', icon: '📚', desc: '距离高考还有多少天' },
+            { cat: '生活工具', name: '环境音效', url: 'https://www.5670.cn/toolsbox/huanjingyins.html', icon: '🎵', desc: '环境音效放松专注' },
+            { cat: '生活工具', name: '记分板', url: 'https://www.5670.cn/toolsbox/jifenban.html', icon: '📊', desc: '在线比赛记分板' },
+            { cat: '生活工具', name: '番茄时钟', url: 'https://www.5670.cn/toolsbox/fanqietime.html', icon: '🍅', desc: '番茄工作法计时' },
+            { cat: '生活工具', name: '在线闹钟', url: 'https://www.5670.cn/toolsbox/naozhong.html', icon: '⏰', desc: '网页版在线闹钟' },
+            { cat: '生活工具', name: '薪资转换', url: 'https://www.5670.cn/toolsbox/xinzi.html', icon: '💰', desc: '单双休月薪转换' },
+            { cat: '生活工具', name: '久坐提醒', url: 'https://www.5670.cn/toolsbox/longtips.html', icon: '🪑', desc: '网页版久坐提醒' },
+            { cat: '生活工具', name: '观看距离', url: 'https://www.5670.cn/toolsbox/calc_tvjuli.html', icon: '📺', desc: '电视最佳观看距离' },
+            { cat: '生活工具', name: '倒计时', url: 'https://www.5670.cn/toolsbox/timedaojishi.html', icon: '⏳', desc: '在线时间倒计时' },
+            { cat: '生活工具', name: '秒表', url: 'https://www.5670.cn/toolsbox/jishiqi.html', icon: '⏱️', desc: '在线秒表计时' },
+            { cat: '生活工具', name: '北京时间', url: 'https://www.5670.cn/toolsbox/bjtime.html', icon: '🕐', desc: '北京标准时间校对' },
+            { cat: '生活工具', name: '十二时辰', url: 'https://www.5670.cn/toolsbox/timeshichen.html', icon: '🕐', desc: '时间转十二时辰' },
+            { cat: '生活工具', name: '12/24转换', url: 'https://www.5670.cn/toolsbox/time12to24.html', icon: '🕐', desc: '12/24小时制互转' },
+            { cat: '生活工具', name: '第几天', url: 'https://www.5670.cn/toolsbox/date-year.html', icon: '📅', desc: '当年第几天周计算' },
+            { cat: '生活工具', name: '丁兰尺', url: 'https://www.5670.cn/toolsbox/dinglanchis.html', icon: '📏', desc: '丁兰尺吉凶数查询' },
+            { cat: '生活工具', name: '大龄宝宝', url: 'https://www.5670.cn/toolsbox/calc_dalingbaobaos.html', icon: '👶', desc: '计算你是几个月宝宝' },
+            { cat: '生活工具', name: '声音生成', url: 'https://www.5670.cn/toolsbox/hzyinpin.html', icon: '🔊', desc: '指定频率声音生成' },
+            { cat: '生活工具', name: '手机归属', url: 'https://www.5670.cn/toolsbox/phone_guishu.html', icon: '📱', desc: '手机号归属地查询' },
+            { cat: '生活工具', name: '银行卡', url: 'https://www.5670.cn/toolsbox/bankcard.html', icon: '💳', desc: '银行卡归属地查询' },
+            { cat: '生活工具', name: '车牌查询', url: 'https://www.5670.cn/toolsbox/chepai.html', icon: '🚗', desc: '车牌号归属地查询' },
+            { cat: '生活工具', name: '保质期', url: 'https://www.5670.cn/toolsbox/baozhiqi.html', icon: '🍽️', desc: '食物保质期计算' },
+            // ===== 补充：更多实用工具 =====
+            { cat: '生活工具', name: '卡路里计算', url: 'https://www.5670.cn/toolsbox/calc_kaluli.html', icon: '🔥', desc: '运动消耗卡路里计算' },
+            { cat: '生活工具', name: '喝水计算', url: 'https://www.5670.cn/toolsbox/calc_he_shui.html', icon: '💧', desc: '每日喝水量计算' },
+            { cat: '生活工具', name: 'BMR代谢', url: 'https://www.5670.cn/toolsbox/calc_bmr.html', icon: '🔥', desc: '基础代谢率计算' },
+            { cat: '生活工具', name: '体脂率', url: 'https://www.5670.cn/toolsbox/calc_tizhilv.html', icon: '💪', desc: '人体体脂率BFR计算' },
+            { cat: '生活工具', name: '燃脂心率', url: 'https://www.5670.cn/toolsbox/calc_ranzhi.html', icon: '❤️', desc: '有氧运动燃脂心率' },
+            { cat: '生活工具', name: '女性三围', url: 'https://www.5670.cn/toolsbox/calc_sanwei.html', icon: '📏', desc: '女性三围自测计算' },
+            { cat: '生活工具', name: '茶方大全', url: 'https://www.5670.cn/toolsbox/chafang.html', icon: '🍵', desc: '收集茶方配方' },
+            { cat: '生活工具', name: '在线画板', url: 'https://www.5670.cn/toolsbox/huaban.html', icon: '🎨', desc: '在线画板绘画工具' },
+            { cat: '生活工具', name: '流程图', url: 'https://www.5670.cn/toolsbox/liuchengtu.html', icon: '📊', desc: '在线流程图编辑器' },
+            { cat: '生活工具', name: 'CSS渐变', url: 'https://www.5670.cn/toolsbox/css_jianbian.html', icon: '🎨', desc: 'CSS渐变色生成器' },
+            { cat: '生活工具', name: 'Favicon', url: 'https://www.5670.cn/toolsbox/favicon.html', icon: '🖼️', desc: 'Favicon图标制作' },
+            { cat: '生活工具', name: '音频转换', url: 'https://www.5670.cn/toolsbox/yinpin_zhuanhuan.html', icon: '🎵', desc: '音频格式转换' },
+            { cat: '生活工具', name: '电子签名', url: 'https://www.5670.cn/toolsbox/qianming.html', icon: '✍️', desc: '在线电子签名生成' },
+            { cat: '生活工具', name: '词云图', url: 'https://www.5670.cn/toolsbox/ciyuntu.html', icon: '☁️', desc: '词云图生成器' },
+            { cat: '生活工具', name: 'PDF工具', url: 'https://www.5670.cn/toolsbox/pdf.html', icon: '📄', desc: 'PDF在线处理工具' },
+            { cat: '生活工具', name: '视频转GIF', url: 'https://www.5670.cn/toolsbox/shipin_gif.html', icon: '🎬', desc: '视频转GIF动图' },
+            { cat: '生活工具', name: 'IP查询', url: 'https://www.5670.cn/toolsbox/ip_chaxun.html', icon: '🌐', desc: 'IP地址在线查询' },
+            { cat: '生活工具', name: '摩斯密码', url: 'https://www.5670.cn/toolsbox/mosi.html', icon: '📡', desc: '摩斯密码翻译器' },
+            { cat: '生活工具', name: '打字测试', url: 'https://www.5670.cn/toolsbox/dazi.html', icon: '⌨️', desc: '在线打字速度测试' },
+            { cat: '生活工具', name: '手持弹幕', url: 'https://www.5670.cn/toolsbox/danmu.html', icon: '📱', desc: '手机手持弹幕' },
+            { cat: '生活工具', name: '评分对比', url: 'https://www.5670.cn/toolsbox/pingfen.html', icon: '📊', desc: '产品评分对比工具' },
+            { cat: '生活工具', name: '条形码', url: 'https://www.5670.cn/toolsbox/tiaoxingma.html', icon: '📊', desc: '条形码生成器' },
+            { cat: '生活工具', name: '二维码识别', url: 'https://www.5670.cn/toolsbox/erweima_sb.html', icon: '📱', desc: '二维码在线识别' },
+            { cat: '生活工具', name: '表情包', url: 'https://www.5670.cn/toolsbox/biaoqingbao.html', icon: '😂', desc: '表情包制作器' },
+            { cat: '生活工具', name: '人格测试', url: 'https://www.5670.cn/toolsbox/mbti.html', icon: '🧠', desc: 'MBTI人格测试' },
+            { cat: '生活工具', name: '16型人格', url: 'https://www.5670.cn/toolsbox/renge16.html', icon: '🧠', desc: '16型人格测试' },
+            { cat: '生活工具', name: 'I人E人', url: 'https://www.5670.cn/toolsbox/ie_test.html', icon: '🧠', desc: 'I人E人性格测试' },
+            { cat: '生活工具', name: 'AI提示词', url: 'https://www.5670.cn/toolsbox/ai_prompt.html', icon: '🤖', desc: 'AI提示词生成器' },
+            { cat: '生活工具', name: '文字头像', url: 'https://www.5670.cn/toolsbox/wenzi_touxiang.html', icon: '👤', desc: '文字头像生成' },
+            { cat: '生活工具', name: 'JSON格式化', url: 'https://www.5670.cn/toolsbox/json.html', icon: '📄', desc: 'JSON在线格式化' },
+            { cat: '生活工具', name: 'CSS压缩', url: 'https://www.5670.cn/toolsbox/css_yasuo.html', icon: '🎨', desc: 'CSS代码压缩' },
+            { cat: '生活工具', name: '正则测试', url: 'https://www.5670.cn/toolsbox/zhengze.html', icon: '🔧', desc: '正则表达式测试' },
+            { cat: '生活工具', name: 'UUID生成', url: 'https://www.5670.cn/toolsbox/uuid.html', icon: '🆔', desc: 'UUID在线生成' },
+            { cat: '生活工具', name: 'BASE64', url: 'https://www.5670.cn/toolsbox/base64.html', icon: '🔒', desc: 'Base64加密解密' },
+            { cat: '生活工具', name: 'MD5加密', url: 'https://www.5670.cn/toolsbox/md5.html', icon: '🔒', desc: 'MD5在线加密' },
+            { cat: '生活工具', name: '随机密码', url: 'https://www.5670.cn/toolsbox/pass.html', icon: '🔑', desc: '随机密码生成' },
+            { cat: '生活工具', name: '金额大写', url: 'https://www.5670.cn/toolsbox/jine_daxie.html', icon: '💰', desc: '金额转大写' },
+            { cat: '生活工具', name: 'gzip检测', url: 'https://www.5670.cn/toolsbox/gzip.html', icon: '📦', desc: 'gzip压缩检测' },
+            { cat: '生活工具', name: 'UA生成', url: 'https://www.5670.cn/toolsbox/useragent.html', icon: '🔍', desc: 'UserAgent生成' },
+            { cat: '生活工具', name: '图片转Base64', url: 'https://www.5670.cn/toolsbox/img_base64.html', icon: '🖼️', desc: '图片转base64编码' },
+            // 更多fly63工具补充
+            { cat: '在线转换', name: 'Sass/Less转换', url: 'https://fly63.com/tool/csass', icon: '🎨', desc: 'Sass/Less/Stylus转CSS' },
+            { cat: '在线转换', name: 'JSON转CSV', url: 'https://fly63.com/tool/jsonscv', icon: '📊', desc: 'JSON转Excel/CSV' },
+            { cat: '在线转换', name: 'Htaccess转Nginx', url: 'https://fly63.com/tool/htaccess2nginx', icon: '🔧', desc: 'Htaccess转Nginx配置' },
+            { cat: '在线转换', name: 'JSON转Java', url: 'https://fly63.com/tool/json2java', icon: '☕', desc: 'JSON转Java实体类' },
+            { cat: '在线转换', name: 'JSON转Python', url: 'https://fly63.com/tool/json2python', icon: '🐍', desc: 'JSON转Python类' },
+            { cat: '在线转换', name: 'JSON转SQL', url: 'https://fly63.com/tool/json2sql', icon: '🗄️', desc: 'JSON转SQL语句' },
+            { cat: '在线转换', name: 'JSON转PHP', url: 'https://fly63.com/tool/json_php', icon: '🐘', desc: 'JSON转PHP数组' },
+            { cat: '在线转换', name: 'JSON转Protobuf', url: 'https://fly63.com/tool/json_protobuf', icon: '📄', desc: 'JSON转Protobuf' },
+            { cat: '在线转换', name: 'TS转JS', url: 'https://fly63.com/tool/ts_js', icon: '🔧', desc: 'TypeScript编译成JS' },
+            { cat: '在线转换', name: 'JSON转TOML', url: 'https://fly63.com/tool/json_toml', icon: '📄', desc: 'JSON转TOML' },
+            { cat: '在线转换', name: 'PDF元数据', url: 'https://fly63.com/tool/pdfmeta', icon: '📄', desc: 'PDF元数据修改' },
+            { cat: '在线转换', name: '文本比较运算', url: 'https://fly63.com/tool/text_compare', icon: '📋', desc: '文本交集并集差集' },
+            { cat: '在线转换', name: '文本排序', url: 'https://fly63.com/tool/text_sort', icon: '📋', desc: '文本在线排序' },
+            { cat: '在线转换', name: 'SSL证书转换', url: 'https://fly63.com/tool/certificate_conversion', icon: '🔐', desc: 'PEM/DER/CRT转换' },
+            { cat: '在线转换', name: '区位码', url: 'https://fly63.com/tool/quweima', icon: '🔤', desc: '汉字区位码转换' },
+            { cat: '在线转换', name: 'XML转Excel', url: 'https://fly63.com/tool/xml2excel', icon: '📊', desc: 'XML转CSV文件' },
+            { cat: '在线转换', name: 'XML转Go', url: 'https://fly63.com/tool/xml2go', icon: '🔧', desc: 'XML转Go代码' },
+            { cat: '在线转换', name: 'JSON转C#', url: 'https://fly63.com/tool/JsonToModel', icon: '🔧', desc: 'JSON转C#实体类' },
+            { cat: '在线转换', name: 'HTML转PHP', url: 'https://fly63.com/tool/html_php', icon: '🐘', desc: 'HTML转PHP代码' },
+            { cat: '在线转换', name: 'HTML转PDF', url: 'https://fly63.com/tool/html_pdf', icon: '📄', desc: 'HTML文件转PDF' },
+            { cat: '在线转换', name: '油耗换算', url: 'https://fly63.com/tool/fuel_calculator', icon: '⛽', desc: '油耗单位转换' },
+            { cat: '在线转换', name: 'Excel转XML', url: 'https://fly63.com/tool/excel2xml', icon: '📊', desc: 'Excel转XML格式' },
+            { cat: '在线转换', name: '利率转换', url: 'https://fly63.com/tool/rate_conversion', icon: '💰', desc: '年月利率转换' },
+            { cat: '在线转换', name: 'PDF删页', url: 'https://fly63.com/tool/pdf_removepage', icon: '📄', desc: '删除PDF页面' },
+            { cat: '在线转换', name: '音频倒放', url: 'https://fly63.com/tool/music-reverser', icon: '🎵', desc: '音频反向播放' },
+            { cat: '加密解密', name: '文本隐藏', url: 'https://fly63.com/tool/txtencrypt', icon: '🔒', desc: '文本隐藏加密' },
+            { cat: '加密解密', name: 'URL十六进制', url: 'https://fly63.com/tool/urlcode', icon: '🔗', desc: 'URL十六进制加密' },
+            { cat: '加密解密', name: 'Escape', url: 'https://fly63.com/tool/escape', icon: '🔒', desc: 'Escape加密解密' },
+            { cat: '加密解密', name: 'aaEncode', url: 'https://fly63.com/tool/aaEncode', icon: '🔒', desc: 'aaEncode加密' },
+            { cat: '加密解密', name: 'MD2', url: 'https://fly63.com/tool/md2', icon: '🔒', desc: 'MD2哈希加密' },
+            { cat: '加密解密', name: '卡密生成', url: 'https://fly63.com/tool/cardPass', icon: '🔑', desc: '卡密批量生成器' },
+            { cat: '加密解密', name: '电报码', url: 'https://fly63.com/tool/telegraph', icon: '📡', desc: '电报码翻译对照' },
+            { cat: '加密解密', name: '敲击码', url: 'https://fly63.com/tool/tapcode', icon: '📡', desc: 'Tap code敲击码' },
+            { cat: '加密解密', name: '埃特巴什码', url: 'https://fly63.com/tool/atbash', icon: '📜', desc: '埃特巴什码转换' },
+            { cat: '加密解密', name: 'Base16', url: 'https://fly63.com/tool/base16', icon: '🔒', desc: 'Base16加密解密' },
+            { cat: '加密解密', name: '博福特密码', url: 'https://fly63.com/tool/beaufort', icon: '📜', desc: '博福特密码加密' },
+            { cat: '加密解密', name: '四方密码', url: 'https://fly63.com/tool/four_square', icon: '📜', desc: '四方密码翻译' },
+            { cat: '加密解密', name: 'A1Z26', url: 'https://fly63.com/tool/a1z26', icon: '🔢', desc: '字母数字转换' },
+            { cat: '加密解密', name: '栅栏密码', url: 'https://fly63.com/tool/railfence', icon: '📜', desc: '栅栏密码加密' },
+            { cat: '加密解密', name: 'PBKDF2', url: 'https://fly63.com/tool/pbkdf2', icon: '🔒', desc: 'PBKDF2密钥派生' },
+            { cat: '加密解密', name: 'Rijndael', url: 'https://fly63.com/tool/rijndael', icon: '🔒', desc: 'Rijndael AES加密' },
+            { cat: '加密解密', name: 'Deflate', url: 'https://fly63.com/tool/deflate', icon: '📦', desc: '文本Deflate压缩' },
+            { cat: '加密解密', name: 'Gz/Br解压', url: 'https://fly63.com/tool/gzbr_unzip', icon: '📦', desc: 'Gzip/Brotli解压' },
+            { cat: '加密解密', name: 'TripleDES', url: 'https://fly63.com/tool/tripledes', icon: '🔒', desc: '3DES加密解密' },
+            { cat: '加密解密', name: 'RIPEMD160', url: 'https://fly63.com/tool/ripemd160', icon: '🔒', desc: 'RIPEMD160哈希' },
+            { cat: '加密解密', name: 'Shake', url: 'https://fly63.com/tool/shake', icon: '🔒', desc: 'Shake加密' },
+            { cat: '加密解密', name: 'Keccak', url: 'https://fly63.com/tool/keccak', icon: '🔒', desc: 'Keccak加密' },
+            { cat: '代码开发', name: 'JS生成', url: 'https://fly63.com/tool/code', icon: '🔧', desc: '在线JS代码生成' },
+            { cat: '代码开发', name: 'JSON生成模型', url: 'https://fly63.com/tool/JsonToModel', icon: '🔧', desc: 'JSON转Java/C#实体' },
+            { cat: '代码开发', name: 'JS美化', url: 'https://fly63.com/tool/beautify', icon: '🔧', desc: 'JS/HTML在线美化' },
+            { cat: '代码开发', name: 'JSON高亮', url: 'https://fly63.com/tool/jon', icon: '📄', desc: 'JSON格式化高亮' },
+            { cat: '代码开发', name: 'SQL设计', url: 'https://fly63.com/tool/sqldesigner', icon: '🗄️', desc: 'SQL在线数据库设计' },
+            { cat: '代码开发', name: 'Element表单', url: 'https://fly63.com/tool/element-form', icon: '🔧', desc: 'Element表单代码生成' },
+            { cat: '代码开发', name: '注释清理', url: 'https://fly63.com/tool/removeNote', icon: '🧹', desc: '代码注释清理' },
+            { cat: '代码开发', name: 'JSON5', url: 'https://fly63.com/tool/json5', icon: '📄', desc: 'JSON5格式化校验' },
+            { cat: '代码开发', name: 'YAML编辑', url: 'https://fly63.com/tool/yaml', icon: '📄', desc: 'YAML格式化校验' },
+            { cat: '代码开发', name: 'MIME类型', url: 'https://fly63.com/tool/mimetype', icon: '📋', desc: '文件格式类型大全' },
+            { cat: '代码开发', name: 'PHP格式化', url: 'https://fly63.com/tool/php_format', icon: '🐘', desc: 'PHP代码格式化' },
+            { cat: '代码开发', name: 'CSR解析', url: 'https://fly63.com/tool/csr_decoder', icon: '🔐', desc: 'CSR证书解析' },
+            { cat: '代码开发', name: 'CSR生成', url: 'https://fly63.com/tool/csr_create', icon: '🔐', desc: 'CSR证书请求生成' },
+            { cat: '代码开发', name: 'OPML格式化', url: 'https://fly63.com/tool/opmlcode', icon: '📄', desc: 'OPML美化压缩' },
+            { cat: '代码开发', name: 'UA生成', url: 'https://fly63.com/tool/useragent_rnd', icon: '🔍', desc: '随机UA生成' },
+            { cat: '代码开发', name: 'AI API导航', url: 'https://fly63.com/tool/ai-api', icon: '🤖', desc: 'AI智能API导航' },
+            { cat: '图片工具', name: '图片镜像', url: 'https://fly63.com/tool/imgFlip', icon: '🔄', desc: '图片镜像翻转' },
+            { cat: '图片工具', name: '图片旋转', url: 'https://fly63.com/tool/imgRotate', icon: '🔄', desc: '图片批量旋转' },
+            { cat: '图片工具', name: '修改DPI', url: 'https://fly63.com/tool/imgDpi', icon: '🖼️', desc: '修改图片DPI' },
+            { cat: '图片工具', name: '图片灰度', url: 'https://fly63.com/tool/imgGray', icon: '🖼️', desc: '彩色图片转黑白' },
+            { cat: '图片工具', name: '图片拼接', url: 'https://fly63.com/tool/imgStitching', icon: '🖼️', desc: '多图合成拼接' },
+            { cat: '图片工具', name: 'EXIF', url: 'https://fly63.com/tool/imgexif', icon: '📋', desc: '照片EXIF查看' },
+            { cat: '图片工具', name: '图片转SVG', url: 'https://fly63.com/tool/imgtosvg', icon: '🎨', desc: '图片转SVG格式' },
+            { cat: '图片工具', name: 'PDF图片提取', url: 'https://fly63.com/tool/pdf_imgs', icon: '📄', desc: 'PDF图片提取' },
+            { cat: '图片工具', name: '色盲检测', url: 'https://fly63.com/tool/color_blindness', icon: '👁️', desc: '色盲色弱检测' },
+            { cat: '图片工具', name: '坐标定位', url: 'https://fly63.com/tool/img_coord', icon: '📍', desc: '图片坐标查看' },
+            { cat: '图片工具', name: 'PPT图片提取', url: 'https://fly63.com/tool/ppt_img', icon: '📊', desc: 'PPT图片批量导出' },
+            { cat: '图片工具', name: 'HEIC转换', url: 'https://fly63.com/tool/heicimg', icon: '🖼️', desc: '苹果HEIC图片转换' },
+            { cat: '图片工具', name: '网站图标', url: 'https://fly63.com/tool/web_icon', icon: '🌐', desc: '获取网站icon' },
+            { cat: '图片工具', name: 'PNG换底', url: 'https://fly63.com/tool/png_bg', icon: '🖼️', desc: 'PNG图片换底色' },
+            { cat: '图片工具', name: 'Excel图片', url: 'https://fly63.com/tool/excel_img', icon: '📊', desc: 'Excel图片提取' },
+            { cat: '图片工具', name: '图片反色', url: 'https://fly63.com/tool/img_colorreverse', icon: '🎨', desc: '图片反色负片' },
+            { cat: '图片工具', name: 'PDF转图片保护', url: 'https://fly63.com/tool/pdf_intensify', icon: '📄', desc: 'PDF防复制修改' },
+            { cat: '图片工具', name: '图片取色', url: 'https://fly63.com/tool/img_colorpicker', icon: '🎨', desc: '图片颜色提取' },
+            { cat: '图片工具', name: 'Graphviz', url: 'https://fly63.com/tool/graphviz', icon: '📊', desc: 'Graphviz在线编辑' },
+            { cat: '图片工具', name: '丑萌头像', url: 'https://fly63.com/tool/ugly-avatar', icon: '👤', desc: '个性化头像制作' },
+            { cat: '图片工具', name: '几何头像', url: 'https://fly63.com/tool/special-avatar', icon: '👤', desc: '简约几何头像' },
+            { cat: '图片工具', name: '圆角处理', url: 'https://fly63.com/tool/img_radius', icon: '🖼️', desc: '图片批量圆角' },
+            // 站长工具补充
+            { cat: '站长工具', name: '文章伪原创', url: 'https://fly63.com/php/weiyuanchuang', icon: '📝', desc: '在线文章伪原创' },
+            { cat: '站长工具', name: 'AI指令', url: 'https://fly63.com/tool/aishort', icon: '🤖', desc: 'AI提示词常用指令' },
+            { cat: '站长工具', name: '公众号排版', url: 'https://fly63.com/tool/weixinmd', icon: '💬', desc: 'Markdown公众号排版' },
+            { cat: '站长工具', name: '邮箱大全', url: 'https://fly63.com/tool/email', icon: '📧', desc: '电子邮箱网址大全' },
+            { cat: '站长工具', name: '邮件群发', url: 'https://fly63.com/php/mailer', icon: '📧', desc: '邮件群发营销' },
+            { cat: '站长工具', name: 'HTML过滤', url: 'https://fly63.com/tool/clearhtm', icon: '🧹', desc: 'HTML/JS/CSS标签过滤' },
+            { cat: '站长工具', name: '301跳转', url: 'https://fly63.com/tool/redirect', icon: '↪️', desc: '301跳转代码生成' },
+            { cat: '站长工具', name: '今日热榜', url: 'https://fly63.com/php/hotnews', icon: '📰', desc: '实时新闻热榜' },
+            { cat: '站长工具', name: 'PDF识别', url: 'https://fly63.com/tool/pdfdraw', icon: '📄', desc: 'PDF文字识别' },
+            { cat: '站长工具', name: '关键词分析', url: 'https://fly63.com/tool/keywordParticiple', icon: '📊', desc: '关键词重复分析' },
+            { cat: '站长工具', name: '字体提取', url: 'https://fly63.com/tool/fontSubset', icon: '🔤', desc: '字体裁剪压缩' },
+            { cat: '站长工具', name: 'IPv6', url: 'https://fly63.com/tool/ipv6Compress', icon: '🌐', desc: 'IPv6地址压缩展开' },
+            { cat: '站长工具', name: '文件分割', url: 'https://fly63.com/tool/fileSplit', icon: '✂️', desc: '文件分割拆分' },
+            { cat: '站长工具', name: '源码查询', url: 'https://fly63.com/tool/view_source', icon: '📝', desc: '网站源代码获取' },
+            // CSS补充
+            { cat: 'CSS样式', name: 'CSS格式化', url: 'https://fly63.com/tool/cs', icon: '🎨', desc: 'CSS代码美化' },
+            { cat: 'CSS样式', name: 'Animate', url: 'https://fly63.com/tool/animate', icon: '✨', desc: 'Animate.css动画' },
+            { cat: 'CSS样式', name: '长度转换', url: 'https://fly63.com/tool/unitConvert', icon: '📏', desc: 'CSS长度单位转换' },
+            { cat: 'CSS样式', name: 'Shield', url: 'https://fly63.com/tool/shieldbadge', icon: '🛡️', desc: 'Shield Badge徽章' },
+            { cat: 'CSS样式', name: '中间色', url: 'https://fly63.com/tool/color_middle', icon: '🎨', desc: '色彩中间色计算' },
+            { cat: 'CSS样式', name: '色彩工具箱', url: 'https://fly63.com/tool/color_tool', icon: '🎨', desc: '颜色混合匹配' },
+            // 娱乐补充
+            { cat: '娱乐工具', name: '锅碗乐器', url: 'https://fly63.com/tool/drums', icon: '🥁', desc: '锅碗瓢盆乐器' },
+            { cat: '娱乐工具', name: '放屁模拟', url: 'https://fly63.com/tool/fangpi', icon: '💨', desc: '放屁声音模拟' },
+            { cat: '娱乐工具', name: '迷宫', url: 'https://fly63.com/tool/maze', icon: '🌀', desc: '迷宫生成器' },
+            { cat: '娱乐工具', name: '赛博抽烟', url: 'https://fly63.com/tool/smoke', icon: '🚬', desc: '虚拟吸烟模拟' },
+            { cat: '娱乐工具', name: 'LoopTape', url: 'https://fly63.com/tool/looptap', icon: '🎮', desc: '消磨时间小游戏' },
+            { cat: '娱乐工具', name: '星座幸运色', url: 'https://fly63.com/tool/jinri_color', icon: '🌈', desc: '星座幸运色数字' },
+            { cat: '娱乐工具', name: '真心话', url: 'https://fly63.com/tool/totd', icon: '🎲', desc: '真心话大冒险' },
+            { cat: '娱乐工具', name: '彩虹屁语录', url: 'https://fly63.com/php/caihongpi', icon: '🌈', desc: '彩虹屁文案语录' },
+            { cat: '娱乐工具', name: 'App推荐', url: 'https://fly63.com/tool/app', icon: '📱', desc: 'iOS优质App推荐' },
+            { cat: '娱乐工具', name: '表情包游戏', url: 'https://fly63.com/tool/lookEmojis', icon: '😐', desc: '找不动的表情包' },
+            { cat: '娱乐工具', name: '黑白棋', url: 'https://fly63.com/tool/reversi', icon: '⚫', desc: '黑白棋在线' },
+            { cat: '娱乐工具', name: '恐龙快跑', url: 'https://fly63.com/tool/dinosaur', icon: '🦖', desc: '恐龙快跑游戏' },
+            { cat: '娱乐工具', name: '旭日图', url: 'https://fly63.com/tool/chartSunburst', icon: '📊', desc: '旭日图生成器' },
+            { cat: '娱乐工具', name: '折线图', url: 'https://fly63.com/tool/chartLine', icon: '📊', desc: '折线图在线制作' },
+            { cat: '娱乐工具', name: '柱状图', url: 'https://fly63.com/tool/chartBar', icon: '📊', desc: '柱状图生成器' },
+            { cat: '娱乐工具', name: '饼状图', url: 'https://fly63.com/tool/chartPie', icon: '📊', desc: '饼状图制作' },
+            { cat: '生活工具', name: '经纬度', url: 'https://fly63.com/tool/position', icon: '📍', desc: '地图经纬度查询' },
+            { cat: '生活工具', name: '度分秒', url: 'https://fly63.com/tool/degreeConvert', icon: '📍', desc: '经纬度度分秒转换' },
+            { cat: '生活工具', name: '姓名排序', url: 'https://fly63.com/tool/name_sort', icon: '📋', desc: '姓名在线排序' },
+            { cat: '生活工具', name: '投资收益', url: 'https://fly63.com/tool/invest', icon: '💰', desc: '投资收益规划' },
+            { cat: '生活工具', name: '儿童身高', url: 'https://fly63.com/tool/child_height', icon: '🧒', desc: '儿童身高体重参考' },
+            { cat: '生活工具', name: '调整体重', url: 'https://fly63.com/tool/adjusted_weight', icon: '⚖️', desc: '理想体重计算' },
+            { cat: '生活工具', name: 'FFMI', url: 'https://fly63.com/tool/ffmi_calculator', icon: '💪', desc: '无脂肪质量指数' },
+            { cat: '生活工具', name: 'ABSI', url: 'https://fly63.com/tool/absi_calculator', icon: '⚖️', desc: '体型指数ABSI' },
+            { cat: '生活工具', name: '购房评估', url: 'https://fly63.com/tool/house_buy', icon: '🏠', desc: '购房能力评估' },
+            { cat: '生活工具', name: '血糖换算', url: 'https://fly63.com/tool/blood_sugar', icon: '🩸', desc: '血糖单位换算' },
+            { cat: '生活工具', name: '商贷计算', url: 'https://fly63.com/tool/loan_calculator', icon: '💰', desc: '商业贷款计算' },
+            { cat: '生活工具', name: '电影院选座', url: 'https://fly63.com/tool/cinema', icon: '🎬', desc: '电影院选座指南' },
+            { cat: '生活工具', name: '红包领取', url: 'https://fly63.com/tool/coupon', icon: '🧧', desc: '各大平台优惠券' },
+            { cat: '生活工具', name: '24节气', url: 'https://fly63.com/tool/24jieqi', icon: '🌿', desc: '24节气时间查询' },
+            { cat: '生活工具', name: '弟子规', url: 'https://fly63.com/tool/dzg', icon: '📖', desc: '弟子规全文解释' },
+            { cat: '生活工具', name: 'LRC编辑', url: 'https://fly63.com/tool/lrc_editor', icon: '🎵', desc: 'LRC歌词编辑' },
+            { cat: '生活工具', name: '格子纸', url: 'https://fly63.com/tool/gezi', icon: '📄', desc: '格子纸打印' },
+            { cat: '生活工具', name: '紫微斗数', url: 'https://fly63.com/tool/ziwei', icon: '🔮', desc: '紫微斗数排盘' },
+            { cat: '生活工具', name: '淘宝券', url: 'https://fly63.com/php/tbyhq', icon: '🛒', desc: '淘宝优惠券查询' },
+            { cat: '生活工具', name: '英文大写', url: 'https://fly63.com/tool/usDollarsConvert', icon: '💰', desc: '英文金额大写' },
+        ];
+
+        // 渲染工具导航
+        function renderNavTools(filter) {
+            const container = document.getElementById('nav-tools-container');
+            if (!container) return;
+            const filtered = filter
+                ? navTools.filter(t =>
+                    t.name.toLowerCase().includes(filter.toLowerCase()) ||
+                    t.desc.toLowerCase().includes(filter.toLowerCase()) ||
+                    t.cat.toLowerCase().includes(filter.toLowerCase()))
+                : navTools;
+            // 按分类分组
+            const categories = {};
+            filtered.forEach(t => {
+                if (!categories[t.cat]) categories[t.cat] = [];
+                categories[t.cat].push(t);
+            });
+            let html = '';
+            for (const cat in categories) {
+                html += '<div class="cat-title" style="font-size:clamp(12px,1.2vw,16px);opacity:.6;margin-top:12px;">' + cat + ' · ' + categories[cat].length + '个工具</div>';
+                html += '<div class="tool-grid">';
+                categories[cat].forEach(t => {
+                    html += '<a href="' + t.url + '" target="_blank" rel="noopener" class="tool-card" title="' + t.desc + '">';
+                    html += '<div style="font-size:clamp(22px,2.8vw,28px);">' + t.icon + '</div>';
+                    html += '<div class="name">' + t.name + '</div>';
+                    html += '<div class="desc">' + t.desc + '</div>';
+                    html += '</a>';
+                });
+                html += '</div>';
+            }
+            if (filtered.length === 0) {
+                html = '<div style="text-align:center;padding:40px;color:var(--sub);">未找到匹配的工具</div>';
+            }
+            container.innerHTML = html;
+        }
+        window.filterNavTools = function() {
+            const q = document.getElementById('nav-tool-search').value.trim();
+            renderNavTools(q);
+        };
+        // 初始化渲染
+        renderNavTools('');
+
+        // ============================================================
+        // 电竞优化工具集
+        // ============================================================
+
+        // 帧率测试器
+        let fpsState = { running: false, frames: [], raf: null, lastTime: 0, min: 999, max: 0, sum: 0, count: 0 };
+        window.startFPSTest = function() {
+            fpsState = { running: true, frames: [], raf: null, lastTime: performance.now(), min: 999, max: 0, sum: 0, count: 0 };
+            const canvas = document.getElementById('fps-chart');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+            const btn = document.getElementById('fps-start-btn');
+            if (btn) btn.textContent = '⏸️ 测试中...';
+
+            function tick(now) {
+                if (!fpsState.running) return;
+                const delta = now - fpsState.lastTime;
+                fpsState.lastTime = now;
+                const fps = Math.round(1000 / delta);
+                if (fps > 0 && fps < 999) {
+                    fpsState.frames.push(fps);
+                    fpsState.sum += fps;
+                    fpsState.count++;
+                    if (fps < fpsState.min) fpsState.min = fps;
+                    if (fps > fpsState.max) fpsState.max = fps;
+                    // 只保留最近60帧
+                    if (fpsState.frames.length > 60) fpsState.frames.shift();
+
+                    const curEl = document.getElementById('fps-current');
+                    const avgEl = document.getElementById('fps-avg');
+                    const minEl = document.getElementById('fps-min');
+                    const maxEl = document.getElementById('fps-max');
+                    if (curEl) curEl.textContent = fps;
+                    if (avgEl) avgEl.textContent = Math.round(fpsState.sum / fpsState.count);
+                    if (minEl) minEl.textContent = fpsState.min;
+                    if (maxEl) maxEl.textContent = fpsState.max;
+
+                    // 绘制图表
+                    if (ctx && canvas) {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        const w = canvas.width;
+                        const h = canvas.height;
+                        const maxFps = 240;
+                        const step = w / 60;
+                        // 网格线
+                        ctx.strokeStyle = 'rgba(0,255,136,0.05)';
+                        ctx.lineWidth = 1;
+                        for (let i = 0; i <= 4; i++) {
+                            const y = (h / 4) * i;
+                            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+                        }
+                        // FPS曲线
+                        ctx.strokeStyle = '#00ff88';
+                        ctx.lineWidth = 2;
+                        ctx.shadowBlur = 4;
+                        ctx.shadowColor = '#00ff88';
+                        ctx.beginPath();
+                        fpsState.frames.forEach((f, i) => {
+                            const x = i * step;
+                            const y = h - (Math.min(f, maxFps) / maxFps) * h;
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        });
+                        ctx.stroke();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+                fpsState.raf = requestAnimationFrame(tick);
+            }
+            fpsState.raf = requestAnimationFrame(tick);
+            showToast('FPS测试已开始');
+        };
+        window.stopFPSTest = function() {
+            fpsState.running = false;
+            if (fpsState.raf) cancelAnimationFrame(fpsState.raf);
+            const btn = document.getElementById('fps-start-btn');
+            if (btn) btn.textContent = '▶️ 开始测试';
+            const avg = fpsState.count > 0 ? Math.round(fpsState.sum / fpsState.count) : 0;
+            showToast('FPS测试已停止，平均' + avg + 'FPS');
+        };
+
+        // 输入延迟测试
+        let latencyState = { phase: 'idle', startTime: 0, timeout: null, results: [] };
+        window.handleLatencyClick = function() {
+            const box = document.getElementById('latency-box');
+            const result = document.getElementById('latency-result');
+            if (!box || !result) return;
+
+            if (latencyState.phase === 'idle' || latencyState.phase === 'done') {
+                latencyState.phase = 'waiting';
+                box.textContent = '准备...等待变绿';
+                box.className = 'waiting';
+                result.textContent = '等待信号...';
+                // 随机延迟1-4秒
+                const delay = 1000 + Math.random() * 3000;
+                latencyState.timeout = setTimeout(() => {
+                    latencyState.phase = 'ready';
+                    latencyState.startTime = performance.now();
+                    box.textContent = '🟢 点击！';
+                    box.className = 'ready';
+                }, delay);
+            } else if (latencyState.phase === 'ready') {
+                const elapsed = Math.round(performance.now() - latencyState.startTime);
+                latencyState.results.push(elapsed);
+                if (latencyState.results.length > 5) latencyState.results.shift();
+                const avg = Math.round(latencyState.results.reduce((a, b) => a + b, 0) / latencyState.results.length);
+                const best = Math.min(...latencyState.results);
+                let level = '🐌 慢';
+                let color = '#ef4444';
+                if (elapsed < 200) { level = '🏆 电竞级'; color = '#00ff88'; }
+                else if (elapsed < 300) { level = '✅ 优秀'; color = '#00f5ff'; }
+                else if (elapsed < 400) { level = '⚠️ 一般'; color = '#fbbf24'; }
+                result.innerHTML = `<span style="font-size:clamp(18px,2.2vw,24px);font-weight:900;color:${color};">${elapsed}ms</span><br><span style="font-size:11px;color:var(--sub);">${level} | 平均${avg}ms | 最佳${best}ms | 第${latencyState.results.length}次</span>`;
+                latencyState.phase = 'done';
+                box.textContent = '点击重新开始';
+                box.className = '';
+            } else if (latencyState.phase === 'waiting') {
+                // 提前点击=失误
+                clearTimeout(latencyState.timeout);
+                result.innerHTML = '<span style="color:#ef4444;font-weight:700;">❌ 太早了！等变绿再点</span>';
+                latencyState.phase = 'idle';
+                box.textContent = '点击开始';
+                box.className = '';
+            }
+        };
+
+        // 系统信息检测
+        window.detectSystemInfo = function() {
+            const result = document.getElementById('sysinfo-result');
+            if (!result) return;
+            result.innerHTML = '<span style="color:var(--accent);">检测中...</span>';
+
+            const nav = navigator;
+            const screen = window.screen;
+            let gpu = '无法检测';
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (gl) {
+                    const ext = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (ext) gpu = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '未知';
+                }
+            } catch(e) {}
+
+            const info = [
+                { label: '🖥️ 处理器核心', value: nav.hardwareConcurrency + ' 核' },
+                { label: '💾 设备内存', value: (nav.deviceMemory || '未知') + ' GB' },
+                { label: '🎮 GPU型号', value: gpu },
+                { label: '📱 屏幕分辨率', value: screen.width + '×' + screen.height },
+                { label: '🔍 可用屏幕', value: screen.availWidth + '×' + screen.availHeight },
+                { label: '🎨 色彩深度', value: screen.colorDepth + ' bit' },
+                { label: '📐 像素比', value: window.devicePixelRatio },
+                { label: '🌐 平台', value: nav.platform },
+                { label: '🌍 语言', value: nav.language },
+                { label: '🍪 Cookie', value: nav.cookieEnabled ? '已启用' : '未启用' },
+                { label: '⚡ 在线状态', value: nav.onLine ? '在线' : '离线' },
+                { label: '🚀 最大触点', value: nav.maxTouchPoints }
+            ];
+
+            let html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:4px;">';
+            info.forEach(i => {
+                html += `<div style="padding:6px 8px;background:rgba(var(--glow-color),0.03);border-radius:10px;border-left:2px solid rgba(var(--glow-color),0.15);">
+                    <div style="font-size:9px;color:var(--sub);">${i.label}</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--text);word-break:break-all;">${i.value}</div>
+                </div>`;
+            });
+            html += '</div>';
+            // 性能评估
+            const cores = nav.hardwareConcurrency || 4;
+            const mem = nav.deviceMemory || 4;
+            let perfScore = 0;
+            perfScore += cores * 100;
+            perfScore += mem * 50;
+            if (gpu.includes('RTX') || gpu.includes('Radeon')) perfScore += 500;
+            let perfLevel = '入门级';
+            let perfColor = '#ef4444';
+            if (perfScore > 1500) { perfLevel = '电竞级 🏆'; perfColor = '#00ff88'; }
+            else if (perfScore > 1000) { perfLevel = '高端级 ✅'; perfColor = '#00f5ff'; }
+            else if (perfScore > 600) { perfLevel = '中端级 ⚠️'; perfColor = '#fbbf24'; }
+            html += `<div style="margin-top:8px;padding:10px;background:rgba(0,255,136,0.04);border-radius:12px;text-align:center;">
+                <div style="font-size:10px;color:var(--sub);">性能评分</div>
+                <div style="font-size:clamp(20px,2.5vw,28px);font-weight:900;color:${perfColor};">${perfScore}</div>
+                <div style="font-size:11px;color:${perfColor};">${perfLevel}</div>
+            </div>`;
+            result.innerHTML = html;
+            showToast('系统信息检测完成');
+        };
+
+        // 网络速度测试
+        window.startNetTest = function() {
+            const btn = document.getElementById('nettest-btn');
+            const speedEl = document.getElementById('nettest-speed');
+            const statusEl = document.getElementById('nettest-status');
+            if (!speedEl || !statusEl) return;
+            if (btn) { btn.disabled = true; btn.textContent = '⏳ 测试中...'; }
+            speedEl.textContent = '...';
+            statusEl.textContent = '正在下载测试数据...';
+
+            const testSize = 2 * 1024 * 1024; // 2MB
+            const start = performance.now();
+            fetch('https://speed.cloudflare.com/__down?bytes=' + testSize, { cache: 'no-store' })
+                .then(r => r.blob())
+                .then(blob => {
+                    const elapsed = (performance.now() - start) / 1000;
+                    const bits = blob.size * 8;
+                    const mbps = (bits / elapsed / 1000000).toFixed(1);
+                    speedEl.textContent = mbps;
+                    let level = '低速';
+                    let color = '#ef4444';
+                    if (mbps > 100) { level = '极速 🚀'; color = '#00ff88'; }
+                    else if (mbps > 50) { level = '高速 ✅'; color = '#00f5ff'; }
+                    else if (mbps > 20) { level = '中速 ⚠️'; color = '#fbbf24'; }
+                    statusEl.innerHTML = `<span style="color:${color};">Mbps · ${level}</span><br><span style="font-size:9px;">下载${(blob.size/1024/1024).toFixed(1)}MB 用时${elapsed.toFixed(2)}s</span>`;
+                    if (btn) { btn.disabled = false; btn.textContent = '🚀 开始测速'; }
+                })
+                .catch(() => {
+                    // 备用方案：用小数据测
+                    const fallbackStart = performance.now();
+                    fetch('https://www.google.com/generate_204', { cache: 'no-store', mode: 'no-cors' })
+                        .then(() => {
+                            const t = performance.now() - fallbackStart;
+                            speedEl.textContent = (1000 / t * 8 / 1000).toFixed(1);
+                            statusEl.innerHTML = '<span style="color:#fbbf24;">Mbps · 估算值</span>';
+                        })
+                        .catch(() => {
+                            speedEl.textContent = '—';
+                            statusEl.innerHTML = '<span style="color:#ef4444;">测速失败</span>';
+                        })
+                        .finally(() => { if (btn) { btn.disabled = false; btn.textContent = '🚀 开始测速'; } });
+                });
+        };
+
+        // 游戏性能跑分
+        window.runBenchmark = function() {
+            const scoreEl = document.getElementById('benchmark-score');
+            const levelEl = document.getElementById('benchmark-level');
+            if (!scoreEl || !levelEl) return;
+            scoreEl.textContent = '...';
+            levelEl.textContent = '跑分中...';
+
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256; canvas.height = 256;
+                const gl = canvas.getContext('webgl');
+                if (!gl) {
+                    scoreEl.textContent = '0';
+                    levelEl.textContent = '❌ 不支持WebGL';
+                    return;
+                }
+                // 简单的WebGL压力测试
+                const vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}';
+                const fs = 'precision mediump float;uniform float t;void main(){vec2 r=gl_FragCoord.xy*0.01;float c=sin(r.x+t)*cos(r.y+t);gl_FragColor=vec4(c,c*0.5,c*0.3,1);}';
+                const prog = gl.createProgram();
+                const vsObj = gl.createShader(gl.VERTEX_SHADER);
+                gl.shaderSource(vsObj, vs); gl.compileShader(vsObj);
+                const fsObj = gl.createShader(gl.FRAGMENT_SHADER);
+                gl.shaderSource(fsObj, fs); gl.compileShader(fsObj);
+                gl.attachShader(prog, vsObj); gl.attachShader(prog, fsObj);
+                gl.linkProgram(prog); gl.useProgram(prog);
+
+                const buf = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+                const loc = gl.getAttribLocation(prog, 'p');
+                gl.enableVertexAttribArray(loc);
+                gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+                const start = performance.now();
+                let frames = 0;
+                function render() {
+                    frames++;
+                    const t = (performance.now() - start) / 1000;
+                    gl.uniform1f(gl.getUniformLocation(prog, 't'), t);
+                    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                    if (frames < 500 && performance.now() - start < 3000) {
+                        requestAnimationFrame(render);
+                    } else {
+                        const elapsed = performance.now() - start;
+                        const fps = (frames / elapsed) * 1000;
+                        const score = Math.round(fps * 10 + frames);
+                        scoreEl.textContent = score;
+                        let level = '入门级';
+                        let color = '#ef4444';
+                        if (score > 10000) { level = '电竞级 🏆'; color = '#00ff88'; }
+                        else if (score > 5000) { level = '流畅级 ✅'; color = '#00f5ff'; }
+                        else if (score > 2000) { level = '基本级 ⚠️'; color = '#fbbf24'; }
+                        levelEl.innerHTML = `<span style="color:${color};">${level}</span><br><span style="font-size:9px;">${frames}帧/${(elapsed/1000).toFixed(1)}s = ${fps.toFixed(0)}FPS</span>`;
+                        showToast('性能跑分完成：' + score);
+                    }
+                }
+                render();
+            } catch(e) {
+                scoreEl.textContent = '0';
+                levelEl.textContent = '❌ 跑分失败';
+            }
+        };
+
+        // 鼠标轮询率测试
+        document.addEventListener('DOMContentLoaded', function() {
+            const area = document.getElementById('mouse-test-area');
+            if (!area) return;
+            let events = 0;
+            let lastSecond = performance.now();
+            area.addEventListener('mousemove', function() {
+                events++;
+                const now = performance.now();
+                if (now - lastSecond >= 1000) {
+                    const rateEl = document.getElementById('mouse-rate');
+                    const hzEl = document.getElementById('mouse-hz');
+                    if (rateEl) rateEl.textContent = events;
+                    if (hzEl) hzEl.textContent = Math.min(1000, events);
+                    events = 0;
+                    lastSecond = now;
+                }
+            }, { passive: true });
+        });
+
+        // 系统优化清单 (Optimization Checklist) - 统一实现
+        const _optItems = [
+            { text: '关闭不必要的后台进程', detail: '360、鲁大师、2345等占后台资源，释放CPU和内存' },
+            { text: '关闭Windows索引服务', detail: 'Windows Search索引偷资源，关闭后减少磁盘IO' },
+            { text: '关闭超级预读(Superfetch)', detail: 'SysMain服务占用磁盘IO，影响游戏加载' },
+            { text: '调整电源策略为高性能', detail: '平衡模式CPU从未跑满，高性能模式释放全部性能' },
+            { text: 'CPU大小核调度优化', detail: 'Intel P/E核分配调校，避免任务跑到小核' },
+            { text: '游戏进程优先级提升', detail: '强制高优先级运行，减少被其他进程抢占' },
+            { text: '安装DirectX运行库修复', detail: '补全DX处理链路，修复游戏运行环境' },
+            { text: 'VC++运行库重封', detail: '底层依赖修复，解决缺失DLL报错' },
+            { text: 'GPU驱动环境优化', detail: '显卡驱动链路调优，清理残留注册表项' },
+            { text: '内存分页预取优化', detail: '压缩物理内存响应周期，减少交换延迟' },
+            { text: '鼠标端到端延迟优化', detail: '降低点击到显示延迟，关闭鼠标加速' },
+            { text: '视觉渲染增强', detail: '画质清晰度与曝光优化，提升游戏视觉体验' },
+            { text: '帧率突破与Low帧锁定', detail: '改善掉帧下限，稳定帧率输出' },
+            { text: '全链路延迟压缩', detail: '系统层延迟优化，从输入到显示全链路压缩' },
+            { text: '设置显示器最高刷新率', detail: '发挥硬件最大潜能，确保刷新率拉满' },
+            { text: '禁用系统动画与透明效果', detail: '降低GPU渲染负担，关闭Aero毛玻璃效果' },
+            { text: '关闭Windows游戏栏', detail: '减少后台占用，避免GameDVR偷性能' },
+            { text: '更新显卡驱动至最新', detail: '提升游戏兼容性与性能，修复已知Bug' }
+        ];
+        const _optDone = new Set();
+        (function initOptChecklist() {
+            const container = document.getElementById('opt-checklist');
+            if (!container) return;
+            container.innerHTML = _optItems.map(function(item, i) {
+                return '<div class="opt-item" data-idx="' + i + '" onclick="toggleOptItem(' + i + ')">' +
+                    '<div class="opt-checkbox"></div>' +
+                    '<div class="opt-text">' + item.text + '<br><small>' + item.detail + '</small></div>' +
+                    '</div>';
+            }).join('');
+        })();
+        window.toggleOptItem = function(idx) {
+            var item = document.querySelector('.opt-item[data-idx="' + idx + '"]');
+            if (!item) return;
+            item.classList.toggle('done');
+            var checkbox = item.querySelector('.opt-checkbox');
+            if (checkbox) checkbox.textContent = item.classList.contains('done') ? '✓' : '';
+            var doneCount = document.querySelectorAll('.opt-item.done').length;
+            var progress = document.getElementById('opt-progress');
+            if (progress) progress.textContent = Math.round((doneCount / _optItems.length) * 100) + '%';
+        };
+
+        // 游戏设置推荐
+        window.recommendSettings = function() {
+            const res = document.getElementById('game-resolution');
+            const fps = document.getElementById('game-fps-target');
+            const result = document.getElementById('settings-result');
+            if (!res || !fps || !result) return;
+            const r = parseInt(res.value);
+            const f = parseInt(fps.value);
+            // 基于分辨率和帧率推荐设置
+            let tex = '高', shadow = '高', aa = 'TAA', effects = '高', lod = '远', render = '100%';
+            let note = '推荐设置适合大多数游戏';
+            if (r >= 2160) { // 4K
+                if (f >= 120) { tex='中'; shadow='低'; aa='关闭'; effects='中'; lod='中'; render='75%'; note='4K+高帧率需要顶级GPU，建议降低画质'; }
+                else if (f >= 60) { tex='高'; shadow='中'; aa='FXAA'; effects='中'; lod='中'; note='4K 60FPS需要高端GPU'; }
+                else { tex='超高'; shadow='高'; aa='TAA'; effects='高'; note='4K画质优先模式'; }
+            } else if (r >= 1440) { // 2K
+                if (f >= 144) { tex='高'; shadow='中'; aa='FXAA'; effects='中'; lod='中'; note='2K 144FPS需要中高端GPU'; }
+                else if (f >= 120) { tex='高'; shadow='高'; aa='TAA'; effects='高'; note='2K 120FPS平衡设置'; }
+                else { tex='超高'; shadow='超高'; aa='TAA'; effects='超高'; lod='远'; note='2K画质优先'; }
+            } else { // 1080p
+                if (f >= 240) { tex='中'; shadow='低'; aa='关闭'; effects='低'; lod='中'; render='90%'; note='1080P 240FPS竞技模式，牺牲画质换帧率'; }
+                else if (f >= 144) { tex='高'; shadow='中'; aa='FXAA'; effects='中'; note='1080P 144FPS竞技设置'; }
+                else { tex='超高'; shadow='高'; aa='TAA'; effects='高'; note='1080P 60FPS画质优先'; }
+            }
+            result.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:4px;">
+                <div style="padding:6px;background:rgba(0,255,136,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">纹理质量</div><div style="font-size:12px;font-weight:700;color:#00ff88;">${tex}</div></div>
+                <div style="padding:6px;background:rgba(0,245,255,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">阴影质量</div><div style="font-size:12px;font-weight:700;color:var(--accent);">${shadow}</div></div>
+                <div style="padding:6px;background:rgba(124,58,237,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">抗锯齿</div><div style="font-size:12px;font-weight:700;color:#a78bfa;">${aa}</div></div>
+                <div style="padding:6px;background:rgba(251,191,36,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">特效质量</div><div style="font-size:12px;font-weight:700;color:#fbbf24;">${effects}</div></div>
+                <div style="padding:6px;background:rgba(244,114,182,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">可视距离</div><div style="font-size:12px;font-weight:700;color:#f472b6;">${lod}</div></div>
+                <div style="padding:6px;background:rgba(0,0,0,0.06);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">渲染缩放</div><div style="font-size:12px;font-weight:700;color:var(--text);">${render}</div></div>
+            </div>
+            <div style="margin-top:6px;font-size:10px;color:var(--sub);opacity:.7;">💡 ${note}</div>`;
+            showToast('设置推荐已生成');
+        };
 
         // ============================================================
         // 导航切换
@@ -7711,6 +9299,19 @@
             });
         }
 
+        // 节流函数
+        function throttle(fn, delay) {
+            let last = 0, timer = null;
+            return function(...args) {
+                const now = Date.now();
+                if (now - last >= delay) {
+                    clearTimeout(timer);
+                    last = now;
+                    fn.apply(this, args);
+                }
+            };
+        }
+
         // ============================================================
         // 初始化
         // ============================================================
@@ -9473,12 +11074,528 @@
                 '<div style="margin-top:2px;font-size:11px;color:var(--accent3);">相对: ' + rel + '</div>';
         };
 
+        // ============================================================
+        // 电竞优化工具集 · 冠军调试风格 (已合并到上方window.X实现，此处移除重复定义)
+        // ============================================================
+        // NOTE: 以下重复代码已删除，FPS/延迟/系统信息/网络测速/性能评分/鼠标轮询/设置推荐
+        // 均由上方 window.X = function() 实现统一定义，避免重复事件监听和函数覆盖问题。
+        /* eslint-disable
+        function _DEAD_CODE_startFPSTest() {
+            if (_fpsRunning) return;
+            _fpsRunning = true;
+            _fpsSamples = []; _fpsMin = Infinity; _fpsMax = 0; _fpsSum = 0; _fpsCount = 0;
+            const cur = document.getElementById('fps-current');
+            const avg = document.getElementById('fps-avg');
+            const min = document.getElementById('fps-min');
+            const max = document.getElementById('fps-max');
+            const chart = document.getElementById('fps-chart');
+            const ctx = chart ? chart.getContext('2d') : null;
+            _fpsLast = performance.now();
+            const btn = document.getElementById('fps-start-btn');
+            if (btn) btn.textContent = '⏸️ 测试中...';
+            function loop(now) {
+                if (!_fpsRunning) return;
+                _fpsFrames++;
+                const elapsed = now - _fpsLast;
+                if (elapsed >= 500) {
+                    const fps = Math.round((_fpsFrames * 1000) / elapsed);
+                    _fpsSamples.push(fps);
+                    if (_fpsSamples.length > 80) _fpsSamples.shift();
+                    if (fps < _fpsMin) _fpsMin = fps;
+                    if (fps > _fpsMax) _fpsMax = fps;
+                    _fpsSum += fps; _fpsCount++;
+                    if (cur) cur.textContent = fps;
+                    if (avg) avg.textContent = Math.round(_fpsSum / _fpsCount);
+                    if (min) min.textContent = (_fpsMin === Infinity ? 0 : _fpsMin);
+                    if (max) max.textContent = _fpsMax;
+                    // 绘制图表
+                    if (ctx) {
+                        const w = chart.width, h = chart.height;
+                        ctx.clearRect(0, 0, w, h);
+                        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+                        ctx.fillRect(0, 0, w, h);
+                        const maxF = Math.max(60, ..._fpsSamples);
+                        const step = w / Math.max(1, _fpsSamples.length);
+                        ctx.strokeStyle = '#00ff88';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        _fpsSamples.forEach((v, i) => {
+                            const x = i * step;
+                            const y = h - (v / maxF) * h;
+                            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                        });
+                        ctx.stroke();
+                        // 60FPS基准线
+                        ctx.strokeStyle = 'rgba(0,245,255,0.3)';
+                        ctx.setLineDash([4, 4]);
+                        ctx.beginPath();
+                        ctx.moveTo(0, h - (60 / maxF) * h);
+                        ctx.lineTo(w, h - (60 / maxF) * h);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                    }
+                    _fpsFrames = 0;
+                    _fpsLast = now;
+                }
+                _fpsRAF = requestAnimationFrame(loop);
+            }
+            _fpsRAF = requestAnimationFrame(loop);
+        }
+        function stopFPSTest() {
+            _fpsRunning = false;
+            if (_fpsRAF) cancelAnimationFrame(_fpsRAF);
+            const btn = document.getElementById('fps-start-btn');
+            if (btn) btn.textContent = '▶️ 开始测试';
+        }
+
+        // ---- 输入延迟测试 (Input Lag) ----
+        let _latencyState = 'idle', _latencyStart = 0, _latencyTimer = null;
+        function handleLatencyClick() {
+            const box = document.getElementById('latency-box');
+            const res = document.getElementById('latency-result');
+            if (!box || !res) return;
+            if (_latencyState === 'idle' || _latencyState === 'result') {
+                // 开始等待
+                _latencyState = 'waiting';
+                box.className = 'waiting';
+                box.textContent = '等待变绿...';
+                res.textContent = '准备好，屏幕变绿时立即点击！';
+                const delay = 1500 + Math.random() * 3000;
+                _latencyTimer = setTimeout(() => {
+                    _latencyState = 'ready';
+                    box.className = 'ready';
+                    box.textContent = '🟢 立即点击！';
+                    _latencyStart = performance.now();
+                }, delay);
+            } else if (_latencyState === 'waiting') {
+                // 过早点击
+                clearTimeout(_latencyTimer);
+                _latencyState = 'result';
+                box.className = '';
+                box.textContent = '点击开始';
+                res.innerHTML = '<span style="color:#ef4444;">⚠️ 太早了！请等屏幕变绿</span>';
+            } else if (_latencyState === 'ready') {
+                // 成功测量
+                const lag = Math.round(performance.now() - _latencyStart);
+                _latencyState = 'result';
+                box.className = '';
+                box.textContent = '点击重新开始';
+                let grade = '🐌 需要加油', color = '#ef4444';
+                if (lag < 200) { grade = '🏆 电竞级'; color = '#00ff88'; }
+                else if (lag < 300) { grade = '⚡ 优秀'; color = '#00f5ff'; }
+                else if (lag < 400) { grade = '👍 良好'; color = '#fbbf24'; }
+                res.innerHTML = `<span style="font-size:18px;font-weight:900;color:${color};">${lag}ms</span> <span style="color:var(--sub);">${grade}</span>`;
+            }
+        }
+
+        // ---- 系统信息检测 (System Info) ----
+        function detectSystemInfo() {
+            const el = document.getElementById('sysinfo-result');
+            if (!el) return;
+            el.innerHTML = '<span style="color:var(--accent);">🔍 检测中...</span>';
+            const info = [];
+            info.push(['🖥️ 平台', navigator.platform || '未知']);
+            info.push(['🔢 CPU核心', (navigator.hardwareConcurrency || '未知') + ' 核']);
+            info.push(['💾 内存', navigator.deviceMemory ? navigator.deviceMemory + ' GB' : '不可用']);
+            info.push(['📐 屏幕分辨率', screen.width + ' × ' + screen.height]);
+            info.push(['📱 像素比', window.devicePixelRatio || 1]);
+            info.push(['🎨 色深', screen.colorDepth + ' bit']);
+            info.push(['🌐 语言', navigator.language || '未知']);
+            info.push(['🍪 Cookie', navigator.cookieEnabled ? '启用' : '禁用']);
+            info.push(['🎮 触控', ('ontouchstart' in window) ? '支持' : '不支持']);
+            // GPU检测
+            let gpu = '不可用';
+            try {
+                const c = document.createElement('canvas');
+                const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+                if (gl) {
+                    const ext = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (ext) gpu = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '未知';
+                }
+            } catch (e) {}
+            info.push(['🎴 GPU', gpu]);
+            // WebGL支持
+            let webgl = '不支持';
+            try {
+                const c = document.createElement('canvas');
+                const gl = c.getContext('webgl2') || c.getContext('webgl');
+                if (gl) webgl = c.getContext('webgl2') ? 'WebGL 2.0' : 'WebGL 1.0';
+            } catch (e) {}
+            info.push(['🔮 WebGL', webgl]);
+            setTimeout(() => {
+                el.innerHTML = '<div style="display:grid;gap:4px;">' + info.map(i =>
+                    `<div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(var(--glow-color),0.04);border-radius:8px;"><span style="color:var(--sub);font-size:11px;">${i[0]}</span><span style="font-size:11px;font-weight:700;color:var(--accent);word-break:break-all;text-align:right;max-width:60%;">${i[1]}</span></div>`
+                ).join('') + '</div>';
+            }, 400);
+        }
+
+        // ---- 网络速度测试 (Speed Test) ----
+        let _netRunning = false;
+        function startNetTest() {
+            if (_netRunning) return;
+            _netRunning = true;
+            const btn = document.getElementById('nettest-btn');
+            const speed = document.getElementById('nettest-speed');
+            const status = document.getElementById('nettest-status');
+            if (btn) btn.disabled = true;
+            if (speed) speed.textContent = '...';
+            if (status) status.textContent = '测试中，请稍候';
+            const sizes = [5000000, 10000000, 20000000];
+            let bestSpeed = 0;
+            let idx = 0;
+            function testOnce() {
+                if (idx >= sizes.length) {
+                    _netRunning = false;
+                    if (btn) btn.disabled = false;
+                    if (speed) speed.textContent = bestSpeed.toFixed(1) + ' Mbps';
+                    let grade = '网络较弱', color = '#ef4444';
+                    if (bestSpeed >= 50) { grade = '电竞级网络 ⚡'; color = '#00ff88'; }
+                    else if (bestSpeed >= 20) { grade = '适合竞技游戏'; color = '#00f5ff'; }
+                    else if (bestSpeed >= 5) { grade = '可日常游戏'; color = '#fbbf24'; }
+                    if (status) status.innerHTML = `<span style="color:${color};">${grade}</span>`;
+                    return;
+                }
+                const size = sizes[idx];
+                const url = `https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js?_=${Date.now()}_${size}`;
+                const start = performance.now();
+                fetch(url, { cache: 'no-store' }).then(r => {
+                    if (!r.ok) throw new Error();
+                    const reader = r.body ? r.body.getReader() : null;
+                    if (!reader) { return r.arrayBuffer(); }
+                    let received = 0;
+                    function read() {
+                        return reader.read().then(({ done, value }) => {
+                            if (done) return;
+                            received += value.length;
+                            const elapsed = (performance.now() - start) / 1000;
+                            const mbps = (received * 8) / 1000000 / elapsed;
+                            if (speed) speed.textContent = mbps.toFixed(1) + ' Mbps';
+                            return read();
+                        });
+                    }
+                    return read();
+                }).then(() => {
+                    const elapsed = (performance.now() - start) / 1000;
+                    const mbps = (size * 8) / 1000000 / elapsed;
+                    if (mbps > bestSpeed) bestSpeed = mbps;
+                    idx++;
+                    setTimeout(testOnce, 300);
+                }).catch(() => {
+                    idx++;
+                    setTimeout(testOnce, 300);
+                });
+            }
+            testOnce();
+        }
+
+        // ---- 游戏性能评分 (Benchmark) ----
+        function runBenchmark() {
+            const score = document.getElementById('benchmark-score');
+            const level = document.getElementById('benchmark-level');
+            if (score) score.textContent = '...';
+            if (level) level.textContent = '跑分中...';
+            setTimeout(() => {
+                let canvas;
+                try {
+                    canvas = document.createElement('canvas');
+                    canvas.width = 512; canvas.height = 512;
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (!gl) throw new Error('no webgl');
+                    const vs = gl.createShader(gl.VERTEX_SHADER);
+                    gl.shaderSource(vs, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}');
+                    gl.compileShader(vs);
+                    const fs = gl.createShader(gl.FRAGMENT_SHADER);
+                    gl.shaderSource(fs, 'precision mediump float;uniform float t;void main(){vec2 u=gl_FragCoord.xy/512.;gl_FragColor=vec4(sin(t+u.x*8.),cos(t+u.y*8.),sin(u.x*u.y*16.),1.);}');
+                    gl.compileShader(fs);
+                    const prog = gl.createProgram();
+                    gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+                    gl.linkProgram(prog); gl.useProgram(prog);
+                    const buf = gl.createBuffer();
+                    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+                    const loc = gl.getAttribLocation(prog, 'p');
+                    gl.enableVertexAttribArray(loc);
+                    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+                    const tLoc = gl.getUniformLocation(prog, 't');
+                    const start = performance.now();
+                    let frames = 0;
+                    const duration = 1500;
+                    function render() {
+                        const elapsed = performance.now() - start;
+                        if (elapsed >= duration) {
+                            const fps = frames / (duration / 1000);
+                            const result = Math.round(fps * 120 + (navigator.hardwareConcurrency || 4) * 200);
+                            if (score) score.textContent = result;
+                            let g = '入门级', c = '#ef4444';
+                            if (result >= 10000) { g = '🏆 电竞级'; c = '#00ff88'; }
+                            else if (result >= 5000) { g = '⚡ 流畅级'; c = '#00f5ff'; }
+                            else if (result >= 2500) { g = '👍 标准级'; c = '#fbbf24'; }
+                            if (level) level.innerHTML = `<span style="color:${c};">${g} · 约${Math.round(fps)}FPS</span>`;
+                            return;
+                        }
+                        gl.uniform1f(tLoc, elapsed / 1000);
+                        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                        frames++;
+                        requestAnimationFrame(render);
+                    }
+                    render();
+                } catch (e) {
+                    // WebGL不可用时用纯JS跑分
+                    const start = performance.now();
+                    let ops = 0;
+                    while (performance.now() - start < 1000) {
+                        for (let i = 0; i < 10000; i++) { Math.sqrt(i * 1.5); }
+                        ops++;
+                    }
+                    const result = ops * 100;
+                    if (score) score.textContent = result;
+                    if (level) level.innerHTML = '<span style="color:#fbbf24;">标准级 (无WebGL)</span>';
+                }
+            }, 100);
+        }
+
+        // ---- 鼠标轮询率测试 (Polling Rate) ----
+        document.addEventListener('DOMContentLoaded', function() {
+            const area = document.getElementById('mouse-test-area');
+            const rateEl = document.getElementById('mouse-rate');
+            const hzEl = document.getElementById('mouse-hz');
+            if (!area) return;
+            let events = 0, lastReset = performance.now();
+            area.addEventListener('mousemove', () => {
+                events++;
+                const now = performance.now();
+                if (now - lastReset >= 1000) {
+                    const hz = Math.round(events * 1000 / (now - lastReset));
+                    if (rateEl) rateEl.textContent = events;
+                    if (hzEl) hzEl.textContent = Math.min(hz, 1000);
+                    events = 0;
+                    lastReset = now;
+                }
+            });
+        });
+
+        // ---- 游戏设置推荐 (Settings Guide) ----
+        function recommendSettings() {
+            const res = document.getElementById('game-resolution');
+            const fps = document.getElementById('game-fps-target');
+            const out = document.getElementById('settings-result');
+            if (!res || !fps || !out) return;
+            const r = parseInt(res.value), f = parseInt(fps.value);
+            const perfFactor = (navigator.hardwareConcurrency || 4) * f / r;
+            let settings;
+            if (perfFactor < 0.4) {
+                settings = { shadow: '低', texture: '中', aa: '关闭', post: '关闭', view: '近', note: '性能优先，保证帧率' };
+            } else if (perfFactor < 0.8) {
+                settings = { shadow: '中', texture: '高', aa: 'FXAA', post: '低', view: '中', note: '平衡画质与性能' };
+            } else {
+                settings = { shadow: '高', texture: '超高', aa: 'TAA/MSAA 4x', post: '中', view: '远', note: '画质优先，电竞画面拉满' };
+            }
+            const fpsLabel = f >= 240 ? '电竞级' : f >= 120 ? '流畅级' : '标准级';
+            out.innerHTML = `
+                <div style="display:grid;gap:4px;">
+                    <div style="text-align:center;font-size:12px;font-weight:700;color:#00ff88;margin-bottom:4px;">${r}p · ${fps}FPS · ${fpsLabel}</div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(0,255,136,0.04);border-radius:8px;font-size:11px;"><span>🌑 阴影质量</span><span style="color:var(--accent);font-weight:700;">${settings.shadow}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(0,245,255,0.04);border-radius:8px;font-size:11px;"><span>🎨 纹理质量</span><span style="color:var(--accent);font-weight:700;">${settings.texture}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(124,58,237,0.04);border-radius:8px;font-size:11px;"><span>🔬 抗锯齿</span><span style="color:var(--accent);font-weight:700;">${settings.aa}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(251,191,36,0.04);border-radius:8px;font-size:11px;"><span>✨ 后期处理</span><span style="color:var(--accent);font-weight:700;">${settings.post}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(244,114,182,0.04);border-radius:8px;font-size:11px;"><span>👁️ 视野距离</span><span style="color:var(--accent);font-weight:700;">${settings.view}</span></div>
+                    <div style="text-align:center;margin-top:4px;font-size:10px;color:#fbbf24;">💡 ${settings.note}</div>
+                </div>`;
+        }
+        */
+
         // PWA Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('./sw.js').catch(function() {});
             });
         }
+
+        // ---- 键盘按键测试 (Key Test) ----
+        (function initKeyTest() {
+            const area = document.getElementById('keytest-area');
+            const result = document.getElementById('keytest-result');
+            if (!area || !result) return;
+            const pressed = new Set();
+            area.tabIndex = 0;
+            area.addEventListener('keydown', function(e) {
+                e.preventDefault();
+                pressed.add(e.key);
+                result.innerHTML = '<span style="color:#00ff88;font-weight:700;">✓ 按键: ' + e.key + '</span> (keyCode: ' + e.keyCode + ') | 同时按下: ' + pressed.size + '个键';
+                result.style.color = '#00ff88';
+            });
+            area.addEventListener('keyup', function(e) {
+                pressed.delete(e.key);
+            });
+            area.addEventListener('blur', function() {
+                pressed.clear();
+            });
+        })();
+
+        // ---- 屏幕刷新率检测 (Refresh Rate) ----
+        let _rrState = { running: false, frames: 0, lastTime: 0, raf: null };
+        window.startRefreshTest = function() {
+            if (_rrState.running) return;
+            _rrState = { running: true, frames: 0, lastTime: performance.now(), raf: null };
+            const hz = document.getElementById('refresh-hz');
+            const lvl = document.getElementById('refresh-level');
+            const btn = document.getElementById('rr-start-btn');
+            if (btn) btn.textContent = '⏳ 检测中...';
+            function tick(now) {
+                _rrState.frames++;
+                var elapsed = now - _rrState.lastTime;
+                if (elapsed >= 2000) {
+                    var rate = Math.round((_rrState.frames / elapsed) * 1000);
+                    if (hz) hz.textContent = rate + 'Hz';
+                    if (lvl) {
+                        if (rate >= 120) lvl.innerHTML = '<span style="color:#00ff88;">电竞级 ✦</span>';
+                        else if (rate >= 90) lvl.innerHTML = '<span style="color:var(--accent);">高刷新率</span>';
+                        else lvl.innerHTML = '<span style="color:#fbbf24;">标准60Hz</span>';
+                    }
+                    _rrState.running = false;
+                    if (btn) btn.textContent = '🔍 重新检测';
+                    return;
+                }
+                _rrState.raf = requestAnimationFrame(tick);
+            }
+            _rrState.raf = requestAnimationFrame(tick);
+        };
+
+        // ---- 鼠标DPI计算器 ----
+        window.calcDPI = function() {
+            var dist = parseFloat(document.getElementById('dpi-distance').value) || 0;
+            var px = parseFloat(document.getElementById('dpi-pixels').value) || 0;
+            var result = document.getElementById('dpi-result');
+            if (!result) return;
+            if (dist <= 0 || px <= 0) { result.textContent = '请输入有效数值'; return; }
+            var inches = dist / 2.54;
+            var dpi = Math.round(px / inches);
+            result.textContent = dpi + ' DPI';
+        };
+
+        // ---- 色彩感知测试 ----
+        let _colorState = { level: 0, active: false };
+        window.startColorTest = function() {
+            _colorState = { level: 0, active: true };
+            _colorNext();
+        };
+        function _colorNext() {
+            var grid = document.getElementById('color-grid');
+            var result = document.getElementById('color-result');
+            if (!grid || !result) return;
+            if (_colorState.level > 20) {
+                result.innerHTML = '<span style="color:#00ff88;font-weight:700;">🏆 满分！你的屏幕色彩表现优秀</span>';
+                grid.innerHTML = '';
+                _colorState.active = false;
+                return;
+            }
+            var baseHue = Math.floor(Math.random() * 360);
+            var diff = 30 - _colorState.level * 1.4;
+            if (diff < 1) diff = 1;
+            var baseColor = 'hsl(' + baseHue + ', 60%, 50%)';
+            var diffColor = 'hsl(' + baseHue + ', 60%, ' + (50 + diff) + '%)';
+            var oddIdx = Math.floor(Math.random() * 25);
+            var html = '';
+            for (var i = 0; i < 25; i++) {
+                var c = i === oddIdx ? diffColor : baseColor;
+                html += '<div onclick="_colorPick(' + i + ',' + oddIdx + ')" style="height:clamp(20px,4vw,30px);background:' + c + ';border-radius:6px;cursor:pointer;transition:transform 0.15s;"></div>';
+            }
+            grid.innerHTML = html;
+            result.innerHTML = '等级 ' + (_colorState.level + 1) + '/20 — 找出颜色不同的方块';
+        }
+        window._colorPick = function(picked, correct) {
+            if (!_colorState.active) return;
+            var result = document.getElementById('color-result');
+            if (picked === correct) {
+                _colorState.level++;
+                _colorNext();
+            } else {
+                if (result) result.innerHTML = '<span style="color:#ef4444;font-weight:700;">❌ 错误！等级 ' + _colorState.level + '/20</span>';
+                _colorState.active = false;
+            }
+        };
+
+        // ---- 滚轮速度测试 ----
+        (function initScrollTest() {
+            var area = document.getElementById('scroll-test-area');
+            var countEl = document.getElementById('scroll-count');
+            var speedEl = document.getElementById('scroll-speed');
+            if (!area || !countEl || !speedEl) return;
+            var count = 0, timer = null, lastSecond = 0;
+            area.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                count++;
+                countEl.textContent = count;
+                var now = Date.now();
+                if (now - lastSecond >= 1000) {
+                    speedEl.textContent = count - (area._lastCount || 0);
+                    area._lastCount = count;
+                    lastSecond = now;
+                }
+            }, { passive: false });
+        })();
+
+        // ---- 显示器坏点检测 ----
+        window.openDeadPixelTest = function(color) {
+            var overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:' + color + ';z-index:99999;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.3);';
+            overlay.innerHTML = '<div>ESC退出 | 点击切换颜色</div>';
+            overlay.addEventListener('click', function() {
+                var colors = ['#ff0000', '#00ff00', '#0000ff', '#ffffff', '#000000'];
+                var idx = colors.indexOf(color);
+                overlay.style.background = colors[(idx + 1) % colors.length];
+            });
+            document.addEventListener('keydown', function esc(e) {
+                if (e.key === 'Escape') {
+                    overlay.remove();
+                    document.removeEventListener('keydown', esc);
+                }
+            });
+            document.body.appendChild(overlay);
+        };
+
+        // ---- 音频延迟测试 ----
+        let _audioState = { startTime: 0, playing: false, ctx: null };
+        window.startAudioTest = function() {
+            if (_audioState.playing) return;
+            _audioState.playing = true;
+            var result = document.getElementById('audio-latency-result');
+            if (result) { result.textContent = '准备中... 3'; result.style.color = '#fbbf24'; }
+            var delay = 1500 + Math.random() * 3000;
+            setTimeout(function() {
+                try {
+                    _audioState.ctx = _audioState.ctx || new (window.AudioContext || window.webkitAudioContext)();
+                    var osc = _audioState.ctx.createOscillator();
+                    var gain = _audioState.ctx.createGain();
+                    osc.frequency.value = 880;
+                    gain.gain.value = 0.3;
+                    osc.connect(gain);
+                    gain.connect(_audioState.ctx.destination);
+                    osc.start();
+                    osc.stop(_audioState.ctx.currentTime + 0.15);
+                    _audioState.startTime = performance.now();
+                    if (result) { result.textContent = '听到声音了？立即点击！'; result.style.color = '#00ff88'; }
+                    var clickHandler = function() {
+                        var latency = Math.round(performance.now() - _audioState.startTime - 150);
+                        if (result) {
+                            if (latency < 50) result.innerHTML = '<span style="color:#00ff88;font-weight:700;">✓ ' + latency + 'ms — 极佳</span>';
+                            else if (latency < 100) result.innerHTML = '<span style="color:var(--accent);font-weight:700;">' + latency + 'ms — 良好</span>';
+                            else result.innerHTML = '<span style="color:#fbbf24;font-weight:700;">' + latency + 'ms — 一般</span>';
+                        }
+                        document.removeEventListener('click', clickHandler);
+                        _audioState.playing = false;
+                    };
+                    document.addEventListener('click', clickHandler);
+                    setTimeout(function() {
+                        document.removeEventListener('click', clickHandler);
+                        _audioState.playing = false;
+                    }, 3000);
+                } catch (e) {
+                    if (result) result.textContent = '音频设备不可用';
+                    _audioState.playing = false;
+                }
+            }, delay);
+        };
     </script>
 
 </body></html>
