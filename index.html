@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+<html lang="zh-CN" data-theme="dark"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>绊谈 · 塔罗三牌 · 全屏适配版</title>
     <style>
         /* ===== CSS 变量 ===== */
@@ -17,6 +16,7 @@
             --glass-bg: rgba(3, 3, 15, 0.3);
             --glass-border: rgba(255, 255, 255, 0.02);
             --card-bg: rgba(0, 0, 0, 0.15);
+            --border: rgba(255, 255, 255, 0.08);
             --glow-color: 0, 245, 255;
             --radius: 28px;
             --transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -34,6 +34,7 @@
             --glass-bg: rgba(255, 255, 255, 0.3);
             --glass-border: rgba(255, 255, 255, 0.1);
             --card-bg: rgba(255, 255, 255, 0.2);
+            --border: rgba(0, 0, 0, 0.1);
             --glow-color: 0, 102, 255;
         }
         * {
@@ -91,12 +92,13 @@
         .cosmic-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(180px);
+            filter: blur(120px);
             pointer-events: none;
             z-index: -8;
             mix-blend-mode: screen;
             opacity: 0.04;
             animation: cosmicFloat 50s infinite alternate ease-in-out;
+            will-change: transform;
         }
         /* 光晕数量减少到6个，节省性能 */
         .cosmic-orb:nth-child(1) {
@@ -402,7 +404,6 @@
             margin-bottom: clamp(16px, 3vw, 28px);
             box-shadow: 0 8px 80px rgba(0, 0, 0, 0.08);
             transition: all var(--transition);
-            position: relative;
         }
         .nav::before {
             content: '';
@@ -1403,9 +1404,15 @@
         .footer {
             text-align: center;
             font-size: clamp(10px, 0.9vw, 14px);
-            opacity: 0.1;
+            opacity: 0.35;
             margin: clamp(16px, 2vh, 28px) 0 clamp(8px, 1vh, 12px);
             letter-spacing: 0.1em;
+            transition: opacity 0.4s ease;
+            padding: clamp(10px, 2vh, 18px) 0;
+            border-top: 1px solid var(--border);
+        }
+        .footer:hover {
+            opacity: 0.8;
         }
         .footer kbd {
             background: rgba(255, 255, 255, 0.01);
@@ -1414,12 +1421,91 @@
             border: 1px solid var(--border);
             font-size: 11px;
         }
+
+        /* ===== 回到顶部按钮 ===== */
+        #back-to-top {
+            position: fixed;
+            right: clamp(12px, 3vw, 28px);
+            bottom: clamp(12px, 3vw, 28px);
+            z-index: 200;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(var(--glow-color), 0.12);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: var(--accent);
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        }
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        #back-to-top:hover {
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 0 60px rgba(var(--glow-color), 0.1);
+        }
+
+        /* ===== 无障碍：减弱动效 ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .cosmic-orb,
+            #starfield,
+            #meteor-shower,
+            #led-bg {
+                display: none !important;
+            }
+            .glass-card::before {
+                animation: none !important;
+            }
+        }
+
+        /* ===== 标签页隐藏时隐藏重画布（节省 GPU） ===== */
+        body.tab-hidden #starfield,
+        body.tab-hidden #meteor-shower,
+        body.tab-hidden #led-bg,
+        body.tab-hidden .cosmic-orb {
+            display: none !important;
+        }
+
+        /* ===== 移动端：减少粒子与光晕开销 ===== */
+        @media (max-width: 768px) {
+            .cosmic-orb {
+                filter: blur(100px);
+            }
+            .glass-card {
+                backdrop-filter: blur(30px) saturate(200%);
+                -webkit-backdrop-filter: blur(30px) saturate(200%);
+            }
+            .nav {
+                backdrop-filter: blur(30px) saturate(200%);
+                -webkit-backdrop-filter: blur(30px) saturate(200%);
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- ===== 开机 ===== -->
-    <div id="boot-screen" aria-hidden="true">
+    <div id="boot-screen" aria-hidden="true" class="hidden">
         <div class="boot-reactor" role="img" aria-label="开机动画">
             <div class="ring"></div>
             <div class="ring"></div>
@@ -1431,9 +1517,9 @@
 
     <!-- ===== 宇宙背景 ===== -->
     <div id="cosmic-bg"></div>
-    <canvas id="starfield"></canvas>
-    <canvas id="meteor-shower"></canvas>
-    <canvas id="led-bg"></canvas>
+    <canvas id="starfield" width="762" height="839"></canvas>
+    <canvas id="meteor-shower" width="762" height="839"></canvas>
+    <canvas id="led-bg" width="762" height="839"></canvas>
     <div class="cosmic-orb"></div>
     <div class="cosmic-orb"></div>
     <div class="cosmic-orb"></div>
@@ -1442,14 +1528,14 @@
     <div class="cosmic-orb"></div>
 
     <!-- ===== 系统字幕 ===== -->
-    <div id="system-caption" role="status" aria-live="polite">✦ 塔罗三牌 · 全屏适配 ✦</div>
+    <div id="system-caption" role="status" aria-live="polite" class="">✦ 塔罗三牌版 · 全屏适配 ✦</div>
 
     <!-- ===== 快捷键面板 ===== -->
     <div id="shortcut-panel" role="dialog" aria-modal="true" aria-labelledby="shortcut-title">
         <button class="close-btn" onclick="closeShortcut()" aria-label="关闭快捷键面板">✕</button>
         <h3 id="shortcut-title" style="color:var(--accent);font-size:clamp(16px,1.8vw,22px);margin-bottom:4px;">⌨️ 全局快捷键</h3>
         <table>
-            <tr><th>按键</th><th>功能</th></tr>
+            <tbody><tr><th>按键</th><th>功能</th></tr>
             <tr><td><kbd>F</kbd></td><td>聚焦搜索</td></tr>
             <tr><td><kbd>M</kbd></td><td>聚焦翻译</td></tr>
             <tr><td><kbd>Esc</kbd></td><td>关闭翻译</td></tr>
@@ -1457,7 +1543,7 @@
             <tr><td><kbd>Ctrl+Shift+F</kbd></td><td>全屏模式</td></tr>
             <tr><td><kbd>N</kbd></td><td>切换主题</td></tr>
             <tr><td><kbd>Space</kbd></td><td>切换名言</td></tr>
-        </table>
+        </tbody></table>
     </div>
 
     <!-- ===== 主容器 ===== -->
@@ -1465,7 +1551,7 @@
 
         <!-- 导航栏（带汉堡菜单） -->
         <header class="nav" role="navigation" aria-label="主导航">
-            <span class="logo">绊谈枢纽 <span class="quantum-tag">✦ 三牌</span></span>
+            <span class="logo">绊谈枢纽 <span class="quantum-tag">✦ 终极</span></span>
             <button class="hamburger" onclick="toggleMenu()" aria-label="切换菜单" id="hamburgerBtn">☰</button>
             <div class="nav-links" id="navLinks">
                 <a class="active" data-target="home" onclick="navigate('home')" role="button" tabindex="0">首页</a>
@@ -1487,8 +1573,8 @@
 
             <!-- 名言 -->
             <div class="quote-card" role="region" aria-label="每日名言">
-                <div class="quote-text" id="quote-text">保持热爱，奔赴下一场山海</div>
-                <div class="quote-author" id="quote-author">—— 追梦人</div>
+                <div class="quote-text" id="quote-text">代码是写给人看的，顺便让机器运行。</div>
+                <div class="quote-author" id="quote-author">—— 计算机格言</div>
                 <div class="quote-actions">
                     <button type="button" onclick="nextQuote()">↻ 换一句</button>
                     <button type="button" onclick="copyText(document.getElementById('quote-text').textContent+' '+document.getElementById('quote-author').textContent,'名言')">📋 复制</button>
@@ -1521,13 +1607,13 @@
                             <option value="zh">中文</option>
                         </select>
                         <button type="button" class="btn" onclick="translateText()" style="flex:0 0 auto;">翻译</button>
-                        <textarea id="translate-output" readonly placeholder="结果..." style="flex:2 1 160px;" aria-label="翻译结果"></textarea>
+                        <textarea id="translate-output" readonly="" placeholder="结果..." style="flex:2 1 160px;" aria-label="翻译结果"></textarea>
                     </div>
                 </div>
                 <div style="display:flex;flex-wrap:wrap;justify-content:space-between;margin-top:10px;border-top:1px solid var(--border);padding-top:10px;gap:4px;font-size:clamp(11px,1.1vw,15px);">
-                    <div>🌍 城市: <b id="weather-loc">定位中</b></div>
-                    <div>🌡️ 温度: <b style="color:var(--accent)" id="weather-temp">--</b></div>
-                    <div>🕐 时间: <b id="current-time" style="color:var(--accent2);">--</b></div>
+                    <div>🌍 城市: <b id="weather-loc">Zhengzhou</b></div>
+                    <div>🌡️ 温度: <b style="color:var(--accent)" id="weather-temp">27°C</b></div>
+                    <div>🕐 时间: <b id="current-time" style="color:var(--accent2);">14:31:46</b></div>
                     <div>📋 <span id="clipboard-count">0</span> 条记录</div>
                 </div>
             </div>
@@ -1535,11 +1621,11 @@
             <!-- ===== 人口信息 ===== -->
             <div class="glass-card">
                 <div style="font-weight:900;color:var(--accent);margin-bottom:6px;font-size:clamp(14px,1.4vw,18px);">🌍 全球人口</div>
-                <div id="population-display">8,000,000,000</div>
+                <div id="population-display">8,020,002,664</div>
                 <div class="pop-grid">
-                    <div>🇨🇳 中国: <span id="china-pop" style="color:var(--accent);font-weight:600;">1,420,000,000</span></div>
-                    <div>🇮🇳 印度: <span id="india-pop" style="color:var(--accent);font-weight:600;">1,410,000,000</span></div>
-                    <div>⚡ 每秒: <span id="pop-speed" style="color:var(--accent3);font-weight:600;">+2.5</span></div>
+                    <div>🇨🇳 中国: <span id="china-pop" style="color:var(--accent);font-weight:600;">1,420,000,479</span></div>
+                    <div>🇮🇳 印度: <span id="india-pop" style="color:var(--accent);font-weight:600;">1,410,000,452</span></div>
+                    <div>⚡ 每秒: <span id="pop-speed" style="color:var(--accent3);font-weight:600;">+82.9</span></div>
                     <div>🌱 年增长: <span id="pop-growth" style="color:var(--accent4);font-weight:600;">0.8%</span></div>
                 </div>
             </div>
@@ -1561,10 +1647,10 @@
 
             <!-- 系统状态 -->
             <div class="stats-row">
-                <div class="stat"><div class="stat-label">⚡ 负载</div><div class="stat-value" id="s-load">42%</div></div>
-                <div class="stat"><div class="stat-label">📶 延迟</div><div class="stat-value" id="s-delay">3ms</div></div>
-                <div class="stat"><div class="stat-label">💾 内存</div><div class="stat-value" id="s-mem">68%</div></div>
-                <div class="stat"><div class="stat-label">🎯 帧率</div><div class="stat-value" id="s-fps">144</div></div>
+                <div class="stat"><div class="stat-label">⚡ 负载</div><div class="stat-value" id="s-load">34%</div></div>
+                <div class="stat"><div class="stat-label">📶 延迟</div><div class="stat-value" id="s-delay">3.8ms</div></div>
+                <div class="stat"><div class="stat-label">💾 内存</div><div class="stat-value" id="s-mem">65%</div></div>
+                <div class="stat"><div class="stat-label">🎯 帧率</div><div class="stat-value" id="s-fps">131</div></div>
             </div>
         </section>
 
@@ -1683,9 +1769,7 @@
                                 ✨ 抽三张牌
                             </button>
                         </div>
-                        <div id="tarot-result" class="result" style="min-height:80px;text-align:center;font-size:clamp(14px,1.4vw,18px);">
-                            <span style="color:var(--sub);">点击抽牌，三张牌揭示过去·现在·未来</span>
-                        </div>
+                        <div id="tarot-result" class="result" style="min-height:80px;text-align:center;font-size:clamp(14px,1.4vw,18px);"><span style="color:var(--sub);">点击抽牌，三张牌揭示过去·现在·未来</span></div>
                     </div>
                 </div>
 
@@ -1753,7 +1837,7 @@
                 <div class="mini-card">
                     <div class="title">🕐 世界时钟</div>
                     <div class="content">
-                        <div id="world-clock">加载中...</div>
+                        <div id="world-clock"><div>北京: <strong style="color:var(--accent);">14:31:46</strong></div><div>东京: <strong style="color:var(--accent);">15:31:46</strong></div><div>纽约: <strong style="color:var(--accent);">02:31:46</strong></div><div>伦敦: <strong style="color:var(--accent);">07:31:46</strong></div></div>
                     </div>
                 </div>
                 <!-- 计算器 -->
@@ -1778,7 +1862,7 @@
                 <div class="mini-card">
                     <div class="title">📋 JSON 格式化</div>
                     <div class="content">
-                        <textarea id="json-input" rows="3" placeholder='{"key":"value"}' style="width:100%;"></textarea>
+                        <textarea id="json-input" rows="3" placeholder="{&quot;key&quot;:&quot;value&quot;}" style="width:100%;"></textarea>
                         <button type="button" class="btn btn-sm" onclick="formatJSON()">美化</button>
                         <button type="button" class="btn btn-sm" onclick="minifyJSON()">压缩</button>
                         <div class="result" id="json-result">等待输入</div>
@@ -1818,7 +1902,7 @@
                 <div class="mini-card">
                     <div class="title">📋 剪贴板历史</div>
                     <div class="content">
-                        <div id="clipboard-history" style="max-height:100px;overflow-y:auto;"></div>
+                        <div id="clipboard-history" style="max-height:100px;overflow-y:auto;">暂无记录</div>
                         <button type="button" class="btn btn-sm" onclick="clearClipboardHistory()" style="margin-top:4px;">清空</button>
                     </div>
                 </div>
@@ -1915,7 +1999,7 @@
                         <select id="from-currency" style="margin-top:4px;" aria-label="原始货币">
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
-                            <option value="CNY" selected>CNY</option>
+                            <option value="CNY" selected="">CNY</option>
                             <option value="JPY">JPY</option>
                             <option value="GBP">GBP</option>
                             <option value="KRW">KRW</option>
@@ -1926,7 +2010,7 @@
                             <option value="CNY">CNY</option>
                             <option value="JPY">JPY</option>
                             <option value="GBP">GBP</option>
-                            <option value="KRW" selected>KRW</option>
+                            <option value="KRW" selected="">KRW</option>
                         </select>
                         <button type="button" class="btn btn-sm" onclick="convertCurrency()" style="margin-top:4px;">换算</button>
                         <div class="result" id="currency-result">输入金额</div>
@@ -1973,8 +2057,8 @@
                     <div class="content">
                         <div class="flex-row">
                             <input type="number" id="adv-pwd-length" value="16" min="4" max="64" style="width:60px;" aria-label="密码长度">
-                            <label style="font-size:12px;"><input type="checkbox" id="adv-pwd-special" checked> 特殊符</label>
-                            <label style="font-size:12px;"><input type="checkbox" id="adv-pwd-numbers" checked> 数字</label>
+                            <label style="font-size:12px;"><input type="checkbox" id="adv-pwd-special" checked=""> 特殊符</label>
+                            <label style="font-size:12px;"><input type="checkbox" id="adv-pwd-numbers" checked=""> 数字</label>
                         </div>
                         <button type="button" class="btn btn-sm" onclick="generateAdvancedPassword()" style="margin-top:4px;">生成</button>
                         <div class="result" id="adv-pwd-result">点击生成</div>
@@ -2004,7 +2088,7 @@
                             <button type="button" class="btn btn-sm" onclick="startTypingTest()">开始测试</button>
                             <span id="typing-status" style="color:var(--sub);font-size:12px;">点击开始</span>
                         </div>
-                        <textarea id="typing-area" rows="2" placeholder="开始打字测试..." style="margin-top:4px;" disabled></textarea>
+                        <textarea id="typing-area" rows="2" placeholder="开始打字测试..." style="margin-top:4px;" disabled=""></textarea>
                         <div class="result" id="typing-result">等待测试</div>
                     </div>
                 </div>
@@ -2025,7 +2109,9 @@
                 <div class="mini-card">
                     <div class="title">🎯 随机选择</div>
                     <div class="content">
-                        <textarea id="picker-input" rows="2" placeholder="选项1&#10;选项2&#10;选项3" style="width:100%;"></textarea>
+                        <textarea id="picker-input" rows="2" placeholder="选项1
+选项2
+选项3" style="width:100%;"></textarea>
                         <button type="button" class="btn btn-sm" onclick="randomPicker()" style="margin-top:4px;">随机选一个</button>
                         <div class="result" id="picker-result">输入选项</div>
                     </div>
@@ -2069,10 +2155,10 @@
                     <div class="content">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                             <button type="button" class="btn btn-sm" onclick="changeMonth(-1)">◀</button>
-                            <span id="calendar-title" style="font-weight:700;font-size:clamp(14px,1.4vw,20px);"></span>
+                            <span id="calendar-title" style="font-weight:700;font-size:clamp(14px,1.4vw,20px);">2026年 八月</span>
                             <button type="button" class="btn btn-sm" onclick="changeMonth(1)">▶</button>
                         </div>
-                        <div id="calendar-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;font-size:clamp(11px,1vw,14px);"></div>
+                        <div id="calendar-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;font-size:clamp(11px,1vw,14px);"><div style="font-weight:700;color:var(--accent);">日</div><div style="font-weight:700;color:var(--accent);">一</div><div style="font-weight:700;color:var(--accent);">二</div><div style="font-weight:700;color:var(--accent);">三</div><div style="font-weight:700;color:var(--accent);">四</div><div style="font-weight:700;color:var(--accent);">五</div><div style="font-weight:700;color:var(--accent);">六</div><div></div><div></div><div></div><div></div><div></div><div></div><div style="">1</div><div style="">2</div><div style="">3</div><div style="">4</div><div style="">5</div><div style="">6</div><div style="">7</div><div style="">8</div><div style="">9</div><div style="">10</div><div style="">11</div><div style="">12</div><div style="">13</div><div style="">14</div><div style="">15</div><div style="">16</div><div style="">17</div><div style="">18</div><div style="">19</div><div style="">20</div><div style="">21</div><div style="">22</div><div style="">23</div><div style="">24</div><div style="background:rgba(var(--glow-color),0.04);border-radius:50%;">25</div><div style="">26</div><div style="">27</div><div style="">28</div><div style="">29</div><div style="">30</div><div style="">31</div></div>
                     </div>
                 </div>
                 <!-- 取色器 -->
@@ -2118,8 +2204,8 @@
                             <option value="data">数据存储</option>
                         </select>
                         <input type="number" id="unit-value" placeholder="数值" style="width:100%;margin-top:4px;" aria-label="数值">
-                        <select id="unit-from" style="width:100%;margin-top:4px;"></select>
-                        <select id="unit-to" style="width:100%;margin-top:4px;"></select>
+                        <select id="unit-from" style="width:100%;margin-top:4px;"><option value="平方米">平方米</option><option value="平方千米">平方千米</option><option value="公顷">公顷</option><option value="亩">亩</option><option value="平方英尺">平方英尺</option><option value="平方英里">平方英里</option></select>
+                        <select id="unit-to" style="width:100%;margin-top:4px;"><option value="平方米">平方米</option><option value="平方千米">平方千米</option><option value="公顷">公顷</option><option value="亩">亩</option><option value="平方英尺">平方英尺</option><option value="平方英里">平方英里</option></select>
                         <button type="button" class="btn btn-sm" onclick="convertAdvancedUnit()" style="margin-top:4px;">换算</button>
                         <div class="result" id="unit-result">输入数值</div>
                     </div>
@@ -2129,12 +2215,15 @@
 
         <!-- 底部 -->
         <div class="footer">
-            © 2026 绊谈 · 塔罗三牌版 &nbsp;|&nbsp; <kbd>Ctrl+H</kbd> 快捷键
+            © 2026 绊谈 · 终极版 &nbsp;|&nbsp; <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp; <kbd>空格</kbd> 换名言 &nbsp;|&nbsp; <kbd>F</kbd> 搜索 &nbsp;|&nbsp; <kbd>M</kbd> 翻译
         </div>
     </div>
 
+    <!-- ===== 回到顶部 ===== -->
+    <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部" title="回到顶部">↑</button>
+
     <!-- ===== Toast ===== -->
-    <div id="toast" role="alert" aria-live="assertive"></div>
+    <div id="toast" role="alert" aria-live="assertive" class="">便签已加载</div>
 
     <!-- ============================================================
     JavaScript（完整功能）
@@ -3481,6 +3570,29 @@
             document.getElementById('tarot-result').innerHTML =
                 '<span style="color:var(--sub);">点击抽牌，三张牌揭示过去·现在·未来</span>';
 
+            // 回到顶部按钮：滚动超过 400px 时显示
+            const backTop = document.getElementById('back-to-top');
+            let scrollTicking = false;
+            window.addEventListener('scroll', function() {
+                if (!scrollTicking) {
+                    requestAnimationFrame(function() {
+                        if (window.scrollY > 400) backTop.classList.add('show');
+                        else backTop.classList.remove('show');
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }, { passive: true });
+
+            // 标签页可见性：隐藏时暂停重画布以节省 GPU
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    document.body.classList.add('tab-hidden');
+                } else {
+                    document.body.classList.remove('tab-hidden');
+                }
+            });
+
             showCaption('✦ 塔罗三牌版 · 全屏适配 ✦');
             console.log('✅ 绊谈 · 塔罗三牌版 已加载（全屏适配优化）');
         };
@@ -3488,5 +3600,5 @@
         // 暴露全局
         window.drawTarotThree = drawTarotThree;
     </script>
-</body>
-</html>
+
+</body></html>
