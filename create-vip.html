@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建VIP账号 - 绊谈万能枢纽</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .vip-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .vip-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .vip-crown {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        .vip-title {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        .vip-subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .form-input:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
+        }
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        .vip-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            cursor: pointer;
+        }
+        .vip-select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .create-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+        }
+        .create-btn:active {
+            transform: translateY(0);
+        }
+        .create-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 10px;
+            display: none;
+        }
+        .result-box.success {
+            background: rgba(0,255,128,0.1);
+            border: 1px solid rgba(0,255,128,0.3);
+            color: #00ff80;
+            display: block;
+        }
+        .result-box.error {
+            background: rgba(255,80,80,0.1);
+            border: 1px solid rgba(255,80,80,0.3);
+            color: #ff5050;
+            display: block;
+        }
+        .result-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .result-detail {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 20px 0;
+        }
+        .tip-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="vip-card">
+        <div class="vip-header">
+            <div class="vip-crown">👑</div>
+            <div class="vip-title">创建至尊VIP账号</div>
+            <div class="vip-subtitle">一键创建永久VIP，享受无限对话</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Worker 地址</label>
+            <input type="text" class="form-input" id="workerUrl" placeholder="https://xxx.workers.dev" value="https://bantanai.1429616034.workers.dev">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">管理员密码</label>
+            <input type="password" class="form-input" id="adminPassword" placeholder="请输入管理员密码" value="BANTAN777">
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-group">
+            <label class="form-label">VIP 用户名</label>
+            <input type="text" class="form-input" id="username" placeholder="请输入用户名" value="BANTAN7">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">VIP 密码</label>
+            <input type="password" class="form-input" id="password" placeholder="请输入密码" value="BANTAN777">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">VIP 等级</label>
+            <select class="vip-select" id="vipLevel">
+                <option value="1">🥉 青铜VIP</option>
+                <option value="2">🥈 白银VIP</option>
+                <option value="3">🥇 黄金VIP</option>
+                <option value="4">💎 钻石VIP</option>
+                <option value="5" selected="">👑 至尊VIP（最高级）</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">赠送余额（次）</label>
+            <input type="number" class="form-input" id="balance" placeholder="赠送对话次数" value="99999">
+        </div>
+
+        <button class="create-btn" onclick="createVip()" id="createBtn">
+            ✨ 立即创建至尊VIP账号
+        </button>
+
+        <div class="result-box" id="resultBox">
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-detail" id="resultDetail"></div>
+        </div>
+
+        <div class="tip-text">
+            创建成功后，即可在主站登录享受VIP特权
+        </div>
+    </div>
+
+    <script>
+        async function createVip() {
+            const workerUrl = document.getElementById('workerUrl').value.trim().replace(/\/$/, '');
+            const adminPassword = document.getElementById('adminPassword').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const vipLevel = parseInt(document.getElementById('vipLevel').value);
+            const balance = parseInt(document.getElementById('balance').value);
+
+            const btn = document.getElementById('createBtn');
+            const resultBox = document.getElementById('resultBox');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultDetail = document.getElementById('resultDetail');
+
+            if (!workerUrl || !adminPassword || !username || !password) {
+                resultBox.className = 'result-box error';
+                resultTitle.textContent = '❌ 请填写完整信息';
+                resultDetail.textContent = '所有字段都不能为空';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '创建中...';
+            resultBox.style.display = 'none';
+
+            try {
+                const response = await fetch(workerUrl + '/api/init-vip', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        adminPassword,
+                        username,
+                        password,
+                        vipLevel,
+                        balance
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultBox.className = 'result-box success';
+                    resultTitle.textContent = '🎉 ' + data.message;
+                    resultDetail.innerHTML = 
+                        '用户名：<strong>' + data.user.username + '</strong><br>' +
+                        'VIP等级：<strong>' + getVipName(data.user.vipLevel) + '</strong><br>' +
+                        '赠送余额：<strong>' + data.user.balance + ' 次</strong><br>' +
+                        '<br>💡 现在可以去主站登录使用了！';
+                } else {
+                    resultBox.className = 'result-box error';
+                    resultTitle.textContent = '❌ 创建失败';
+                    resultDetail.textContent = data.error || '未知错误';
+                }
+            } catch (e) {
+                resultBox.className = 'result-box error';
+                resultTitle.textContent = '❌ 网络错误';
+                resultDetail.textContent = '无法连接到 Worker，请检查地址是否正确';
+            }
+
+            btn.disabled = false;
+            btn.textContent = '✨ 立即创建至尊VIP账号';
+        }
+
+        function getVipName(level) {
+            const names = ['', '🥉 青铜VIP', '🥈 白银VIP', '🥇 黄金VIP', '💎 钻石VIP', '👑 至尊VIP'];
+            return names[level] || 'VIP';
+        }
+    </script>
+
+
+</body></html>
