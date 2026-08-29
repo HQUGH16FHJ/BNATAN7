@@ -604,6 +604,426 @@
   .table-wrap {
     overflow-x: auto;
   }
+
+  /* ===== 实时监控样式 ===== */
+  .toggle-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--sub);
+  }
+  .toggle-switch .toggle-track {
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    background: rgba(136,136,136,0.25);
+    position: relative;
+    transition: 0.3s;
+    flex-shrink: 0;
+  }
+  .toggle-switch .toggle-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #888;
+    transition: 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .toggle-switch.on .toggle-track { background: rgba(34,197,94,0.3); }
+  .toggle-switch.on .toggle-thumb { left: 21px; background: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.5); }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(239,68,68,0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: livePulse 1.5s infinite;
+  }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .flash-up { animation: flashGreen 0.8s ease; }
+  .flash-down { animation: flashRed 0.8s ease; }
+  @keyframes flashGreen {
+    0% { background: rgba(34,197,94,0.25); }
+    100% { background: transparent; }
+  }
+  @keyframes flashRed {
+    0% { background: rgba(239,68,68,0.25); }
+    100% { background: transparent; }
+  }
+
+  .monitor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .monitor-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+  .monitor-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .monitor-card-title .title-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .activity-log {
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .activity-log::-webkit-scrollbar { width: 4px; }
+  .activity-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(var(--glow-color), 0.02);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .activity-item .act-time {
+    color: var(--sub);
+    font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .activity-item .act-icon { font-size: 14px; flex-shrink: 0; }
+  .activity-item .act-text { color: var(--text); line-height: 1.4; }
+  .activity-item.up { border-left: 3px solid #22c55e; }
+  .activity-item.down { border-left: 3px solid #ef4444; }
+  .activity-item.info { border-left: 3px solid var(--accent); }
+  .activity-item.warn { border-left: 3px solid var(--accent4); }
+
+  .health-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(136,136,136,0.15);
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .health-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #22c55e, #00f5ff);
+    transition: width 0.6s ease;
+  }
+  .health-bar-fill.warn { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .health-bar-fill.crit { background: linear-gradient(90deg, #ef4444, #ef4444); }
+
+  .mini-trend {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 40px;
+    margin-top: 8px;
+  }
+  .mini-trend-bar {
+    flex: 1;
+    min-height: 3px;
+    border-radius: 2px 2px 0 0;
+    background: linear-gradient(180deg, var(--accent), rgba(0,245,255,0.2));
+    transition: height 0.3s ease;
+  }
+
+  .monitor-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .monitor-stat-row:last-child { border-bottom: none; }
+  .monitor-stat-row .ms-label { font-size: 12px; color: var(--sub); }
+  .monitor-stat-row .ms-value { font-size: 14px; font-weight: 700; }
+
+  .pulse-ring {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    position: relative;
+    display: inline-block;
+  }
+  .pulse-ring::after {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid #22c55e;
+    animation: ringPulse 2s infinite;
+  }
+  @keyframes ringPulse {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  .online-user-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(var(--glow-color), 0.02);
+    border: 1px solid var(--border);
+    margin-bottom: 6px;
+    font-size: 13px;
+    animation: slideIn 0.3s ease;
+  }
+
+  .countdown-timer {
+    font-size: 11px;
+    color: var(--sub);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .realtime-chart-wrap {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    padding: 10px 0;
+  }
+  .realtime-chart-bar {
+    flex: 1;
+    min-width: 4px;
+    min-height: 4px;
+    border-radius: 3px 3px 0 0;
+    transition: height 0.4s ease;
+    position: relative;
+  }
+  .realtime-chart-bar:hover { opacity: 0.7; }
+
+  @media (max-width: 768px) {
+    .monitor-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== 更新日志管理 ===== */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sub);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .cl-version-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    background: rgba(var(--glow-color), 0.02);
+    position: relative;
+    transition: 0.3s;
+  }
+  .cl-version-card:hover { border-color: rgba(var(--glow-color), 0.2); }
+  .cl-version-card.latest {
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(135deg, rgba(0,245,255,0.04), transparent);
+  }
+  .cl-version-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .cl-version-header input,
+  .cl-version-header select {
+    background: rgba(136,136,136,0.08);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: var(--text);
+    font-size: 12px;
+    outline: none;
+  }
+  .cl-version-header input:focus,
+  .cl-version-header select:focus { border-color: var(--accent); }
+  .cl-vnum { width: 100px; font-weight: 700; }
+  .cl-vtitle { flex: 1; min-width: 120px; }
+  .cl-vdate { width: 130px; }
+
+  .cl-item-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(136,136,136,0.04);
+    border: 1px solid var(--border);
+  }
+  .cl-item-row select { width: 70px; font-size: 11px; }
+  .cl-item-row input { flex: 1; font-size: 12px; }
+  .cl-item-tag-sel { font-weight: 600; }
+  .cl-item-tag-sel option.add { color: #22c55e; }
+  .cl-item-tag-sel option.opt { color: var(--accent); }
+  .cl-item-tag-sel option.fix { color: var(--accent4); }
+
+  .cl-add-item-btn {
+    font-size: 11px;
+    padding: 4px 12px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    color: var(--sub);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .cl-add-item-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(var(--glow-color), 0.04);
+  }
+
+  .cl-preview {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 14px;
+    background: rgba(10,10,30,0.3);
+  }
+  .cl-preview .changelog-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cl-preview .changelog-item:last-child { border-bottom: none; }
+  .cl-preview .changelog-date {
+    min-width: 100px;
+    font-size: 11px;
+    color: var(--sub);
+  }
+  .cl-preview .changelog-version {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+  .cl-preview .changelog-list-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .cl-preview .changelog-list-items li {
+    font-size: 12px;
+    padding: 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cl-preview .tag {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cl-preview .tag.add { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .cl-preview .tag.opt { background: rgba(0,245,255,0.15); color: var(--accent); }
+  .cl-preview .tag.fix { background: rgba(251,191,36,0.15); color: var(--accent4); }
+
+  /* ===== 公告预警等级 ===== */
+  .ann-level-sel {
+    width: 90px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid var(--border);
+    background: rgba(136,136,136,0.08);
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .ann-level-sel option.lvl-normal { color: #94a3b8; }
+  .ann-level-sel option.lvl-important { color: #f59e0b; }
+  .ann-level-sel option.lvl-urgent { color: #ef4444; }
+
+  .ann-item-normal { border-left: 3px solid rgba(148,163,184,0.4); }
+  .ann-item-important { border-left: 3px solid #f59e0b; background: linear-gradient(135deg, rgba(245,158,11,0.04), transparent); }
+  .ann-item-urgent { border-left: 3px solid #ef4444; background: linear-gradient(135deg, rgba(239,68,68,0.05), transparent); }
+
+  .ann-level-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  .ann-level-tag.normal { background: rgba(148,163,184,0.15); color: #94a3b8; }
+  .ann-level-tag.important { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(251,191,36,0.15)); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+  .ann-level-tag.urgent { background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(248,113,113,0.15)); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); animation: annUrgentPulse 2s ease-in-out infinite; }
+  @keyframes annUrgentPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+    50% { box-shadow: 0 0 8px 2px rgba(239,68,68,0.2); }
+  }
 </style>
 </head>
 <body>
@@ -615,7 +1035,7 @@
     <h4>🔌 Worker 接口配置</h4>
     <input type="text" id="api-base" placeholder="https://api.bantan.online">
     <button class="btn primary" style="width:100%;" onclick="saveApiConfig()">保存并测试</button>
-    <div class="api-status" id="api-status"></div>
+    <div class="api-status ok" id="api-status">✅ 已配置: https://bantanai.1429616034.wo...</div>
     <div style="font-size:10px;color:var(--sub);margin-top:8px;">
       配置后数据将从云端 KV 读取，无需本地存储
     </div>
@@ -623,12 +1043,11 @@
 </div>
 
 <!-- 登录页 -->
-<div id="login-page" class="login-wrap">
+<div id="login-page" class="login-wrap" style="display: none;">
   <div class="login-card">
     <div class="logo">⚙️</div>
     <h2>站长后台</h2>
     <div class="sub">绊谈万能枢纽 · 管理控制台</div>
-    <input type="text" id="admin-username" placeholder="管理员账号" value="BANTAN7" onkeydown="if(event.key==='Enter')doLogin()">
     <input type="password" id="admin-pwd" placeholder="请输入管理员密码" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="btn primary" onclick="doLogin()">登 录</button>
     <div class="login-tip" id="login-tip">💡 请输入您在 Cloudflare 中配置的 ADMIN_PASSWORD</div>
@@ -636,7 +1055,7 @@
 </div>
 
 <!-- 后台主界面 -->
-<div id="admin-app" style="display:none; width:100%;">
+<div id="admin-app" style="display: flex; width: 100%;">
   <!-- 侧边栏 -->
   <div class="sidebar">
     <div class="sidebar-logo">
@@ -648,8 +1067,12 @@
     </div>
     <div class="sidebar-nav">
       <div class="nav-section">概览</div>
-      <div class="nav-item active" onclick="switchPage('dashboard', this)">
+      <div class="nav-item" onclick="switchPage('dashboard', this)">
         <span class="nav-icon">📊</span> 数据仪表盘
+      </div>
+      <div class="nav-item active" onclick="switchPage('monitor', this)">
+        <span class="nav-icon">📡</span> 实时监控
+        <span class="nav-badge" id="monitor-badge" style="display:none;background:#22c55e;">●</span>
       </div>
 
       <div class="nav-section">内容管理</div>
@@ -690,13 +1113,19 @@
   <div class="main">
 
     <!-- 仪表盘 -->
-    <div class="page active" id="page-dashboard">
+    <div class="page" id="page-dashboard">
       <div class="page-header">
         <div>
           <div class="page-title">数据仪表盘 <small>实时概览</small></div>
         </div>
         <div class="header-actions">
-          <span class="admin-badge" id="conn-badge">● 连接中</span>
+          <span class="live-badge" id="dash-live-badge"><span class="live-dot"></span> LIVE</span>
+          <div class="toggle-switch on" id="dash-auto-toggle" onclick="toggleDashboardAuto()">
+            <span>自动刷新</span>
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+          </div>
+          <span class="countdown-timer" id="dash-countdown">下次刷新: 10s</span>
+          <span class="admin-badge" id="conn-badge" style="background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border-color: rgba(239, 68, 68, 0.2);">● 离线</span>
           <button class="btn" onclick="loadDashboard()">🔄 刷新</button>
         </div>
       </div>
@@ -774,6 +1203,142 @@
         <div class="card-title">🎟️ 兑换码使用分布</div>
         <div id="tier-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;">
           <div style="color:var(--sub);font-size:12px;">加载中...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 实时监控 -->
+    <div class="page active" id="page-monitor">
+      <div class="page-header">
+        <div>
+          <div class="page-title">实时监控 <small>自动刷新 · 活动追踪 · 健康检查</small></div>
+        </div>
+        <div class="header-actions">
+          <span class="live-badge" id="monitor-live-badge"><span class="live-dot"></span> LIVE</span>
+          <div class="toggle-switch on" id="monitor-toggle" onclick="toggleMonitor()">
+            <span>自动刷新</span>
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+          </div>
+          <span class="countdown-timer" id="monitor-countdown">下次刷新: 5s</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" style="border-left:3px solid #22c55e;">
+          <div class="stat-label">当前在线用户</div>
+          <div class="stat-value" id="mon-online" style="color:#22c55e;">--</div>
+          <div class="stat-delta" id="mon-online-delta">实时心跳监测</div>
+          <div class="stat-icon">🟢</div>
+        </div>
+        <div class="stat-card c1">
+          <div class="stat-label">今日 PV（实时）</div>
+          <div class="stat-value" id="mon-pv">--</div>
+          <div class="stat-delta" id="mon-pv-delta">每5秒更新</div>
+          <div class="stat-icon">📊</div>
+        </div>
+        <div class="stat-card c2">
+          <div class="stat-label">今日对话（实时）</div>
+          <div class="stat-value" id="mon-chat">--</div>
+          <div class="stat-delta" id="mon-chat-delta">AI 调用计数</div>
+          <div class="stat-icon">💬</div>
+        </div>
+        <div class="stat-card c4">
+          <div class="stat-label">服务延迟</div>
+          <div class="stat-value" id="mon-latency">--<small style="font-size:14px;">ms</small></div>
+          <div class="stat-delta" id="mon-latency-delta">API 响应时间</div>
+          <div class="stat-icon">⚡</div>
+        </div>
+      </div>
+
+      <div class="monitor-grid">
+        <!-- 健康检查 -->
+        <div class="monitor-card">
+          <div class="monitor-card-title">
+            <div class="title-left"><span class="pulse-ring" id="health-ring"></span> 服务健康状态</div>
+            <span class="tag green" id="health-tag">检测中...</span>
+          </div>
+          <div class="monitor-stat-row">
+            <span class="ms-label">服务状态</span>
+            <span class="ms-value" id="health-status">--</span>
+          </div>
+          <div class="monitor-stat-row">
+            <span class="ms-label">已运行时长</span>
+            <span class="ms-value" id="health-uptime">--</span>
+          </div>
+          <div class="monitor-stat-row">
+            <span class="ms-label">检测次数</span>
+            <span class="ms-value" id="health-checks">0</span>
+          </div>
+          <div class="monitor-stat-row">
+            <span class="ms-label">成功率</span>
+            <span class="ms-value" id="health-success-rate">--</span>
+          </div>
+          <div class="health-bar"><div class="health-bar-fill" id="health-bar-fill" style="width:0%;"></div></div>
+          <div style="font-size:10px;color:var(--sub);margin-top:6px;">每 10 秒自动检测一次</div>
+        </div>
+
+        <!-- 实时迷你图表 -->
+        <div class="monitor-card">
+          <div class="monitor-card-title">
+            <div class="title-left">📈 实时访问趋势</div>
+            <span style="font-size:10px;color:var(--sub);" id="rt-chart-label">最近 30 次采样</span>
+          </div>
+          <div class="realtime-chart-wrap" id="realtime-chart">
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:12px;">等待数据...</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--sub);margin-top:4px;">
+            <span>PV 趋势</span>
+            <span id="rt-chart-current">--</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="monitor-grid">
+        <!-- 活动日志 -->
+        <div class="monitor-card">
+          <div class="monitor-card-title">
+            <div class="title-left">🔔 实时活动日志</div>
+            <button class="btn btn-sm" onclick="clearActivityLog()">清空</button>
+          </div>
+          <div class="activity-log" id="activity-log">
+            <div class="activity-item info">
+              <span class="act-icon">📡</span>
+              <span class="act-text">监控已启动，等待数据...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 在线用户实时列表 -->
+        <div class="monitor-card">
+          <div class="monitor-card-title">
+            <div class="title-left">👥 在线用户</div>
+            <span class="tag green" id="mon-online-tag">0 人在线</span>
+          </div>
+          <div id="online-users-list" style="max-height:320px;overflow-y:auto;">
+            <div class="empty" style="font-size:12px;">等待数据...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 数据变化追踪 -->
+      <div class="card">
+        <div class="card-title">📊 数据变化追踪</div>
+        <div class="grid-3">
+          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
+            <span class="ms-label">PV 变化</span>
+            <span class="ms-value" id="track-pv" style="color:var(--accent);">0</span>
+            <span style="font-size:10px;color:var(--sub);" id="track-pv-time">--</span>
+          </div>
+          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
+            <span class="ms-label">对话变化</span>
+            <span class="ms-value" id="track-chat" style="color:var(--accent2);">0</span>
+            <span style="font-size:10px;color:var(--sub);" id="track-chat-time">--</span>
+          </div>
+          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
+            <span class="ms-label">在线变化</span>
+            <span class="ms-value" id="track-online" style="color:#22c55e;">0</span>
+            <span style="font-size:10px;color:var(--sub);" id="track-online-time">--</span>
+          </div>
         </div>
       </div>
     </div>
@@ -867,9 +1432,7 @@
           <thead>
             <tr><th>兑换码</th><th>档次</th><th>次数</th><th>状态</th><th>生成时间</th><th>操作</th></tr>
           </thead>
-          <tbody id="code-list">
-            <tr><td colspan="6" class="empty"><span class="loading"></span> 加载中...</td></tr>
-          </tbody>
+          <tbody id="code-list"><tr><td colspan="6" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
         </table>
         <div style="text-align:center;padding:12px;font-size:11px;color:var(--sub);" id="code-page-info">
           加载中...
@@ -882,6 +1445,7 @@
       <div class="page-header">
         <div class="page-title">用户管理 <small>用户列表 · 余额调整</small></div>
         <div class="header-actions">
+          <button class="btn primary" onclick="showCreateUser()">➕ 添加用户</button>
           <button class="btn" onclick="loadUserList()">🔄 刷新</button>
         </div>
       </div>
@@ -935,32 +1499,65 @@
                 <th>操作</th>
               </tr>
             </thead>
-            <tbody id="user-list">
-              <tr><td colspan="8" class="empty"><span class="loading"></span> 加载中...</td></tr>
-            </tbody>
+            <tbody id="user-list"><tr><td colspan="8" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
           </table>
         </div>
-        <div style="text-align:center;padding:12px;font-size:11px;color:var(--sub);" id="user-page-info">
-          加载中...
-        </div>
+        <div style="text-align:center;padding:12px;font-size:11px;color:var(--sub);" id="user-page-info">加载失败</div>
       </div>
     </div>
 
     <!-- 公告管理 -->
     <div class="page" id="page-announce">
       <div class="page-header">
-        <div class="page-title">公告管理 <small>首页滚动公告</small></div>
+        <div class="page-title">公告管理 <small>滚动公告 · 更新日志</small></div>
         <div class="header-actions">
-          <button class="btn primary" onclick="addAnnounce()">➕ 添加公告</button>
-          <button class="btn" onclick="saveAnnounces()">💾 保存</button>
+          <button class="btn" onclick="loadAnnounces()">🔄 刷新</button>
+          <button class="btn primary" onclick="saveAnnounces()">💾 保存全部</button>
         </div>
       </div>
-      <div class="card">
-        <div id="announce-list" style="margin-bottom:16px;">
-          <div class="empty"><span class="loading"></span> 加载中...</div>
+
+      <!-- 标签栏 -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tab-ann" onclick="switchAnnTab('ann')">📢 滚动公告</button>
+        <button class="tab-btn" id="tab-cl" onclick="switchAnnTab('cl')">📋 更新日志</button>
+      </div>
+
+      <!-- 滚动公告面板 -->
+      <div class="tab-panel active" id="panel-ann">
+        <div class="card">
+          <div class="card-title">
+            📢 滚动公告列表
+            <button class="btn btn-sm primary" onclick="addAnnounce()" style="margin-left:auto;">➕ 添加</button>
+          </div>
+          <div id="announce-list" style="margin-bottom:16px;"><div class="empty">加载中...</div></div>
+          <div style="font-size:11px;color:var(--sub);line-height:1.8;">
+            💡 公告会在首页顶部滚动显示，建议每条不超过 30 字<br>
+            <span style="color:#94a3b8;">📌 普通</span> ·
+            <span style="color:#f59e0b;">⭐ 重要</span> ·
+            <span style="color:#ef4444;">🔥 紧急（脉冲高亮）</span>
+          </div>
         </div>
-        <div style="font-size:11px;color:var(--sub);">
-          💡 公告会在首页顶部滚动显示，建议每条不超过 30 字
+      </div>
+
+      <!-- 更新日志面板 -->
+      <div class="tab-panel" id="panel-cl">
+        <div class="card">
+          <div class="card-title">
+            📋 更新日志管理
+            <button class="btn btn-sm primary" onclick="addChangelogVersion()" style="margin-left:auto;">➕ 添加版本</button>
+          </div>
+          <div id="changelog-editor" style="margin-bottom:16px;">
+            <div class="empty">加载中...</div>
+          </div>
+          <div style="font-size:11px;color:var(--sub);margin-bottom:14px;">
+            💡 更新日志会显示在首页「更多」页面的更新日志卡片中，最新版本自动置顶
+          </div>
+
+          <!-- 预览 -->
+          <div class="cl-preview" id="cl-preview" style="display:none;">
+            <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--sub);">👁️ 预览效果</div>
+            <div id="cl-preview-content"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1155,6 +1752,59 @@
   </div>
 </div>
 
+<!-- 创建用户模态框 -->
+<div class="modal-overlay" id="modal-create-user">
+  <div class="modal" style="width:460px;">
+    <div class="modal-title">👤 添加用户</div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label>用户名</label>
+        <input type="text" id="cu-username" placeholder="3-20位字母数字下划线" style="flex:1;">
+      </div>
+      <div class="form-row">
+        <label>密码</label>
+        <input type="text" id="cu-password" placeholder="至少6位" style="flex:1;">
+        <button class="btn btn-sm" onclick="document.getElementById('cu-password').value=generateRandomPwd()" title="随机生成">🎲</button>
+      </div>
+      <div class="form-row">
+        <label>赠送余额</label>
+        <input type="number" id="cu-balance" value="0" min="0" placeholder="对话次数" style="flex:1;">
+        <span style="font-size:10px;color:var(--sub);">次</span>
+      </div>
+      <div style="font-size:12px;color:var(--sub);margin:14px 0 6px;">用户类型</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;font-size:12px;" onclick="document.getElementById('cu-vip-off').checked=true;document.getElementById('cu-vip-level-wrap').style.display='none'">
+          <input type="radio" name="cu-vip-status" id="cu-vip-off" value="0" checked="" style="margin-right:4px;">
+          普通用户
+        </label>
+        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;font-size:12px;background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,140,0,0.1));border-color:rgba(255,215,0,0.3);" onclick="document.getElementById('cu-vip-on').checked=true;document.getElementById('cu-vip-level-wrap').style.display='block'">
+          <input type="radio" name="cu-vip-status" id="cu-vip-on" value="1" style="margin-right:4px;">
+          VIP用户
+        </label>
+      </div>
+      <div id="cu-vip-level-wrap" style="display:none;margin-bottom:12px;">
+        <div class="form-row">
+          <label>VIP等级</label>
+          <select id="cu-vip-level" style="flex:1;">
+            <option value="1">🥉 青铜VIP</option>
+            <option value="2">🥈 白银VIP</option>
+            <option value="3">🥇 黄金VIP</option>
+            <option value="4">💎 钻石VIP</option>
+            <option value="5" selected="">👑 至尊VIP（最高级）</option>
+          </select>
+        </div>
+        <div style="font-size:11px;color:var(--sub);padding:8px;background:rgba(255,215,0,0.05);border-radius:6px;border:1px solid rgba(255,215,0,0.1);">
+          💡 VIP用户享受无限对话次数，创建即为永久VIP
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-create-user')">取消</button>
+      <button class="btn primary" onclick="confirmCreateUser()" id="cu-btn">确认创建</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast">提示信息</div>
 
 <script>
@@ -1237,15 +1887,13 @@ function updateApiStatus() {
 
 // ==================== 登录 ====================
 async function doLogin() {
-  const username = document.getElementById('admin-username').value.trim();
   const pwd = document.getElementById('admin-pwd').value;
-  if (!username) { showToast('请输入管理员账号'); return; }
   if (!pwd) { showToast('请输入密码'); return; }
   if (!API_BASE) { showToast('请先配置 Worker 地址（右下角 ⚙️）'); return; }
   
   const res = await api('/api/admin/login', {
     method: 'POST',
-    body: JSON.stringify({ username, password: pwd })
+    body: JSON.stringify({ password: pwd })
   });
   
   if (res.success) {
@@ -1260,6 +1908,7 @@ async function doLogin() {
 }
 
 function doLogout() {
+  stopAllTimers();
   ADMIN_TOKEN = '';
   localStorage.removeItem('admin_token');
   localStorage.removeItem('admin_token_expires');
@@ -1272,6 +1921,10 @@ function showAdmin() {
   loadDashboard();
   loadCodeStats();
   loadFeedbackBadge();
+  // 启动实时监控和仪表盘自动刷新
+  startMonitor();
+  startDashboardAuto();
+  addActivityLog('✅', '管理员登录成功，实时监控已启动', 'up');
 }
 
 // 检查登录状态
@@ -1301,6 +1954,7 @@ function switchPage(name, el) {
   
   // 页面加载数据
   if (name === 'dashboard') loadDashboard();
+  if (name === 'monitor') { pollMonitorData(); pollHealth(); }
   if (name === 'users') loadUserList();
   if (name === 'codes') { loadCodeStats(); loadCodeList(); }
   if (name === 'announce') loadAnnounces();
@@ -1325,17 +1979,28 @@ async function loadDashboard() {
   document.getElementById('conn-badge').style.borderColor = 'rgba(34,197,94,0.2)';
   
   const d = res;
-  document.getElementById('stat-pv').textContent = d.pv || 0;
-  document.getElementById('stat-chat').textContent = d.chat || 0;
-  document.getElementById('stat-users').textContent = d.totalUsers || 0;
-  document.getElementById('stat-online').textContent = d.onlineUsers || 0;
-  document.getElementById('stat-code').textContent = d.codeTotal || 0;
-  document.getElementById('stat-fb').textContent = d.feedbackCount || 0;
+  // 闪烁效果：值变化时高亮
+  setStatWithFlash('stat-pv', d.pv || 0, prevSnap.pv);
+  setStatWithFlash('stat-chat', d.chat || 0, prevSnap.chat);
+  setStatWithFlash('stat-users', d.userCount || 0, prevSnap.users);
+  setStatWithFlash('stat-online', d.onlineCount || 0, prevSnap.online);
+  setStatWithFlash('stat-code', d.codeTotal || 0, prevSnap.codes);
+  setStatWithFlash('stat-fb', d.feedbackCount || 0, prevSnap.feedback);
   
   document.getElementById('stat-code-delta').textContent = '已使用 ' + (d.codeUsed || 0);
   document.getElementById('stat-fb-delta').textContent = '共 ' + (d.feedbackCount || 0) + ' 条';
-  document.getElementById('stat-users-delta').textContent = '今日新增 ' + (d.todayNewUsers || 0);
+  document.getElementById('stat-users-delta').textContent = '累计注册';
   document.getElementById('stat-online-delta').textContent = '当前活跃用户';
+  
+  // 同步数据快照
+  prevSnap = {
+    pv: d.pv || 0,
+    chat: d.chat || 0,
+    online: d.onlineCount || 0,
+    users: d.userCount || 0,
+    feedback: d.feedbackCount || 0,
+    codes: d.codeTotal || 0
+  };
   
   // 每日额度
   const dailyLimit = d.dailyLimit || 100;
@@ -1785,6 +2450,53 @@ async function deleteUser(username) {
   }
 }
 
+// 添加用户
+function showCreateUser() {
+  document.getElementById('cu-username').value = '';
+  document.getElementById('cu-password').value = '';
+  document.getElementById('cu-balance').value = '0';
+  document.getElementById('cu-vip-off').checked = true;
+  document.getElementById('cu-vip-level-wrap').style.display = 'none';
+  document.getElementById('cu-vip-level').value = '5';
+  openModal('modal-create-user');
+  setTimeout(() => document.getElementById('cu-username').focus(), 100);
+}
+
+async function confirmCreateUser() {
+  const username = document.getElementById('cu-username').value.trim();
+  const password = document.getElementById('cu-password').value.trim();
+  const balance = parseInt(document.getElementById('cu-balance').value) || 0;
+  const isVip = document.getElementById('cu-vip-on').checked;
+  const vipLevel = isVip ? parseInt(document.getElementById('cu-vip-level').value) : 0;
+
+  if (!username || username.length < 3) { showToast('用户名至少3位'); return; }
+  if (!/^[a-zA-Z0-9_]+$/.test(username)) { showToast('用户名只能包含字母、数字、下划线'); return; }
+  if (!password || password.length < 6) { showToast('密码至少6位'); return; }
+
+  const btn = document.getElementById('cu-btn');
+  btn.disabled = true;
+  btn.textContent = '创建中...';
+
+  const res = await api('/api/admin/users', {
+    method: 'POST',
+    body: JSON.stringify({ username, password, balance, isVip, vipLevel })
+  });
+
+  btn.disabled = false;
+  btn.textContent = '确认创建';
+
+  if (res.success) {
+    showToast('用户「' + username + '」创建成功');
+    closeModal('modal-create-user');
+    loadUserList();
+    if (typeof addActivityLog === 'function') {
+      addActivityLog('👤', '新用户「' + username + '」已创建' + (isVip ? ' (VIP' + vipLevel + ')' : ''), 'up');
+    }
+  } else {
+    showToast(res.error || '创建失败');
+  }
+}
+
 // 模态框控制
 function openModal(id) {
   document.getElementById(id).classList.add('show');
@@ -1801,45 +2513,108 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ==================== 公告 ====================
-let announceList = [];
+// ==================== 公告 & 更新日志 ====================
+let announceList = [];   // 滚动公告（含预警等级）
+let changelogData = [];  // 更新日志版本数组
 
+// 标签切换
+function switchAnnTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  if (tab === 'ann') {
+    document.getElementById('tab-ann').classList.add('active');
+    document.getElementById('panel-ann').classList.add('active');
+  } else {
+    document.getElementById('tab-cl').classList.add('active');
+    document.getElementById('panel-cl').classList.add('active');
+    renderChangelogPreview();
+  }
+}
+
+// 加载公告（含更新日志）
 async function loadAnnounces() {
   const res = await api('/api/admin/announce');
   const wrap = document.getElementById('announce-list');
-  
+  const clWrap = document.getElementById('changelog-editor');
+
   if (!res.success) {
-    wrap.innerHTML = `<div class="empty" style="color:var(--accent5);">${res.error}</div>`;
+    if (wrap) wrap.innerHTML = '<div class="empty" style="color:var(--accent5);">' + (res.error || '加载失败') + '</div>';
+    if (clWrap) clWrap.innerHTML = '<div class="empty" style="color:var(--accent5);">加载失败</div>';
     return;
   }
-  
-  announceList = res.list || [];
+
+  const rawList = res.list || [];
+  // 分离滚动公告和更新日志
+  announceList = [];
+  changelogData = [];
+  rawList.forEach(item => {
+    if (typeof item === 'object' && item !== null && item.type === 'changelog') {
+      // 更新日志数据
+      if (item.versions && Array.isArray(item.versions)) {
+        changelogData = item.versions;
+      }
+    } else if (typeof item === 'string') {
+      // 旧格式字符串 → 转为对象（默认普通级别）
+      announceList.push({ content: item, level: 'normal' });
+    } else if (item && typeof item === 'object' && item.content !== undefined) {
+      // 新格式对象（含预警等级）
+      announceList.push({ content: item.content, level: item.level || 'normal' });
+    }
+  });
+
   renderAnnounces();
+  renderChangelogEditor();
 }
 
+// ===== 滚动公告（支持三级预警） =====
 function renderAnnounces() {
   const wrap = document.getElementById('announce-list');
   if (!announceList.length) {
     wrap.innerHTML = '<div class="empty">暂无公告，点击右上角添加</div>';
     return;
   }
-  
-  wrap.innerHTML = announceList.map((a, i) => `
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;">
-      <span style="font-size:12px;color:var(--sub);min-width:40px;">#${i+1}</span>
-      <input type="text" value="${escapeHtml(a)}" onchange="updateAnnounce(${i}, this.value)" style="flex:1;">
-      <button class="btn btn-sm danger" onclick="removeAnnounce(${i})">删除</button>
-    </div>
-  `).join('');
+
+  const levelNames = { normal: '📌 普通', important: '⭐ 重要', urgent: '🔥 紧急' };
+
+  wrap.innerHTML = announceList.map((a, i) => {
+    // 兼容旧字符串格式
+    if (typeof a === 'string') a = { content: a, level: 'normal' };
+    const content = a.content || '';
+    const level = a.level || 'normal';
+
+    return '<div class="ann-item-' + level + '" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;">' +
+      '<span style="font-size:12px;color:var(--sub);min-width:40px;">#' + (i+1) + '</span>' +
+      '<select class="ann-level-sel" onchange="updateAnnounceLevel(' + i + ', this.value)">' +
+        '<option value="normal" class="lvl-normal"' + (level === 'normal' ? ' selected' : '') + '>' + levelNames.normal + '</option>' +
+        '<option value="important" class="lvl-important"' + (level === 'important' ? ' selected' : '') + '>' + levelNames.important + '</option>' +
+        '<option value="urgent" class="lvl-urgent"' + (level === 'urgent' ? ' selected' : '') + '>' + levelNames.urgent + '</option>' +
+      '</select>' +
+      '<input type="text" value="' + escapeHtml(content) + '" onchange="updateAnnounce(' + i + ', this.value)" placeholder="公告内容..." style="flex:1;">' +
+      '<button class="btn btn-sm danger" onclick="removeAnnounce(' + i + ')">删除</button>' +
+    '</div>';
+  }).join('');
 }
 
 function addAnnounce() {
-  announceList.push('新公告内容');
+  announceList.push({ content: '新公告内容', level: 'normal' });
   renderAnnounces();
 }
 
 function updateAnnounce(index, value) {
-  announceList[index] = value;
+  if (typeof announceList[index] === 'string') {
+    announceList[index] = { content: value, level: 'normal' };
+  } else {
+    announceList[index].content = value;
+  }
+}
+
+function updateAnnounceLevel(index, level) {
+  if (typeof announceList[index] === 'string') {
+    announceList[index] = { content: announceList[index], level: level };
+  } else {
+    announceList[index].level = level;
+  }
+  renderAnnounces();
 }
 
 function removeAnnounce(index) {
@@ -1847,13 +2622,132 @@ function removeAnnounce(index) {
   renderAnnounces();
 }
 
+// ===== 更新日志管理 =====
+function renderChangelogEditor() {
+  const wrap = document.getElementById('changelog-editor');
+  if (!changelogData.length) {
+    wrap.innerHTML = '<div class="empty">暂无更新日志，点击右上角「添加版本」</div>';
+    document.getElementById('cl-preview').style.display = 'none';
+    return;
+  }
+
+  wrap.innerHTML = changelogData.map((v, vi) => {
+    const isLatest = vi === 0;
+    const items = (v.items || []).map((item, ii) => {
+      return '<div class="cl-item-row">' +
+        '<select class="cl-item-tag-sel" onchange="updateClItem(' + vi + ',' + ii + ',\'tag\',this.value)">' +
+          '<option value="add"' + (item.tag === 'add' ? ' selected' : '') + '>新增</option>' +
+          '<option value="opt"' + (item.tag === 'opt' ? ' selected' : '') + '>优化</option>' +
+          '<option value="fix"' + (item.tag === 'fix' ? ' selected' : '') + '>修复</option>' +
+        '</select>' +
+        '<input type="text" value="' + escapeHtml(item.text || '') + '" onchange="updateClItem(' + vi + ',' + ii + ',\'text\',this.value)" placeholder="更新内容描述...">' +
+        '<button class="btn btn-sm danger" onclick="removeClItem(' + vi + ',' + ii + ')">✕</button>' +
+      '</div>';
+    }).join('');
+
+    return '<div class="cl-version-card' + (isLatest ? ' latest' : '') + '">' +
+      '<div class="cl-version-header">' +
+        '<input type="text" class="cl-vnum" value="' + escapeHtml(v.version || '') + '" onchange="updateClVersion(' + vi + ',\'version\',this.value)" placeholder="v2.7">' +
+        '<input type="text" class="cl-vtitle" value="' + escapeHtml(v.title || '') + '" onchange="updateClVersion(' + vi + ',\'title\',this.value)" placeholder="版本标题">' +
+        '<input type="text" class="cl-vdate" value="' + escapeHtml(v.date || '') + '" onchange="updateClVersion(' + vi + ',\'date\',this.value)" placeholder="2026.08.30">' +
+        (isLatest ? '<span class="tag green">最新</span>' : '') +
+        '<button class="btn btn-sm danger" onclick="removeClVersion(' + vi + ')" style="margin-left:auto;">删除版本</button>' +
+      '</div>' +
+      '<div class="cl-items">' + items + '</div>' +
+      '<button class="cl-add-item-btn" onclick="addClItem(' + vi + ')">+ 添加条目</button>' +
+    '</div>';
+  }).join('');
+
+  renderChangelogPreview();
+}
+
+function addChangelogVersion() {
+  const today = new Date();
+  const dateStr = today.getFullYear() + '.' + String(today.getMonth()+1).padStart(2,'0') + '.' + String(today.getDate()).padStart(2,'0');
+  const nextVer = 'v' + (2.6 + changelogData.length * 0.1).toFixed(1);
+  changelogData.unshift({
+    version: nextVer,
+    title: '新版本',
+    date: dateStr,
+    items: [{ tag: 'add', text: '新增功能描述' }]
+  });
+  renderChangelogEditor();
+}
+
+function updateClVersion(vi, field, value) {
+  if (changelogData[vi]) changelogData[vi][field] = value;
+  renderChangelogPreview();
+}
+
+function addClItem(vi) {
+  if (!changelogData[vi]) return;
+  if (!changelogData[vi].items) changelogData[vi].items = [];
+  changelogData[vi].items.push({ tag: 'add', text: '' });
+  renderChangelogEditor();
+}
+
+function updateClItem(vi, ii, field, value) {
+  if (changelogData[vi] && changelogData[vi].items[ii]) {
+    changelogData[vi].items[ii][field] = value;
+  }
+  renderChangelogPreview();
+}
+
+function removeClItem(vi, ii) {
+  if (changelogData[vi] && changelogData[vi].items) {
+    changelogData[vi].items.splice(ii, 1);
+    renderChangelogEditor();
+  }
+}
+
+function removeClVersion(vi) {
+  if (!confirm('确定删除此版本？')) return;
+  changelogData.splice(vi, 1);
+  renderChangelogEditor();
+}
+
+function renderChangelogPreview() {
+  const previewWrap = document.getElementById('cl-preview');
+  const contentWrap = document.getElementById('cl-preview-content');
+  if (!changelogData.length) {
+    previewWrap.style.display = 'none';
+    return;
+  }
+
+  const tagNames = { add: '新增', opt: '优化', fix: '修复' };
+  contentWrap.innerHTML = changelogData.map((v, i) => {
+    const items = (v.items || []).map(item =>
+      '<li><span class="tag ' + item.tag + '">' + tagNames[item.tag] + '</span>' + escapeHtml(item.text || '') + '</li>'
+    ).join('');
+    return '<div class="changelog-item">' +
+      '<div class="changelog-date"><span class="date-main">' + escapeHtml(v.date || '') + '</span>' + (i === 0 ? ' <span class="date-tag new">新</span>' : '') + '</div>' +
+      '<div class="changelog-content">' +
+        '<div class="changelog-version">' + escapeHtml(v.version || '') + (v.title ? ' · ' + escapeHtml(v.title) : '') + '</div>' +
+        '<ul class="changelog-list-items">' + items + '</ul>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  previewWrap.style.display = 'block';
+}
+
+// ===== 保存（合并滚动公告 + 更新日志） =====
 async function saveAnnounces() {
+  // 组合数据：滚动公告 + 更新日志（作为特殊对象）
+  const combined = [...announceList];
+  if (changelogData.length > 0) {
+    combined.push({ type: 'changelog', versions: changelogData });
+  }
+
   const res = await api('/api/admin/announce', {
     method: 'POST',
-    body: JSON.stringify({ list: announceList })
+    body: JSON.stringify({ list: combined })
   });
   if (res.success) {
-    showToast('公告已保存');
+    showToast('公告与更新日志已保存');
+    if (typeof addActivityLog === 'function') {
+      addActivityLog('📋', '更新日志已保存（' + changelogData.length + ' 个版本）', 'info');
+    }
   } else {
     showToast(res.error || '保存失败');
   }
@@ -1943,6 +2837,335 @@ function showToast(msg) {
   clearTimeout(el._t);
   el._t = setTimeout(() => el.classList.remove('show'), 2500);
 }
+
+// ==================== 实时监控系统 ====================
+let monitorActive = true;
+let dashboardAutoRefresh = true;
+let monitorInterval = null;
+let dashboardInterval = null;
+let healthInterval = null;
+let countdownInterval = null;
+let monitorCountdown = 5;
+let dashCountdown = 10;
+
+// 上次数据快照（用于变化检测）
+let prevSnap = { pv: 0, chat: 0, online: 0, users: 0, feedback: 0, codes: 0 };
+
+// 实时图表数据
+let rtChart = [];
+const RT_CHART_MAX = 30;
+
+// 健康检查统计
+let healthStats = { totalChecks: 0, successCount: 0, startTime: Date.now(), isOnline: false };
+
+function toggleMonitor() {
+  monitorActive = !monitorActive;
+  const toggle = document.getElementById('monitor-toggle');
+  const badge = document.getElementById('monitor-live-badge');
+  if (monitorActive) {
+    toggle.classList.add('on');
+    badge.style.display = 'inline-flex';
+    startMonitor();
+    addActivityLog('📡', '实时监控已恢复', 'info');
+  } else {
+    toggle.classList.remove('on');
+    badge.style.display = 'none';
+    stopMonitor();
+    addActivityLog('⏸️', '实时监控已暂停', 'warn');
+  }
+}
+
+function toggleDashboardAuto() {
+  dashboardAutoRefresh = !dashboardAutoRefresh;
+  const toggle = document.getElementById('dash-auto-toggle');
+  const badge = document.getElementById('dash-live-badge');
+  if (dashboardAutoRefresh) {
+    toggle.classList.add('on');
+    badge.style.display = 'inline-flex';
+    startDashboardAuto();
+    showToast('仪表盘自动刷新已开启');
+  } else {
+    toggle.classList.remove('on');
+    badge.style.display = 'none';
+    stopDashboardAuto();
+    showToast('仪表盘自动刷新已关闭');
+  }
+}
+
+function startMonitor() {
+  if (monitorInterval) clearInterval(monitorInterval);
+  if (healthInterval) clearInterval(healthInterval);
+  if (!countdownInterval) {
+    countdownInterval = setInterval(updateCountdowns, 1000);
+  }
+  pollMonitorData();
+  pollHealth();
+  monitorInterval = setInterval(pollMonitorData, 5000);
+  healthInterval = setInterval(pollHealth, 10000);
+  monitorCountdown = 5;
+}
+
+function stopMonitor() {
+  if (monitorInterval) { clearInterval(monitorInterval); monitorInterval = null; }
+  if (healthInterval) { clearInterval(healthInterval); healthInterval = null; }
+}
+
+function startDashboardAuto() {
+  if (dashboardInterval) clearInterval(dashboardInterval);
+  dashboardInterval = setInterval(loadDashboard, 10000);
+  dashCountdown = 10;
+}
+
+function stopDashboardAuto() {
+  if (dashboardInterval) { clearInterval(dashboardInterval); dashboardInterval = null; }
+}
+
+function updateCountdowns() {
+  if (monitorActive) {
+    monitorCountdown--;
+    if (monitorCountdown <= 0) monitorCountdown = 5;
+    const mc = document.getElementById('monitor-countdown');
+    if (mc) mc.textContent = '下次刷新: ' + monitorCountdown + 's';
+  }
+  if (dashboardAutoRefresh) {
+    dashCountdown--;
+    if (dashCountdown <= 0) dashCountdown = 10;
+    const dc = document.getElementById('dash-countdown');
+    if (dc) dc.textContent = '下次刷新: ' + dashCountdown + 's';
+  }
+}
+
+function stopAllTimers() {
+  stopMonitor();
+  stopDashboardAuto();
+  if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+}
+
+async function pollMonitorData() {
+  const t0 = performance.now();
+  const res = await api('/api/admin/dashboard');
+  const t1 = performance.now();
+  const latency = Math.round(t1 - t0);
+
+  if (!res.success) {
+    document.getElementById('mon-online').textContent = '--';
+    document.getElementById('mon-pv').textContent = '--';
+    document.getElementById('mon-chat').textContent = '--';
+    document.getElementById('mon-latency').innerHTML = '--<small style="font-size:14px;">ms</small>';
+    addActivityLog('❌', '数据获取失败: ' + (res.error || '未知错误'), 'down');
+    return;
+  }
+
+  // 延迟
+  document.getElementById('mon-latency').innerHTML = latency + '<small style="font-size:14px;">ms</small>';
+  const latencyDelta = document.getElementById('mon-latency-delta');
+  if (latency < 200) latencyDelta.textContent = '响应快速 ⚡';
+  else if (latency < 500) latencyDelta.textContent = '响应正常';
+  else latencyDelta.textContent = '响应较慢 ⚠️';
+
+  const online = res.onlineCount || 0;
+  const pv = res.pv || 0;
+  const chat = res.chat || 0;
+
+  setStatWithFlash('mon-online', online, prevSnap.online);
+  setStatWithFlash('mon-pv', pv, prevSnap.pv);
+  setStatWithFlash('mon-chat', chat, prevSnap.chat);
+
+  // 变化检测 & 活动日志
+  if (online !== prevSnap.online && prevSnap.online > 0) {
+    const delta = online - prevSnap.online;
+    if (delta > 0) addActivityLog('🟢', '在线用户 +' + delta + '（当前 ' + online + ' 人）', 'up');
+    else addActivityLog('🔴', '在线用户 ' + delta + '（当前 ' + online + ' 人）', 'down');
+    document.getElementById('track-online').textContent = (delta > 0 ? '+' : '') + delta;
+    document.getElementById('track-online-time').textContent = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+  }
+
+  if (pv !== prevSnap.pv && prevSnap.pv > 0) {
+    const delta = pv - prevSnap.pv;
+    if (delta > 0) addActivityLog('📊', 'PV +' + delta + '（总计 ' + pv + '）', 'up');
+    document.getElementById('track-pv').textContent = (delta > 0 ? '+' : '') + delta;
+    document.getElementById('track-pv-time').textContent = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+  }
+
+  if (chat !== prevSnap.chat && prevSnap.chat > 0) {
+    const delta = chat - prevSnap.chat;
+    if (delta > 0) addActivityLog('💬', 'AI对话 +' + delta + '（总计 ' + chat + '）', 'up');
+    document.getElementById('track-chat').textContent = (delta > 0 ? '+' : '') + delta;
+    document.getElementById('track-chat-time').textContent = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+  }
+
+  // 新反馈检测
+  if (res.feedbackCount > prevSnap.feedback && prevSnap.feedback > 0) {
+    const newFb = res.feedbackCount - prevSnap.feedback;
+    addActivityLog('📝', '新用户反馈 +' + newFb + ' 条！', 'warn');
+    const badge = document.getElementById('fb-badge');
+    if (badge) { badge.style.display = 'inline-block'; badge.textContent = res.feedbackCount; }
+  }
+
+  // 新用户检测
+  if (res.userCount > prevSnap.users && prevSnap.users > 0) {
+    const newUsers = res.userCount - prevSnap.users;
+    addActivityLog('👤', '新用户注册 +' + newUsers + '（总计 ' + res.userCount + '）', 'up');
+  }
+
+  document.getElementById('mon-online-tag').textContent = online + ' 人在线';
+  document.getElementById('mon-online-delta').textContent = online > 0 ? online + ' 个活跃心跳' : '暂无在线用户';
+
+  // 实时图表
+  rtChart.push(pv);
+  if (rtChart.length > RT_CHART_MAX) rtChart.shift();
+  updateRealtimeChart();
+
+  prevSnap = { pv, chat, online, users: res.userCount || 0, feedback: res.feedbackCount || 0, codes: res.codeTotal || 0 };
+
+  // 在线用户列表
+  pollOnlineUsersList();
+}
+
+function setStatWithFlash(id, newVal, oldVal) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = newVal;
+  if (newVal !== oldVal && oldVal > 0) {
+    el.classList.remove('flash-up', 'flash-down');
+    void el.offsetWidth;
+    if (newVal > oldVal) el.classList.add('flash-up');
+    else el.classList.add('flash-down');
+  }
+}
+
+function updateRealtimeChart() {
+  const wrap = document.getElementById('realtime-chart');
+  if (!wrap || rtChart.length === 0) return;
+
+  const maxVal = Math.max(...rtChart, 1);
+  wrap.innerHTML = rtChart.map((v, i) => {
+    const h = Math.max(5, (v / maxVal) * 100);
+    const opacity = 0.3 + (i / rtChart.length) * 0.7;
+    const color = v === maxVal ? 'var(--accent)' : 'var(--accent2)';
+    return '<div class="realtime-chart-bar" style="height:' + h + '%;background:linear-gradient(180deg,' + color + ',rgba(0,245,255,0.1));opacity:' + opacity + ';" title="' + v + '"></div>';
+  }).join('');
+
+  document.getElementById('rt-chart-current').textContent = '当前 PV: ' + rtChart[rtChart.length - 1];
+}
+
+async function pollHealth() {
+  if (!API_BASE) return;
+
+  healthStats.totalChecks++;
+  const t0 = performance.now();
+
+  try {
+    const res = await fetch(API_BASE.replace(/\/$/, '') + '/api/health');
+    const data = await res.json();
+    const t1 = performance.now();
+
+    if (data.status === 'ok') {
+      healthStats.successCount++;
+      healthStats.isOnline = true;
+      document.getElementById('health-status').textContent = '✅ 正常运行';
+      document.getElementById('health-status').style.color = '#22c55e';
+      document.getElementById('health-tag').textContent = '在线';
+      document.getElementById('health-tag').className = 'tag green';
+      document.getElementById('health-ring').style.background = '#22c55e';
+    }
+  } catch (e) {
+    healthStats.isOnline = false;
+    document.getElementById('health-status').textContent = '❌ 连接失败';
+    document.getElementById('health-status').style.color = '#ef4444';
+    document.getElementById('health-tag').textContent = '离线';
+    document.getElementById('health-tag').className = 'tag red';
+    document.getElementById('health-ring').style.background = '#ef4444';
+    addActivityLog('⚠️', '健康检查失败: ' + e.message, 'down');
+  }
+
+  document.getElementById('health-checks').textContent = healthStats.totalChecks;
+  const successRate = healthStats.totalChecks > 0
+    ? Math.round((healthStats.successCount / healthStats.totalChecks) * 100) : 0;
+  document.getElementById('health-success-rate').textContent = successRate + '%';
+
+  const barFill = document.getElementById('health-bar-fill');
+  barFill.style.width = successRate + '%';
+  barFill.className = 'health-bar-fill';
+  if (successRate < 50) barFill.classList.add('crit');
+  else if (successRate < 90) barFill.classList.add('warn');
+
+  document.getElementById('health-uptime').textContent = formatUptime(Date.now() - healthStats.startTime);
+}
+
+function formatUptime(ms) {
+  const s = Math.floor(ms / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return h + 'h ' + m + 'm';
+  if (m > 0) return m + 'm ' + sec + 's';
+  return sec + 's';
+}
+
+async function pollOnlineUsersList() {
+  const res = await api('/api/admin/users?limit=50');
+  if (!res.success) return;
+
+  const users = (res.users || []).filter(u => u.online || u.isOnline);
+  const wrap = document.getElementById('online-users-list');
+
+  if (users.length === 0) {
+    wrap.innerHTML = '<div class="empty" style="font-size:12px;">当前无在线用户</div>';
+    return;
+  }
+
+  const vipNames = ['', '🥉青铜', '🥈白银', '🥇黄金', '💎钻石', '👑至尊'];
+
+  wrap.innerHTML = users.map(u => {
+    const isVip = u.isVip || false;
+    const vipLevel = u.vipLevel || 0;
+    const vipTag = isVip ? '<span class="tag" style="background:rgba(255,215,0,0.1);color:#ffd700;border:1px solid rgba(255,215,0,0.2);">' + (vipNames[vipLevel] || 'VIP') + '</span>' : '';
+    return '<div class="online-user-item">' +
+      '<span class="status-dot online"></span>' +
+      '<span style="font-weight:600;flex:1;">' + escapeHtml(u.username || '') + '</span>' +
+      vipTag +
+      '<span style="font-size:11px;color:var(--sub);">余额 ' + (u.balance || 0) + '</span>' +
+      '</div>';
+  }).join('');
+}
+
+function addActivityLog(icon, text, type) {
+  type = type || 'info';
+  const log = document.getElementById('activity-log');
+  if (!log) return;
+
+  const time = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+  const item = document.createElement('div');
+  item.className = 'activity-item ' + type;
+  item.innerHTML = '<span class="act-icon">' + icon + '</span><span class="act-text">' + text + '</span><span class="act-time">' + time + '</span>';
+
+  const firstChild = log.firstElementChild;
+  if (firstChild && firstChild.textContent.indexOf('等待数据') >= 0) {
+    log.removeChild(firstChild);
+  }
+
+  log.insertBefore(item, log.firstChild);
+  while (log.children.length > 50) {
+    log.removeChild(log.lastChild);
+  }
+}
+
+function clearActivityLog() {
+  const log = document.getElementById('activity-log');
+  log.innerHTML = '<div class="activity-item info"><span class="act-icon">🧹</span><span class="act-text">日志已清空</span></div>';
+}
+
+// 页面可见性管理：切到后台时暂停轮询
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden) {
+    stopMonitor();
+    stopDashboardAuto();
+  } else {
+    if (monitorActive) startMonitor();
+    if (dashboardAutoRefresh) startDashboardAuto();
+  }
+});
 </script>
 
 

@@ -773,6 +773,9 @@
             font-size: 12px;
             font-weight: 700;
         }
+        .nav-user-dropdown > div[style*="padding:8px 12px"]:hover {
+            background: rgba(var(--glow-color), 0.08);
+        }
         .nav-user-name {
             font-weight: 600;
             max-width: 80px;
@@ -2755,6 +2758,55 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(var(--glow-color), 0.3);
         }
+        .fb-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .feedback-contact-row {
+            margin-top: 10px;
+        }
+        .feedback-contact-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(var(--glow-color), 0.03);
+            color: var(--text);
+            font-size: 12px;
+            outline: none;
+            transition: 0.2s;
+            box-sizing: border-box;
+        }
+        .feedback-contact-input:focus {
+            border-color: var(--accent);
+        }
+        .feedback-tip {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--sub);
+            text-align: center;
+        }
+        .feedback-contact-btns {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .mini-contact {
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(var(--glow-color), 0.08);
+            color: var(--text);
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .mini-contact:hover {
+            background: rgba(var(--glow-color), 0.15);
+        }
 
         /* ===== 回到顶部按钮 ===== */
         #back-to-top {
@@ -3856,6 +3908,109 @@
             color: var(--accent);
         }
 
+        /* 购买充值卡引导 */
+        .redeem-buy-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(244, 114, 182, 0.08));
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            border-radius: 12px;
+        }
+        .buy-card-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 8px rgba(251, 191, 36, 0.3));
+        }
+        .buy-card-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .buy-card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+        .buy-card-desc {
+            font-size: 11px;
+            color: var(--sub);
+            line-height: 1.4;
+        }
+        .buy-card-action {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+        }
+        .buy-card-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        }
+
+        /* 价格套餐列表 */
+        .redeem-price-list {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .price-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .price-item:hover {
+            border-color: rgba(var(--glow-color), 0.3);
+            transform: translateY(-1px);
+        }
+        .price-item.hot {
+            border-color: rgba(251, 191, 36, 0.4);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(244, 114, 182, 0.04));
+        }
+        .price-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            flex-shrink: 0;
+        }
+        .price-count {
+            font-size: 11px;
+            color: var(--sub);
+            flex: 1;
+        }
+        .price-money {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .price-hot {
+            position: absolute;
+            top: -6px;
+            right: 8px;
+            background: linear-gradient(135deg, #ef4444, #f59e0b);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 8px;
+        }
+
         /* ===== 个人中心弹窗 ===== */
         .profile-modal-card {
             max-width: 340px !important;
@@ -3899,8 +4054,15 @@
             margin-bottom: 2px;
         }
         .profile-uid {
-            font-size: 11px;
-            color: var(--sub);
+            font-size: 12px;
+            color: var(--accent);
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(var(--glow-color), 0.15), rgba(var(--glow-color), 0.08));
+            border: 1px solid rgba(var(--glow-color), 0.25);
+            border-radius: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
         }
         .profile-stats {
             display: flex;
@@ -4332,42 +4494,100 @@
         .announcement-bar {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 14px;
-            margin: 10px auto 0;
-            max-width: 600px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(244, 114, 182, 0.08));
-            border: 1px solid rgba(244, 114, 182, 0.2);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            gap: 12px;
+            padding: 10px 16px;
+            margin: 12px auto 0;
+            max-width: 680px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(244, 114, 182, 0.08), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(244, 114, 182, 0.25);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .announcement-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            animation: annShine 4s ease-in-out infinite;
+        }
+        @keyframes annShine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
         }
         .ann-icon {
-            font-size: 16px;
+            font-size: 18px;
             flex-shrink: 0;
             animation: annBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.4));
+            z-index: 1;
         }
         @keyframes annBounce {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
         }
         .ann-track {
             flex: 1;
             overflow: hidden;
-            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-            -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+            z-index: 1;
         }
         .ann-content {
             display: flex;
-            gap: 60px;
+            gap: 70px;
             white-space: nowrap;
-            animation: annScroll 25s linear infinite;
+            animation: annScroll 28s linear infinite;
         }
         .ann-content span {
-            font-size: clamp(11px, 1vw, 13px);
+            font-size: clamp(12px, 1vw, 13px);
             color: var(--text);
             flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ann-content span.ann-level-important {
+            color: #f59e0b;
+        }
+        .ann-content span.ann-level-urgent {
+            color: #ef4444;
+            font-weight: 700;
+        }
+        .ann-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .ann-tag-normal {
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+        }
+        .ann-tag-important {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.15));
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .ann-tag-urgent {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.15));
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            animation: annUrgentPulse 2s ease-in-out infinite;
+        }
+        @keyframes annUrgentPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 8px 2px rgba(239, 68, 68, 0.3); }
         }
         @keyframes annScroll {
             0% { transform: translateX(0); }
@@ -4375,6 +4595,26 @@
         }
         .announcement-bar:hover .ann-content {
             animation-play-state: paused;
+        }
+        .ann-close {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--sub);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .ann-close:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            transform: rotate(90deg);
         }
 
         /* 2. 空间站HUD仪表盘 */
@@ -5013,9 +5253,84 @@
             -webkit-user-select: text !important;
             user-select: text !important;
         }
+
+        /* ===== 实时状态浮窗 ===== */
+        .rt-status-widget {
+            position: fixed;
+            bottom: 70px;
+            right: 16px;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 24px;
+            background: rgba(10, 10, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            font-size: 12px;
+            color: #8892b0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        [data-theme="light"] .rt-status-widget {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(0, 102, 255, 0.15);
+        }
+        .rt-status-widget:hover {
+            border-color: rgba(0, 245, 255, 0.4);
+            box-shadow: 0 0 16px rgba(0, 245, 255, 0.1);
+        }
+        .rt-status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #6b7280;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+        .rt-status-dot.online {
+            background: #22c55e;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+            animation: rtPulse 2s infinite;
+        }
+        .rt-status-dot.offline {
+            background: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+        @keyframes rtPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .rt-online-count {
+            color: var(--accent);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        .rt-latency {
+            font-size: 10px;
+            color: #6b7280;
+            font-variant-numeric: tabular-nums;
+        }
+        @media (max-width: 768px) {
+            .rt-status-widget {
+                bottom: 64px;
+                right: 8px;
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            .rt-latency { display: none; }
+        }
     </style>
 </head>
 <body>
+
+<!-- 实时状态浮窗 -->
+<div class="rt-status-widget" id="rt-status-widget" onclick="toggleRtDetail()">
+    <span class="rt-status-dot" id="rt-status-dot"></span>
+    <span id="rt-status-text">检测中...</span>
+    <span class="rt-latency" id="rt-latency-text"></span>
+</div>
 
     <!-- ===== 开机 ===== -->
     <div id="boot-screen" aria-hidden="true" class="hidden">
@@ -5117,11 +5432,33 @@
                     <span>👤</span>
                     <span class="login-label">登录 / 注册</span>
                 </button>
-                <button class="nav-user-btn" id="nav-user-btn" style="display:none;" onclick="openAuthModal()">
-                    <div class="nav-user-avatar" id="nav-user-avatar">U</div>
-                    <span class="nav-user-name" id="nav-user-name">用户</span>
-                    <span class="nav-vip-badge" id="nav-vip-badge" style="display:none;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:6px;font-weight:bold;">VIP</span>
-                </button>
+                <div class="nav-user-wrap" id="nav-user-wrap" style="display:none;position:relative;">
+                    <button class="nav-user-btn" id="nav-user-btn" onclick="toggleNavUserDropdown()">
+                        <div class="nav-user-avatar" id="nav-user-avatar">U</div>
+                        <span class="nav-user-name" id="nav-user-name">用户</span>
+                        <span class="nav-vip-badge" id="nav-vip-badge" style="display:none;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:6px;font-weight:bold;">VIP</span>
+                        <span style="font-size:10px;margin-left:2px;opacity:.7;">▾</span>
+                    </button>
+                    <div class="nav-user-dropdown" id="nav-user-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;min-width:180px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:8px;backdrop-filter:blur(20px);box-shadow:0 10px 40px rgba(0,0,0,0.3);z-index:1000;">
+                        <div style="padding:10px 12px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+                            <div style="font-size:12px;color:var(--sub);margin-bottom:2px;">当前用户</div>
+                            <div style="font-weight:600;font-size:14px;" id="nav-dropdown-username">用户</div>
+                        </div>
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" onclick="openUserProfile();closeNavUserDropdown();">
+                            <span>👤</span> 个人中心
+                        </div>
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" onclick="openRedeemModal();closeNavUserDropdown();">
+                            <span>🎁</span> 兑换码
+                        </div>
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" id="nav-admin-entry" onclick="window.location.href='admin.html'">
+                            <span>⚙️</span> 站长后台
+                        </div>
+                        <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;color:var(--accent5);" onclick="doLogout();closeNavUserDropdown();">
+                            <span>🚪</span> 退出登录
+                        </div>
+                    </div>
+                </div>
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题" title="切换深色/浅色主题">🌓</button>
                 <button class="theme-toggle" onclick="openCmd()" aria-label="命令面板" title="Ctrl+K 命令面板" style="font-size:15px;">⌘</button>
                 <button class="hamburger" onclick="toggleMenu()" aria-label="切换菜单" id="hamburgerBtn">☰</button>
@@ -5155,7 +5492,7 @@
             </div>
 
             <!-- 公告栏 -->
-            <div class="announcement-bar">
+            <div class="announcement-bar" id="announcementBar">
                 <span class="ann-icon">📢</span>
                 <div class="ann-track">
                     <div class="ann-content" id="announcementContent">
@@ -6734,7 +7071,7 @@
                     <span class="changelog-title">更新日志</span>
                     <span class="changelog-badge">持续更新中</span>
                 </div>
-                <div class="changelog-list">
+                <div class="changelog-list" id="changelog-list">
                     <!-- 最新更新置顶，下次更新在最上面加新条目 -->
                     <div class="changelog-item latest">
                         <div class="changelog-date">
@@ -7747,29 +8084,33 @@
     <div class="feedback-overlay" id="feedback-overlay" onclick="if(event.target===this)closeFeedback()">
         <div class="feedback-card">
             <div class="feedback-title">💬 反馈 &amp; 建议</div>
-            <div class="feedback-desc">有bug要报？有功能想加？随时找站长～</div>
-            <div class="feedback-btns">
-                <a href="weixin://dl/profile/HQUGH16FHJ" class="feedback-btn wechat" onclick="copyFeedbackContact('wechat');return false;">
-                    <span class="fb-icon">💬</span>
-                    <span class="fb-text">微信联系</span>
-                    <span class="fb-copy">复制</span>
-                </a>
-                <a href="tencent://message/?uin=1429616034" class="feedback-btn qq" onclick="copyFeedbackContact('qq');return false;">
-                    <span class="fb-icon">🐧</span>
-                    <span class="fb-text">QQ 联系</span>
-                    <span class="fb-copy">复制</span>
-                </a>
-            </div>
+            <div class="feedback-desc">有bug要报？有功能想加？提交后站长会尽快处理～</div>
+            
             <div class="feedback-type-title">反馈类型：</div>
             <div class="feedback-types">
                 <button class="fb-type-btn" onclick="setFeedbackType('bug')">🐛 Bug 报告</button>
-                <button class="fb-type-btn" onclick="setFeedbackType('feature')">💡 功能建议</button>
-                <button class="fb-type-btn" onclick="setFeedbackType('other')">❓ 其他问题</button>
+                <button class="fb-type-btn" onclick="setFeedbackType('suggestion')">💡 功能建议</button>
+                <button class="fb-type-btn" onclick="setFeedbackType('question')">❓ 使用咨询</button>
+                <button class="fb-type-btn" onclick="setFeedbackType('other')">📝 其他</button>
             </div>
-            <textarea id="feedback-input" class="feedback-input" rows="4" placeholder="描述一下你的问题或建议..."></textarea>
+            
+            <textarea id="feedback-input" class="feedback-input" rows="5" placeholder="详细描述一下你的问题或建议，越详细越好哦～"></textarea>
+            
+            <div class="feedback-contact-row">
+                <input type="text" id="feedback-contact" class="feedback-contact-input" placeholder="联系方式（选填，方便站长回复你）">
+            </div>
+            
             <div class="feedback-actions">
                 <button class="fb-btn cancel" onclick="closeFeedback()">取消</button>
-                <button class="fb-btn submit" onclick="submitFeedback()">📋 复制并联系</button>
+                <button class="fb-btn submit" onclick="submitFeedback()" id="feedback-submit-btn">📤 提交反馈</button>
+            </div>
+            
+            <div class="feedback-tip">
+                <span>💡 也可以通过以下方式直接联系站长：</span>
+                <div class="feedback-contact-btns">
+                    <span class="mini-contact" onclick="copyFeedbackContact('wechat')">💬 微信</span>
+                    <span class="mini-contact" onclick="copyFeedbackContact('qq')">🐧 QQ</span>
+                </div>
             </div>
         </div>
     </div>
@@ -8074,6 +8415,52 @@
                 </div>
             </div>
             <button class="auth-submit-btn" onclick="doRedeem()">立即兑换</button>
+            <div class="redeem-buy-card">
+                <div class="buy-card-icon">💎</div>
+                <div class="buy-card-body">
+                    <div class="buy-card-title">每日100次不够用？</div>
+                    <div class="buy-card-desc">联系站长购买充值卡，多种套餐可选，即买即用</div>
+                </div>
+                <div class="buy-card-action" onclick="openFeedback()">联系站长</div>
+            </div>
+            <div class="redeem-price-list">
+                <div class="price-item">
+                    <span class="price-tag">体验卡</span>
+                    <span class="price-count">5次</span>
+                    <span class="price-money">¥2</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-tag">入门卡</span>
+                    <span class="price-count">10次</span>
+                    <span class="price-money">¥3</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-tag">基础卡</span>
+                    <span class="price-count">20次</span>
+                    <span class="price-money">¥5</span>
+                </div>
+                <div class="price-item hot">
+                    <span class="price-tag">标准卡</span>
+                    <span class="price-count">50次</span>
+                    <span class="price-money">¥10</span>
+                    <span class="price-hot">热销</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-tag">进阶卡</span>
+                    <span class="price-count">100次</span>
+                    <span class="price-money">¥18</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-tag">高级卡</span>
+                    <span class="price-count">200次</span>
+                    <span class="price-money">¥30</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-tag">至尊卡</span>
+                    <span class="price-count">500次</span>
+                    <span class="price-money">¥68</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -9286,6 +9673,7 @@
         function openFeedback() {
             document.getElementById('feedback-overlay').classList.add('show');
             document.getElementById('feedback-input').value = '';
+            document.getElementById('feedback-contact').value = '';
             _feedbackType = '';
             document.querySelectorAll('.fb-type-btn').forEach(b => b.classList.remove('active'));
         }
@@ -9304,34 +9692,198 @@
                 copyText('1429616034', 'QQ号已复制');
             }
         }
-        function submitFeedback() {
-            const typeMap = { bug: '🐛 Bug报告', feature: '💡 功能建议', other: '❓ 其他问题' };
-            const typeLabel = _feedbackType ? typeMap[_feedbackType] : '其他';
+        async function submitFeedback() {
             const content = document.getElementById('feedback-input').value.trim();
-            const msg = `【${typeLabel}】\n${content || '（用户未填写描述）'}\n\n—— 来自绊谈万能枢纽`;
-            copyText(msg, '反馈内容已复制，快去联系站长吧！');
-            setTimeout(() => {
-                closeFeedback();
-            }, 800);
+            const contact = document.getElementById('feedback-contact').value.trim();
+            const btn = document.getElementById('feedback-submit-btn');
+            
+            if (!_feedbackType) {
+                showToast('请先选择反馈类型');
+                return;
+            }
+            if (!content) {
+                showToast('请填写反馈内容');
+                return;
+            }
+            if (content.length < 5) {
+                showToast('反馈内容至少5个字哦');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = '提交中...';
+            
+            try {
+                const baseUrl = getUserAPIUrl();
+                const res = await fetch(baseUrl + '/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: _feedbackType,
+                        content,
+                        contact,
+                    })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('✅ 反馈提交成功，感谢你的支持！');
+                    setTimeout(() => {
+                        closeFeedback();
+                    }, 1000);
+                } else {
+                    showToast(data.error || '提交失败，请稍后再试');
+                }
+            } catch (e) {
+                showToast('提交失败，请检查网络后重试');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '📤 提交反馈';
+            }
         }
 
         // 公告栏无缝滚动初始化
         function initAnnouncement() {
-            updateAnnouncement();
+            if (!checkAnnouncementVisible()) return;
+            loadAnnouncements();
         }
 
-        function updateAnnouncement() {
+        async function loadAnnouncements() {
             const el = document.getElementById('announcementContent');
             if (!el) return;
-            const announces = [
-                '✨ v2.6 更新：小绊谈 AI 升级，支持真实大模型！',
-                '🎮 电竞优化专区上线，帧率测试·延迟检测一站式',
-                '🔧 工具箱新增外设驱动下载，12+品牌官方直达',
-                '💡 有想法？点右下角 💬 反馈给站长～'
+            
+            const defaultAnns = [
+                { content: '✨ v2.6 更新：小绊谈 AI 升级，支持真实大模型！', level: 'important' },
+                { content: '🎮 电竞优化专区上线，帧率测试·延迟检测一站式', level: 'normal' },
+                { content: '🔧 工具箱新增外设驱动下载，12+品牌官方直达', level: 'normal' },
+                { content: '💡 有想法？点右下角 💬 反馈给站长～', level: 'normal' }
             ];
-            el.innerHTML = announces.map(t => '<span>' + t + '</span>').join('');
+            
+            try {
+                const proxyUrl = getAISettings().proxyUrl || BUILTIN_PROXY_URL;
+                const res = await fetch(proxyUrl.replace(/\/$/, '') + '/api/announce');
+                const data = await res.json();
+                if (data.success && data.list && data.list.length > 0) {
+                    // 分离滚动公告和更新日志
+                    const scrollAnns = [];
+                    let changelogVersions = null;
+                    data.list.forEach(item => {
+                        if (item && typeof item === 'object' && item.type === 'changelog') {
+                            changelogVersions = item.versions || null;
+                        } else {
+                            scrollAnns.push(item);
+                        }
+                    });
+                    // 渲染滚动公告
+                    if (scrollAnns.length > 0) {
+                        renderAnnouncements(scrollAnns);
+                    } else {
+                        renderAnnouncements(defaultAnns);
+                    }
+                    // 渲染更新日志（如果后台有配置）
+                    if (changelogVersions) {
+                        renderChangelogDynamic(changelogVersions);
+                    }
+                    return;
+                }
+            } catch (e) {
+                // 加载失败用默认公告
+            }
+            renderAnnouncements(defaultAnns);
+        }
+
+        // 动态渲染更新日志（从后台管理的数据）
+        function renderChangelogDynamic(versions) {
+            const section = document.getElementById('changelog-list');
+            if (!section || !versions || !versions.length) return;
+
+            const tagNames = { add: '新增', opt: '优化', fix: '修复' };
+
+            section.innerHTML = versions.map((v, i) => {
+                const isLatest = i === 0;
+                const items = (v.items || []).map(item => {
+                    const tag = item.tag || 'add';
+                    const text = escapeHtml(item.text || '');
+                    return '<li><span class="tag ' + tag + '">' + tagNames[tag] + '</span>' + text + '</li>';
+                }).join('');
+
+                return '<div class="changelog-item' + (isLatest ? ' latest' : '') + '">' +
+                    '<div class="changelog-date">' +
+                        '<span class="date-main">' + escapeHtml(v.date || '') + '</span>' +
+                        (isLatest ? '<span class="date-tag new">新</span>' : '') +
+                    '</div>' +
+                    '<div class="changelog-content">' +
+                        '<div class="changelog-version">' + escapeHtml(v.version || '') + (v.title ? ' · ' + escapeHtml(v.title) : '') + '</div>' +
+                        '<ul class="changelog-list-items">' + items + '</ul>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function renderAnnouncements(list) {
+            const el = document.getElementById('announcementContent');
+            if (!el) return;
+            
+            // 兼容纯字符串和对象格式
+            const items = list.map(item => {
+                if (typeof item === 'string') return { content: item, level: 'normal' };
+                return item;
+            });
+            
+            const levelNames = {
+                normal: '普通',
+                important: '重要',
+                urgent: '紧急'
+            };
+            
+            const levelIcons = {
+                normal: '📌',
+                important: '⭐',
+                urgent: '🔥'
+            };
+            
+            el.innerHTML = items.map(a => {
+                const level = a.level || 'normal';
+                return `<span class="ann-level-${level}">
+                    <span class="ann-tag ann-tag-${level}">${levelIcons[level] || '📌'} ${levelNames[level] || '普通'}</span>
+                    ${escapeHtml(a.content || '')}
+                </span>`;
+            }).join('');
             // 复制一份内容实现无缝滚动
             el.innerHTML += el.innerHTML;
+        }
+
+        // 收起公告栏
+        function closeAnnouncement() {
+            const bar = document.getElementById('announcementBar');
+            if (bar) {
+                bar.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                bar.style.opacity = '0';
+                bar.style.transform = 'translateY(-10px)';
+                bar.style.maxHeight = '0';
+                bar.style.marginTop = '0';
+                bar.style.paddingTop = '0';
+                bar.style.paddingBottom = '0';
+                setTimeout(() => {
+                    bar.style.display = 'none';
+                }, 400);
+            }
+            try {
+                localStorage.setItem('announcement_closed_date', getTodayStr());
+            } catch(e) {}
+        }
+
+        // 检查是否应该显示公告
+        function checkAnnouncementVisible() {
+            try {
+                const closedDate = localStorage.getItem('announcement_closed_date');
+                if (closedDate === getTodayStr()) {
+                    const bar = document.getElementById('announcementBar');
+                    if (bar) bar.style.display = 'none';
+                    return false;
+                }
+            } catch(e) {}
+            return true;
         }
 
         // 访问人数统计
@@ -11860,10 +12412,12 @@
 
             // 导航栏按钮
             const navLoginBtn = document.getElementById('nav-login-btn');
-            const navUserBtn = document.getElementById('nav-user-btn');
+            const navUserWrap = document.getElementById('nav-user-wrap');
             const navUserName = document.getElementById('nav-user-name');
             const navUserAvatar = document.getElementById('nav-user-avatar');
             const navVipBadge = document.getElementById('nav-vip-badge');
+            const navDropdownUsername = document.getElementById('nav-dropdown-username');
+            const navAdminEntry = document.getElementById('nav-admin-entry');
 
             if (isUserLoggedIn() && _userState.info) {
                 if (loginBtn) loginBtn.style.display = 'none';
@@ -11888,8 +12442,9 @@
 
                 // 导航栏
                 if (navLoginBtn) navLoginBtn.style.display = 'none';
-                if (navUserBtn) navUserBtn.style.display = 'flex';
+                if (navUserWrap) navUserWrap.style.display = 'flex';
                 if (navUserName) navUserName.textContent = _userState.info.username || '用户';
+                if (navDropdownUsername) navDropdownUsername.textContent = _userState.info.username || '用户';
                 if (navUserAvatar) {
                     navUserAvatar.textContent = (_userState.info.username || 'U').charAt(0).toUpperCase();
                     if (_userState.info.isVip) {
@@ -11907,6 +12462,10 @@
                 }
 
                 // 站长后台入口：只有至尊VIP（等级5）才能看到
+                if (navAdminEntry) {
+                    const isSuperVip = _userState.info.isVip && _userState.info.vipLevel >= 5;
+                    navAdminEntry.style.display = isSuperVip ? 'flex' : 'none';
+                }
                 const adminEntry = document.getElementById('admin-entry');
                 if (adminEntry) {
                     const isSuperVip = _userState.info.isVip && _userState.info.vipLevel >= 5;
@@ -11918,7 +12477,7 @@
                 if (loginBtn) loginBtn.style.display = 'flex';
                 if (userInfo) userInfo.style.display = 'none';
                 if (navLoginBtn) navLoginBtn.style.display = 'flex';
-                if (navUserBtn) navUserBtn.style.display = 'none';
+                if (navUserWrap) navUserWrap.style.display = 'none';
             }
         }
 
@@ -11927,7 +12486,9 @@
         function updateRemainingCountUI() {
             if (isUserLoggedIn() && _userState.info) {
                 const info = _userState.info;
-                const isVip = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
+                const vipActive = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
+                const vipLevel = info.vipLevel || 0;
+                const isUnlimitedVip = vipActive && vipLevel >= 5; // 只有至尊VIP(5级)无限
                 const countEl = document.getElementById('ai-remaining-count');
                 const usageRemEl = document.getElementById('usage-remaining');
                 const usageDailyEl = document.getElementById('usage-daily');
@@ -11939,10 +12500,10 @@
                 const redeemBonus = document.getElementById('redeem-bonus-count');
                 const vipTipEl = document.getElementById('usage-vip-tip');
 
-                if (isVip) {
-                    // VIP用户显示无限
-                    if (countEl) countEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">VIP</span>';
-                    if (usageRemEl) usageRemEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">(VIP无限)</span>';
+                if (isUnlimitedVip) {
+                    // 至尊VIP：无限次数
+                    if (countEl) countEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">至尊VIP</span>';
+                    if (usageRemEl) usageRemEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">(至尊VIP无限)</span>';
                     if (usageDailyEl) usageDailyEl.textContent = '无限';
                     if (bonusWrap) bonusWrap.style.display = 'none';
                     if (rechargeDaily) rechargeDaily.textContent = '无限';
@@ -12046,6 +12607,12 @@
                 closeAuthModal();
                 // 登录后刷新用户信息
                 fetchUserInfo();
+                // 如果AI面板已打开，从服务端加载对话历史
+                const aiPanel = document.getElementById('ai-panel');
+                if (aiPanel && aiPanel.classList.contains('show')) {
+                    _aiState.history = [];
+                    loadAIChatHistory();
+                }
             } else {
                 showToast(result.message || '登录失败，请检查用户名和密码');
             }
@@ -12083,6 +12650,12 @@
                 showToast('注册成功！');
                 closeAuthModal();
                 fetchUserInfo();
+                // 如果AI面板已打开，从服务端加载对话历史
+                const aiPanel = document.getElementById('ai-panel');
+                if (aiPanel && aiPanel.classList.contains('show')) {
+                    _aiState.history = [];
+                    loadAIChatHistory();
+                }
             } else {
                 showToast(result.message || '注册失败，请稍后重试');
             }
@@ -12146,6 +12719,33 @@
             const userInfo = document.getElementById('ai-user-info');
             if (userInfo && !userInfo.contains(e.target)) {
                 closeUserDropdown();
+            }
+        }
+
+        // ===== 导航栏用户下拉菜单 =====
+        function toggleNavUserDropdown() {
+            const dropdown = document.getElementById('nav-user-dropdown');
+            if (!dropdown) return;
+            if (dropdown.style.display === 'none' || !dropdown.style.display) {
+                dropdown.style.display = 'block';
+                setTimeout(() => {
+                    document.addEventListener('click', closeNavUserDropdownOutside);
+                }, 0);
+            } else {
+                closeNavUserDropdown();
+            }
+        }
+
+        function closeNavUserDropdown() {
+            const dropdown = document.getElementById('nav-user-dropdown');
+            if (dropdown) dropdown.style.display = 'none';
+            document.removeEventListener('click', closeNavUserDropdownOutside);
+        }
+
+        function closeNavUserDropdownOutside(e) {
+            const wrap = document.getElementById('nav-user-wrap');
+            if (wrap && !wrap.contains(e.target)) {
+                closeNavUserDropdown();
             }
         }
 
@@ -12217,14 +12817,18 @@
             const overlay = document.getElementById('profile-modal-overlay');
             if (overlay && _userState.info) {
                 const info = _userState.info;
+                const vipNames = ['普通用户', '🥉青铜VIP', '🥈白银VIP', '🥇黄金VIP', '💎钻石VIP', '👑至尊VIP'];
+                const isVip = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
+                const levelName = isVip ? (vipNames[info.vipLevel] || 'VIP用户') : '普通用户';
+                
                 document.getElementById('profile-avatar').textContent = (info.username || 'U').charAt(0).toUpperCase();
                 document.getElementById('profile-name').textContent = info.username || '用户';
                 document.getElementById('profile-uid').textContent = 'UID: ' + (info.uid || '--');
-                document.getElementById('profile-total-count').textContent = info.totalCount || 0;
+                document.getElementById('profile-total-count').textContent = info.totalUsed !== undefined ? info.totalUsed : (info.totalCount || 0);
                 document.getElementById('profile-daily-count').textContent = info.remainingCount || 0;
                 document.getElementById('profile-bonus-count').textContent = info.bonusCount || 0;
                 document.getElementById('profile-created-at').textContent = info.createdAt ? new Date(info.createdAt).toLocaleDateString('zh-CN') : '--';
-                document.getElementById('profile-level').textContent = info.level || '普通用户';
+                document.getElementById('profile-level').textContent = levelName;
                 overlay.classList.add('show');
             }
         }
@@ -12275,13 +12879,113 @@
                 const baseUrl = getUserAPIUrl();
                 const response = await fetch(baseUrl + '/api/user/online');
                 const data = await response.json();
-                if (data.success && data.data) {
-                    _userState.onlineCount = data.data.count || 0;
+                if (data.success) {
+                    const count = data.count || (data.data && data.data.count) || 0;
+                    _userState.onlineCount = count;
                     const onlineEl = document.getElementById('auth-online-count');
-                    if (onlineEl) onlineEl.textContent = _userState.onlineCount;
+                    if (onlineEl) onlineEl.textContent = count;
+                    // 同步浮窗
+                    updateRtWidget(count, true);
                 }
-            } catch(e) {}
+            } catch(e) {
+                updateRtWidget(_userState.onlineCount, false);
+            }
         }
+
+        // ===== 实时状态浮窗 =====
+        let _rtPollTimer = null;
+        let _rtHealthTimer = null;
+        let _rtServerOnline = false;
+        let _rtLatency = 0;
+        let _rtDetailExpanded = false;
+
+        function startRtPolling() {
+            if (_rtPollTimer) clearInterval(_rtPollTimer);
+            if (_rtHealthTimer) clearInterval(_rtHealthTimer);
+            // 立即执行一次
+            fetchOnlineCount();
+            checkServerHealth();
+            // 在线人数每 30 秒刷新
+            _rtPollTimer = setInterval(fetchOnlineCount, 30000);
+            // 健康检查每 60 秒一次
+            _rtHealthTimer = setInterval(checkServerHealth, 60000);
+        }
+
+        function stopRtPolling() {
+            if (_rtPollTimer) { clearInterval(_rtPollTimer); _rtPollTimer = null; }
+            if (_rtHealthTimer) { clearInterval(_rtHealthTimer); _rtHealthTimer = null; }
+        }
+
+        async function checkServerHealth() {
+            const baseUrl = getUserAPIUrl();
+            const dot = document.getElementById('rt-status-dot');
+            const text = document.getElementById('rt-status-text');
+            const latencyEl = document.getElementById('rt-latency-text');
+            if (!dot || !text) return;
+
+            const t0 = performance.now();
+            try {
+                const response = await fetch(baseUrl + '/api/health');
+                const data = await response.json();
+                const t1 = performance.now();
+                _rtLatency = Math.round(t1 - t0);
+
+                if (data.status === 'ok') {
+                    _rtServerOnline = true;
+                    dot.className = 'rt-status-dot online';
+                    text.innerHTML = '服务正常 <span class="rt-latency">' + _rtLatency + 'ms</span>';
+                    if (latencyEl) latencyEl.textContent = _rtLatency + 'ms';
+                } else {
+                    throw new Error('异常');
+                }
+            } catch(e) {
+                _rtServerOnline = false;
+                dot.className = 'rt-status-dot offline';
+                text.textContent = '服务异常';
+                if (latencyEl) latencyEl.textContent = '';
+            }
+        }
+
+        function updateRtWidget(onlineCount, isOnline) {
+            const dot = document.getElementById('rt-status-dot');
+            const text = document.getElementById('rt-status-text');
+            if (!dot || !text) return;
+            if (isOnline) {
+                dot.className = 'rt-status-dot online';
+                text.innerHTML = '在线 <span class="rt-online-count">' + onlineCount + '</span> 人';
+            } else {
+                dot.className = 'rt-status-dot offline';
+                text.textContent = '连接中...';
+            }
+        }
+
+        function toggleRtDetail() {
+            _rtDetailExpanded = !_rtDetailExpanded;
+            const widget = document.getElementById('rt-status-widget');
+            if (!widget) return;
+            if (_rtDetailExpanded) {
+                widget.style.padding = '10px 16px';
+                widget.innerHTML =
+                    '<span class="rt-status-dot online"></span>' +
+                    '<div style="display:flex;flex-direction:column;gap:2px;">' +
+                    '<span style="font-size:12px;">在线 <b style="color:var(--accent);">' + _userState.onlineCount + '</b> 人</span>' +
+                    '<span class="rt-latency">延迟 ' + _rtLatency + 'ms · ' + (_rtServerOnline ? '正常' : '异常') + '</span>' +
+                    '</div>';
+            } else {
+                location.reload();
+            }
+        }
+
+        // 页面可见性：切到后台暂停轮询
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopRtPolling();
+                stopHeartbeat();
+            } else {
+                startRtPolling();
+                if (isUserLoggedIn()) startHeartbeat();
+            }
+        });
 
         // 初始化用户系统
         function initUserSystem() {
@@ -12293,6 +12997,8 @@
                 // 启动时刷新用户信息
                 fetchUserInfo();
             }
+            // 启动实时状态监控（在线人数 + 服务健康检查）
+            startRtPolling();
             // Esc 键关闭弹窗
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
@@ -12362,6 +13068,12 @@
             return loadAISettings();
         }
 
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text || '';
+            return div.innerHTML;
+        }
+
         // ===== 聊天次数管理 =====
         function getTodayStr() {
             const d = new Date();
@@ -12417,6 +13129,39 @@
         }
 
         function updateRemainingCountUI() {
+            // 登录用户：使用服务端同步的用户信息
+            if (isUserLoggedIn() && _userState.info) {
+                const info = _userState.info;
+                const total = (info.remainingCount || 0) + (info.bonusCount || 0);
+                const dailyLimit = info.dailyLimit || _aiState.dailyLimit;
+                const bonusCount = info.bonusCount || 0;
+                const remainingCount = info.remainingCount || 0;
+
+                const countEl = document.getElementById('ai-remaining-count');
+                const usageRemEl = document.getElementById('usage-remaining');
+                const usageDailyEl = document.getElementById('usage-daily');
+                const bonusWrap = document.getElementById('usage-bonus-wrap');
+                const bonusEl = document.getElementById('usage-bonus');
+                const rechargeDaily = document.getElementById('recharge-daily-count');
+                const rechargeBonus = document.getElementById('recharge-bonus-count');
+                const redeemDaily = document.getElementById('redeem-daily-count');
+                const redeemBonus = document.getElementById('redeem-bonus-count');
+
+                if (countEl) countEl.textContent = total;
+                if (usageRemEl) usageRemEl.textContent = total;
+                if (usageDailyEl) usageDailyEl.textContent = dailyLimit;
+                if (bonusWrap) {
+                    bonusWrap.style.display = bonusCount > 0 ? 'inline' : 'none';
+                }
+                if (bonusEl) bonusEl.textContent = bonusCount;
+                if (rechargeDaily) rechargeDaily.textContent = remainingCount;
+                if (rechargeBonus) rechargeBonus.textContent = bonusCount;
+                if (redeemDaily) redeemDaily.textContent = remainingCount;
+                if (redeemBonus) redeemBonus.textContent = bonusCount;
+                return;
+            }
+
+            // 未登录用户：使用本地数据
             const total = getTotalRemaining();
             const countEl = document.getElementById('ai-remaining-count');
             const usageRemEl = document.getElementById('usage-remaining');
@@ -12442,9 +13187,17 @@
 
             // 登录用户：从用户信息中检查余额，不本地扣减（服务端扣减）
             if (isUserLoggedIn() && _userState.info) {
-                const total = (_userState.info.remainingCount || 0) + (_userState.info.bonusCount || 0);
+                const info = _userState.info;
+                // 只有至尊VIP（等级5）无限次数，直接通过
+                const vipActive = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
+                const isUnlimitedVip = vipActive && (info.vipLevel || 0) >= 5;
+                if (isUnlimitedVip) {
+                    return true;
+                }
+                const total = (info.remainingCount || 0) + (info.bonusCount || 0);
                 if (total <= 0) {
-                    showToast('今日聊天次数已用完，点击「充值」获取更多次数');
+                    openRecharge();
+                    showToast('今日次数已用完，联系站长购买充值卡～');
                     return false;
                 }
                 // 登录用户由服务端扣次，本地只做预检查
@@ -12454,7 +13207,8 @@
             // 未登录用户：使用本地 localStorage 计次
             const total = getTotalRemaining();
             if (total <= 0) {
-                showToast('今日聊天次数已用完，点击「充值」获取更多次数');
+                openRecharge();
+                showToast('今日次数已用完，联系站长购买充值卡～');
                 return false;
             }
             // 优先扣每日额度，再扣赠次
@@ -13042,17 +13796,45 @@
             }
         }
 
-        // 保存对话历史到 localStorage
+        // 保存对话历史
         function saveAIChatHistory() {
             try {
                 // 只保存最近 50 条，防止太大
                 const history = _aiState.history.slice(-50);
                 localStorage.setItem('ai_chat_history', JSON.stringify(history));
+
+                // 登录用户：同步保存到服务端
+                if (isUserLoggedIn() && _userState.token) {
+                    userAPI('/api/user/chat/history', {
+                        method: 'POST',
+                        body: { history }
+                    }).catch(() => {
+                        // 忽略保存失败，不影响用户体验
+                    });
+                }
             } catch(e) {}
         }
 
         // 加载对话历史
-        function loadAIChatHistory() {
+        async function loadAIChatHistory() {
+            // 登录用户：优先从服务端加载
+            if (isUserLoggedIn() && _userState.token) {
+                try {
+                    const result = await userAPI('/api/user/chat/history', {
+                        method: 'GET'
+                    });
+                    if (result.success && result.data && result.data.length > 0) {
+                        const history = result.data;
+                        _aiState.history = history;
+                        renderChatHistory(history);
+                        return;
+                    }
+                } catch(e) {
+                    // 服务端加载失败，回退到本地
+                }
+            }
+
+            // 未登录或服务端无历史：从本地加载
             try {
                 const saved = localStorage.getItem('ai_chat_history');
                 if (!saved) return;
@@ -13060,39 +13842,43 @@
                 if (!history.length) return;
 
                 _aiState.history = history;
-                const messages = document.getElementById('ai-messages');
-                // 保留欢迎消息，在后面追加历史
-                const welcomeRow = messages.querySelector('.ai-msg-row.bot');
-                messages.innerHTML = '';
-                if (welcomeRow) messages.appendChild(welcomeRow);
-
-                history.forEach(item => {
-                    // 用户消息
-                    const userRow = document.createElement('div');
-                    userRow.className = 'ai-msg-row user';
-                    userRow.innerHTML = `
-                        <div class="ai-msg-avatar">😊</div>
-                        <div class="ai-msg-content"></div>
-                    `;
-                    userRow.querySelector('.ai-msg-content').textContent = item.user;
-                    messages.appendChild(userRow);
-
-                    // AI消息
-                    const botRow = document.createElement('div');
-                    botRow.className = 'ai-msg-row bot';
-                    botRow.innerHTML = `
-                        <div class="ai-msg-avatar">✨</div>
-                        <div class="ai-msg-content"></div>
-                    `;
-                    const contentEl = botRow.querySelector('.ai-msg-content');
-                    // 简单渲染Markdown（粗体、列表）
-                    contentEl.innerHTML = formatMsgHTML(item.bot);
-                    addMsgActions(contentEl);
-                    messages.appendChild(botRow);
-                });
-
-                messages.scrollTop = messages.scrollHeight;
+                renderChatHistory(history);
             } catch(e) {}
+        }
+
+        // 渲染对话历史到界面
+        function renderChatHistory(history) {
+            const messages = document.getElementById('ai-messages');
+            // 保留欢迎消息，在后面追加历史
+            const welcomeRow = messages.querySelector('.ai-msg-row.bot');
+            messages.innerHTML = '';
+            if (welcomeRow) messages.appendChild(welcomeRow);
+
+            history.forEach(item => {
+                // 用户消息
+                const userRow = document.createElement('div');
+                userRow.className = 'ai-msg-row user';
+                userRow.innerHTML = `
+                    <div class="ai-msg-avatar">😊</div>
+                    <div class="ai-msg-content"></div>
+                `;
+                userRow.querySelector('.ai-msg-content').textContent = item.user;
+                messages.appendChild(userRow);
+
+                // AI消息
+                const botRow = document.createElement('div');
+                botRow.className = 'ai-msg-row bot';
+                botRow.innerHTML = `
+                    <div class="ai-msg-avatar">✨</div>
+                    <div class="ai-msg-content"></div>
+                `;
+                const contentEl = botRow.querySelector('.ai-msg-content');
+                contentEl.innerHTML = formatMsgHTML(item.bot);
+                addMsgActions(contentEl);
+                messages.appendChild(botRow);
+            });
+
+            messages.scrollTop = messages.scrollHeight;
         }
 
         // 消息HTML格式化（简单Markdown）
@@ -13174,6 +13960,10 @@
             _aiState.conversation = [];
             _aiState.msgCount = 0;
             localStorage.removeItem('ai_chat_history');
+            // 登录用户：同步清空服务端对话历史
+            if (isUserLoggedIn() && _userState.token) {
+                saveAIChatHistory();
+            }
             showToast('对话已清空');
         }
 
@@ -13197,6 +13987,13 @@
         }
 
         async function sendAIMessage() {
+            // 登录检查：必须登录才能对话
+            if (!isUserLoggedIn()) {
+                openAuthModal();
+                showToast('请先登录后使用AI对话功能');
+                return;
+            }
+
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
             if (!msg || _aiState.isTyping) return;
