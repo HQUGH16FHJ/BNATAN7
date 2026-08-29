@@ -613,7 +613,7 @@
   <div class="api-config-btn" onclick="toggleApiConfig()" title="API 配置">⚙️</div>
   <div class="api-config-panel" id="api-config-panel">
     <h4>🔌 Worker 接口配置</h4>
-    <input type="text" id="api-base" placeholder="https://xxx.workers.dev">
+    <input type="text" id="api-base" placeholder="https://api.bantan.online">
     <button class="btn primary" style="width:100%;" onclick="saveApiConfig()">保存并测试</button>
     <div class="api-status" id="api-status"></div>
     <div style="font-size:10px;color:var(--sub);margin-top:8px;">
@@ -1163,7 +1163,7 @@ const TIER_NAMES = {
   'V1': '进阶卡', 'V2': '高级卡', 'VX': '至尊卡'
 };
 
-let API_BASE = localStorage.getItem('admin_api_base') || '';
+let API_BASE = localStorage.getItem('admin_api_base') || 'https://api.bantan.online';
 let ADMIN_TOKEN = localStorage.getItem('admin_token') || '';
 
 // ==================== API 请求 ====================
