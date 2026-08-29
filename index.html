@@ -8383,8 +8383,8 @@
                 </div>
                 <button class="auth-submit-btn" onclick="doRegister()">注 册</button>
             </div>
-            <!-- 底部在线人数 -->
-            <div class="auth-footer">
+            <!-- 底部在线人数（已关闭，减少 KV 调用） -->
+            <div class="auth-footer" style="display:none;">
                 <span class="online-dot"></span>
                 当前在线 <b id="auth-online-count">--</b> 人
             </div>
@@ -12308,8 +12308,7 @@
         const _userState = {
             token: '',
             info: null,       // {username, uid, dailyLimit, remainingCount, bonusCount, totalCount, createdAt, level}
-            heartbeatTimer: null,
-            onlineCount: 0
+            heartbeatTimer: null
         };
 
         // 获取 API 基础地址（从 localStorage 或默认内置代理地址）
@@ -12543,8 +12542,8 @@
                 document.getElementById('register-password').value = '';
                 document.getElementById('register-password2').value = '';
                 setTimeout(() => document.getElementById('login-username').focus(), 300);
-                // 获取在线人数
-                fetchOnlineCount();
+                // 在线人数已关闭，减少 KV 调用
+                // fetchOnlineCount();
             }
         }
 
@@ -12873,46 +12872,26 @@
             }
         }
 
-        // ===== 在线人数 =====
+        // ===== 在线人数（已关闭，减少 KV 调用） =====
         async function fetchOnlineCount() {
-            try {
-                const baseUrl = getUserAPIUrl();
-                const response = await fetch(baseUrl + '/api/user/online');
-                const data = await response.json();
-                if (data.success) {
-                    const count = data.count || (data.data && data.data.count) || 0;
-                    _userState.onlineCount = count;
-                    const onlineEl = document.getElementById('auth-online-count');
-                    if (onlineEl) onlineEl.textContent = count;
-                    // 同步浮窗
-                    updateRtWidget(count, true);
-                }
-            } catch(e) {
-                updateRtWidget(_userState.onlineCount, false);
-            }
+            // 已禁用在线人数查询，避免频繁调用 KV list()
+            return;
         }
 
         // ===== 实时状态浮窗 =====
-        let _rtPollTimer = null;
         let _rtHealthTimer = null;
         let _rtServerOnline = false;
         let _rtLatency = 0;
         let _rtDetailExpanded = false;
 
         function startRtPolling() {
-            if (_rtPollTimer) clearInterval(_rtPollTimer);
             if (_rtHealthTimer) clearInterval(_rtHealthTimer);
-            // 立即执行一次
-            fetchOnlineCount();
-            checkServerHealth();
-            // 在线人数每 30 秒刷新
-            _rtPollTimer = setInterval(fetchOnlineCount, 30000);
             // 健康检查每 60 秒一次
+            checkServerHealth();
             _rtHealthTimer = setInterval(checkServerHealth, 60000);
         }
 
         function stopRtPolling() {
-            if (_rtPollTimer) { clearInterval(_rtPollTimer); _rtPollTimer = null; }
             if (_rtHealthTimer) { clearInterval(_rtHealthTimer); _rtHealthTimer = null; }
         }
 
@@ -12952,7 +12931,7 @@
             if (!dot || !text) return;
             if (isOnline) {
                 dot.className = 'rt-status-dot online';
-                text.innerHTML = '在线 <span class="rt-online-count">' + onlineCount + '</span> 人';
+                text.innerHTML = '服务正常';
             } else {
                 dot.className = 'rt-status-dot offline';
                 text.textContent = '连接中...';
@@ -12966,10 +12945,10 @@
             if (_rtDetailExpanded) {
                 widget.style.padding = '10px 16px';
                 widget.innerHTML =
-                    '<span class="rt-status-dot online"></span>' +
+                    '<span class="rt-status-dot ' + (_rtServerOnline ? 'online' : 'offline') + '"></span>' +
                     '<div style="display:flex;flex-direction:column;gap:2px;">' +
-                    '<span style="font-size:12px;">在线 <b style="color:var(--accent);">' + _userState.onlineCount + '</b> 人</span>' +
-                    '<span class="rt-latency">延迟 ' + _rtLatency + 'ms · ' + (_rtServerOnline ? '正常' : '异常') + '</span>' +
+                    '<span style="font-size:12px;">' + (_rtServerOnline ? '服务正常' : '服务异常') + '</span>' +
+                    '<span class="rt-latency">延迟 ' + _rtLatency + 'ms</span>' +
                     '</div>';
             } else {
                 location.reload();

@@ -6,17 +6,34 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --bg: #0a0a0f;
-    --card-bg: rgba(20, 20, 30, 0.7);
-    --border: rgba(255,255,255,0.08);
-    --text: #e8e8f0;
-    --sub: #888;
+    --bg: #03030a;
+    --bg-deep: #000005;
+    --card-bg: rgba(10, 10, 30, 0.4);
+    --card-bg-hover: rgba(20, 20, 50, 0.6);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(0, 245, 255, 0.25);
+    --text: #e8f0ff;
+    --sub: #8892b0;
     --accent: #00f5ff;
-    --accent2: #a855f7;
-    --accent3: #22c55e;
-    --accent4: #f59e0b;
-    --accent5: #ef4444;
+    --accent2: #7c3aed;
+    --accent3: #f472b6;
+    --accent4: #fbbf24;
+    --accent5: #00ff88;
+    --accent6: #3b82f6;
     --glow-color: 0, 245, 255;
+    --shadow: 0 4px 24px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+    --radius: 12px;
+    --radius-lg: 16px;
+    --neon-glow: 0 0 10px rgba(var(--glow-color), 0.5), 0 0 20px rgba(var(--glow-color), 0.3), 0 0 40px rgba(var(--glow-color), 0.1);
+    --rainbow-grad: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6, #fbbf24, #00ff88, #00f5ff);
+    --aurora-1: linear-gradient(135deg, rgba(0,245,255,0.06), rgba(124,58,237,0.04), rgba(244,114,182,0.03));
+    --glass-reflection: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.03) 100%);
+    --edge-glow: 0 0 0 1px rgba(var(--glow-color),0.06), 0 0 20px rgba(var(--glow-color),0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+    --glow-strong: 0 0 16px rgba(var(--glow-color), 0.55), 0 0 36px rgba(var(--glow-color), 0.35), 0 0 70px rgba(var(--glow-color), 0.18);
+    --glow-purple: 0 0 18px rgba(124, 58, 237, 0.4), 0 0 40px rgba(124, 58, 237, 0.2);
+    --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.03) 100%);
+    --top-grad-line: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 30%, var(--accent3) 65%, var(--accent5) 100%);
   }
   html[data-theme="light"] {
     --bg: #f5f7fa;
@@ -29,88 +46,234 @@
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: var(--bg);
+    background-image: 
+      radial-gradient(ellipse at 20% 0%, rgba(0,245,255,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 10%, rgba(124,58,237,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(244,114,182,0.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 0% 60%, rgba(0,255,136,0.03) 0%, transparent 50%);
+    background-attachment: fixed;
     color: var(--text);
     min-height: 100vh;
     display: flex;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(var(--glow-color), 0.008) 3px,
+      transparent 4px
+    );
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+  }
+
+  /* 浮动光球背景 */
+  .cosmic-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: screen;
+    opacity: 0.04;
+    animation: cosmicFloat 50s infinite alternate ease-in-out;
+    will-change: transform;
+  }
+  .cosmic-orb:nth-child(1) {
+    width: 1200px; height: 1200px;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.06), transparent 70%);
+    top: -35%; left: -30%;
+    animation-duration: 55s;
+  }
+  .cosmic-orb:nth-child(2) {
+    width: 1100px; height: 1100px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.05), transparent 70%);
+    bottom: -35%; right: -30%;
+    animation-duration: 60s;
+    animation-delay: -14s;
+  }
+  .cosmic-orb:nth-child(3) {
+    width: 900px; height: 900px;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.04), transparent 70%);
+    top: 5%; left: 25%;
+    animation-duration: 52s;
+    animation-delay: -22s;
+  }
+  .cosmic-orb:nth-child(4) {
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.035), transparent 70%);
+    top: -5%; right: -5%;
+    animation-duration: 46s;
+    animation-delay: -10s;
+  }
+  .cosmic-orb:nth-child(5) {
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0, 255, 200, 0.035), transparent 70%);
+    bottom: -5%; left: -5%;
+    animation-duration: 56s;
+    animation-delay: -18s;
+  }
+  .cosmic-orb:nth-child(6) {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255, 100, 200, 0.03), transparent 70%);
+    top: 35%; right: 5%;
+    animation-duration: 50s;
+    animation-delay: -26s;
+  }
+  @keyframes cosmicFloat {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    20% { transform: translate(180px, -200px) scale(1.4) rotate(6deg); }
+    40% { transform: translate(-140px, 180px) scale(0.65) rotate(-4deg); }
+    60% { transform: translate(220px, 120px) scale(1.35) rotate(5deg); }
+    80% { transform: translate(-100px, -140px) scale(0.8) rotate(-3deg); }
+    100% { transform: translate(80px, -80px) scale(1.1) rotate(2deg); }
   }
 
   /* 侧边栏 */
   .sidebar {
-    width: 240px;
+    width: 248px;
     background: var(--card-bg);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0; left: 0; bottom: 0;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     z-index: 100;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.15);
+  }
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(0,245,255,0.15), transparent);
   }
   .sidebar-logo {
-    padding: 24px 20px;
+    padding: 28px 24px 24px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    position: relative;
   }
   .sidebar-logo .logo-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: var(--rainbow-grad);
+    background-size: 200% 200%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
+    position: relative;
+    animation: logoShine 6s ease infinite;
+    box-shadow: 0 4px 16px rgba(0,245,255,0.25);
+  }
+  .sidebar-logo .logo-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.08) 100%);
   }
   .sidebar-logo .logo-text {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 800;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .sidebar-logo .logo-sub {
     font-size: 10px;
     color: var(--sub);
-    margin-top: 2px;
+    margin-top: 3px;
+    letter-spacing: 1px;
   }
   .sidebar-nav {
     flex: 1;
-    padding: 12px;
+    padding: 16px 14px;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
   }
+  .sidebar-nav::-webkit-scrollbar { width: 4px; }
+  .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
   .nav-section {
     font-size: 10px;
     color: var(--sub);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 8px 6px;
-    font-weight: 600;
+    letter-spacing: 1.5px;
+    padding: 16px 10px 8px;
+    font-weight: 700;
+    opacity: 0.7;
   }
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 10px;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 13px;
     color: var(--text);
-    transition: 0.2s;
-    margin-bottom: 2px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 3px;
+    position: relative;
+    overflow: hidden;
   }
-  .nav-item:hover { background: rgba(var(--glow-color), 0.06); }
+  .nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 0 3px 3px 0;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .nav-item:hover {
+    background: rgba(var(--glow-color), 0.08);
+    transform: translateX(3px);
+  }
   .nav-item.active {
-    background: rgba(var(--glow-color), 0.12);
+    background: linear-gradient(135deg, rgba(var(--glow-color), 0.18), rgba(124,58,237,0.12));
     color: var(--accent);
     font-weight: 600;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  .nav-item .nav-icon { font-size: 16px; }
+  .nav-item.active::before {
+    opacity: 1;
+    background: var(--rainbow-grad);
+    background-size: 100% 200%;
+    animation: logoShine 6s ease infinite;
+  }
+  .nav-item .nav-icon { 
+    font-size: 17px; 
+    width: 20px; 
+    text-align: center;
+    transition: transform 0.25s;
+  }
+  .nav-item:hover .nav-icon {
+    transform: scale(1.1);
+  }
   .nav-item .nav-badge {
     margin-left: auto;
     font-size: 10px;
-    padding: 2px 6px;
+    padding: 2px 8px;
     border-radius: 10px;
     background: var(--accent5);
     color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(239,68,68,0.3);
   }
   .sidebar-footer {
     padding: 16px;
@@ -128,55 +291,168 @@
   /* 主内容 */
   .main {
     flex: 1;
-    margin-left: 240px;
-    padding: 24px 32px;
+    margin-left: 248px;
+    padding: 28px 36px;
+    min-height: 100vh;
+  }
+  .page {
+    animation: pageIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   .page-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
   }
   .page-title {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
+    background: linear-gradient(135deg, var(--text), var(--sub));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
   }
   .page-title small {
     font-size: 12px;
     color: var(--sub);
     font-weight: 400;
-    margin-left: 10px;
+    margin-left: 12px;
+    -webkit-text-fill-color: var(--sub);
+    opacity: 0.7;
   }
   .header-actions {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
   .admin-badge {
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
     background: rgba(34, 197, 94, 0.1);
     color: var(--accent3);
     font-size: 11px;
     font-weight: 600;
     border: 1px solid rgba(34, 197, 94, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
 
   /* 卡片 */
   .card {
-    background: var(--card-bg);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 35%, transparent 65%, rgba(255, 255, 255, 0.025) 100%),
+      var(--glass-reflection),
+      var(--aurora-1),
+      var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 20px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    box-shadow:
+      0 8px 50px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      var(--edge-glow);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: calc(var(--radius-lg) + 1.5px);
+    padding: 1.5px;
+    background: conic-gradient(from var(--angle, 0deg),
+            transparent 0%,
+            rgba(0,245,255,0.3) 12%,
+            rgba(124, 58, 237, 0.25) 25%,
+            rgba(244, 114, 182, 0.2) 38%,
+            rgba(251, 191, 36, 0.15) 50%,
+            rgba(0, 255, 200, 0.15) 62%,
+            rgba(255, 100, 200, 0.15) 75%,
+            rgba(100, 200, 255, 0.2) 88%,
+            transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: spinBorder 20s linear infinite;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .card:hover::before {
+    opacity: 1;
+    animation-duration: 8s;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.02), transparent 60%);
+    pointer-events: none;
+    opacity: 0.1;
+    transition: opacity 1s;
+  }
+  .card:hover::after {
+    opacity: 0.6;
+  }
+  .card:hover {
+    transform: translateY(-5px) scale(1.008);
+    box-shadow:
+      0 25px 80px rgba(0, 0, 0, 0.25),
+      0 0 60px rgba(var(--glow-color), 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      inset 0 0 40px rgba(var(--glow-color), 0.04);
+  }
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes spinBorder {
+    to { --angle: 360deg; }
   }
   .card-title {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-title::before {
+    content: '';
+    width: 3px;
+    height: 16px;
+    background: var(--rainbow-grad);
+    background-size: 200% 200%;
+    border-radius: 2px;
+    animation: logoShine 6s ease infinite;
   }
 
   /* 统计卡片 */
@@ -187,48 +463,104 @@
     margin-bottom: 24px;
   }
   .stat-card {
-    background: var(--card-bg);
+    background: 
+      linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.02) 100%),
+      var(--glass-sheen),
+      var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
+    border-radius: 20px;
+    padding: 20px;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      var(--edge-glow);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .stat-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow:
+      0 25px 80px rgba(0, 0, 0, 0.25),
+      0 0 60px rgba(var(--glow-color), 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border-color: var(--border-hover);
   }
   .stat-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--accent);
+    width: 100%; height: 3px;
+    background: var(--rainbow-grad);
+    background-size: 200% 200%;
+    animation: logoShine 6s ease infinite;
+    opacity: 0.8;
   }
-  .stat-card.c2::before { background: var(--accent2); }
-  .stat-card.c3::before { background: var(--accent3); }
-  .stat-card.c4::before { background: var(--accent4); }
+  .stat-card.c2::before { filter: hue-rotate(30deg); }
+  .stat-card.c3::before { filter: hue-rotate(60deg); }
+  .stat-card.c4::before { filter: hue-rotate(120deg); }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(var(--glow-color), 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
   .stat-label {
     font-size: 12px;
     color: var(--sub);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
   }
   .stat-value {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 800;
     line-height: 1.2;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
+  .stat-card.c2 .stat-value { background: linear-gradient(135deg, var(--text), var(--accent2)); -webkit-background-clip: text; background-clip: text; }
+  .stat-card.c3 .stat-value { background: linear-gradient(135deg, var(--text), var(--accent5)); -webkit-background-clip: text; background-clip: text; }
+  .stat-card.c4 .stat-value { background: linear-gradient(135deg, var(--text), var(--accent4)); -webkit-background-clip: text; background-clip: text; }
   .stat-delta {
     font-size: 11px;
-    margin-top: 6px;
-    color: var(--accent3);
+    margin-top: 8px;
+    color: var(--accent5);
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
-  .stat-delta.down { color: var(--accent5); }
+  .stat-delta.down { color: var(--accent4); }
+  .stat-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    opacity: 0.12;
+    filter: blur(0.5px);
+  }
 
   /* 表格 */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
   table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
   }
   th, td {
-    padding: 10px 12px;
+    padding: 12px 14px;
     text-align: left;
     border-bottom: 1px solid var(--border);
   }
@@ -237,63 +569,178 @@
     color: var(--sub);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-weight: 600;
-    background: rgba(var(--glow-color), 0.03);
+    font-weight: 700;
+    background: linear-gradient(180deg, rgba(var(--glow-color), 0.05), rgba(var(--glow-color), 0.02));
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
   }
-  tbody tr:hover { background: rgba(var(--glow-color), 0.03); }
+  tbody tr {
+    transition: background 0.2s;
+  }
+  tbody tr:hover {
+    background: rgba(var(--glow-color), 0.04);
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
   .tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 8px;
     font-size: 11px;
     font-weight: 600;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.4;
   }
-  .tag.green { background: rgba(34,197,94,0.1); color: #22c55e; }
-  .tag.yellow { background: rgba(245,158,11,0.1); color: #f59e0b; }
-  .tag.red { background: rgba(239,68,68,0.1); color: #ef4444; }
-  .tag.purple { background: rgba(168,85,247,0.1); color: #a855f7; }
-  .tag.cyan { background: rgba(0,245,255,0.1); color: var(--accent); }
-  .tag.gray { background: rgba(136,136,136,0.1); color: #888; }
-  .tag.gold { background: linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15)); color: #ffd700; }
+  .tag:hover {
+    transform: translateY(-1px);
+  }
+  .tag.green { 
+    background: rgba(34,197,94,0.1); 
+    color: #22c55e; 
+    border-color: rgba(34,197,94,0.2);
+  }
+  .tag.yellow { 
+    background: rgba(245,158,11,0.1); 
+    color: #f59e0b; 
+    border-color: rgba(245,158,11,0.2);
+  }
+  .tag.red { 
+    background: rgba(239,68,68,0.1); 
+    color: #ef4444; 
+    border-color: rgba(239,68,68,0.2);
+  }
+  .tag.purple { 
+    background: rgba(168,85,247,0.1); 
+    color: #a855f7; 
+    border-color: rgba(168,85,247,0.2);
+  }
+  .tag.cyan { 
+    background: rgba(0,245,255,0.1); 
+    color: var(--accent); 
+    border-color: rgba(0,245,255,0.2);
+  }
+  .tag.gray { 
+    background: rgba(136,136,136,0.1); 
+    color: #888; 
+    border-color: rgba(136,136,136,0.2);
+  }
+  .tag.gold { 
+    background: linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15)); 
+    color: #ffd700; 
+    border-color: rgba(255,215,0,0.25);
+  }
 
   /* 按钮 */
   .btn {
-    padding: 8px 16px;
-    border-radius: 10px;
+    padding: 8px 18px;
+    border-radius: 50px;
     border: 1px solid var(--border);
     background: var(--card-bg);
     color: var(--text);
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
-    transition: 0.2s;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.32, 1);
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 34px;
+    position: relative;
+    overflow: hidden;
   }
-  .btn:hover { background: rgba(var(--glow-color), 0.08); }
+  .btn:hover {
+    background: rgba(var(--glow-color), 0.08);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 0 20px rgba(var(--glow-color), 0.08);
+  }
+  .btn:active {
+    transform: scale(0.94);
+  }
   .btn.primary {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: var(--rainbow-grad);
+    background-size: 200% 200%;
     color: #000;
     border: none;
+    box-shadow: 0 4px 20px rgba(0, 245, 255, 0.25);
+    animation: btnShine 8s ease infinite;
+    font-weight: 700;
+    position: relative;
+    overflow: hidden;
   }
-  .btn.primary:hover { opacity: 0.9; }
-  .btn.danger { color: var(--accent5); border-color: rgba(239,68,68,0.3); }
-  .btn.danger:hover { background: rgba(239,68,68,0.1); }
-  .btn-sm { padding: 4px 10px; font-size: 11px; }
+  .btn.primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.35) 50%, transparent 75%);
+    transition: left 0.6s;
+  }
+  .btn.primary:hover::after {
+    left: 100%;
+  }
+  .btn.primary:hover {
+    opacity: 1;
+    box-shadow: 0 6px 28px rgba(0, 245, 255, 0.4), var(--glow-strong);
+    transform: translateY(-2px);
+  }
+  @keyframes btnShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .btn.danger {
+    color: #ff6b6b;
+    border-color: rgba(255,107,107,0.3);
+  }
+  .btn.danger:hover {
+    background: rgba(255,107,107,0.1);
+    border-color: rgba(255,107,107,0.5);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 0 20px rgba(255,107,107,0.15);
+  }
+  .btn-sm { 
+    padding: 4px 12px; 
+    font-size: 11px; 
+    border-radius: 40px; 
+    min-height: 28px;
+  }
 
   /* 输入 */
   input, select, textarea {
     background: rgba(var(--glow-color), 0.03);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
+    border-radius: 50px;
+    padding: 9px 16px;
     color: var(--text);
     font-size: 12px;
     outline: none;
-    transition: 0.2s;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.32, 1);
     font-family: inherit;
+  }
+  input:hover, select:hover, textarea:hover {
+    border-color: rgba(255,255,255,0.15);
   }
   input:focus, select:focus, textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(var(--glow-color), 0.1);
+    box-shadow: 0 0 0 3px rgba(var(--glow-color), 0.12), 0 0 20px rgba(var(--glow-color), 0.1);
+    background: rgba(var(--glow-color), 0.05);
+  }
+  textarea { border-radius: 16px; }
+  select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238892b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 36px;
   }
 
   /* 布局 */
@@ -347,31 +794,123 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(ellipse at top, rgba(0,245,255,0.08), transparent 50%),
-                radial-gradient(ellipse at bottom, rgba(168,85,247,0.08), transparent 50%),
-                var(--bg);
+    background: 
+      radial-gradient(ellipse at top left, rgba(0,245,255,0.1), transparent 50%),
+      radial-gradient(ellipse at top right, rgba(168,85,247,0.1), transparent 50%),
+      radial-gradient(ellipse at bottom center, rgba(34,197,94,0.05), transparent 50%),
+      var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .login-wrap::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,245,255,0.06) 0%, transparent 70%);
+    top: -200px; left: -200px;
+    animation: float 8s ease-in-out infinite;
+  }
+  .login-wrap::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%);
+    bottom: -150px; right: -150px;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -20px); }
   }
   .login-card {
     width: 380px;
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 32px;
-    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px 32px;
+    backdrop-filter: blur(30px);
     text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 1;
+    animation: cardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .login-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.4), transparent);
   }
   .login-card .logo {
-    width: 60px; height: 60px;
-    margin: 0 auto 16px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    width: 80px; height: 80px;
+    margin: 0 auto 22px;
+    border-radius: 22px;
+    background: var(--rainbow-grad);
+    background-size: 200% 200%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
+    font-size: 36px;
+    position: relative;
+    animation: logoShine 4s ease infinite, logoFloat 3s ease-in-out infinite;
   }
-  .login-card h2 { font-size: 20px; margin-bottom: 4px; }
+  .login-card .logo::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 24px;
+    background: var(--rainbow-grad);
+    background-size: 200% 200%;
+    filter: blur(12px);
+    opacity: 0.6;
+    z-index: -1;
+    animation: logoShine 4s ease infinite;
+  }
+  .login-card .logo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.1) 100%);
+  }
+  @keyframes logoShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(1deg); }
+  }
+  .login-card h2 { 
+    font-size: 22px; 
+    margin-bottom: 6px; 
+    background: linear-gradient(135deg, var(--text), var(--sub));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .login-card .sub { font-size: 12px; color: var(--sub); margin-bottom: 28px; }
-  .login-card input { width: 100%; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; }
-  .login-card .btn { width: 100%; padding: 12px; margin-top: 8px; font-size: 14px; }
+  .login-card input { 
+    width: 100%; 
+    padding: 12px 14px; 
+    margin-bottom: 12px; 
+    font-size: 13px; 
+    transition: all 0.3s;
+  }
+  .login-card input:focus {
+    transform: translateY(-1px);
+  }
+  .login-card .btn { 
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 8px; 
+    font-size: 14px; 
+    justify-content: center;
+  }
   .login-tip { margin-top: 16px; font-size: 11px; color: var(--sub); }
 
   /* API 配置 */
@@ -422,19 +961,38 @@
   /* Toast */
   #toast {
     position: fixed;
-    top: 20px;
+    top: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(-100px);
     background: var(--card-bg);
     border: 1px solid var(--border);
-    padding: 10px 20px;
-    border-radius: 12px;
+    padding: 12px 24px;
+    border-radius: 14px;
     font-size: 13px;
+    font-weight: 500;
     z-index: 9999;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    min-width: 200px;
+    text-align: center;
   }
   #toast.show { transform: translateX(-50%) translateY(0); }
+  #toast.success {
+    border-color: rgba(34,197,94,0.3);
+    background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(34,197,94,0.05));
+    color: #22c55e;
+  }
+  #toast.warn {
+    border-color: rgba(245,158,11,0.3);
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
+    color: #f59e0b;
+  }
+  #toast.error {
+    border-color: rgba(239,68,68,0.3);
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+    color: #ef4444;
+  }
 
   /* 加载 */
   .loading {
@@ -507,15 +1065,15 @@
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .modal-overlay.show {
     opacity: 1;
@@ -524,33 +1082,50 @@
   .modal {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    width: 400px;
-    max-width: 90%;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    transform: translateY(20px);
-    transition: 0.3s;
+    border-radius: 20px;
+    padding: 28px;
+    width: 420px;
+    max-width: 92%;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.3), transparent);
   }
   .modal-overlay.show .modal {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   .modal-title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--text), var(--sub));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .modal-body {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   .modal-footer {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+  }
+  .modal-footer .btn {
+    min-width: 80px;
+    justify-content: center;
   }
 
   /* 搜索栏 */
@@ -568,12 +1143,34 @@
   /* 操作按钮组 */
   .action-btns {
     display: flex;
-    gap: 6px;
+    gap: 5px;
     flex-wrap: wrap;
   }
   .action-btns .btn {
-    padding: 4px 10px;
+    padding: 5px 9px;
     font-size: 11px;
+    border-radius: 8px;
+    opacity: 0.85;
+  }
+  .action-btns .btn:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+
+  /* 全局滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.18);
   }
 
   /* 卡片增强阴影 */
@@ -1029,6 +1626,14 @@
 </head>
 <body>
 
+<!-- 宇宙背景光球 -->
+<div class="cosmic-orb"></div>
+<div class="cosmic-orb"></div>
+<div class="cosmic-orb"></div>
+<div class="cosmic-orb"></div>
+<div class="cosmic-orb"></div>
+<div class="cosmic-orb"></div>
+
 <!-- API 配置浮窗 -->
 <div class="api-config">
   <div class="api-config-btn" onclick="toggleApiConfig()" title="API 配置">⚙️</div>
@@ -1069,10 +1674,10 @@
     </div>
     <div class="sidebar-nav">
       <div class="nav-section">概览</div>
-      <div class="nav-item" onclick="switchPage('dashboard', this)">
+      <div class="nav-item active" onclick="switchPage('dashboard', this)">
         <span class="nav-icon">📊</span> 数据仪表盘
       </div>
-      <div class="nav-item active" onclick="switchPage('monitor', this)">
+      <div class="nav-item" onclick="switchPage('monitor', this)">
         <span class="nav-icon">📡</span> 实时监控
         <span class="nav-badge" id="monitor-badge" style="display:none;background:#22c55e;">●</span>
       </div>
@@ -1115,18 +1720,18 @@
   <div class="main">
 
     <!-- 仪表盘 -->
-    <div class="page" id="page-dashboard">
+    <div class="page active" id="page-dashboard">
       <div class="page-header">
         <div>
           <div class="page-title">数据仪表盘 <small>实时概览</small></div>
         </div>
         <div class="header-actions">
-          <span class="live-badge" id="dash-live-badge"><span class="live-dot"></span> LIVE</span>
-          <div class="toggle-switch on" id="dash-auto-toggle" onclick="toggleDashboardAuto()">
+          <span class="live-badge" id="dash-live-badge" style="display:none;"><span class="live-dot"></span> LIVE</span>
+          <div class="toggle-switch" id="dash-auto-toggle" onclick="toggleDashboardAuto()">
             <span>自动刷新</span>
             <div class="toggle-track"><div class="toggle-thumb"></div></div>
           </div>
-          <span class="countdown-timer" id="dash-countdown">下次刷新: 10s</span>
+          <span class="countdown-timer" id="dash-countdown" style="display:none;">下次刷新: 60s</span>
           <span class="admin-badge" id="conn-badge" style="background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68); border-color: rgba(239, 68, 68, 0.2);">● 离线</span>
           <button class="btn" onclick="loadDashboard()">🔄 刷新</button>
         </div>
@@ -1151,12 +1756,14 @@
           <div class="stat-delta" id="stat-users-delta">累计注册</div>
           <div class="stat-icon">👥</div>
         </div>
+        <!-- 在线人数已关闭，减少 KV list() 调用
         <div class="stat-card c4">
           <div class="stat-label">在线人数</div>
           <div class="stat-value" id="stat-online">--</div>
           <div class="stat-delta" id="stat-online-delta">当前在线</div>
           <div class="stat-icon">🟢</div>
         </div>
+        -->
         <div class="stat-card c2">
           <div class="stat-label">兑换码总数</div>
           <div class="stat-value" id="stat-code">--</div>
@@ -1210,28 +1817,30 @@
     </div>
 
     <!-- 实时监控 -->
-    <div class="page active" id="page-monitor">
+    <div class="page" id="page-monitor">
       <div class="page-header">
         <div>
           <div class="page-title">实时监控 <small>自动刷新 · 活动追踪 · 健康检查</small></div>
         </div>
         <div class="header-actions">
-          <span class="live-badge" id="monitor-live-badge"><span class="live-dot"></span> LIVE</span>
-          <div class="toggle-switch on" id="monitor-toggle" onclick="toggleMonitor()">
+          <span class="live-badge" id="monitor-live-badge" style="display:none;"><span class="live-dot"></span> LIVE</span>
+          <div class="toggle-switch" id="monitor-toggle" onclick="toggleMonitor()">
             <span>自动刷新</span>
             <div class="toggle-track"><div class="toggle-thumb"></div></div>
           </div>
-          <span class="countdown-timer" id="monitor-countdown">下次刷新: 5s</span>
+          <span class="countdown-timer" id="monitor-countdown" style="display:none;">下次刷新: 30s</span>
         </div>
       </div>
 
       <div class="stats-grid">
+        <!-- 在线人数已关闭，减少 KV list() 调用
         <div class="stat-card" style="border-left:3px solid #22c55e;">
           <div class="stat-label">当前在线用户</div>
           <div class="stat-value" id="mon-online" style="color:#22c55e;">--</div>
           <div class="stat-delta" id="mon-online-delta">实时心跳监测</div>
           <div class="stat-icon">🟢</div>
         </div>
+        -->
         <div class="stat-card c1">
           <div class="stat-label">今日 PV（实时）</div>
           <div class="stat-value" id="mon-pv">--</div>
@@ -1310,7 +1919,7 @@
           </div>
         </div>
 
-        <!-- 在线用户实时列表 -->
+        <!-- 在线用户实时列表（已关闭，减少 KV list() 调用）
         <div class="monitor-card">
           <div class="monitor-card-title">
             <div class="title-left">👥 在线用户</div>
@@ -1320,6 +1929,7 @@
             <div class="empty" style="font-size:12px;">等待数据...</div>
           </div>
         </div>
+        -->
       </div>
 
       <!-- 数据变化追踪 -->
@@ -1336,11 +1946,13 @@
             <span class="ms-value" id="track-chat" style="color:var(--accent2);">0</span>
             <span style="font-size:10px;color:var(--sub);" id="track-chat-time">--</span>
           </div>
+          <!-- 在线变化（已关闭，减少 KV 调用）
           <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
             <span class="ms-label">在线变化</span>
             <span class="ms-value" id="track-online" style="color:#22c55e;">0</span>
             <span style="font-size:10px;color:var(--sub);" id="track-online-time">--</span>
           </div>
+          -->
         </div>
       </div>
     </div>
@@ -1445,7 +2057,9 @@
     <!-- 用户管理 -->
     <div class="page" id="page-users">
       <div class="page-header">
-        <div class="page-title">用户管理 <small>用户列表 · 余额调整</small></div>
+        <div>
+          <div class="page-title">用户管理 <small>用户列表 · UID 管理 · 余额调整</small></div>
+        </div>
         <div class="header-actions">
           <button class="btn primary" onclick="showCreateUser()">➕ 添加用户</button>
           <button class="btn" onclick="loadUserList()">🔄 刷新</button>
@@ -1466,10 +2080,10 @@
           <div class="stat-icon">✨</div>
         </div>
         <div class="stat-card c3">
-          <div class="stat-label">在线人数</div>
-          <div class="stat-value" id="user-stat-online">--</div>
-          <div class="stat-delta">当前活跃用户</div>
-          <div class="stat-icon">🟢</div>
+          <div class="stat-label">VIP 用户</div>
+          <div class="stat-value" id="user-stat-vip">--</div>
+          <div class="stat-delta">付费会员数</div>
+          <div class="stat-icon">👑</div>
         </div>
         <div class="stat-card c4">
           <div class="stat-label">累计对话数</div>
@@ -1482,8 +2096,13 @@
       <div class="card">
         <div class="card-title">
           👥 用户列表
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
-            <input type="text" id="user-search" placeholder="搜索用户名..." onkeyup="if(event.key==='Enter')loadUserList()" style="font-size:11px;width:200px;">
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <input type="text" id="user-search" placeholder="搜索用户名或 UID..." oninput="filterUsers()" onkeydown="if(event.key==='Enter')loadUserList()" style="font-size:12px;width:200px;">
+            <select id="user-filter-vip" onchange="filterUsers()" style="font-size:12px;">
+              <option value="all">全部等级</option>
+              <option value="normal">普通用户</option>
+              <option value="vip">VIP 用户</option>
+            </select>
             <button class="btn btn-sm" onclick="loadUserList()">🔍 搜索</button>
           </div>
         </div>
@@ -1491,21 +2110,20 @@
           <table>
             <thead>
               <tr>
-                <th>UID</th>
+                <th style="width:95px;">UID</th>
                 <th>用户名</th>
-                <th>VIP等级</th>
-                <th>余额</th>
-                <th>累计使用</th>
-                <th>注册时间</th>
-                <th>最后登录</th>
-                <th>在线状态</th>
-                <th>操作</th>
+                <th style="width:100px;">VIP等级</th>
+                <th style="width:90px;">余额</th>
+                <th style="width:90px;">累计使用</th>
+                <th style="width:130px;">注册时间</th>
+                <th style="width:130px;">最后登录</th>
+                <th style="width:210px;">操作</th>
               </tr>
             </thead>
-            <tbody id="user-list"><tr><td colspan="9" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
+            <tbody id="user-list"><tr><td colspan="8" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
           </table>
         </div>
-        <div style="text-align:center;padding:12px;font-size:11px;color:var(--sub);" id="user-page-info">加载失败</div>
+        <div style="text-align:center;padding:12px;font-size:12px;color:var(--sub);" id="user-page-info">加载失败</div>
       </div>
     </div>
 
@@ -1708,6 +2326,31 @@
   </div>
 </div>
 
+<!-- 设置UID模态框 -->
+<div class="modal-overlay" id="modal-uid">
+  <div class="modal">
+    <div class="modal-title">🆔 设置 UID</div>
+    <div class="modal-body">
+      <div style="font-size:12px;color:var(--sub);margin-bottom:12px;">
+        用户: <span id="uid-username" style="color:var(--text);font-weight:600;"></span>
+        &nbsp;|&nbsp; 当前 UID: <span id="uid-current" style="color:var(--accent6);font-weight:700;font-family:monospace;"></span>
+      </div>
+      <div style="font-size:12px;color:var(--sub);margin-bottom:6px;">新 UID（格式：BT + 6位数字）</div>
+      <input type="text" id="uid-input" placeholder="例如：BT000001" style="width:100%;font-family:monospace;letter-spacing:1px;text-transform:uppercase;" maxlength="8" oninput="validateUidInput()">
+      <div style="font-size:11px;color:var(--sub);margin-top:6px;" id="uid-hint">
+        💡 设置后，后续新注册用户的 UID 将从该数字之后继续递增
+      </div>
+      <div style="font-size:11px;margin-top:8px;padding:8px;background:rgba(245,158,11,0.08);border-radius:6px;border:1px solid rgba(245,158,11,0.2);color:var(--accent4);">
+        ⚠️ 请确保 UID 不与现有用户重复，建议按注册顺序依次设置
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-uid')">取消</button>
+      <button class="btn primary" onclick="confirmSetUid()">确认设置</button>
+    </div>
+  </div>
+</div>
+
 <!-- VIP设置模态框 -->
 <div class="modal-overlay" id="modal-vip">
   <div class="modal">
@@ -1836,6 +2479,10 @@ async function api(path, options = {}) {
       doLogout();
       showToast('登录已过期，请重新登录');
     }
+    // KV 额度超限友好提示
+    if (data.error && data.error.includes && data.error.includes('limit exceeded')) {
+      showToast('⚠️ KV 每日额度已用完，部分数据可能无法加载', 'warning');
+    }
     return data;
   } catch (e) {
     return { success: false, error: '网络错误: ' + e.message };
@@ -1926,10 +2573,8 @@ function showAdmin() {
   loadDashboard();
   loadCodeStats();
   loadFeedbackBadge();
-  // 启动实时监控和仪表盘自动刷新
-  startMonitor();
-  startDashboardAuto();
-  addActivityLog('✅', '管理员登录成功，实时监控已启动', 'up');
+  // 默认不自动刷新，点击手动刷新按钮更新数据
+  addActivityLog('✅', '管理员登录成功', 'up');
 }
 
 // 检查登录状态
@@ -2233,64 +2878,99 @@ async function deleteFeedback(id) {
 // ==================== 用户管理 ====================
 let currentUser = '';
 let currentBalance = 0;
+let _allUsers = []; // 缓存用户数据，前端筛选不增加 KV
 
 async function loadUserList() {
   const search = document.getElementById('user-search').value;
-  let url = '/api/admin/users?limit=50';
+  let url = '/api/admin/users?limit=200';
   if (search) url += '&search=' + encodeURIComponent(search);
   
   const res = await api(url);
   const tbody = document.getElementById('user-list');
   
   if (!res.success) {
-    tbody.innerHTML = `<tr><td colspan="9" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
     document.getElementById('user-page-info').textContent = '加载失败';
     return;
   }
   
   const users = res.users || [];
+  _allUsers = users; // 缓存供前端筛选
   
   // 从返回数据计算统计
   const todayStr = new Date().toISOString().split('T')[0];
-  let todayNew = 0, onlineCount = 0, totalChats = 0;
+  let todayNew = 0, vipCount = 0, totalChats = 0;
   users.forEach(u => {
     if (u.createdAt) {
       const createDate = new Date(u.createdAt).toISOString().split('T')[0];
       if (createDate === todayStr) todayNew++;
     }
-    if (u.isOnline || u.online) onlineCount++;
+    if (u.isVip) vipCount++;
     totalChats += (u.totalUsed || 0);
   });
   
   // 更新统计卡片
   document.getElementById('user-stat-total').textContent = res.totalUsers || res.total || users.length;
   document.getElementById('user-stat-today').textContent = todayNew;
-  document.getElementById('user-stat-online').textContent = onlineCount;
+  document.getElementById('user-stat-vip').textContent = vipCount;
   document.getElementById('user-stat-chat').textContent = totalChats.toLocaleString();
   
+  renderUserList(users);
+}
+
+// 前端筛选（不增加 KV 调用）
+function filterUsers() {
+  const vipFilter = document.getElementById('user-filter-vip').value;
+  const search = document.getElementById('user-search').value.toLowerCase();
+  let filtered = _allUsers;
+  
+  if (vipFilter === 'normal') {
+    filtered = filtered.filter(u => !u.isVip);
+  } else if (vipFilter === 'vip') {
+    filtered = filtered.filter(u => u.isVip);
+  }
+  
+  if (search) {
+    filtered = filtered.filter(u => 
+      (u.username && u.username.toLowerCase().includes(search)) ||
+      (u.uid && u.uid.toLowerCase().includes(search))
+    );
+  }
+  
+  renderUserList(filtered);
+}
+
+function renderUserList(users) {
+  const tbody = document.getElementById('user-list');
+  
   if (!users.length) {
-    tbody.innerHTML = '<tr><td colspan="9" class="empty">暂无用户</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty">暂无用户</td></tr>';
     document.getElementById('user-page-info').textContent = '共 0 条';
     return;
   }
   
   tbody.innerHTML = users.map(u => {
-    const isOnline = u.isOnline || u.online;
     const balance = u.balance !== undefined ? u.balance : (u.credits || 0);
     const totalUsed = u.totalUsed !== undefined ? u.totalUsed : (u.usageCount || 0);
     const createdAt = u.createdAt || u.registerTime || '-';
     const lastLogin = u.lastLogin || u.lastActive || '-';
     const isVip = u.isVip || false;
     const vipLevel = u.vipLevel || 0;
+    const uid = u.uid || '-';
     const vipNames = ['普通用户', '🥉青铜VIP', '🥈白银VIP', '🥇黄金VIP', '💎钻石VIP', '👑至尊VIP'];
     const vipColors = ['gray', 'yellow', 'yellow', 'yellow', 'purple', 'gold'];
+    const username = u.username || u.name || '';
     
     return `
       <tr>
-        <td style="font-family:monospace;font-size:11px;color:var(--accent3);font-weight:600;">${escapeHtml(u.uid || '-')}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-family:'SF Mono',Consolas,monospace;font-size:12px;color:var(--accent6);font-weight:700;letter-spacing:0.5px;">${escapeHtml(uid)}</span>
+            <button class="btn btn-sm" onclick="copyUid('${escapeHtml(uid)}')" title="复制 UID" style="padding:2px 6px;font-size:10px;">📋</button>
+          </div>
+        </td>
         <td style="font-weight:600;">
-          <span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>
-          ${escapeHtml(u.username || u.name || '')}
+          ${escapeHtml(username)}
         </td>
         <td>
           <span class="tag ${isVip ? vipColors[vipLevel] || 'gold' : 'gray'}" style="${isVip ? 'background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border-color:rgba(255,215,0,0.3);color:#ffd700;' : ''}">
@@ -2302,16 +2982,13 @@ async function loadUserList() {
         <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${formatDate(createdAt)}</td>
         <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${formatDate(lastLogin)}</td>
         <td>
-          <span class="tag ${isOnline ? 'green' : 'gray'}">
-            ${isOnline ? '● 在线' : '○ 离线'}
-          </span>
-        </td>
-        <td>
-          <div class="action-btns">
-            <button class="btn btn-sm" onclick="showSetVip('${escapeHtml(u.username || u.name || '')}', ${isVip}, ${vipLevel})">👑 VIP设置</button>
-            <button class="btn btn-sm" onclick="showResetPassword('${escapeHtml(u.username || u.name || '')}')">🔐 重置密码</button>
-            <button class="btn btn-sm" onclick="showAdjustBalance('${escapeHtml(u.username || u.name || '')}', ${balance})">💰 调余额</button>
-            <button class="btn btn-sm danger" onclick="deleteUser('${escapeHtml(u.username || u.name || '')}')">🗑️ 删除</button>
+          <div class="action-btns" style="flex-wrap:wrap;gap:4px;">
+            <button class="btn btn-sm" onclick="showSetVip('${escapeHtml(username)}', ${isVip}, ${vipLevel})" title="VIP设置">👑</button>
+            <button class="btn btn-sm" onclick="showResetPassword('${escapeHtml(username)}')" title="重置密码">🔐</button>
+            <button class="btn btn-sm" onclick="showAdjustBalance('${escapeHtml(username)}', ${balance})" title="调整余额">💰</button>
+            <button class="btn btn-sm" onclick="copyUid('${escapeHtml(uid)}')" title="复制 UID">📋</button>
+            <button class="btn btn-sm" onclick="showSetUid('${escapeHtml(username)}', '${escapeHtml(uid)}')" title="设置 UID">✏️</button>
+            <button class="btn btn-sm danger" onclick="deleteUser('${escapeHtml(username)}')" title="删除用户">🗑️</button>
           </div>
         </td>
       </tr>
@@ -2319,7 +2996,84 @@ async function loadUserList() {
   }).join('');
   
   document.getElementById('user-page-info').textContent = 
-    `显示 ${users.length} 条 · 共 ${res.totalUsers || res.total || 0} 条用户`;
+    `显示 ${users.length} 条 · 共 ${_allUsers.length} 条用户（前端筛选，不消耗 KV）`;
+}
+
+// 复制 UID
+function copyUid(uid) {
+  if (!uid || uid === '-') {
+    showToast('UID 无效', 'warn');
+    return;
+  }
+  navigator.clipboard.writeText(uid).then(() => {
+    showToast('✅ UID 已复制: ' + uid, 'success');
+  }).catch(() => {
+    // 降级方案
+    const ta = document.createElement('textarea');
+    ta.value = uid;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('✅ UID 已复制: ' + uid, 'success');
+  });
+}
+
+// 设置 UID
+let _setUidUsername = '';
+
+function showSetUid(username, currentUid) {
+  _setUidUsername = username;
+  document.getElementById('uid-username').textContent = username;
+  document.getElementById('uid-current').textContent = currentUid && currentUid !== '-' ? currentUid : '（未设置）';
+  document.getElementById('uid-input').value = currentUid && currentUid !== '-' ? currentUid : '';
+  document.getElementById('uid-hint').style.color = 'var(--sub)';
+  document.getElementById('uid-hint').textContent = '💡 设置后，后续新注册用户的 UID 将从该数字之后继续递增';
+  openModal('modal-uid');
+  setTimeout(() => document.getElementById('uid-input').focus(), 100);
+}
+
+function validateUidInput() {
+  const input = document.getElementById('uid-input');
+  const hint = document.getElementById('uid-hint');
+  let val = input.value.toUpperCase().replace(/[^BT0-9]/g, '');
+  // 自动补 BT 前缀
+  if (/^\d+$/.test(val)) {
+    val = 'BT' + val.padStart(6, '0');
+  }
+  input.value = val;
+  
+  if (/^BT\d{6}$/.test(val)) {
+    hint.style.color = 'var(--accent3)';
+    hint.textContent = '✅ 格式正确';
+  } else if (val.length > 0) {
+    hint.style.color = 'var(--accent5)';
+    hint.textContent = '❌ 格式错误，应为 BT + 6位数字';
+  } else {
+    hint.style.color = 'var(--sub)';
+    hint.textContent = '💡 设置后，后续新注册用户的 UID 将从该数字之后继续递增';
+  }
+}
+
+async function confirmSetUid() {
+  const uid = document.getElementById('uid-input').value.trim().toUpperCase();
+  if (!/^BT\d{6}$/.test(uid)) {
+    showToast('UID 格式错误', 'warn');
+    return;
+  }
+  
+  const res = await api('/api/admin/users/' + encodeURIComponent(_setUidUsername) + '/uid', {
+    method: 'POST',
+    body: JSON.stringify({ uid })
+  });
+  
+  if (res.success) {
+    showToast(res.message, 'success');
+    closeModal('modal-uid');
+    loadUserList(); // 刷新列表
+  } else {
+    showToast(res.error || '设置失败', 'error');
+  }
 }
 
 function formatDate(dateStr) {
@@ -2904,17 +3658,23 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-function showToast(msg) {
+function showToast(msg, type) {
   const el = document.getElementById('toast');
   el.textContent = msg;
+  el.className = '';
+  if (type === 'success' || type === 'warn' || type === 'error') {
+    el.classList.add(type);
+  }
+  // 强制重绘
+  void el.offsetWidth;
   el.classList.add('show');
   clearTimeout(el._t);
   el._t = setTimeout(() => el.classList.remove('show'), 2500);
 }
 
 // ==================== 实时监控系统 ====================
-let monitorActive = true;
-let dashboardAutoRefresh = true;
+let monitorActive = false;
+let dashboardAutoRefresh = false;
 let monitorInterval = null;
 let dashboardInterval = null;
 let healthInterval = null;
@@ -2974,9 +3734,9 @@ function startMonitor() {
   }
   pollMonitorData();
   pollHealth();
-  monitorInterval = setInterval(pollMonitorData, 5000);
-  healthInterval = setInterval(pollHealth, 10000);
-  monitorCountdown = 5;
+  monitorInterval = setInterval(pollMonitorData, 30000); // 30秒一次，省KV
+  healthInterval = setInterval(pollHealth, 60000); // 60秒一次健康检查
+  monitorCountdown = 30;
 }
 
 function stopMonitor() {
@@ -2986,8 +3746,8 @@ function stopMonitor() {
 
 function startDashboardAuto() {
   if (dashboardInterval) clearInterval(dashboardInterval);
-  dashboardInterval = setInterval(loadDashboard, 10000);
-  dashCountdown = 10;
+  dashboardInterval = setInterval(loadDashboard, 60000); // 60秒一次
+  dashCountdown = 60;
 }
 
 function stopDashboardAuto() {
@@ -3017,7 +3777,7 @@ function stopAllTimers() {
 
 async function pollMonitorData() {
   const t0 = performance.now();
-  const res = await api('/api/admin/dashboard');
+  const res = await api('/api/admin/monitor'); // 精简接口，省KV
   const t1 = performance.now();
   const latency = Math.round(t1 - t0);
 
