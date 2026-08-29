@@ -258,6 +258,7 @@
                     resultBox.className = 'result-box success';
                     resultTitle.textContent = '🎉 ' + data.message;
                     resultDetail.innerHTML = 
+                        'UID：<strong>' + (data.user.uid || '-') + '</strong><br>' +
                         '用户名：<strong>' + data.user.username + '</strong><br>' +
                         'VIP等级：<strong>' + getVipName(data.user.vipLevel) + '</strong><br>' +
                         '赠送余额：<strong>' + data.user.balance + ' 次</strong><br>' +

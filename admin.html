@@ -254,6 +254,7 @@
   .tag.purple { background: rgba(168,85,247,0.1); color: #a855f7; }
   .tag.cyan { background: rgba(0,245,255,0.1); color: var(--accent); }
   .tag.gray { background: rgba(136,136,136,0.1); color: #888; }
+  .tag.gold { background: linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15)); color: #ffd700; }
 
   /* 按钮 */
   .btn {
@@ -1048,9 +1049,10 @@
     <div class="logo">⚙️</div>
     <h2>站长后台</h2>
     <div class="sub">绊谈万能枢纽 · 管理控制台</div>
-    <input type="password" id="admin-pwd" placeholder="请输入管理员密码" onkeydown="if(event.key==='Enter')doLogin()">
+    <input type="text" id="admin-user" placeholder="管理员账号" onkeydown="if(event.key==='Enter')document.getElementById('admin-pwd').focus()">
+    <input type="password" id="admin-pwd" placeholder="管理员密码" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="btn primary" onclick="doLogin()">登 录</button>
-    <div class="login-tip" id="login-tip">💡 请输入您在 Cloudflare 中配置的 ADMIN_PASSWORD</div>
+    <div class="login-tip" id="login-tip">💡 请输入管理员账号和密码</div>
   </div>
 </div>
 
@@ -1489,6 +1491,7 @@
           <table>
             <thead>
               <tr>
+                <th>UID</th>
                 <th>用户名</th>
                 <th>VIP等级</th>
                 <th>余额</th>
@@ -1499,7 +1502,7 @@
                 <th>操作</th>
               </tr>
             </thead>
-            <tbody id="user-list"><tr><td colspan="8" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
+            <tbody id="user-list"><tr><td colspan="9" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
           </table>
         </div>
         <div style="text-align:center;padding:12px;font-size:11px;color:var(--sub);" id="user-page-info">加载失败</div>
@@ -1887,13 +1890,15 @@ function updateApiStatus() {
 
 // ==================== 登录 ====================
 async function doLogin() {
+  const user = document.getElementById('admin-user').value.trim();
   const pwd = document.getElementById('admin-pwd').value;
+  if (!user) { showToast('请输入管理员账号'); return; }
   if (!pwd) { showToast('请输入密码'); return; }
   if (!API_BASE) { showToast('请先配置 Worker 地址（右下角 ⚙️）'); return; }
   
   const res = await api('/api/admin/login', {
     method: 'POST',
-    body: JSON.stringify({ password: pwd })
+    body: JSON.stringify({ username: user, password: pwd })
   });
   
   if (res.success) {
@@ -1939,11 +1944,7 @@ function checkLogin() {
   return false;
 }
 
-// 初始化
-if (!checkLogin()) {
-  // 未登录，显示登录页
-}
-updateApiStatus();
+// 初始化（移至脚本末尾执行，确保所有变量已声明）
 
 // ==================== 页面切换 ====================
 function switchPage(name, el) {
@@ -2042,7 +2043,7 @@ let generatedCodes = [];
 function toggleGenPanel() {
   const panel = document.getElementById('gen-panel');
   panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-  switchPage('codes', document.querySelectorAll('.nav-item')[1]);
+  switchPage('codes', document.querySelectorAll('.nav-item')[2]);
 }
 
 async function doGenCodes() {
@@ -2170,7 +2171,7 @@ async function deleteCode(code) {
 
 function exportAllCodes() {
   showToast('请使用「备份与恢复」导出全部数据');
-  switchPage('backup', document.querySelectorAll('.nav-item')[7]);
+  switchPage('backup', document.querySelectorAll('.nav-item')[8]);
 }
 
 // ==================== 反馈 ====================
@@ -2242,21 +2243,33 @@ async function loadUserList() {
   const tbody = document.getElementById('user-list');
   
   if (!res.success) {
-    tbody.innerHTML = `<tr><td colspan="8" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
     document.getElementById('user-page-info').textContent = '加载失败';
     return;
   }
   
   const users = res.users || [];
   
+  // 从返回数据计算统计
+  const todayStr = new Date().toISOString().split('T')[0];
+  let todayNew = 0, onlineCount = 0, totalChats = 0;
+  users.forEach(u => {
+    if (u.createdAt) {
+      const createDate = new Date(u.createdAt).toISOString().split('T')[0];
+      if (createDate === todayStr) todayNew++;
+    }
+    if (u.isOnline || u.online) onlineCount++;
+    totalChats += (u.totalUsed || 0);
+  });
+  
   // 更新统计卡片
-  document.getElementById('user-stat-total').textContent = res.totalUsers || res.total || 0;
-  document.getElementById('user-stat-today').textContent = res.todayNewUsers || 0;
-  document.getElementById('user-stat-online').textContent = res.onlineUsers || 0;
-  document.getElementById('user-stat-chat').textContent = (res.totalChats || 0).toLocaleString();
+  document.getElementById('user-stat-total').textContent = res.totalUsers || res.total || users.length;
+  document.getElementById('user-stat-today').textContent = todayNew;
+  document.getElementById('user-stat-online').textContent = onlineCount;
+  document.getElementById('user-stat-chat').textContent = totalChats.toLocaleString();
   
   if (!users.length) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty">暂无用户</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="empty">暂无用户</td></tr>';
     document.getElementById('user-page-info').textContent = '共 0 条';
     return;
   }
@@ -2274,6 +2287,7 @@ async function loadUserList() {
     
     return `
       <tr>
+        <td style="font-family:monospace;font-size:11px;color:var(--accent3);font-weight:600;">${escapeHtml(u.uid || '-')}</td>
         <td style="font-weight:600;">
           <span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>
           ${escapeHtml(u.username || u.name || '')}
@@ -2486,11 +2500,12 @@ async function confirmCreateUser() {
   btn.textContent = '确认创建';
 
   if (res.success) {
-    showToast('用户「' + username + '」创建成功');
+    const uid = res.user?.uid || '';
+    showToast('用户「' + username + '」创建成功' + (uid ? ' · UID: ' + uid : ''));
     closeModal('modal-create-user');
     loadUserList();
     if (typeof addActivityLog === 'function') {
-      addActivityLog('👤', '新用户「' + username + '」已创建' + (isVip ? ' (VIP' + vipLevel + ')' : ''), 'up');
+      addActivityLog('👤', '新用户「' + username + '」' + (uid ? '(UID:' + uid + ') ' : '') + '已创建' + (isVip ? ' (VIP' + vipLevel + ')' : ''), 'up');
     }
   } else {
     showToast(res.error || '创建失败');
@@ -2515,7 +2530,59 @@ document.addEventListener('click', function(e) {
 
 // ==================== 公告 & 更新日志 ====================
 let announceList = [];   // 滚动公告（含预警等级）
-let changelogData = [];  // 更新日志版本数组
+
+// 默认更新日志（首次加载即显示，保存后写入 KV）
+let changelogData = [
+  {
+    version: 'v3.0',
+    title: 'UID系统 & 全面优化',
+    date: '2026.08.29',
+    items: [
+      { tag: 'add', text: '用户 UID 系统：注册自动分配唯一标识（BT000001），后台/个人中心/VIP创建全链路展示' },
+      { tag: 'add', text: '后台用户管理表格新增 UID 列' },
+      { tag: 'add', text: '前端个人中心弹窗、VIP创建成功页展示 UID' },
+      { tag: 'fix', text: '导航高亮索引错误：批量生成和导出按钮高亮位置偏移' },
+      { tag: 'fix', text: '用户统计卡片数据为 0：今日新增/在线人数/累计对话数改为前端实时计算' },
+      { tag: 'fix', text: '登录页默认密码泄露：移除默认用户名回退，必须手动输入账号密码' },
+      { tag: 'fix', text: '至尊VIP标签 gold 样式缺失，已补充渐变样式' },
+      { tag: 'fix', text: 'Worker 代码恢复原始版本：CORS头、北京时间、data包装全部还原' },
+      { tag: 'opt', text: '创建用户成功提示显示 UID，操作日志同步记录' },
+      { tag: 'opt', text: '用户管理表格列数 8→9 列，colspan 同步更新' },
+    ]
+  },
+  {
+    version: 'v2.9',
+    title: '后台管理增强 & 安全加固',
+    date: '2026.08.29',
+    items: [
+      { tag: 'add', text: '后台用户创建功能：管理员可直接创建用户，设置用户名/密码/余额/VIP等级' },
+      { tag: 'add', text: '三级公告预警系统：普通/重要/紧急，各有独立颜色和图标' },
+      { tag: 'add', text: '公告管理双标签页：滚动公告管理 + 更新日志管理' },
+      { tag: 'add', text: '实时监控页面：在线用户数、API健康状态、请求趋势图、活动日志流' },
+      { tag: 'add', text: '数据仪表盘：PV/UV/对话数/用户数/兑换码/反馈多维统计 + 7日趋势图' },
+      { tag: 'add', text: '系统设置页面 + 备份与恢复（全量 KV 数据导出）' },
+      { tag: 'fix', text: '后台管理页面无法点击：初始化代码顺序问题，已移至脚本末尾' },
+      { tag: 'fix', text: '登录仅发送密码：补充用户名字段，doLogin 同时发送账号和密码' },
+      { tag: 'opt', text: '首页动态公告渲染，支持三级预警样式展示' },
+      { tag: 'opt', text: 'API 配置悬浮面板，右下角设置 Worker 地址' },
+    ]
+  },
+  {
+    version: 'v2.8',
+    title: 'CORS 跨域 & 基础架构',
+    date: '2026.08.28',
+    items: [
+      { tag: 'add', text: 'CORS 跨域配置：OPTIONS 预检 + X-Admin-Token/X-User-Token 自定义头' },
+      { tag: 'add', text: '用户系统：注册/登录/Token鉴权/每日额度重置（北京时间0点）/VIP等级体系' },
+      { tag: 'add', text: 'AI 代理接口：DeepSeek API 转发，VIP无限对话 + 普通用户额度扣减' },
+      { tag: 'add', text: '兑换码系统：批量生成/兑换充值/已用标记/管理员CRUD' },
+      { tag: 'add', text: '用户反馈收集 + 管理员查看删除' },
+      { tag: 'add', text: '管理员后台：Base64 Token鉴权/仪表盘/用户管理/兑换码/公告/设置' },
+      { tag: 'add', text: '在线心跳机制：60秒心跳，超时自动离线' },
+      { tag: 'add', text: '一键 VIP 初始化接口 + 全量 KV 数据导出' },
+    ]
+  },
+];
 
 // 标签切换
 function switchAnnTab(tab) {
@@ -2539,19 +2606,21 @@ async function loadAnnounces() {
 
   if (!res.success) {
     if (wrap) wrap.innerHTML = '<div class="empty" style="color:var(--accent5);">' + (res.error || '加载失败') + '</div>';
-    if (clWrap) clWrap.innerHTML = '<div class="empty" style="color:var(--accent5);">加载失败</div>';
+    // API失败时保留默认更新日志，仅渲染编辑器
+    renderChangelogEditor();
     return;
   }
 
   const rawList = res.list || [];
   // 分离滚动公告和更新日志
   announceList = [];
-  changelogData = [];
+  let hasChangelog = false;
   rawList.forEach(item => {
     if (typeof item === 'object' && item !== null && item.type === 'changelog') {
       // 更新日志数据
-      if (item.versions && Array.isArray(item.versions)) {
+      if (item.versions && Array.isArray(item.versions) && item.versions.length > 0) {
         changelogData = item.versions;
+        hasChangelog = true;
       }
     } else if (typeof item === 'string') {
       // 旧格式字符串 → 转为对象（默认普通级别）
@@ -2561,6 +2630,11 @@ async function loadAnnounces() {
       announceList.push({ content: item.content, level: item.level || 'normal' });
     }
   });
+
+  // 如果云端没有更新日志，保留默认数据
+  if (!hasChangelog) {
+    // changelogData 保持默认值不变
+  }
 
   renderAnnounces();
   renderChangelogEditor();
@@ -3166,6 +3240,13 @@ document.addEventListener('visibilitychange', function() {
     if (dashboardAutoRefresh) startDashboardAuto();
   }
 });
+
+// ==================== 初始化执行 ====================
+if (!checkLogin()) {
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('admin-app').style.display = 'none';
+}
+updateApiStatus();
 </script>
 
 
