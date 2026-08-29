@@ -628,6 +628,7 @@
     <div class="logo">⚙️</div>
     <h2>站长后台</h2>
     <div class="sub">绊谈万能枢纽 · 管理控制台</div>
+    <input type="text" id="admin-username" placeholder="管理员账号" value="BANTAN7" onkeydown="if(event.key==='Enter')doLogin()">
     <input type="password" id="admin-pwd" placeholder="请输入管理员密码" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="btn primary" onclick="doLogin()">登 录</button>
     <div class="login-tip" id="login-tip">💡 请输入您在 Cloudflare 中配置的 ADMIN_PASSWORD</div>
@@ -1236,13 +1237,15 @@ function updateApiStatus() {
 
 // ==================== 登录 ====================
 async function doLogin() {
+  const username = document.getElementById('admin-username').value.trim();
   const pwd = document.getElementById('admin-pwd').value;
+  if (!username) { showToast('请输入管理员账号'); return; }
   if (!pwd) { showToast('请输入密码'); return; }
   if (!API_BASE) { showToast('请先配置 Worker 地址（右下角 ⚙️）'); return; }
   
   const res = await api('/api/admin/login', {
     method: 'POST',
-    body: JSON.stringify({ password: pwd })
+    body: JSON.stringify({ username, password: pwd })
   });
   
   if (res.success) {
