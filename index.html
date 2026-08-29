@@ -12879,7 +12879,7 @@
             try {
                 // 判断是代理模式还是直连模式
                 const isProxy = _aiState.apiMode === 'proxy';
-                const apiUrl = isProxy ? settings.proxyUrl : settings.endpoint;
+                const apiUrl = isProxy ? settings.proxyUrl + '/api/chat' : settings.endpoint;
 
                 const requestBody = {
                     model: settings.model || 'deepseek-chat',
