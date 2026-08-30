@@ -2844,20 +2844,29 @@
         }
 
         /* ===== AI 助手悬浮按钮 ===== */
-        #ai-fab {
+        .ai-fab-wrap {
             position: fixed;
-            right: clamp(12px, 3vw, 28px);
-            bottom: clamp(70px, 12vw, 100px);
+            right: clamp(14px, 3.5vw, 32px);
+            bottom: clamp(75px, 13vw, 110px);
             z-index: 200;
-            width: 56px;
-            height: 56px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-direction: row-reverse;
+        }
+        #ai-fab {
+            position: relative;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            border: 2px solid rgba(0, 245, 255, 0.6);
+            background:
+                radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 40%),
+                linear-gradient(135deg, #0a0a2e, #1a0a3e, #0a1a3e);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             color: white;
-            font-size: 26px;
+            font-size: 36px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -2866,31 +2875,192 @@
             visibility: visible;
             transform: translateY(0) scale(1);
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4), 0 0 20px rgba(0,245,255,0.2);
-            animation: aiFabFloat 4s ease-in-out infinite;
+            flex-shrink: 0;
+            box-shadow:
+                0 0 0 0 rgba(0, 245, 255, 0.5),
+                0 0 0 0 rgba(124, 58, 237, 0.4),
+                0 12px 50px rgba(0, 245, 255, 0.3),
+                0 0 60px rgba(0, 245, 255, 0.35),
+                inset 0 0 20px rgba(0, 245, 255, 0.1);
+            animation:
+                aiFabFloat 3s ease-in-out infinite,
+                aiFabPulse 2s ease-out infinite;
+        }
+        .ai-fab-logo {
+            width: 80%;
+            height: 80%;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.6));
+        }
+        #ai-fab::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            padding: 3px;
+            background: conic-gradient(from var(--ai-fab-angle, 0deg),
+                    #00f5ff,
+                    #7c3aed,
+                    #f472b6,
+                    #fbbf24,
+                    #00ff88,
+                    #00f5ff);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: aiFabSpin 4s linear infinite;
+            z-index: 0;
+        }
+        #ai-fab::after {
+            content: '';
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.25) 0%, rgba(124, 58, 237, 0.15) 40%, transparent 70%);
+            filter: blur(8px);
+            z-index: -1;
+            animation: aiFabHalo 3s ease-in-out infinite;
+        }
+        @property --ai-fab-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+        @keyframes aiFabSpin {
+            to { --ai-fab-angle: 360deg; }
+        }
+        @keyframes aiFabHalo {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+        #ai-fab > * {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes aiFabRainbow {
+            0% { filter: hue-rotate(0deg) blur(16px); }
+            100% { filter: hue-rotate(360deg) blur(16px); }
         }
         @keyframes aiFabFloat {
-            0%, 100% { transform: translateY(0); box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4), 0 0 20px rgba(0,245,255,0.2); }
-            50% { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(124, 58, 237, 0.5), 0 0 35px rgba(0,245,255,0.3); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes aiFabPulse {
+            0% {
+                box-shadow:
+                    0 0 0 0 rgba(0, 245, 255, 0.5),
+                    0 0 0 0 rgba(124, 58, 237, 0.35),
+                    0 10px 40px rgba(124, 58, 237, 0.5),
+                    0 0 50px rgba(0,245,255,0.4);
+            }
+            50% {
+                box-shadow:
+                    0 0 0 12px rgba(0, 245, 255, 0),
+                    0 0 0 24px rgba(124, 58, 237, 0),
+                    0 10px 40px rgba(124, 58, 237, 0.5),
+                    0 0 70px rgba(0,245,255,0.5);
+            }
+            100% {
+                box-shadow:
+                    0 0 0 0 rgba(0, 245, 255, 0),
+                    0 0 0 0 rgba(124, 58, 237, 0),
+                    0 10px 40px rgba(124, 58, 237, 0.5),
+                    0 0 50px rgba(0,245,255,0.4);
+            }
         }
         #ai-fab:hover {
-            transform: translateY(-4px) scale(1.12);
+            transform: translateY(-4px) scale(1.18);
             animation-play-state: paused;
+            box-shadow:
+                0 0 0 0 rgba(0, 245, 255, 0.6),
+                0 0 0 0 rgba(244, 114, 182, 0.4),
+                0 16px 50px rgba(124, 58, 237, 0.6),
+                0 0 80px rgba(0,245,255,0.5),
+                0 0 120px rgba(244, 114, 182, 0.25);
         }
         #ai-fab .ai-badge {
             position: absolute;
-            top: -2px;
-            right: -2px;
-            background: #f472b6;
+            top: 2px;
+            right: 2px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+            background-size: 200% 200%;
             color: white;
-            font-size: 9px;
+            font-size: 16px;
             font-weight: 900;
             padding: 2px 6px;
-            border-radius: 10px;
-            min-width: 18px;
-            text-align: center;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(244,114,182,0.5);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 2px 12px rgba(251, 191, 36, 0.8),
+                0 0 16px rgba(251, 191, 36, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.5);
+            z-index: 2;
+            animation: aiBadgePulse 1.5s ease-in-out infinite, aiBadgeShine 2s ease-in-out infinite;
+        }
+        @keyframes aiBadgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        @keyframes aiBadgeShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ===== AI 按钮多设备响应式适配 ===== */
+        /* 超大屏 4K+ (≥2560px) */
+        @media (min-width: 2560px) {
+            .ai-fab-wrap { right: 40px; bottom: 130px; }
+            #ai-fab { width: 92px; height: 92px; }
+            #ai-fab .ai-badge { width: 30px; height: 30px; font-size: 18px; top: 2px; right: 2px; }
+        }
+        /* 大屏桌面 (1920-2559px) */
+        @media (min-width: 1920px) and (max-width: 2559px) {
+            .ai-fab-wrap { right: 32px; bottom: 115px; }
+            #ai-fab { width: 86px; height: 86px; }
+            #ai-fab .ai-badge { width: 28px; height: 28px; font-size: 17px; }
+        }
+        /* 普通桌面/笔记本 (1367-1919px) — 默认样式已覆盖 */
+        /* 笔记本/小屏桌面 (1025-1366px) */
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .ai-fab-wrap { right: 24px; bottom: 95px; }
+            #ai-fab { width: 70px; height: 70px; }
+            #ai-fab .ai-badge { width: 24px; height: 24px; font-size: 14px; }
+        }
+        /* 平板横屏/iPad (769-1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .ai-fab-wrap { right: 20px; bottom: 85px; }
+            #ai-fab { width: 64px; height: 64px; }
+            #ai-fab .ai-badge { width: 22px; height: 22px; font-size: 13px; }
+        }
+        /* 平板竖屏/大屏手机 (601-768px) */
+        @media (min-width: 601px) and (max-width: 768px) {
+            .ai-fab-wrap { right: 18px; bottom: 80px; }
+            #ai-fab { width: 60px; height: 60px; }
+            #ai-fab .ai-badge { width: 22px; height: 22px; font-size: 13px; }
+        }
+        /* 手机横屏/小平板 (481-600px) */
+        @media (min-width: 481px) and (max-width: 600px) {
+            .ai-fab-wrap { right: 16px; bottom: 75px; }
+            #ai-fab { width: 56px; height: 56px; }
+            #ai-fab .ai-badge { width: 20px; height: 20px; font-size: 12px; }
+        }
+        /* 手机竖屏 (≤480px) */
+        @media (max-width: 480px) {
+            .ai-fab-wrap { right: 14px; bottom: 70px; }
+            #ai-fab { width: 60px; height: 60px; }
+            #ai-fab .ai-badge { width: 22px; height: 22px; font-size: 13px; }
+        }
+        /* 超小屏手机 (≤360px) */
+        @media (max-width: 360px) {
+            .ai-fab-wrap { right: 12px; bottom: 65px; }
+            #ai-fab { width: 54px; height: 54px; }
+            #ai-fab .ai-badge { width: 20px; height: 20px; font-size: 12px; top: 1px; right: 1px; }
         }
 
         /* ===== AI 聊天面板 ===== */
@@ -5699,13 +5869,13 @@
             </div>
 
             <!-- 更新日志入口 -->
-            <div class="glass-card changelog-entry" onclick="goToChangelog()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToChangelog();}" role="button" tabindex="0" style="cursor:pointer;margin-top:10px;">
+            <div class="glass-card changelog-entry" onclick="location.href='changelog.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();location.href='changelog.html';}" role="button" tabindex="0" style="cursor:pointer;margin-top:10px;">
                 <div class="changelog-entry-inner">
                     <div class="entry-left">
                         <span class="entry-icon">📋</span>
                         <div>
                             <div class="entry-title">更新日志</div>
-                            <div class="entry-desc">v2.6 · AI 大升级 <span class="entry-new">新</span></div>
+                            <div class="entry-desc">v3.1 · 视觉全面升级 <span class="entry-new">新</span></div>
                         </div>
                     </div>
                     <span class="entry-arrow">→</span>
@@ -7064,63 +7234,19 @@
                     </div>
                 </div>
             </div>
-            <!-- 更新日志 -->
-            <div class="glass-card changelog-card" id="changelog-section" style="margin-top:10px;">
+            <!-- 更新日志入口 -->
+            <div class="glass-card changelog-card" id="changelog-section" style="margin-top:10px;cursor:pointer;" onclick="location.href='changelog.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();location.href='changelog.html';}" role="button" tabindex="0">
                 <div class="changelog-header">
                     <span class="changelog-icon">📋</span>
                     <span class="changelog-title">更新日志</span>
-                    <span class="changelog-badge">持续更新中</span>
+                    <span class="changelog-badge">v3.1 最新</span>
                 </div>
-                <div class="changelog-list" id="changelog-list">
-                    <!-- 最新更新置顶，下次更新在最上面加新条目 -->
-                    <div class="changelog-item latest">
-                        <div class="changelog-date">
-                            <span class="date-main">2026.08.29</span>
-                            <span class="date-tag new">新</span>
-                        </div>
-                        <div class="changelog-content">
-                            <div class="changelog-version">v2.6 · AI 大升级</div>
-                            <ul class="changelog-list-items">
-                                <li><span class="tag add">新增</span>绊谈 AI Pro 智能助手，支持真实大模型对话</li>
-                                <li><span class="tag add">新增</span>站点代理模式，内置 Cloudflare Worker 代理，无需配置直接用</li>
-                                <li><span class="tag add">新增</span>自定义 API Key 模式，支持 DeepSeek / Kimi / 通义千问 / 智谱 / 硅基流动</li>
-                                <li><span class="tag add">新增</span>流式输出，打字机效果，边想边说</li>
-                                <li><span class="tag opt">优化</span>代理安全加固：域名白名单 + IP 限速 + 每日请求上限</li>
-                                <li><span class="tag opt">优化</span>修复时间不动、页面卡顿等性能问题</li>
-                                <li><span class="tag fix">修复</span>AI 设置面板代理地址引用报错</li>
-                            </ul>
-                        </div>
+                <div style="padding:16px 20px 20px;display:flex;align-items:center;gap:12px;">
+                    <div style="flex:1;">
+                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v3.1 · 视觉全面升级 · 宇宙风格</div>
+                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">彩虹旋转边框 · 玻璃拟态质感 · 全站宇宙主题焕新</div>
                     </div>
-                    <div class="changelog-item">
-                        <div class="changelog-date">
-                            <span class="date-main">2026.08.28</span>
-                        </div>
-                        <div class="changelog-content">
-                            <div class="changelog-version">v2.5 · 工具箱扩充</div>
-                            <ul class="changelog-list-items">
-                                <li><span class="tag add">新增</span>外设驱动下载专区（罗技、雷蛇、ROG、赛睿等 12+ 品牌）</li>
-                                <li><span class="tag add">新增</span>游戏设置推荐工具，根据分辨率和帧率自动推荐画质</li>
-                                <li><span class="tag add">新增</span>塔罗占卜多牌阵模式（三牌阵 / 单牌速占 / 每日一牌）</li>
-                                <li><span class="tag add">新增</span>考试倒计时日历</li>
-                                <li><span class="tag opt">优化</span>驱动专区移入工具箱分类</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="changelog-item">
-                        <div class="changelog-date">
-                            <span class="date-main">2026.08.20</span>
-                        </div>
-                        <div class="changelog-content">
-                            <div class="changelog-version">v2.0 · 终极版上线</div>
-                            <ul class="changelog-list-items">
-                                <li><span class="tag add">新增</span>绊谈 TECH HUB 万能枢纽正式上线</li>
-                                <li><span class="tag add">新增</span>首页 HUD 仪表盘、实时系统状态展示</li>
-                                <li><span class="tag add">新增</span>9 大功能分区：首页、关于我、工具箱、影音、开发、更多、教育、电竞、导航</li>
-                                <li><span class="tag add">新增</span>命令面板（Ctrl+K），全站搜索快速跳转</li>
-                                <li><span class="tag add">新增</span>暗色/亮色主题切换</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div style="font-size:20px;color:var(--accent);transition:transform 0.3s;" class="entry-arrow">→</div>
                 </div>
             </div>
             <!-- 免责声明 -->
@@ -8119,17 +8245,37 @@
     <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部" title="回到顶部">↑</button>
 
     <!-- ===== AI 助手悬浮按钮 ===== -->
-    <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="AI小助手">
-        ✨
-        <span class="ai-badge" id="ai-badge">新</span>
-    </button>
+    <div class="ai-fab-wrap">
+        <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="小绊谈 AI 智能对话">
+            <svg class="ai-fab-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="aiLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"></stop>
+                        <stop offset="40%" style="stop-color:#e0f7ff;stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:#00f5ff;stop-opacity:1"></stop>
+                    </linearGradient>
+                    <filter id="aiLogoGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+                        <feMerge>
+                            <feMergeNode in="blur"></feMergeNode>
+                            <feMergeNode in="blur"></feMergeNode>
+                            <feMergeNode in="blur"></feMergeNode>
+                            <feMergeNode in="SourceGraphic"></feMergeNode>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <text x="50" y="68" text-anchor="middle" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="56" font-weight="900" fill="url(#aiLogoGrad)" filter="url(#aiLogoGlow)" font-style="italic">AI</text>
+            </svg>
+            <span class="ai-badge" id="ai-badge">✨</span>
+        </button>
+    </div>
 
     <!-- ===== AI 聊天面板 ===== -->
     <div id="ai-panel">
         <div class="ai-panel-header">
-            <div class="ai-avatar">✨</div>
+            <div class="ai-avatar">🤖</div>
             <div class="ai-header-info">
-                <div class="ai-title">小绊谈 <span class="pro-badge">PRO</span></div>
+                <div class="ai-title">小绊谈 AI <span class="pro-badge">PRO</span></div>
                 <div class="ai-subtitle"><span class="dot"></span>在线 · 智能对话 · 剩余 <b id="ai-remaining-count">--</b> 次</div>
             </div>
             <!-- 用户入口 -->
@@ -8171,7 +8317,7 @@
         </div>
         <div class="ai-messages" id="ai-messages">
             <div class="ai-msg-row bot">
-                <div class="ai-msg-avatar">✨</div>
+                <div class="ai-msg-avatar">🤖</div>
                 <div class="ai-msg-content">
                     <div class="ai-welcome-card">
                         <h4>👋 你好，我是小绊谈</h4>
@@ -9753,9 +9899,10 @@
             if (!el) return;
             
             const defaultAnns = [
-                { content: '✨ v2.6 更新：小绊谈 AI 升级，支持真实大模型！', level: 'important' },
-                { content: '🎮 电竞优化专区上线，帧率测试·延迟检测一站式', level: 'normal' },
-                { content: '🔧 工具箱新增外设驱动下载，12+品牌官方直达', level: 'normal' },
+                { content: '✨ v3.1 视觉全面升级：宇宙风格 · 彩虹边框 · 玻璃拟态', level: 'important' },
+                { content: '🎨 全站宇宙深空背景 + 浮动光球，沉浸感拉满', level: 'normal' },
+                { content: '🌈 卡片彩虹旋转边框，悬浮交互更精致', level: 'normal' },
+                { content: '🆔 UID 身份系统上线，每位用户专属编号', level: 'normal' },
                 { content: '💡 有想法？点右下角 💬 反馈给站长～', level: 'normal' }
             ];
             
@@ -13710,7 +13857,7 @@
                     const botRow = document.createElement('div');
                     botRow.className = 'ai-msg-row bot';
                     botRow.innerHTML = `
-                        <div class="ai-msg-avatar">✨</div>
+                        <div class="ai-msg-avatar">🤖</div>
                         <div class="ai-msg-content"></div>
                     `;
                     document.getElementById('ai-messages').appendChild(botRow);
@@ -13848,7 +13995,7 @@
                 const botRow = document.createElement('div');
                 botRow.className = 'ai-msg-row bot';
                 botRow.innerHTML = `
-                    <div class="ai-msg-avatar">✨</div>
+                    <div class="ai-msg-avatar">🤖</div>
                     <div class="ai-msg-content"></div>
                 `;
                 const contentEl = botRow.querySelector('.ai-msg-content');
@@ -13920,7 +14067,7 @@
                 : '<span class="ai-mode-indicator local"><span class="dot"></span>本地模式</span> &nbsp;点击 ⚙️ 配置 API 解锁真正的大模型能力';
             messages.innerHTML = `
                 <div class="ai-msg-row bot">
-                    <div class="ai-msg-avatar">✨</div>
+                    <div class="ai-msg-avatar">🤖</div>
                     <div class="ai-msg-content">
                         <div class="ai-welcome-card">
                             <h4>👋 你好，我是小绊谈</h4>
@@ -14005,7 +14152,7 @@
             const botRow = document.createElement('div');
             botRow.className = 'ai-msg-row bot';
             botRow.innerHTML = `
-                <div class="ai-msg-avatar">✨</div>
+                <div class="ai-msg-avatar">🤖</div>
                 <div class="ai-msg-content">
                     <div class="thinking-dots"><span></span><span></span><span></span></div>
                 </div>
