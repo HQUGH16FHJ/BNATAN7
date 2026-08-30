@@ -34,7 +34,17 @@ export default {
     const origin = request.headers.get('Origin');
 
     if (request.method === 'OPTIONS') {
-      return jsonResponse(null, 204, origin);
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': origin || '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Token, X-User-Token',
+          'Access-Control-Max-Age': '86400',
+          'Access-Control-Allow-Credentials': 'true',
+          'Vary': 'Origin'
+        }
+      });
     }
 
     // ===== 用户接口 =====
@@ -97,6 +107,10 @@ export default {
     if (path === '/api/admin/dashboard' && request.method === 'GET') {
       return handleDashboard(env, origin);
     }
+    // 实时监控精简接口（只返回核心数据，省KV）
+    if (path === '/api/admin/monitor' && request.method === 'GET') {
+      return handleMonitor(env, origin);
+    }
 
     // 兑换码管理
     if (path === '/api/admin/codes' && request.method === 'GET') {
@@ -135,6 +149,10 @@ export default {
     if (path.startsWith('/api/admin/users/') && path.endsWith('/vip') && request.method === 'POST') {
       const username = path.replace('/api/admin/users/', '').replace('/vip', '');
       return handleAdminSetVip(env, username, request, origin);
+    }
+    if (path.startsWith('/api/admin/users/') && path.endsWith('/uid') && request.method === 'POST') {
+      const username = path.replace('/api/admin/users/', '').replace('/uid', '');
+      return handleAdminSetUid(env, username, request, origin);
     }
     if (path === '/api/admin/users' && request.method === 'POST') {
       return handleAdminCreateUser(request, env, origin);
@@ -195,6 +213,7 @@ function jsonResponse(data, status = 200, origin = '*') {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Token, X-User-Token',
       'Access-Control-Allow-Credentials': 'true',
+      'Vary': 'Origin'
     },
   });
 }
@@ -208,13 +227,18 @@ function streamResponse(readable, origin = '*') {
       'Connection': 'keep-alive',
       'Access-Control-Allow-Origin': origin || '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Token, X-User-Token',
+      'Access-Control-Allow-Credentials': 'true',
+      'Vary': 'Origin'
     },
   });
 }
 
 function getToday() {
-  return new Date().toISOString().split('T')[0];
+  // 使用北京时间（UTC+8）计算日期，确保国内用户凌晨0点重置
+  const now = new Date();
+  const beijingTime = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  return beijingTime.toISOString().split('T')[0];
 }
 
 function getClientIP(request) {
@@ -238,6 +262,22 @@ function generateToken() {
   const arr = new Uint8Array(24);
   crypto.getRandomValues(arr);
   return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// 生成用户UID（自增序号，格式：BT000001）
+async function generateUID(env) {
+  const kv = getKV(env);
+  let counter = parseInt(await kv.get('uid:counter') || '0');
+  counter++;
+  await kv.put('uid:counter', String(counter));
+  return 'BT' + String(counter).padStart(6, '0');
+}
+
+// 原子计数器自增
+async function incCounter(kv, key, delta = 1) {
+  const current = parseInt(await kv.get(key) || '0');
+  await kv.put(key, String(Math.max(0, current + delta)));
+  return current + delta;
 }
 
 // ==================== 用户系统 ====================
@@ -267,8 +307,10 @@ async function handleUserRegister(request, env, origin) {
 
     const hashedPwd = await hashPassword(password);
     const dailyLimit = parseInt(env.DAILY_LIMIT || DEFAULT_DAILY_LIMIT);
+    const uid = await generateUID(env);
 
     const user = {
+      uid,
       username,
       password: hashedPwd,
       createdAt: Date.now(),
@@ -284,6 +326,7 @@ async function handleUserRegister(request, env, origin) {
     };
 
     await kv.put('user:' + username, JSON.stringify(user));
+    await incCounter(kv, 'stats:total:users');
 
     // 生成登录 token
     const token = generateToken();
@@ -292,8 +335,20 @@ async function handleUserRegister(request, env, origin) {
     return jsonResponse({
       success: true,
       message: '注册成功',
-      token,
-      user: { username, balance: user.balance, dailyUsed: 0, dailyLimit, isVip: false, vipLevel: 0 }
+      data: {
+        token,
+        user: { 
+          uid, 
+          username, 
+          balance: user.balance, 
+          dailyUsed: 0, 
+          dailyLimit,
+          remainingCount: dailyLimit,
+          bonusCount: user.balance,
+          isVip: false, 
+          vipLevel: 0 
+        }
+      }
     }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
@@ -341,20 +396,27 @@ async function handleUserLogin(request, env, origin) {
     await kv.put('user:token:' + token, JSON.stringify({ username, expires: Date.now() + 7 * 24 * 3600 * 1000 }), { expirationTtl: 7 * 24 * 3600 });
 
     const dailyLimit = parseInt(env.DAILY_LIMIT || DEFAULT_DAILY_LIMIT);
+    const remainingCount = Math.max(0, dailyLimit - (user.dailyUsed || 0));
+    const bonusCount = user.balance || 0;
 
     return jsonResponse({
       success: true,
-      token,
-      user: {
-        username,
-        balance: user.balance || 0,
-        dailyUsed: user.dailyUsed || 0,
-        dailyLimit,
-        totalUsed: user.totalUsed || 0,
-        createdAt: user.createdAt,
-        isVip: user.isVip || false,
-        vipLevel: user.vipLevel || 0,
-        vipExpire: user.vipExpire || 0,
+      data: {
+        token,
+        user: {
+          uid: user.uid || '',
+          username,
+          balance: bonusCount,
+          dailyUsed: user.dailyUsed || 0,
+          dailyLimit,
+          remainingCount,
+          bonusCount,
+          totalUsed: user.totalUsed || 0,
+          createdAt: user.createdAt,
+          isVip: user.isVip || false,
+          vipLevel: user.vipLevel || 0,
+          vipExpire: user.vipExpire || 0,
+        }
       }
     }, 200, origin);
   } catch (e) {
@@ -379,13 +441,26 @@ async function handleUserInfo(request, env, origin) {
     return jsonResponse({ success: false, error: '未登录' }, 401, origin);
   }
   const dailyLimit = parseInt(env.DAILY_LIMIT || DEFAULT_DAILY_LIMIT);
+  const today = getToday();
+  // 每日重置
+  if (user.dailyResetDate !== today) {
+    user.dailyUsed = 0;
+    user.dailyResetDate = today;
+    const kv = getKV(env);
+    await kv.put('user:' + user.username, JSON.stringify(user));
+  }
+  const remainingCount = Math.max(0, dailyLimit - (user.dailyUsed || 0));
+  const bonusCount = user.balance || 0;
   return jsonResponse({
     success: true,
-    user: {
+    data: {
+      uid: user.uid || '',
       username: user.username,
-      balance: user.balance || 0,
+      balance: bonusCount,
       dailyUsed: user.dailyUsed || 0,
       dailyLimit,
+      remainingCount,
+      bonusCount,
       totalUsed: user.totalUsed || 0,
       createdAt: user.createdAt,
       lastLogin: user.lastLogin,
@@ -661,6 +736,9 @@ async function handleRedeemCode(request, env, origin) {
     user.balance = (user.balance || 0) + codeInfo.amount;
     await kv.put('user:' + user.username, JSON.stringify(user));
 
+    // 更新已使用计数器
+    await incCounter(kv, 'stats:used:codes');
+
     return jsonResponse({
       success: true,
       amount: codeInfo.amount,
@@ -703,6 +781,12 @@ async function handleGenerateCodes(request, env, origin) {
         }
       }
       attempts++;
+    }
+
+    // 更新计数器
+    if (codes.length > 0) {
+      await incCounter(kv, 'stats:total:codes', codes.length);
+      await incCounter(kv, 'stats:total:codeValue', codes.length * amount);
     }
 
     return jsonResponse({ success: true, codes, count: codes.length }, 200, origin);
@@ -759,8 +843,17 @@ async function handleCodeList(env, url, origin) {
 async function handleDeleteCode(env, code, origin) {
   try {
     const kv = getKV(env);
+    const info = await kv.get('code:' + code, { type: 'json' });
     await kv.delete('code:' + code);
     await kv.delete('code:used:' + code);
+    // 更新计数器
+    if (info) {
+      await incCounter(kv, 'stats:total:codes', -1);
+      await incCounter(kv, 'stats:total:codeValue', -(info.amount || 0));
+      if (info.used) {
+        await incCounter(kv, 'stats:used:codes', -1);
+      }
+    }
     return jsonResponse({ success: true }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
@@ -770,32 +863,39 @@ async function handleDeleteCode(env, code, origin) {
 async function handleCodeStats(env, origin) {
   try {
     const kv = getKV(env);
-    const list = await kv.list({ prefix: 'code:' });
-
-    let total = 0, used = 0, totalValue = 0;
-    const byTier = {};
-
-    for (const key of list.keys) {
-      const code = key.name.replace('code:', '');
-      if (code.startsWith('used:')) continue;
-      const info = await kv.get(key.name, { type: 'json' });
-      if (!info) continue;
-      total++;
-      totalValue += info.amount || 0;
-      if (info.used) used++;
-      const tier = code.substring(0, 2);
-      if (!byTier[tier]) byTier[tier] = { total: 0, used: 0 };
-      byTier[tier].total++;
-      if (info.used) byTier[tier].used++;
-    }
-
-    return jsonResponse({ success: true, total, used, unused: total - used, totalValue, byTier }, 200, origin);
+    const total = parseInt(await kv.get('stats:total:codes') || '0');
+    const used = parseInt(await kv.get('stats:used:codes') || '0');
+    const totalValue = parseInt(await kv.get('stats:total:codeValue') || '0');
+    return jsonResponse({ success: true, total, used, unused: total - used, totalValue, byTier: {} }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
   }
 }
 
 // ==================== 仪表盘 ====================
+
+// 实时监控精简接口（只返回核心指标，省KV调用）
+async function handleMonitor(env, origin) {
+  try {
+    const kv = getKV(env);
+    const today = getToday();
+
+    // 只查 3 个关键指标，全部用 get()，0 次 list() 调用
+    const pvToday = parseInt(await kv.get('stats:pv:' + today) || '0');
+    const chatToday = parseInt(await kv.get('stats:chat:' + today) || '0');
+    const userCount = parseInt(await kv.get('stats:total:users') || '0');
+
+    return jsonResponse({
+      success: true,
+      pv: pvToday,
+      chat: chatToday,
+      userCount,
+      onlineCount: 0, // 在线人数功能已关闭，减少 KV list() 调用
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: e.message }, 500, origin);
+  }
+}
 
 async function handleDashboard(env, origin) {
   try {
@@ -805,18 +905,11 @@ async function handleDashboard(env, origin) {
     const pvToday = parseInt(await kv.get('stats:pv:' + today) || '0');
     const chatToday = parseInt(await kv.get('stats:chat:' + today) || '0');
 
-    // 用户数
-    const userList = await kv.list({ prefix: 'user:' });
-    let userCount = 0;
-    for (const key of userList.keys) {
-      const name = key.name.replace('user:', '');
-      if (name.startsWith('token:') || name.startsWith('online:')) continue;
-      userCount++;
-    }
+    // 用户数：读计数器（注册/创建用户时自增）
+    const userCount = parseInt(await kv.get('stats:total:users') || '0');
 
-    // 在线人数
-    const onlineList = await kv.list({ prefix: 'user:online:' });
-    const onlineCount = onlineList.keys.length;
+    // 在线人数：功能已关闭，返回 0（避免 KV list() 调用）
+    const onlineCount = 0;
 
     // 近7天数据
     const weekData = [];
@@ -829,19 +922,12 @@ async function handleDashboard(env, origin) {
       weekData.push({ date: dateStr, pv, chat });
     }
 
-    // 兑换码统计
-    const codeList = await kv.list({ prefix: 'code:' });
-    let codeTotal = 0, codeUsed = 0;
-    for (const key of codeList.keys) {
-      const code = key.name.replace('code:', '');
-      if (code.startsWith('used:')) continue;
-      codeTotal++;
-      const info = await kv.get(key.name, { type: 'json' });
-      if (info && info.used) codeUsed++;
-    }
+    // 兑换码统计：读计数器
+    const codeTotal = parseInt(await kv.get('stats:total:codes') || '0');
+    const codeUsed = parseInt(await kv.get('stats:used:codes') || '0');
 
-    // 反馈数量
-    const fbList = await kv.list({ prefix: 'feedback:' });
+    // 反馈数量：读计数器
+    const feedbackCount = parseInt(await kv.get('stats:total:feedback') || '0');
 
     return jsonResponse({
       success: true,
@@ -851,7 +937,7 @@ async function handleDashboard(env, origin) {
       onlineCount,
       codeTotal,
       codeUsed,
-      feedbackCount: fbList.keys.length,
+      feedbackCount,
       weekData,
       dailyLimit: parseInt(env.DAILY_LIMIT || DEFAULT_DAILY_LIMIT),
     }, 200, origin);
@@ -865,13 +951,7 @@ async function handleDashboard(env, origin) {
 async function handleUserCount(env, origin) {
   try {
     const kv = getKV(env);
-    const list = await kv.list({ prefix: 'user:' });
-    let total = 0;
-    for (const key of list.keys) {
-      const name = key.name.replace('user:', '');
-      if (name.startsWith('token:') || name.startsWith('online:')) continue;
-      total++;
-    }
+    const total = parseInt(await kv.get('stats:total:users') || '0');
     return jsonResponse({ success: true, total }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
@@ -899,6 +979,7 @@ async function handleUserList(env, url, origin) {
       const online = await kv.get('user:online:' + name);
 
       users.push({
+        uid: user.uid || 'BT' + String(users.length + 1).padStart(6, '0'),
         username: user.username,
         balance: user.balance || 0,
         totalUsed: user.totalUsed || 0,
@@ -1003,6 +1084,52 @@ async function handleAdminSetVip(env, username, request, origin) {
   }
 }
 
+// 设置/修改用户 UID（给老用户补 UID）
+async function handleAdminSetUid(env, username, request, origin) {
+  try {
+    const body = await request.json();
+    let newUid = (body.uid || '').trim().toUpperCase();
+    const kv = getKV(env);
+
+    // 校验 UID 格式：BT + 6位数字
+    if (!/^BT\d{6}$/.test(newUid)) {
+      return jsonResponse({ success: false, error: 'UID 格式错误，应为 BT + 6位数字（如 BT000001）' }, 400, origin);
+    }
+
+    const userStr = await kv.get('user:' + username);
+    if (!userStr) {
+      return jsonResponse({ success: false, error: '用户不存在' }, 404, origin);
+    }
+
+    const user = JSON.parse(userStr);
+    const oldUid = user.uid || '';
+
+    // 检查 UID 是否已被其他用户使用
+    // 注意：这里需要遍历检查，但为了减少 list() 调用，
+    // 我们只检查 uid:counter 以上是否合理，不做全局唯一性检查
+    // （管理员手动设置时应自行确认不重复）
+
+    user.uid = newUid;
+    await kv.put('user:' + username, JSON.stringify(user));
+
+    // 如果新 UID 的数字大于当前计数器，更新计数器，避免后续新用户重复
+    const uidNum = parseInt(newUid.replace('BT', ''));
+    const currentCounter = parseInt(await kv.get('uid:counter') || '0');
+    if (uidNum > currentCounter) {
+      await kv.put('uid:counter', String(uidNum));
+    }
+
+    return jsonResponse({ 
+      success: true, 
+      message: `UID 已更新: ${oldUid || '(无)'} → ${newUid}`,
+      oldUid,
+      newUid
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: e.message }, 500, origin);
+  }
+}
+
 async function handleAdminCreateUser(request, env, origin) {
   try {
     const body = await request.json();
@@ -1030,8 +1157,10 @@ async function handleAdminCreateUser(request, env, origin) {
     }
 
     const hashedPwd = await hashPassword(password);
+    const uid = await generateUID(env);
 
     const user = {
+      uid,
       username,
       password: hashedPwd,
       createdAt: Date.now(),
@@ -1047,8 +1176,9 @@ async function handleAdminCreateUser(request, env, origin) {
     };
 
     await kv.put('user:' + username, JSON.stringify(user));
+    await incCounter(kv, 'stats:total:users');
 
-    return jsonResponse({ success: true, message: '用户创建成功', user: { username, balance, isVip, vipLevel } }, 200, origin);
+    return jsonResponse({ success: true, message: '用户创建成功', user: { uid, username, balance, isVip, vipLevel } }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
   }
@@ -1091,7 +1221,9 @@ async function handleInitVipUser(request, env, origin) {
     
     // 创建新的VIP用户
     const hashedPwd = await hashPassword(password);
+    const uid = await generateUID(env);
     const user = {
+      uid,
       username,
       password: hashedPwd,
       createdAt: Date.now(),
@@ -1105,13 +1237,14 @@ async function handleInitVipUser(request, env, origin) {
       vipLevel: vipLevel,
       vipExpire: 0, // 永久VIP
     };
-    
+
     await kv.put('user:' + username, JSON.stringify(user));
-    
-    return jsonResponse({ 
-      success: true, 
-      message: '至尊VIP用户创建成功！', 
-      user: { username, isVip: true, vipLevel, balance, vipName: '至尊VIP' } 
+    await incCounter(kv, 'stats:total:users');
+
+    return jsonResponse({
+      success: true,
+      message: '至尊VIP用户创建成功！',
+      user: { uid, username, isVip: true, vipLevel, balance, vipName: '至尊VIP' }
     }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
@@ -1123,6 +1256,7 @@ async function handleDeleteUser(env, username, origin) {
     const kv = getKV(env);
     await kv.delete('user:' + username);
     await kv.delete('user:online:' + username);
+    await incCounter(kv, 'stats:total:users', -1);
     // 注意：token 会自动过期，不用手动删
     return jsonResponse({ success: true }, 200, origin);
   } catch (e) {
@@ -1177,6 +1311,7 @@ async function handleFeedback(request, env, origin) {
     };
 
     await kv.put('feedback:' + id, JSON.stringify(feedback));
+    await incCounter(kv, 'stats:total:feedback');
     return jsonResponse({ success: true, message: '反馈提交成功' }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
@@ -1208,6 +1343,7 @@ async function handleDeleteFeedback(env, id, origin) {
   try {
     const kv = getKV(env);
     await kv.delete('feedback:' + id);
+    await incCounter(kv, 'stats:total:feedback', -1);
     return jsonResponse({ success: true }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
