@@ -21,6 +21,9 @@
  *   user:<username>            - 用户信息 {password, createdAt, lastLogin, balance, totalUsed}
  *   user:online:<username>     - 在线用户心跳
  *   user:token:<token>         - 用户登录 token
+ *   invite:code:<code>         - 邀请码映射 {username, createdAt, usedCount}
+ *   invite:stats:<username>    - 邀请统计 {code, totalInvited, totalBonus, invitedUsers[]}
+ *   stats:total:invites        - 邀请成功总次数计数器
  */
 
 const DEFAULT_DAILY_LIMIT = 100;
@@ -65,6 +68,9 @@ export default {
     }
     if (path === '/api/user/online' && request.method === 'GET') {
       return handleOnlineCount(env, origin);
+    }
+    if (path === '/api/user/invite' && request.method === 'GET') {
+      return handleMyInvite(request, env, origin);
     }
 
     // ===== AI 代理 =====
@@ -156,6 +162,14 @@ export default {
     }
     if (path === '/api/admin/users' && request.method === 'POST') {
       return handleAdminCreateUser(request, env, origin);
+    }
+
+    // 邀请码管理
+    if (path === '/api/admin/invites' && request.method === 'GET') {
+      return handleAdminInviteList(env, url, origin);
+    }
+    if (path === '/api/admin/invites/stats' && request.method === 'GET') {
+      return handleAdminInviteStats(env, origin);
     }
 
     // 反馈管理
@@ -287,27 +301,50 @@ async function handleUserRegister(request, env, origin) {
     const body = await request.json();
     const username = (body.username || '').trim();
     const password = body.password || '';
+    const inviteCode = (body.inviteCode || '').trim().toUpperCase();
     const kv = getKV(env);
 
     if (!username || username.length < 3 || username.length > 20) {
-      return jsonResponse({ success: false, error: '用户名长度需在 3-20 位之间' }, 400, origin);
+      return jsonResponse({ success: false, message: '用户名长度需在 3-20 位之间' }, 400, origin);
     }
     if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-      return jsonResponse({ success: false, error: '用户名只能包含字母、数字和下划线' }, 400, origin);
+      return jsonResponse({ success: false, message: '用户名只能包含字母、数字和下划线' }, 400, origin);
     }
     if (!password || password.length < 6) {
-      return jsonResponse({ success: false, error: '密码至少 6 位' }, 400, origin);
+      return jsonResponse({ success: false, message: '密码至少 6 位' }, 400, origin);
     }
 
     // 检查账号是否已存在
     const exists = await kv.get('user:' + username);
     if (exists) {
-      return jsonResponse({ success: false, error: '该用户名已被注册' }, 400, origin);
+      return jsonResponse({ success: false, message: '该用户名已被注册' }, 400, origin);
     }
 
     const hashedPwd = await hashPassword(password);
     const dailyLimit = parseInt(env.DAILY_LIMIT || DEFAULT_DAILY_LIMIT);
     const uid = await generateUID(env);
+
+    // ===== 邀请码逻辑 =====
+    let inviterUsername = null;
+    let inviteReward = 0; // 新用户获得的奖励
+    let inviterReward = 0; // 邀请人获得的奖励
+
+    if (inviteCode) {
+      // 查找邀请码对应的邀请人
+      const inviteData = await kv.get('invite:code:' + inviteCode, { type: 'json' });
+      if (inviteData && inviteData.username) {
+        inviterUsername = inviteData.username;
+        // 不能邀请自己（虽然新用户还没邀请码，但防御一下）
+        if (inviterUsername !== username) {
+          inviteReward = 5;   // 被邀请人 +5 次
+          inviterReward = 10; // 邀请人 +10 次
+        }
+      }
+      // 邀请码无效不阻断注册，只是没有奖励
+    }
+
+    // 为新用户生成专属邀请码
+    const myInviteCode = await generateUniqueInviteCode(kv);
 
     const user = {
       uid,
@@ -316,17 +353,67 @@ async function handleUserRegister(request, env, origin) {
       createdAt: Date.now(),
       lastLogin: Date.now(),
       registerIP: getClientIP(request),
-      balance: 0, // 赠送余额
-      totalUsed: 0, // 累计使用次数
-      dailyUsed: 0, // 今日已用
+      balance: inviteReward, // 邀请奖励直接计入余额
+      totalUsed: 0,
+      dailyUsed: 0,
       dailyResetDate: getToday(),
-      isVip: false, // 是否VIP
-      vipLevel: 0, // VIP等级 0=普通 1=青铜 2=白银 3=黄金 4=钻石 5=至尊
-      vipExpire: 0, // VIP到期时间
+      isVip: false,
+      vipLevel: 0,
+      vipExpire: 0,
+      inviteCode: myInviteCode,       // 我的专属邀请码
+      invitedBy: inviterUsername || null, // 谁邀请的我
     };
 
     await kv.put('user:' + username, JSON.stringify(user));
     await incCounter(kv, 'stats:total:users');
+
+    // 存储邀请码映射
+    await kv.put('invite:code:' + myInviteCode, JSON.stringify({
+      username: username,
+      createdAt: Date.now(),
+      usedCount: 0
+    }));
+
+    // 初始化用户邀请统计
+    await kv.put('invite:stats:' + username, JSON.stringify({
+      code: myInviteCode,
+      totalInvited: 0,
+      totalBonus: 0,
+      invitedUsers: []
+    }));
+
+    // 处理邀请奖励
+    if (inviterUsername && inviterReward > 0) {
+      const inviterStr = await kv.get('user:' + inviterUsername);
+      if (inviterStr) {
+        const inviter = JSON.parse(inviterStr);
+        inviter.balance = (inviter.balance || 0) + inviterReward;
+        await kv.put('user:' + inviterUsername, JSON.stringify(inviter));
+
+        // 更新邀请码使用计数
+        const inviterCodeData = await kv.get('invite:code:' + inviteCode, { type: 'json' });
+        if (inviterCodeData) {
+          inviterCodeData.usedCount = (inviterCodeData.usedCount || 0) + 1;
+          await kv.put('invite:code:' + inviteCode, JSON.stringify(inviterCodeData));
+        }
+
+        // 更新邀请人统计
+        const inviterStatsStr = await kv.get('invite:stats:' + inviterUsername);
+        let inviterStats = inviterStatsStr ? JSON.parse(inviterStatsStr) : {
+          code: inviteCode, totalInvited: 0, totalBonus: 0, invitedUsers: []
+        };
+        inviterStats.totalInvited = (inviterStats.totalInvited || 0) + 1;
+        inviterStats.totalBonus = (inviterStats.totalBonus || 0) + inviterReward;
+        inviterStats.invitedUsers.push({
+          username: username,
+          time: Date.now(),
+          bonus: inviterReward
+        });
+        await kv.put('invite:stats:' + inviterUsername, JSON.stringify(inviterStats));
+
+        await incCounter(kv, 'stats:total:invites');
+      }
+    }
 
     // 生成登录 token
     const token = generateToken();
@@ -334,24 +421,26 @@ async function handleUserRegister(request, env, origin) {
 
     return jsonResponse({
       success: true,
-      message: '注册成功',
+      message: inviteReward > 0 ? `注册成功！邀请奖励 +${inviteReward} 次对话` : '注册成功',
       data: {
         token,
-        user: { 
-          uid, 
-          username, 
-          balance: user.balance, 
-          dailyUsed: 0, 
+        user: {
+          uid,
+          username,
+          balance: user.balance,
+          dailyUsed: 0,
           dailyLimit,
-          remainingCount: dailyLimit,
+          remainingCount: dailyLimit + inviteReward,
           bonusCount: user.balance,
-          isVip: false, 
-          vipLevel: 0 
+          isVip: false,
+          vipLevel: 0,
+          inviteCode: myInviteCode,
+          invitedBy: inviterUsername || null
         }
       }
     }, 200, origin);
   } catch (e) {
-    return jsonResponse({ success: false, error: e.message }, 500, origin);
+    return jsonResponse({ success: false, message: e.message }, 500, origin);
   }
 }
 
@@ -416,11 +505,13 @@ async function handleUserLogin(request, env, origin) {
           isVip: user.isVip || false,
           vipLevel: user.vipLevel || 0,
           vipExpire: user.vipExpire || 0,
+          inviteCode: user.inviteCode || '',
+          invitedBy: user.invitedBy || null,
         }
       }
     }, 200, origin);
   } catch (e) {
-    return jsonResponse({ success: false, error: e.message }, 500, origin);
+    return jsonResponse({ success: false, message: e.message }, 500, origin);
   }
 }
 
@@ -467,6 +558,8 @@ async function handleUserInfo(request, env, origin) {
       isVip: user.isVip || false,
       vipLevel: user.vipLevel || 0,
       vipExpire: user.vipExpire || 0,
+      inviteCode: user.inviteCode || '',
+      invitedBy: user.invitedBy || null,
     }
   }, 200, origin);
 }
@@ -494,6 +587,217 @@ async function handleOnlineCount(env, origin) {
   const kv = getKV(env);
   const list = await kv.list({ prefix: 'user:online:', limit: 1000 });
   return jsonResponse({ success: true, count: list.keys.length }, 200, origin);
+}
+
+// ==================== 邀请码系统 ====================
+
+const INVITE_REWARD_INVITER = 10;  // 邀请人获得 10 次
+const INVITE_REWARD_INVITEE = 5;   // 被邀请人获得 5 次
+const INVITE_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // 去除易混淆字符
+
+// 生成 6 位唯一邀请码
+function generateInviteCode() {
+  const arr = new Uint8Array(6);
+  crypto.getRandomValues(arr);
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += INVITE_CODE_CHARS[arr[i] % INVITE_CODE_CHARS.length];
+  }
+  return code;
+}
+
+// 确保邀请码不重复
+async function generateUniqueInviteCode(kv) {
+  for (let i = 0; i < 20; i++) {
+    const code = generateInviteCode();
+    const exists = await kv.get('invite:code:' + code);
+    if (!exists) return code;
+  }
+  // 极端情况：加时间戳后缀
+  return generateInviteCode() + Date.now().toString(36).slice(-2).toUpperCase();
+}
+
+// 用户查询自己的邀请码和邀请记录
+async function handleMyInvite(request, env, origin) {
+  try {
+    const user = await verifyUser(request, env);
+    if (!user) {
+      return jsonResponse({ success: false, message: '未登录' }, 401, origin);
+    }
+
+    const kv = getKV(env);
+
+    // 兼容老用户：如果没有邀请码，补生成一个
+    let inviteCode = user.inviteCode;
+    if (!inviteCode) {
+      inviteCode = await generateUniqueInviteCode(kv);
+      user.inviteCode = inviteCode;
+      await kv.put('user:' + user.username, JSON.stringify(user));
+      await kv.put('invite:code:' + inviteCode, JSON.stringify({
+        username: user.username,
+        createdAt: Date.now(),
+        usedCount: 0
+      }));
+    }
+
+    // 读取邀请统计
+    const statsStr = await kv.get('invite:stats:' + user.username);
+    const stats = statsStr ? JSON.parse(statsStr) : {
+      code: inviteCode,
+      totalInvited: 0,
+      totalBonus: 0,
+      invitedUsers: []
+    };
+
+    return jsonResponse({
+      success: true,
+      data: {
+        inviteCode: inviteCode,
+        invitedBy: user.invitedBy || null,
+        totalInvited: stats.totalInvited || 0,
+        totalBonus: stats.totalBonus || 0,
+        inviterReward: INVITE_REWARD_INVITER,
+        inviteeReward: INVITE_REWARD_INVITEE,
+        recentInvites: (stats.invitedUsers || []).slice(-10).reverse()
+      }
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, message: e.message }, 500, origin);
+  }
+}
+
+// ==================== 邀请码管理（管理员后台） ====================
+
+// 管理员：邀请记录列表（邀请人排行 + 全部邀请事件流）
+// 查询参数：search（用户名/邀请码）、sort（invited|bonus|time）、limit
+async function handleAdminInviteList(env, url, origin) {
+  try {
+    const kv = getKV(env);
+    const search = (url.searchParams.get('search') || '').trim().toLowerCase();
+    const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 200);
+    const sort = url.searchParams.get('sort') || 'invited';
+
+    // 遍历所有邀请统计键 invite:stats:<username>
+    const statsList = await kv.list({ prefix: 'invite:stats:', limit: 1000 });
+
+    const inviters = [];
+    const events = [];
+
+    for (const key of statsList.keys) {
+      const stats = await kv.get(key.name, { type: 'json' });
+      if (!stats) continue;
+
+      const inviterName = key.name.replace('invite:stats:', '');
+      const invitedUsers = stats.invitedUsers || [];
+      const totalInvited = stats.totalInvited || invitedUsers.length;
+
+      // 搜索：按邀请人用户名或邀请码过滤
+      if (search) {
+        const haystack = (inviterName + ' ' + (stats.code || '')).toLowerCase();
+        if (!haystack.includes(search)) continue;
+      }
+
+      inviters.push({
+        username: inviterName,
+        inviteCode: stats.code || '',
+        totalInvited,
+        totalBonus: stats.totalBonus || totalInvited * INVITE_REWARD_INVITER,
+        lastInviteTime: invitedUsers.length ? invitedUsers[invitedUsers.length - 1].time : (stats.createdAt || 0),
+        recentInvites: invitedUsers.slice(-5).reverse(),
+      });
+
+      // 展平为邀请事件流
+      for (const ev of invitedUsers) {
+        events.push({
+          inviter: inviterName,
+          inviteCode: stats.code || '',
+          invitee: ev.username,
+          time: ev.time,
+          inviterBonus: ev.bonus || INVITE_REWARD_INVITER,
+          inviteeBonus: INVITE_REWARD_INVITEE,
+        });
+      }
+    }
+
+    // 排序
+    if (sort === 'bonus') {
+      inviters.sort((a, b) => b.totalBonus - a.totalBonus);
+    } else if (sort === 'time') {
+      inviters.sort((a, b) => (b.lastInviteTime || 0) - (a.lastInviteTime || 0));
+    } else {
+      inviters.sort((a, b) => b.totalInvited - a.totalInvited);
+    }
+    events.sort((a, b) => b.time - a.time);
+
+    return jsonResponse({
+      success: true,
+      inviters: inviters.slice(0, limit),
+      events: events.slice(0, limit),
+      totalInviters: inviters.length,
+      totalInvites: events.length,
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: e.message }, 500, origin);
+  }
+}
+
+// 管理员：邀请数据总览统计
+async function handleAdminInviteStats(env, origin) {
+  try {
+    const kv = getKV(env);
+    const today = getToday();
+
+    // 总邀请次数（注册时累计的计数器）
+    const totalInvites = parseInt(await kv.get('stats:total:invites') || '0');
+
+    // 遍历统计键，汇总活跃邀请人数、今日新增、排行榜
+    const statsList = await kv.list({ prefix: 'invite:stats:', limit: 1000 });
+    let activeInviters = 0;
+    let todayInvites = 0;
+    const topInviters = [];
+
+    for (const key of statsList.keys) {
+      const stats = await kv.get(key.name, { type: 'json' });
+      if (!stats) continue;
+
+      const invitedUsers = stats.invitedUsers || [];
+      const totalInvited = stats.totalInvited || invitedUsers.length;
+      if (totalInvited > 0) {
+        activeInviters++;
+        topInviters.push({
+          username: key.name.replace('invite:stats:', ''),
+          inviteCode: stats.code || '',
+          totalInvited,
+          totalBonus: stats.totalBonus || totalInvited * INVITE_REWARD_INVITER,
+        });
+      }
+
+      // 统计今日新增邀请（按北京时间）
+      for (const ev of invitedUsers) {
+        const d = new Date((ev.time || 0) + 8 * 60 * 60 * 1000);
+        if (d.toISOString().split('T')[0] === today) todayInvites++;
+      }
+    }
+
+    topInviters.sort((a, b) => b.totalInvited - a.totalInvited);
+
+    return jsonResponse({
+      success: true,
+      totalInvites,
+      activeInviters,
+      todayInvites,
+      inviterBonusTotal: totalInvites * INVITE_REWARD_INVITER,
+      inviteeBonusTotal: totalInvites * INVITE_REWARD_INVITEE,
+      bonusTotal: totalInvites * (INVITE_REWARD_INVITER + INVITE_REWARD_INVITEE),
+      rewardRules: {
+        inviter: INVITE_REWARD_INVITER,
+        invitee: INVITE_REWARD_INVITEE,
+      },
+      topInviters: topInviters.slice(0, 10),
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: e.message }, 500, origin);
+  }
 }
 
 // ==================== 管理员鉴权 ====================
@@ -991,6 +1295,8 @@ async function handleUserList(env, url, origin) {
         isVip: user.isVip || false,
         vipLevel: user.vipLevel || 0,
         vipExpire: user.vipExpire || 0,
+        inviteCode: user.inviteCode || '',
+        invitedBy: user.invitedBy || null,
       });
     }
 
@@ -1158,6 +1464,7 @@ async function handleAdminCreateUser(request, env, origin) {
 
     const hashedPwd = await hashPassword(password);
     const uid = await generateUID(env);
+    const myInviteCode = await generateUniqueInviteCode(kv);
 
     const user = {
       uid,
@@ -1173,12 +1480,27 @@ async function handleAdminCreateUser(request, env, origin) {
       isVip: isVip,
       vipLevel: isVip ? vipLevel : 0,
       vipExpire: isVip ? 0 : 0, // 永久VIP
+      inviteCode: myInviteCode,
+      invitedBy: null,
     };
 
     await kv.put('user:' + username, JSON.stringify(user));
     await incCounter(kv, 'stats:total:users');
 
-    return jsonResponse({ success: true, message: '用户创建成功', user: { uid, username, balance, isVip, vipLevel } }, 200, origin);
+    // 同步创建邀请码映射与邀请统计
+    await kv.put('invite:code:' + myInviteCode, JSON.stringify({
+      username: username,
+      createdAt: Date.now(),
+      usedCount: 0
+    }));
+    await kv.put('invite:stats:' + username, JSON.stringify({
+      code: myInviteCode,
+      totalInvited: 0,
+      totalBonus: 0,
+      invitedUsers: []
+    }));
+
+    return jsonResponse({ success: true, message: '用户创建成功', user: { uid, username, balance, isVip, vipLevel, inviteCode: myInviteCode } }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
   }
