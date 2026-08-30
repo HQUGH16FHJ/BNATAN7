@@ -6,34 +6,54 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
+    /* 核心颜色系统 - 精简为3主色 */
     --bg: #03030a;
     --bg-deep: #000005;
-    --card-bg: rgba(10, 10, 30, 0.4);
+    --card-bg: rgba(12, 12, 28, 0.5);
     --card-bg-hover: rgba(20, 20, 50, 0.6);
-    --border: rgba(255, 255, 255, 0.1);
-    --border-hover: rgba(0, 245, 255, 0.25);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(0, 245, 255, 0.2);
     --text: #e8f0ff;
-    --sub: #8892b0;
+    --sub: #6b7a99;
+    --sub-dim: rgba(107, 122, 153, 0.6);
+    
+    /* 主强调色 - 青色 */
     --accent: #00f5ff;
-    --accent2: #7c3aed;
-    --accent3: #f472b6;
-    --accent4: #fbbf24;
-    --accent5: #00ff88;
-    --accent6: #3b82f6;
-    --glow-color: 0, 245, 255;
-    --shadow: 0 4px 24px rgba(0,0,0,0.3);
-    --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
-    --radius: 12px;
+    --accent-rgb: 0, 245, 255;
+    /* 次强调色 - 紫色 */
+    --accent-2: #7c3aed;
+    --accent-2-rgb: 124, 58, 237;
+    /* VIP 专用金色 */
+    --accent-gold: #fbbf24;
+    --accent-gold-rgb: 251, 191, 36;
+    
+    /* 功能色 - 仅用于状态指示 */
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    
+    /* 统一圆角系统 */
+    --radius-md: 12px;
     --radius-lg: 16px;
-    --neon-glow: 0 0 10px rgba(var(--glow-color), 0.5), 0 0 20px rgba(var(--glow-color), 0.3), 0 0 40px rgba(var(--glow-color), 0.1);
-    --rainbow-grad: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6, #fbbf24, #00ff88, #00f5ff);
-    --aurora-1: linear-gradient(135deg, rgba(0,245,255,0.06), rgba(124,58,237,0.04), rgba(244,114,182,0.03));
-    --glass-reflection: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.03) 100%);
-    --edge-glow: 0 0 0 1px rgba(var(--glow-color),0.06), 0 0 20px rgba(var(--glow-color),0.06), inset 0 1px 0 rgba(255,255,255,0.05);
-    --glow-strong: 0 0 16px rgba(var(--glow-color), 0.55), 0 0 36px rgba(var(--glow-color), 0.35), 0 0 70px rgba(var(--glow-color), 0.18);
-    --glow-purple: 0 0 18px rgba(124, 58, 237, 0.4), 0 0 40px rgba(124, 58, 237, 0.2);
-    --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.03) 100%);
-    --top-grad-line: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 30%, var(--accent3) 65%, var(--accent5) 100%);
+    --radius-sm: 8px;
+    
+    /* 玻璃拟态 */
+    --glass-bg: rgba(12, 12, 28, 0.5);
+    --glass-blur: blur(20px) saturate(150%);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+    --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --glass-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    
+    /* 阴影系统 */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(var(--accent-rgb), 0.1);
+    
+    /* 渐变 */
+    --grad-primary: linear-gradient(135deg, var(--accent), var(--accent-2));
+    --grad-soft: linear-gradient(135deg, rgba(0,245,255,0.06), rgba(124,58,237,0.04));
+    --grad-glass: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.02) 100%);
   }
   html[data-theme="light"] {
     --bg: #f5f7fa;
@@ -41,112 +61,75 @@
     --border: rgba(0,0,0,0.08);
     --text: #1f2937;
     --sub: #6b7280;
-    --glow-color: 99, 102, 241;
+    --accent-rgb: 99, 102, 241;
   }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: var(--bg);
     background-image: 
-      radial-gradient(ellipse at 20% 0%, rgba(0,245,255,0.05) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 10%, rgba(124,58,237,0.05) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 100%, rgba(244,114,182,0.03) 0%, transparent 60%),
-      radial-gradient(ellipse at 0% 60%, rgba(0,255,136,0.03) 0%, transparent 50%);
+      radial-gradient(ellipse at 20% 0%, rgba(0,245,255,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 10%, rgba(124,58,237,0.04) 0%, transparent 50%);
     background-attachment: fixed;
     color: var(--text);
     min-height: 100vh;
     display: flex;
     font-size: 14px;
-    line-height: 1.5;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9998;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      transparent 2px,
-      rgba(var(--glow-color), 0.008) 3px,
-      transparent 4px
-    );
-    opacity: 0.5;
-    mix-blend-mode: overlay;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* 浮动光球背景 */
+  /* 浮动光球背景 - 精简为3个，动效减弱 */
   .cosmic-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(100px);
     pointer-events: none;
     z-index: -1;
     mix-blend-mode: screen;
-    opacity: 0.04;
-    animation: cosmicFloat 50s infinite alternate ease-in-out;
+    opacity: 0.06;
+    animation: cosmicFloat 80s infinite alternate ease-in-out;
     will-change: transform;
   }
   .cosmic-orb:nth-child(1) {
-    width: 1200px; height: 1200px;
-    background: radial-gradient(circle, rgba(0, 245, 255, 0.06), transparent 70%);
-    top: -35%; left: -30%;
-    animation-duration: 55s;
+    width: 900px; height: 900px;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.08), transparent 70%);
+    top: -20%; left: -15%;
+    animation-duration: 90s;
   }
   .cosmic-orb:nth-child(2) {
-    width: 1100px; height: 1100px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.05), transparent 70%);
-    bottom: -35%; right: -30%;
-    animation-duration: 60s;
-    animation-delay: -14s;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.06), transparent 70%);
+    bottom: -25%; right: -15%;
+    animation-duration: 100s;
+    animation-delay: -20s;
   }
   .cosmic-orb:nth-child(3) {
-    width: 900px; height: 900px;
-    background: radial-gradient(circle, rgba(244, 114, 182, 0.04), transparent 70%);
-    top: 5%; left: 25%;
-    animation-duration: 52s;
-    animation-delay: -22s;
-  }
-  .cosmic-orb:nth-child(4) {
-    width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(251, 191, 36, 0.035), transparent 70%);
-    top: -5%; right: -5%;
-    animation-duration: 46s;
-    animation-delay: -10s;
-  }
-  .cosmic-orb:nth-child(5) {
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(0, 255, 200, 0.035), transparent 70%);
-    bottom: -5%; left: -5%;
-    animation-duration: 56s;
-    animation-delay: -18s;
-  }
-  .cosmic-orb:nth-child(6) {
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255, 100, 200, 0.03), transparent 70%);
-    top: 35%; right: 5%;
-    animation-duration: 50s;
-    animation-delay: -26s;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.03), transparent 70%);
+    top: 40%; left: 50%;
+    animation-duration: 110s;
+    animation-delay: -40s;
   }
+  /* 隐藏多余的光球 */
+  .cosmic-orb:nth-child(n+4) { display: none; }
   @keyframes cosmicFloat {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    20% { transform: translate(180px, -200px) scale(1.4) rotate(6deg); }
-    40% { transform: translate(-140px, 180px) scale(0.65) rotate(-4deg); }
-    60% { transform: translate(220px, 120px) scale(1.35) rotate(5deg); }
-    80% { transform: translate(-100px, -140px) scale(0.8) rotate(-3deg); }
-    100% { transform: translate(80px, -80px) scale(1.1) rotate(2deg); }
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(80px, -60px) scale(1.1); }
+    100% { transform: translate(-60px, 40px) scale(0.95); }
   }
 
   /* 侧边栏 */
   .sidebar {
-    width: 248px;
-    background: var(--card-bg);
-    border-right: 1px solid var(--border);
+    width: 240px;
+    background: var(--glass-bg);
+    border-right: var(--glass-border);
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0; left: 0; bottom: 0;
-    backdrop-filter: blur(30px);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     z-index: 100;
     box-shadow: 2px 0 20px rgba(0,0,0,0.15);
   }
@@ -155,10 +138,10 @@
     position: absolute;
     top: 0; right: 0; bottom: 0;
     width: 1px;
-    background: linear-gradient(180deg, transparent, rgba(0,245,255,0.15), transparent);
+    background: linear-gradient(180deg, transparent, rgba(0,245,255,0.1), transparent);
   }
   .sidebar-logo {
-    padding: 28px 24px 24px;
+    padding: 24px 20px 20px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -166,117 +149,108 @@
     position: relative;
   }
   .sidebar-logo .logo-icon {
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    background: var(--rainbow-grad);
-    background-size: 200% 200%;
+    width: 38px; height: 38px;
+    border-radius: var(--radius-md);
+    background: var(--grad-primary);
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
+    font-size: 18px;
     position: relative;
-    animation: logoShine 6s ease infinite;
-    box-shadow: 0 4px 16px rgba(0,245,255,0.25);
+    box-shadow: 0 4px 12px rgba(0,245,255,0.2);
   }
   .sidebar-logo .logo-icon::after {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.08) 100%);
+    border-radius: var(--radius-md);
+    background: var(--grad-glass);
   }
   .sidebar-logo .logo-text {
-    font-size: 17px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.2px;
   }
   .sidebar-logo .logo-sub {
     font-size: 10px;
     color: var(--sub);
-    margin-top: 3px;
-    letter-spacing: 1px;
+    margin-top: 2px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
   }
   .sidebar-nav {
     flex: 1;
-    padding: 16px 14px;
+    padding: 12px 12px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    scrollbar-color: rgba(255,255,255,0.08) transparent;
   }
   .sidebar-nav::-webkit-scrollbar { width: 4px; }
   .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
-  .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
   .nav-section {
     font-size: 10px;
-    color: var(--sub);
+    color: var(--sub-dim);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 16px 10px 8px;
-    font-weight: 700;
-    opacity: 0.7;
+    letter-spacing: 1.2px;
+    padding: 14px 10px 6px;
+    font-weight: 600;
   }
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    border-radius: 12px;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-size: 13px;
     color: var(--text);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-bottom: 3px;
+    transition: all 0.2s ease;
+    margin-bottom: 2px;
     position: relative;
-    overflow: hidden;
+    opacity: 0.85;
   }
   .nav-item::before {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
     width: 3px;
-    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    height: 0;
+    background: var(--accent);
     border-radius: 0 3px 3px 0;
-    opacity: 0;
-    transition: opacity 0.25s;
+    transition: height 0.2s ease;
   }
   .nav-item:hover {
-    background: rgba(var(--glow-color), 0.08);
-    transform: translateX(3px);
+    background: rgba(var(--accent-rgb), 0.06);
+    opacity: 1;
   }
   .nav-item.active {
-    background: linear-gradient(135deg, rgba(var(--glow-color), 0.18), rgba(124,58,237,0.12));
+    background: rgba(var(--accent-rgb), 0.1);
     color: var(--accent);
     font-weight: 600;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+    opacity: 1;
+    box-shadow: var(--glass-highlight);
   }
   .nav-item.active::before {
-    opacity: 1;
-    background: var(--rainbow-grad);
-    background-size: 100% 200%;
-    animation: logoShine 6s ease infinite;
+    height: 20px;
   }
   .nav-item .nav-icon { 
-    font-size: 17px; 
+    font-size: 16px; 
     width: 20px; 
     text-align: center;
-    transition: transform 0.25s;
-  }
-  .nav-item:hover .nav-icon {
-    transform: scale(1.1);
+    opacity: 0.9;
   }
   .nav-item .nav-badge {
     margin-left: auto;
     font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: var(--accent5);
+    padding: 2px 7px;
+    border-radius: var(--radius-sm);
+    background: var(--danger);
     color: #fff;
     font-weight: 600;
-    box-shadow: 0 2px 6px rgba(239,68,68,0.3);
   }
   .sidebar-footer {
-    padding: 16px;
+    padding: 14px 16px;
     border-top: 1px solid var(--border);
     font-size: 11px;
     color: var(--sub);
@@ -286,20 +260,33 @@
     color: var(--accent);
     cursor: pointer;
     text-decoration: none;
+    transition: opacity 0.2s;
   }
+  .sidebar-footer .back-link:hover { opacity: 0.8; }
+  .sidebar-logout-btn {
+    margin-top: 8px;
+    color: var(--sub);
+    font-size: 11px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+  }
+  .sidebar-logout-btn:hover { opacity: 0.8; }
 
   /* 主内容 */
   .main {
     flex: 1;
-    margin-left: 248px;
+    margin-left: 240px;
     padding: 28px 36px;
     min-height: 100vh;
   }
   .page {
-    animation: pageIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: pageIn 0.3s ease;
   }
   @keyframes pageIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .page-header {
@@ -311,43 +298,32 @@
     border-bottom: 1px solid var(--border);
     position: relative;
   }
-  .page-header::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0;
-    width: 60px; height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 2px;
-  }
   .page-title {
-    font-size: 26px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--text), var(--sub));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
     line-height: 1.3;
+    letter-spacing: -0.3px;
   }
   .page-title small {
     font-size: 12px;
     color: var(--sub);
     font-weight: 400;
-    margin-left: 12px;
-    -webkit-text-fill-color: var(--sub);
-    opacity: 0.7;
+    margin-left: 10px;
+    opacity: 0.8;
   }
   .header-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
   .admin-badge {
     padding: 5px 12px;
-    border-radius: 20px;
+    border-radius: var(--radius-md);
     background: rgba(34, 197, 94, 0.1);
-    color: var(--accent3);
+    color: var(--success);
     font-size: 11px;
     font-weight: 600;
     border: 1px solid rgba(34, 197, 94, 0.2);
@@ -356,202 +332,135 @@
     gap: 5px;
   }
 
-  /* 卡片 */
+  /* 卡片 - 玻璃拟态质感 */
   .card {
     background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 35%, transparent 65%, rgba(255, 255, 255, 0.025) 100%),
-      var(--glass-reflection),
-      var(--aurora-1),
+      var(--grad-glass),
+      var(--grad-soft),
       var(--card-bg);
-    border: 1px solid var(--border);
+    border: var(--glass-border);
     border-radius: var(--radius-lg);
-    padding: 20px;
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 22px;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     box-shadow:
-      0 8px 50px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-      var(--edge-glow);
-    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      var(--shadow-md),
+      var(--glass-highlight),
+      var(--glass-shadow);
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
   }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: -1.5px;
-    border-radius: calc(var(--radius-lg) + 1.5px);
-    padding: 1.5px;
-    background: conic-gradient(from var(--angle, 0deg),
-            transparent 0%,
-            rgba(0,245,255,0.3) 12%,
-            rgba(124, 58, 237, 0.25) 25%,
-            rgba(244, 114, 182, 0.2) 38%,
-            rgba(251, 191, 36, 0.15) 50%,
-            rgba(0, 255, 200, 0.15) 62%,
-            rgba(255, 100, 200, 0.15) 75%,
-            rgba(100, 200, 255, 0.2) 88%,
-            transparent 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: spinBorder 20s linear infinite;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-  .card:hover::before {
-    opacity: 1;
-    animation-duration: 8s;
-  }
-  .card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: var(--radius-lg);
-    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.02), transparent 60%);
-    pointer-events: none;
-    opacity: 0.1;
-    transition: opacity 1s;
-  }
-  .card:hover::after {
-    opacity: 0.6;
-  }
   .card:hover {
-    transform: translateY(-5px) scale(1.008);
     box-shadow:
-      0 25px 80px rgba(0, 0, 0, 0.25),
-      0 0 60px rgba(var(--glow-color), 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-      inset 0 0 40px rgba(var(--glow-color), 0.04);
-  }
-  @property --angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-  }
-  @keyframes spinBorder {
-    to { --angle: 360deg; }
+      var(--shadow-lg),
+      var(--shadow-glow),
+      var(--glass-highlight),
+      var(--glass-shadow);
+    border-color: var(--border-hover);
   }
   .card-title {
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     position: relative;
     z-index: 1;
+    color: var(--text);
+    letter-spacing: -0.1px;
   }
   .card-title::before {
     content: '';
     width: 3px;
-    height: 16px;
-    background: var(--rainbow-grad);
-    background-size: 200% 200%;
+    height: 14px;
+    background: var(--grad-primary);
     border-radius: 2px;
-    animation: logoShine 6s ease infinite;
   }
 
-  /* 统计卡片 */
+  /* 统计卡片 - 精简设计 */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
+    gap: 14px;
     margin-bottom: 24px;
   }
   .stat-card {
     background: 
-      linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.02) 100%),
-      var(--glass-sheen),
+      var(--grad-glass),
       var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 20px;
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     box-shadow:
-      0 8px 40px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      var(--edge-glow);
-    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      var(--shadow-sm),
+      var(--glass-highlight);
+    transition: all 0.25s ease;
   }
   .stat-card:hover {
-    transform: translateY(-6px) scale(1.02);
+    transform: translateY(-2px);
     box-shadow:
-      0 25px 80px rgba(0, 0, 0, 0.25),
-      0 0 60px rgba(var(--glow-color), 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      var(--shadow-md),
+      var(--shadow-glow),
+      var(--glass-highlight);
     border-color: var(--border-hover);
   }
   .stat-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: var(--rainbow-grad);
-    background-size: 200% 200%;
-    animation: logoShine 6s ease infinite;
-    opacity: 0.8;
+    width: 100%; height: 2px;
+    background: var(--grad-primary);
+    opacity: 0.6;
   }
-  .stat-card.c2::before { filter: hue-rotate(30deg); }
-  .stat-card.c3::before { filter: hue-rotate(60deg); }
-  .stat-card.c4::before { filter: hue-rotate(120deg); }
-  .stat-card::after {
-    content: '';
-    position: absolute;
-    top: -50%; right: -20%;
-    width: 150px; height: 150px;
-    background: radial-gradient(circle, rgba(var(--glow-color), 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
+  .stat-card.c2::before { background: linear-gradient(90deg, var(--accent-2), var(--accent)); }
+  .stat-card.c3::before { background: linear-gradient(90deg, var(--success), var(--accent)); }
+  .stat-card.c4::before { background: linear-gradient(90deg, var(--accent-gold), var(--accent)); }
   .stat-label {
     font-size: 12px;
     color: var(--sub);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 500;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
   }
   .stat-value {
-    font-size: 30px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 700;
     line-height: 1.2;
-    background: linear-gradient(135deg, var(--text), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    font-variant-numeric: tabular-nums;
   }
-  .stat-card.c2 .stat-value { background: linear-gradient(135deg, var(--text), var(--accent2)); -webkit-background-clip: text; background-clip: text; }
-  .stat-card.c3 .stat-value { background: linear-gradient(135deg, var(--text), var(--accent5)); -webkit-background-clip: text; background-clip: text; }
-  .stat-card.c4 .stat-value { background: linear-gradient(135deg, var(--text), var(--accent4)); -webkit-background-clip: text; background-clip: text; }
+  .stat-card.c2 .stat-value { color: var(--accent-2); }
+  .stat-card.c3 .stat-value { color: var(--success); }
+  .stat-card.c4 .stat-value { color: var(--accent-gold); }
   .stat-delta {
     font-size: 11px;
-    margin-top: 8px;
-    color: var(--accent5);
+    margin-top: 6px;
+    color: var(--success);
     display: flex;
     align-items: center;
     gap: 4px;
   }
-  .stat-delta.down { color: var(--accent4); }
+  .stat-delta.down { color: var(--accent-gold); }
   .stat-icon {
     position: absolute;
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 40px;
-    opacity: 0.12;
-    filter: blur(0.5px);
+    font-size: 36px;
+    opacity: 0.08;
   }
 
-  /* 表格 */
+  /* 表格 - 干净简约 */
   .table-wrap {
     overflow-x: auto;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     border: 1px solid var(--border);
   }
   table {
@@ -560,118 +469,140 @@
     font-size: 13px;
   }
   th, td {
-    padding: 12px 14px;
+    padding: 13px 16px;
     text-align: left;
     border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
   }
   th {
     font-size: 11px;
     color: var(--sub);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-weight: 700;
-    background: linear-gradient(180deg, rgba(var(--glow-color), 0.05), rgba(var(--glow-color), 0.02));
+    font-weight: 600;
+    background: rgba(var(--accent-rgb), 0.03);
     position: sticky;
     top: 0;
     z-index: 10;
     white-space: nowrap;
   }
   tbody tr {
-    transition: background 0.2s;
+    transition: background 0.15s ease;
   }
   tbody tr:hover {
-    background: rgba(var(--glow-color), 0.04);
+    background: rgba(var(--accent-rgb), 0.03);
   }
   tbody tr:last-child td {
     border-bottom: none;
+  }
+  /* 淡斑马纹 */
+  tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.015);
+  }
+  tbody tr:nth-child(even):hover {
+    background: rgba(var(--accent-rgb), 0.03);
   }
   .tag {
     display: inline-flex;
     align-items: center;
     padding: 3px 10px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     font-size: 11px;
     font-weight: 600;
     border: 1px solid transparent;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
     line-height: 1.4;
   }
-  .tag:hover {
-    transform: translateY(-1px);
-  }
   .tag.green { 
-    background: rgba(34,197,94,0.1); 
-    color: #22c55e; 
-    border-color: rgba(34,197,94,0.2);
+    background: rgba(34,197,94,0.08); 
+    color: var(--success); 
+    border-color: rgba(34,197,94,0.15);
   }
   .tag.yellow { 
-    background: rgba(245,158,11,0.1); 
-    color: #f59e0b; 
-    border-color: rgba(245,158,11,0.2);
+    background: rgba(245,158,11,0.08); 
+    color: var(--warning); 
+    border-color: rgba(245,158,11,0.15);
   }
   .tag.red { 
-    background: rgba(239,68,68,0.1); 
-    color: #ef4444; 
-    border-color: rgba(239,68,68,0.2);
+    background: rgba(239,68,68,0.08); 
+    color: var(--danger); 
+    border-color: rgba(239,68,68,0.15);
   }
   .tag.purple { 
-    background: rgba(168,85,247,0.1); 
+    background: rgba(124,58,237,0.08); 
     color: #a855f7; 
-    border-color: rgba(168,85,247,0.2);
+    border-color: rgba(124,58,237,0.15);
   }
   .tag.cyan { 
-    background: rgba(0,245,255,0.1); 
+    background: rgba(0,245,255,0.08); 
     color: var(--accent); 
-    border-color: rgba(0,245,255,0.2);
+    border-color: rgba(0,245,255,0.15);
   }
   .tag.gray { 
-    background: rgba(136,136,136,0.1); 
+    background: rgba(136,136,136,0.08); 
     color: #888; 
-    border-color: rgba(136,136,136,0.2);
+    border-color: rgba(136,136,136,0.15);
   }
   .tag.gold { 
-    background: linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15)); 
-    color: #ffd700; 
-    border-color: rgba(255,215,0,0.25);
+    background: rgba(251,191,36,0.08); 
+    color: var(--accent-gold); 
+    border-color: rgba(251,191,36,0.15);
   }
 
-  /* 按钮 */
+  /* 按钮系统 - 明确主次区分 */
+
+  /* button 元素默认样式重置 */
+  button {
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    line-height: normal;
+  }
+  button:focus {
+    outline: none;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
   .btn {
-    padding: 8px 18px;
-    border-radius: 50px;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border);
     background: var(--card-bg);
     color: var(--text);
     cursor: pointer;
     font-size: 12px;
-    font-weight: 600;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.32, 1);
-    backdrop-filter: blur(10px);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
     min-height: 34px;
     position: relative;
-    overflow: hidden;
+    white-space: nowrap;
+    font-family: inherit;
   }
   .btn:hover {
-    background: rgba(var(--glow-color), 0.08);
+    background: rgba(var(--accent-rgb), 0.06);
     border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 0 20px rgba(var(--glow-color), 0.08);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
   }
   .btn:active {
-    transform: scale(0.94);
+    transform: translateY(0) scale(0.98);
   }
   .btn.primary {
-    background: var(--rainbow-grad);
-    background-size: 200% 200%;
+    background: var(--grad-primary);
     color: #000;
     border: none;
-    box-shadow: 0 4px 20px rgba(0, 245, 255, 0.25);
-    animation: btnShine 8s ease infinite;
-    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0, 245, 255, 0.2);
+    font-weight: 600;
     position: relative;
     overflow: hidden;
   }
@@ -680,67 +611,62 @@
     position: absolute;
     top: 0; left: -100%;
     width: 100%; height: 100%;
-    background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.35) 50%, transparent 75%);
-    transition: left 0.6s;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+    transition: left 0.5s ease;
   }
   .btn.primary:hover::after {
     left: 100%;
   }
   .btn.primary:hover {
-    opacity: 1;
-    box-shadow: 0 6px 28px rgba(0, 245, 255, 0.4), var(--glow-strong);
-    transform: translateY(-2px);
-  }
-  @keyframes btnShine {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    box-shadow: 0 6px 20px rgba(0, 245, 255, 0.3);
+    transform: translateY(-1px);
   }
   .btn.danger {
-    color: #ff6b6b;
-    border-color: rgba(255,107,107,0.3);
+    color: var(--danger);
+    border-color: rgba(239,68,68,0.2);
   }
   .btn.danger:hover {
-    background: rgba(255,107,107,0.1);
-    border-color: rgba(255,107,107,0.5);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 0 20px rgba(255,107,107,0.15);
+    background: rgba(239,68,68,0.08);
+    border-color: rgba(239,68,68,0.3);
+    box-shadow: 0 4px 12px rgba(239,68,68,0.15);
   }
   .btn-sm { 
-    padding: 4px 12px; 
+    padding: 4px 10px; 
     font-size: 11px; 
-    border-radius: 40px; 
-    min-height: 28px;
+    border-radius: var(--radius-sm); 
+    min-height: 26px;
   }
 
-  /* 输入 */
+  /* 输入框 - 统一圆角，标签在上方 */
   input, select, textarea {
-    background: rgba(var(--glow-color), 0.03);
+    background: rgba(var(--accent-rgb), 0.02);
     border: 1px solid var(--border);
-    border-radius: 50px;
-    padding: 9px 16px;
+    border-radius: var(--radius-md);
+    padding: 9px 14px;
     color: var(--text);
-    font-size: 12px;
+    font-size: 13px;
     outline: none;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.32, 1);
+    transition: all 0.2s ease;
     font-family: inherit;
+    line-height: 1.5;
   }
   input:hover, select:hover, textarea:hover {
-    border-color: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.12);
   }
   input:focus, select:focus, textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(var(--glow-color), 0.12), 0 0 20px rgba(var(--glow-color), 0.1);
-    background: rgba(var(--glow-color), 0.05);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+    background: rgba(var(--accent-rgb), 0.04);
   }
-  textarea { border-radius: 16px; }
+  textarea { border-radius: var(--radius-md); }
   select {
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238892b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7a99' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 16px center;
-    padding-right: 36px;
+    background-position: right 14px center;
+    padding-right: 34px;
   }
 
   /* 布局 */
@@ -753,20 +679,22 @@
   .grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 14px;
   }
   .form-row {
     display: flex;
     gap: 10px;
-    margin-bottom: 12px;
-    align-items: center;
+    margin-bottom: 14px;
+    align-items: flex-start;
+    flex-direction: column;
   }
   .form-row label {
     font-size: 12px;
     color: var(--sub);
-    min-width: 80px;
+    font-weight: 500;
+    margin-bottom: 4px;
   }
-  .form-row input, .form-row select { flex: 1; }
+  .form-row input, .form-row select { width: 100%; }
 
   /* 生成器结果区 */
   .code-result {
@@ -776,9 +704,9 @@
     font-size: 11px;
     line-height: 1.6;
     padding: 12px;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.2);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     color: var(--text);
     resize: vertical;
   }
@@ -795,48 +723,28 @@
     align-items: center;
     justify-content: center;
     background: 
-      radial-gradient(ellipse at top left, rgba(0,245,255,0.1), transparent 50%),
-      radial-gradient(ellipse at top right, rgba(168,85,247,0.1), transparent 50%),
-      radial-gradient(ellipse at bottom center, rgba(34,197,94,0.05), transparent 50%),
+      radial-gradient(ellipse at top left, rgba(0,245,255,0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(124,58,237,0.06), transparent 50%),
       var(--bg);
     position: relative;
     overflow: hidden;
   }
-  .login-wrap::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,245,255,0.06) 0%, transparent 70%);
-    top: -200px; left: -200px;
-    animation: float 8s ease-in-out infinite;
-  }
-  .login-wrap::after {
-    content: '';
-    position: absolute;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%);
-    bottom: -150px; right: -150px;
-    animation: float 10s ease-in-out infinite reverse;
-  }
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(30px, -20px); }
-  }
   .login-card {
-    width: 380px;
+    width: 360px;
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px 32px;
-    backdrop-filter: blur(30px);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 36px 28px;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    box-shadow: var(--shadow-lg), var(--glass-highlight);
     position: relative;
     z-index: 1;
-    animation: cardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: cardIn 0.5s ease;
   }
   @keyframes cardIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
   .login-card::before {
@@ -844,74 +752,51 @@
     position: absolute;
     top: 0; left: 10%; right: 10%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.2), transparent);
   }
   .login-card .logo {
-    width: 80px; height: 80px;
-    margin: 0 auto 22px;
-    border-radius: 22px;
-    background: var(--rainbow-grad);
-    background-size: 200% 200%;
+    width: 64px; height: 64px;
+    margin: 0 auto 18px;
+    border-radius: var(--radius-lg);
+    background: var(--grad-primary);
     display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
+    font-size: 28px;
     position: relative;
-    animation: logoShine 4s ease infinite, logoFloat 3s ease-in-out infinite;
-  }
-  .login-card .logo::before {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 24px;
-    background: var(--rainbow-grad);
-    background-size: 200% 200%;
-    filter: blur(12px);
-    opacity: 0.6;
-    z-index: -1;
-    animation: logoShine 4s ease infinite;
+    box-shadow: 0 8px 24px rgba(0,245,255,0.2);
   }
   .login-card .logo::after {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 22px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.1) 100%);
-  }
-  @keyframes logoShine {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @keyframes logoFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-5px) rotate(1deg); }
+    border-radius: var(--radius-lg);
+    background: var(--grad-glass);
   }
   .login-card h2 { 
-    font-size: 22px; 
-    margin-bottom: 6px; 
-    background: linear-gradient(135deg, var(--text), var(--sub));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 20px; 
+    margin-bottom: 4px; 
+    font-weight: 700;
+    color: var(--text);
   }
-  .login-card .sub { font-size: 12px; color: var(--sub); margin-bottom: 28px; }
+  .login-card .sub { font-size: 12px; color: var(--sub); margin-bottom: 24px; }
   .login-card input { 
     width: 100%; 
-    padding: 12px 14px; 
-    margin-bottom: 12px; 
+    padding: 11px 14px; 
+    margin-bottom: 10px; 
     font-size: 13px; 
-    transition: all 0.3s;
+    transition: all 0.2s;
   }
   .login-card input:focus {
     transform: translateY(-1px);
   }
   .login-card .btn { 
     width: 100%; 
-    padding: 12px; 
-    margin-top: 8px; 
-    font-size: 14px; 
+    padding: 11px; 
+    margin-top: 6px; 
+    font-size: 13px; 
     justify-content: center;
+    font-weight: 600;
   }
-  .login-tip { margin-top: 16px; font-size: 11px; color: var(--sub); }
+  .login-tip { margin-top: 14px; font-size: 11px; color: var(--sub); }
 
   /* API 配置 */
   .api-config {
@@ -924,11 +809,17 @@
     width: 36px; height: 36px;
     border-radius: 50%;
     background: var(--card-bg);
-    border: 1px solid var(--border);
+    border: var(--glass-border);
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     font-size: 16px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: all 0.2s;
+  }
+  .api-config-btn:hover {
+    border-color: var(--border-hover);
+    transform: scale(1.05);
   }
   .api-config-panel {
     position: absolute;
@@ -936,18 +827,20 @@
     right: 0;
     width: 280px;
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    backdrop-filter: blur(10px);
+    border: var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     display: none;
+    box-shadow: var(--shadow-lg), var(--glass-highlight);
   }
   .api-config-panel.show { display: block; }
-  .api-config-panel h4 { font-size: 13px; margin-bottom: 10px; }
+  .api-config-panel h4 { font-size: 12px; margin-bottom: 8px; font-weight: 600; }
   .api-config-panel input { width: 100%; margin-bottom: 8px; font-size: 11px; }
   .api-status { font-size: 10px; margin-top: 6px; }
-  .api-status.ok { color: var(--accent3); }
-  .api-status.err { color: var(--accent5); }
+  .api-status.ok { color: var(--success); }
+  .api-status.err { color: var(--danger); }
 
   /* 响应式 */
   @media (max-width: 768px) {
@@ -965,33 +858,34 @@
     left: 50%;
     transform: translateX(-50%) translateY(-100px);
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    padding: 12px 24px;
-    border-radius: 14px;
+    border: var(--glass-border);
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
     font-size: 13px;
     font-weight: 500;
     z-index: 9999;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-lg), var(--glass-highlight);
     min-width: 200px;
     text-align: center;
   }
   #toast.show { transform: translateX(-50%) translateY(0); }
   #toast.success {
-    border-color: rgba(34,197,94,0.3);
-    background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(34,197,94,0.05));
-    color: #22c55e;
+    border-color: rgba(34,197,94,0.25);
+    background: rgba(34,197,94,0.08);
+    color: var(--success);
   }
   #toast.warn {
-    border-color: rgba(245,158,11,0.3);
-    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
-    color: #f59e0b;
+    border-color: rgba(245,158,11,0.25);
+    background: rgba(245,158,11,0.08);
+    color: var(--warning);
   }
   #toast.error {
-    border-color: rgba(239,68,68,0.3);
-    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
-    color: #ef4444;
+    border-color: rgba(239,68,68,0.25);
+    background: rgba(239,68,68,0.08);
+    color: var(--danger);
   }
 
   /* 加载 */
@@ -1007,73 +901,42 @@
 
   .empty {
     text-align: center;
-    padding: 40px;
+    padding: 32px;
     color: var(--sub);
     font-size: 13px;
-  }
-
-  /* 增强统计卡片 - 渐变发光效果 */
-  .stat-card {
-    transition: 0.3s ease;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-  }
-  .stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(var(--glow-color), 0.15);
-  }
-  .stat-card .stat-icon {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 36px;
-    opacity: 0.15;
-  }
-  .stat-card.c1::before { background: linear-gradient(180deg, var(--accent), var(--accent2)); }
-
-  /* 斑马纹表格 */
-  tbody tr:nth-child(even) {
-    background: rgba(var(--glow-color), 0.02);
-  }
-  tbody tr:hover {
-    background: rgba(var(--glow-color), 0.06) !important;
   }
 
   /* 在线状态圆点 */
   .status-dot {
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     margin-right: 6px;
     vertical-align: middle;
   }
   .status-dot.online {
-    background: #22c55e;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
-    animation: pulse 2s infinite;
+    background: var(--success);
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
   }
   .status-dot.offline {
     background: #6b7280;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
   }
 
   /* 模态框 */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
   }
   .modal-overlay.show {
     opacity: 1;
@@ -1081,15 +944,16 @@
   }
   .modal {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
     width: 420px;
     max-width: 92%;
-    backdrop-filter: blur(30px);
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-    transform: translateY(30px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-lg), var(--glass-highlight);
+    transform: translateY(20px) scale(0.97);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
   }
@@ -1098,29 +962,26 @@
     position: absolute;
     top: 0; left: 10%; right: 10%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.15), transparent);
   }
   .modal-overlay.show .modal {
     transform: translateY(0) scale(1);
   }
   .modal-title {
-    font-size: 17px;
-    font-weight: 700;
-    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 18px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--text), var(--sub));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    gap: 8px;
+    color: var(--text);
   }
   .modal-body {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   .modal-footer {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: flex-end;
   }
   .modal-footer .btn {
@@ -1131,8 +992,8 @@
   /* 搜索栏 */
   .search-bar {
     display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 14px;
     align-items: center;
   }
   .search-bar input {
@@ -1143,14 +1004,14 @@
   /* 操作按钮组 */
   .action-btns {
     display: flex;
-    gap: 5px;
+    gap: 4px;
     flex-wrap: wrap;
   }
   .action-btns .btn {
-    padding: 5px 9px;
+    padding: 4px 8px;
     font-size: 11px;
-    border-radius: 8px;
-    opacity: 0.85;
+    border-radius: var(--radius-sm);
+    opacity: 0.8;
   }
   .action-btns .btn:hover {
     opacity: 1;
@@ -1159,48 +1020,26 @@
 
   /* 全局滚动条 */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.1);
-    border-radius: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.18);
-  }
-
-  /* 卡片增强阴影 */
-  .card {
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-  }
-  .card:hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    background: rgba(255,255,255,0.15);
   }
 
   /* 渐变文字 */
   .gradient-text {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: var(--grad-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  /* 徽章发光 */
-  .tag {
-    transition: 0.2s;
-  }
-  .tag:hover {
-    filter: brightness(1.2);
-  }
-
-  /* 响应式表格滚动 */
-  .table-wrap {
-    overflow-x: auto;
   }
 
   /* ===== 实时监控样式 ===== */
@@ -1213,24 +1052,24 @@
     color: var(--sub);
   }
   .toggle-switch .toggle-track {
-    width: 40px;
-    height: 22px;
-    border-radius: 11px;
-    background: rgba(136,136,136,0.25);
+    width: 38px;
+    height: 20px;
+    border-radius: 10px;
+    background: rgba(136,136,136,0.2);
     position: relative;
-    transition: 0.3s;
+    transition: 0.2s;
     flex-shrink: 0;
   }
   .toggle-switch .toggle-thumb {
     position: absolute;
-    top: 3px; left: 3px;
+    top: 2px; left: 2px;
     width: 16px; height: 16px;
     border-radius: 50%;
     background: #888;
-    transition: 0.3s cubic-bezier(0.22,1,0.36,1);
+    transition: 0.25s ease;
   }
-  .toggle-switch.on .toggle-track { background: rgba(34,197,94,0.3); }
-  .toggle-switch.on .toggle-thumb { left: 21px; background: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.5); }
+  .toggle-switch.on .toggle-track { background: rgba(34,197,94,0.25); }
+  .toggle-switch.on .toggle-thumb { left: 20px; background: var(--success); box-shadow: 0 0 6px rgba(34,197,94,0.4); }
 
   .live-badge {
     display: inline-flex;
@@ -1239,58 +1078,61 @@
     padding: 3px 10px;
     border-radius: 12px;
     font-size: 10px;
-    font-weight: 700;
-    background: rgba(239,68,68,0.1);
-    color: #ef4444;
-    border: 1px solid rgba(239,68,68,0.2);
+    font-weight: 600;
+    background: rgba(239,68,68,0.08);
+    color: var(--danger);
+    border: 1px solid rgba(239,68,68,0.15);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
   }
   .live-dot {
-    width: 6px; height: 6px;
+    width: 5px; height: 5px;
     border-radius: 50%;
-    background: #ef4444;
-    animation: livePulse 1.5s infinite;
+    background: var(--danger);
+    animation: livePulse 2s infinite;
   }
   @keyframes livePulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
   }
 
-  .flash-up { animation: flashGreen 0.8s ease; }
-  .flash-down { animation: flashRed 0.8s ease; }
+  .flash-up { animation: flashGreen 0.6s ease; }
+  .flash-down { animation: flashRed 0.6s ease; }
   @keyframes flashGreen {
-    0% { background: rgba(34,197,94,0.25); }
+    0% { background: rgba(34,197,94,0.15); }
     100% { background: transparent; }
   }
   @keyframes flashRed {
-    0% { background: rgba(239,68,68,0.25); }
+    0% { background: rgba(239,68,68,0.15); }
     100% { background: transparent; }
   }
 
   .monitor-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 14px;
+    margin-bottom: 20px;
   }
   .monitor-card {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-    backdrop-filter: blur(10px);
+    border: var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-sm), var(--glass-highlight);
   }
   .monitor-card-title {
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
     justify-content: space-between;
+    color: var(--text);
   }
   .monitor-card-title .title-left {
     display: flex;
@@ -1303,23 +1145,23 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
   .activity-log::-webkit-scrollbar { width: 4px; }
-  .activity-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .activity-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
   .activity-item {
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    background: rgba(var(--glow-color), 0.02);
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(var(--accent-rgb), 0.02);
     border: 1px solid var(--border);
     font-size: 12px;
-    animation: slideIn 0.3s ease;
+    animation: slideIn 0.25s ease;
   }
   @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-12px); }
+    from { opacity: 0; transform: translateX(-8px); }
     to { opacity: 1; transform: translateX(0); }
   }
   .activity-item .act-time {
@@ -1328,41 +1170,41 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .activity-item .act-icon { font-size: 14px; flex-shrink: 0; }
-  .activity-item .act-text { color: var(--text); line-height: 1.4; }
-  .activity-item.up { border-left: 3px solid #22c55e; }
-  .activity-item.down { border-left: 3px solid #ef4444; }
-  .activity-item.info { border-left: 3px solid var(--accent); }
-  .activity-item.warn { border-left: 3px solid var(--accent4); }
+  .activity-item .act-icon { font-size: 13px; flex-shrink: 0; }
+  .activity-item .act-text { color: var(--text); line-height: 1.45; }
+  .activity-item.up { border-left: 2px solid var(--success); }
+  .activity-item.down { border-left: 2px solid var(--danger); }
+  .activity-item.info { border-left: 2px solid var(--accent); }
+  .activity-item.warn { border-left: 2px solid var(--accent-gold); }
 
   .health-bar {
-    height: 8px;
-    border-radius: 4px;
-    background: rgba(136,136,136,0.15);
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(136,136,136,0.12);
     overflow: hidden;
     margin-top: 6px;
   }
   .health-bar-fill {
     height: 100%;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #22c55e, #00f5ff);
-    transition: width 0.6s ease;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--success), var(--accent));
+    transition: width 0.5s ease;
   }
-  .health-bar-fill.warn { background: linear-gradient(90deg, #f59e0b, #ef4444); }
-  .health-bar-fill.crit { background: linear-gradient(90deg, #ef4444, #ef4444); }
+  .health-bar-fill.warn { background: linear-gradient(90deg, var(--warning), var(--danger)); }
+  .health-bar-fill.crit { background: var(--danger); }
 
   .mini-trend {
     display: flex;
     align-items: flex-end;
     gap: 2px;
-    height: 40px;
-    margin-top: 8px;
+    height: 36px;
+    margin-top: 6px;
   }
   .mini-trend-bar {
     flex: 1;
-    min-height: 3px;
+    min-height: 2px;
     border-radius: 2px 2px 0 0;
-    background: linear-gradient(180deg, var(--accent), rgba(0,245,255,0.2));
+    background: linear-gradient(180deg, var(--accent), rgba(0,245,255,0.15));
     transition: height 0.3s ease;
   }
 
@@ -1370,66 +1212,66 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 0;
+    padding: 5px 0;
     border-bottom: 1px solid var(--border);
   }
   .monitor-stat-row:last-child { border-bottom: none; }
   .monitor-stat-row .ms-label { font-size: 12px; color: var(--sub); }
-  .monitor-stat-row .ms-value { font-size: 14px; font-weight: 700; }
+  .monitor-stat-row .ms-value { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 
   .pulse-ring {
-    width: 10px; height: 10px;
+    width: 8px; height: 8px;
     border-radius: 50%;
-    background: #22c55e;
+    background: var(--success);
     position: relative;
     display: inline-block;
   }
   .pulse-ring::after {
     content: '';
     position: absolute;
-    top: -4px; left: -4px;
-    width: 18px; height: 18px;
+    top: -3px; left: -3px;
+    width: 14px; height: 14px;
     border-radius: 50%;
-    border: 2px solid #22c55e;
+    border: 2px solid var(--success);
     animation: ringPulse 2s infinite;
   }
   @keyframes ringPulse {
     0% { transform: scale(0.8); opacity: 1; }
-    100% { transform: scale(1.8); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
   }
 
   .online-user-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    background: rgba(var(--glow-color), 0.02);
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(var(--accent-rgb), 0.02);
     border: 1px solid var(--border);
-    margin-bottom: 6px;
-    font-size: 13px;
-    animation: slideIn 0.3s ease;
+    margin-bottom: 5px;
+    font-size: 12px;
+    animation: slideIn 0.25s ease;
   }
 
   .countdown-timer {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--sub);
     font-variant-numeric: tabular-nums;
   }
 
   .realtime-chart-wrap {
-    height: 120px;
+    height: 100px;
     display: flex;
     align-items: flex-end;
-    gap: 3px;
-    padding: 10px 0;
+    gap: 2px;
+    padding: 8px 0;
   }
   .realtime-chart-bar {
     flex: 1;
-    min-width: 4px;
-    min-height: 4px;
-    border-radius: 3px 3px 0 0;
-    transition: height 0.4s ease;
+    min-width: 3px;
+    min-height: 3px;
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s ease;
     position: relative;
   }
   .realtime-chart-bar:hover { opacity: 0.7; }
@@ -1442,40 +1284,42 @@
   .tab-bar {
     display: flex;
     gap: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     border-bottom: 1px solid var(--border);
     padding-bottom: 0;
   }
   .tab-btn {
-    padding: 8px 18px;
+    padding: 8px 14px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--sub);
     cursor: pointer;
     border: none;
     background: transparent;
     border-bottom: 2px solid transparent;
-    transition: 0.3s;
+    transition: 0.2s;
     margin-bottom: -1px;
+    font-family: inherit;
   }
   .tab-btn:hover { color: var(--text); }
   .tab-btn.active {
     color: var(--accent);
     border-bottom-color: var(--accent);
+    font-weight: 600;
   }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
   .cl-version-card {
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 14px;
-    background: rgba(var(--glow-color), 0.02);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+    background: rgba(var(--accent-rgb), 0.02);
     position: relative;
-    transition: 0.3s;
+    transition: 0.2s;
   }
-  .cl-version-card:hover { border-color: rgba(var(--glow-color), 0.2); }
+  .cl-version-card:hover { border-color: rgba(var(--accent-rgb), 0.15); }
   .cl-version-card.latest {
     border-left: 3px solid var(--accent);
     background: linear-gradient(135deg, rgba(0,245,255,0.04), transparent);
@@ -1484,41 +1328,41 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
   }
   .cl-version-header input,
   .cl-version-header select {
-    background: rgba(136,136,136,0.08);
+    background: rgba(136,136,136,0.06);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    padding: 5px 10px;
     color: var(--text);
     font-size: 12px;
     outline: none;
   }
   .cl-version-header input:focus,
   .cl-version-header select:focus { border-color: var(--accent); }
-  .cl-vnum { width: 100px; font-weight: 700; }
+  .cl-vnum { width: 90px; font-weight: 600; }
   .cl-vtitle { flex: 1; min-width: 120px; }
-  .cl-vdate { width: 130px; }
+  .cl-vdate { width: 120px; }
 
   .cl-item-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
-    padding: 6px 10px;
-    border-radius: 8px;
+    margin-bottom: 5px;
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
     background: rgba(136,136,136,0.04);
     border: 1px solid var(--border);
   }
-  .cl-item-row select { width: 70px; font-size: 11px; }
+  .cl-item-row select { width: 60px; font-size: 11px; }
   .cl-item-row input { flex: 1; font-size: 12px; }
   .cl-item-tag-sel { font-weight: 600; }
-  .cl-item-tag-sel option.add { color: #22c55e; }
+  .cl-item-tag-sel option.add { color: var(--success); }
   .cl-item-tag-sel option.opt { color: var(--accent); }
-  .cl-item-tag-sel option.fix { color: var(--accent4); }
+  .cl-item-tag-sel option.fix { color: var(--accent-gold); }
 
   .cl-add-item-btn {
     font-size: 11px;
@@ -1526,39 +1370,40 @@
     border: 1px dashed var(--border);
     background: transparent;
     color: var(--sub);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s;
+    font-family: inherit;
   }
   .cl-add-item-btn:hover {
     border-color: var(--accent);
     color: var(--accent);
-    background: rgba(var(--glow-color), 0.04);
+    background: rgba(var(--accent-rgb), 0.04);
   }
 
   .cl-preview {
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    margin-top: 14px;
-    background: rgba(10,10,30,0.3);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-top: 12px;
+    background: rgba(10,10,30,0.2);
   }
   .cl-preview .changelog-item {
     display: flex;
     gap: 12px;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid var(--border);
   }
   .cl-preview .changelog-item:last-child { border-bottom: none; }
   .cl-preview .changelog-date {
-    min-width: 100px;
+    min-width: 90px;
     font-size: 11px;
     color: var(--sub);
   }
   .cl-preview .changelog-version {
-    font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 4px;
     color: var(--accent);
   }
   .cl-preview .changelog-list-items {
@@ -1568,59 +1413,66 @@
   }
   .cl-preview .changelog-list-items li {
     font-size: 12px;
-    padding: 3px 0;
+    padding: 2px 0;
     display: flex;
     align-items: center;
     gap: 6px;
+    line-height: 1.5;
   }
   .cl-preview .tag {
     font-size: 9px;
     padding: 1px 6px;
     border-radius: 4px;
-    font-weight: 700;
+    font-weight: 600;
     flex-shrink: 0;
   }
-  .cl-preview .tag.add { background: rgba(34,197,94,0.15); color: #22c55e; }
-  .cl-preview .tag.opt { background: rgba(0,245,255,0.15); color: var(--accent); }
-  .cl-preview .tag.fix { background: rgba(251,191,36,0.15); color: var(--accent4); }
+  .cl-preview .tag.add { background: rgba(34,197,94,0.1); color: var(--success); }
+  .cl-preview .tag.opt { background: rgba(0,245,255,0.1); color: var(--accent); }
+  .cl-preview .tag.fix { background: rgba(251,191,36,0.1); color: var(--accent-gold); }
 
   /* ===== 公告预警等级 ===== */
   .ann-level-sel {
-    width: 90px;
-    font-size: 11px;
-    font-weight: 700;
-    border-radius: 8px;
-    padding: 6px 8px;
+    width: 80px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 5px 8px;
     cursor: pointer;
     outline: none;
     border: 1px solid var(--border);
-    background: rgba(136,136,136,0.08);
+    background: rgba(136,136,136,0.06);
     color: var(--text);
     flex-shrink: 0;
   }
   .ann-level-sel option.lvl-normal { color: #94a3b8; }
-  .ann-level-sel option.lvl-important { color: #f59e0b; }
-  .ann-level-sel option.lvl-urgent { color: #ef4444; }
+  .ann-level-sel option.lvl-important { color: var(--warning); }
+  .ann-level-sel option.lvl-urgent { color: var(--danger); }
 
-  .ann-item-normal { border-left: 3px solid rgba(148,163,184,0.4); }
-  .ann-item-important { border-left: 3px solid #f59e0b; background: linear-gradient(135deg, rgba(245,158,11,0.04), transparent); }
-  .ann-item-urgent { border-left: 3px solid #ef4444; background: linear-gradient(135deg, rgba(239,68,68,0.05), transparent); }
+  .ann-item-normal { border-left: 2px solid rgba(148,163,184,0.3); }
+  .ann-item-important { border-left: 2px solid var(--warning); background: linear-gradient(135deg, rgba(245,158,11,0.04), transparent); }
+  .ann-item-urgent { border-left: 2px solid var(--danger); background: linear-gradient(135deg, rgba(239,68,68,0.04), transparent); }
 
   .ann-level-tag {
     display: inline-block;
     padding: 2px 8px;
     font-size: 10px;
-    font-weight: 700;
-    border-radius: 6px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
     letter-spacing: 0.5px;
     flex-shrink: 0;
   }
-  .ann-level-tag.normal { background: rgba(148,163,184,0.15); color: #94a3b8; }
-  .ann-level-tag.important { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(251,191,36,0.15)); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-  .ann-level-tag.urgent { background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(248,113,113,0.15)); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); animation: annUrgentPulse 2s ease-in-out infinite; }
-  @keyframes annUrgentPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
-    50% { box-shadow: 0 0 8px 2px rgba(239,68,68,0.2); }
+  .ann-level-tag.normal { background: rgba(148,163,184,0.1); color: #94a3b8; }
+  .ann-level-tag.important { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.2); }
+  .ann-level-tag.urgent { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); }
+
+  /* 减少动画偏好设置 */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .cosmic-orb { animation: none !important; }
   }
 </style>
 </head>
@@ -1636,7 +1488,7 @@
 
 <!-- API 配置浮窗 -->
 <div class="api-config">
-  <div class="api-config-btn" onclick="toggleApiConfig()" title="API 配置">⚙️</div>
+  <button class="api-config-btn" onclick="toggleApiConfig()" title="API 配置" type="button">⚙️</button>
   <div class="api-config-panel" id="api-config-panel">
     <h4>🔌 Worker 接口配置</h4>
     <input type="text" id="api-base" placeholder="https://api.bantan.online">
@@ -1668,7 +1520,7 @@
     <div class="sidebar-logo">
       <div class="logo-icon">⚙️</div>
       <div>
-        <div class="logo-text">站长后台</div>
+        <h1 class="logo-text">站长后台</h1>
         <div class="logo-sub">Admin Console</div>
       </div>
     </div>
@@ -1679,7 +1531,7 @@
       </div>
       <div class="nav-item" onclick="switchPage('monitor', this)">
         <span class="nav-icon">📡</span> 实时监控
-        <span class="nav-badge" id="monitor-badge" style="display:none;background:#22c55e;">●</span>
+        <span class="nav-badge" id="monitor-badge" style="display:none;background:var(--success);">●</span>
       </div>
 
       <div class="nav-section">内容管理</div>
@@ -1689,6 +1541,10 @@
       <div class="nav-item" onclick="switchPage('announce', this)">
         <span class="nav-icon">📢</span> 公告管理
       </div>
+      <div class="nav-item" onclick="window.open('changelog.html', '_blank')" style="cursor:pointer;">
+        <span class="nav-icon">📋</span> 更新日志页面
+        <span class="nav-badge" style="background:linear-gradient(135deg,#00f5ff,#7c3aed);color:#fff;font-size:10px;">新</span>
+      </div>
 
       <div class="nav-section">用户数据</div>
       <div class="nav-item" onclick="switchPage('users', this)">
@@ -1696,7 +1552,7 @@
       </div>
       <div class="nav-item" onclick="window.open('create-vip.html', '_blank')" style="cursor:pointer;">
         <span class="nav-icon">👑</span> VIP创建通道
-        <span class="nav-badge" style="background:linear-gradient(135deg,#ffd700,#ff8c00);color:#000;font-size:10px;">NEW</span>
+        <span class="nav-badge" style="background:linear-gradient(135deg,var(--accent-gold),var(--accent));color:#000;font-size:10px;">NEW</span>
       </div>
       <div class="nav-item" onclick="switchPage('feedback', this)">
         <span class="nav-icon">💬</span> 反馈收集
@@ -1716,7 +1572,7 @@
     </div>
     <div class="sidebar-footer">
       <a href="index.html" class="back-link">← 返回主站</a>
-      <div style="margin-top:8px;cursor:pointer;" onclick="doLogout()">退出登录</div>
+      <button class="sidebar-logout-btn" onclick="doLogout()" type="button">退出登录</button>
     </div>
   </div>
 
@@ -1727,7 +1583,7 @@
     <div class="page active" id="page-dashboard">
       <div class="page-header">
         <div>
-          <div class="page-title">数据仪表盘 <small>实时概览</small></div>
+          <h2 class="page-title">数据仪表盘 <small>实时概览</small></h2>
         </div>
         <div class="header-actions">
           <span class="live-badge" id="dash-live-badge" style="display:none;"><span class="live-dot"></span> LIVE</span>
@@ -1784,7 +1640,7 @@
 
       <div class="grid-2">
         <div class="card">
-          <div class="card-title">📈 近7天访问趋势</div>
+          <h3 class="card-title">📈 近7天访问趋势</h3>
           <div style="height:220px;display:flex;align-items:flex-end;gap:12px;padding:10px 0;" id="chart-wrap">
             <div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:12px;">
               <span class="loading"></span>&nbsp; 加载中...
@@ -1792,7 +1648,7 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-title">💡 系统状态</div>
+          <h3 class="card-title">💡 系统状态</h3>
           <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
             <span>每日免费额度</span>
             <span class="tag cyan" id="daily-limit-tag">-- 次</span>
@@ -1813,7 +1669,7 @@
       </div>
 
       <div class="card">
-        <div class="card-title">🎟️ 兑换码使用分布</div>
+        <h3 class="card-title">🎟️ 兑换码使用分布</h3>
         <div id="tier-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;">
           <div style="color:var(--sub);font-size:12px;">加载中...</div>
         </div>
@@ -1824,7 +1680,7 @@
     <div class="page" id="page-monitor">
       <div class="page-header">
         <div>
-          <div class="page-title">实时监控 <small>自动刷新 · 活动追踪 · 健康检查</small></div>
+          <h2 class="page-title">实时监控 <small>自动刷新 · 活动追踪 · 健康检查</small></h2>
         </div>
         <div class="header-actions">
           <span class="live-badge" id="monitor-live-badge" style="display:none;"><span class="live-dot"></span> LIVE</span>
@@ -1838,9 +1694,9 @@
 
       <div class="stats-grid">
         <!-- 在线人数已关闭，减少 KV list() 调用
-        <div class="stat-card" style="border-left:3px solid #22c55e;">
+        <div class="stat-card" style="border-left:3px solid var(--success);">
           <div class="stat-label">当前在线用户</div>
-          <div class="stat-value" id="mon-online" style="color:#22c55e;">--</div>
+          <div class="stat-value" id="mon-online" style="color:var(--success);">--</div>
           <div class="stat-delta" id="mon-online-delta">实时心跳监测</div>
           <div class="stat-icon">🟢</div>
         </div>
@@ -1938,22 +1794,22 @@
 
       <!-- 数据变化追踪 -->
       <div class="card">
-        <div class="card-title">📊 数据变化追踪</div>
+        <h3 class="card-title">📊 数据变化追踪</h3>
         <div class="grid-3">
-          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;">
             <span class="ms-label">PV 变化</span>
             <span class="ms-value" id="track-pv" style="color:var(--accent);">0</span>
             <span style="font-size:10px;color:var(--sub);" id="track-pv-time">--</span>
           </div>
-          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;">
             <span class="ms-label">对话变化</span>
-            <span class="ms-value" id="track-chat" style="color:var(--accent2);">0</span>
+            <span class="ms-value" id="track-chat" style="color:var(--accent-2);">0</span>
             <span style="font-size:10px;color:var(--sub);" id="track-chat-time">--</span>
           </div>
           <!-- 在线变化（已关闭，减少 KV 调用）
-          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div class="monitor-stat-row" style="flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;">
             <span class="ms-label">在线变化</span>
-            <span class="ms-value" id="track-online" style="color:#22c55e;">0</span>
+            <span class="ms-value" id="track-online" style="color:var(--success);">0</span>
             <span style="font-size:10px;color:var(--sub);" id="track-online-time">--</span>
           </div>
           -->
@@ -1964,7 +1820,7 @@
     <!-- 兑换码管理 -->
     <div class="page" id="page-codes">
       <div class="page-header">
-        <div class="page-title">兑换码管理 <small>生成 · 导出 · 统计</small></div>
+        <h2 class="page-title">兑换码管理 <small>生成 · 导出 · 统计</small></h2>
         <div class="header-actions">
           <button class="btn primary" onclick="toggleGenPanel()">➕ 批量生成</button>
           <button class="btn" onclick="exportAllCodes()">📤 导出全部</button>
@@ -1991,7 +1847,7 @@
       </div>
 
       <div class="card" id="gen-panel" style="margin-bottom:20px;display:none;">
-        <div class="card-title">🎲 批量生成兑换码</div>
+        <h3 class="card-title">🎲 批量生成兑换码</h3>
         <div class="grid-3">
           <div>
             <div style="font-size:12px;color:var(--sub);margin-bottom:6px;">兑换码档次</div>
@@ -2025,7 +1881,7 @@
       </div>
 
       <div class="card">
-        <div class="card-title">
+        <h3 class="card-title">
           兑换码列表
           <div style="margin-left:auto;display:flex;gap:8px;">
             <select id="code-filter-tier" onchange="loadCodeList()" style="font-size:11px;">
@@ -2045,12 +1901,12 @@
             </select>
             <input type="text" id="code-search" placeholder="搜索兑换码..." onkeyup="if(event.key==='Enter')loadCodeList()" style="font-size:11px;width:160px;">
           </div>
-        </div>
+        </h3>
         <table>
           <thead>
             <tr><th>兑换码</th><th>档次</th><th>次数</th><th>状态</th><th>生成时间</th><th>操作</th></tr>
           </thead>
-          <tbody id="code-list"><tr><td colspan="6" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
+          <tbody id="code-list"><tr><td colspan="6" class="empty" style="color:var(--danger);">网络错误: Failed to fetch</td></tr></tbody>
         </table>
         <div style="text-align:center;padding:12px;font-size:11px;color:var(--sub);" id="code-page-info">
           加载中...
@@ -2062,7 +1918,7 @@
     <div class="page" id="page-users">
       <div class="page-header">
         <div>
-          <div class="page-title">用户管理 <small>用户列表 · UID 管理 · 余额调整</small></div>
+          <h2 class="page-title">用户管理 <small>用户列表 · UID 管理 · 余额调整</small></h2>
         </div>
         <div class="header-actions">
           <button class="btn primary" onclick="showCreateUser()">➕ 添加用户</button>
@@ -2098,7 +1954,7 @@
       </div>
 
       <div class="card">
-        <div class="card-title">
+        <h3 class="card-title">
           👥 用户列表
           <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
             <input type="text" id="user-search" placeholder="搜索用户名或 UID..." oninput="filterUsers()" onkeydown="if(event.key==='Enter')loadUserList()" style="font-size:12px;width:200px;">
@@ -2109,7 +1965,7 @@
             </select>
             <button class="btn btn-sm" onclick="loadUserList()">🔍 搜索</button>
           </div>
-        </div>
+        </h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -2124,7 +1980,7 @@
                 <th style="width:210px;">操作</th>
               </tr>
             </thead>
-            <tbody id="user-list"><tr><td colspan="8" class="empty" style="color:var(--accent5);">网络错误: Failed to fetch</td></tr></tbody>
+            <tbody id="user-list"><tr><td colspan="8" class="empty" style="color:var(--danger);">网络错误: Failed to fetch</td></tr></tbody>
           </table>
         </div>
         <div style="text-align:center;padding:12px;font-size:12px;color:var(--sub);" id="user-page-info">加载失败</div>
@@ -2134,7 +1990,7 @@
     <!-- 公告管理 -->
     <div class="page" id="page-announce">
       <div class="page-header">
-        <div class="page-title">公告管理 <small>滚动公告 · 更新日志</small></div>
+        <h2 class="page-title">公告管理 <small>滚动公告 · 更新日志</small></h2>
         <div class="header-actions">
           <button class="btn" onclick="loadAnnounces()">🔄 刷新</button>
           <button class="btn primary" onclick="saveAnnounces()">💾 保存全部</button>
@@ -2150,16 +2006,16 @@
       <!-- 滚动公告面板 -->
       <div class="tab-panel active" id="panel-ann">
         <div class="card">
-          <div class="card-title">
+          <h3 class="card-title">
             📢 滚动公告列表
             <button class="btn btn-sm primary" onclick="addAnnounce()" style="margin-left:auto;">➕ 添加</button>
-          </div>
+          </h3>
           <div id="announce-list" style="margin-bottom:16px;"><div class="empty">加载中...</div></div>
           <div style="font-size:11px;color:var(--sub);line-height:1.8;">
             💡 公告会在首页顶部滚动显示，建议每条不超过 30 字<br>
             <span style="color:#94a3b8;">📌 普通</span> ·
-            <span style="color:#f59e0b;">⭐ 重要</span> ·
-            <span style="color:#ef4444;">🔥 紧急（脉冲高亮）</span>
+            <span style="color:var(--warning);">⭐ 重要</span> ·
+            <span style="color:var(--danger);">🔥 紧急（脉冲高亮）</span>
           </div>
         </div>
       </div>
@@ -2167,10 +2023,10 @@
       <!-- 更新日志面板 -->
       <div class="tab-panel" id="panel-cl">
         <div class="card">
-          <div class="card-title">
+          <h3 class="card-title">
             📋 更新日志管理
             <button class="btn btn-sm primary" onclick="addChangelogVersion()" style="margin-left:auto;">➕ 添加版本</button>
-          </div>
+          </h3>
           <div id="changelog-editor" style="margin-bottom:16px;">
             <div class="empty">加载中...</div>
           </div>
@@ -2190,7 +2046,7 @@
     <!-- 反馈收集 -->
     <div class="page" id="page-feedback">
       <div class="page-header">
-        <div class="page-title">反馈收集 <small>用户意见 · 功能建议</small></div>
+        <h2 class="page-title">反馈收集 <small>用户意见 · 功能建议</small></h2>
         <div class="header-actions">
           <button class="btn" onclick="loadFeedback()">🔄 刷新</button>
         </div>
@@ -2210,7 +2066,7 @@
     <!-- 访问统计 -->
     <div class="page" id="page-stats">
       <div class="page-header">
-        <div class="page-title">访问统计 <small>PV · UV · 趋势</small></div>
+        <h2 class="page-title">访问统计 <small>PV · UV · 趋势</small></h2>
       </div>
       <div class="card">
         <div style="text-align:center;padding:40px;color:var(--sub);">
@@ -2224,10 +2080,10 @@
     <!-- 系统设置 -->
     <div class="page" id="page-settings">
       <div class="page-header">
-        <div class="page-title">系统设置 <small>基础配置</small></div>
+        <h2 class="page-title">系统设置 <small>基础配置</small></h2>
       </div>
       <div class="card" style="max-width:600px;margin-bottom:20px;">
-        <div class="card-title">⚙️ 基础配置</div>
+        <h3 class="card-title">⚙️ 基础配置</h3>
         <div class="form-row">
           <label>站点名称</label>
           <input type="text" id="set-site-name" value="绊谈万能枢纽">
@@ -2248,7 +2104,7 @@
       </div>
 
       <div class="card" style="max-width:600px;">
-        <div class="card-title">🔐 管理员密码</div>
+        <h3 class="card-title">🔐 管理员密码</h3>
         <div style="font-size:12px;color:var(--sub);margin-bottom:12px;">
           出于安全考虑，管理员密码需要在 Cloudflare Workers 后台修改：
           <br>Settings → Variables → Environment Variables → ADMIN_PASSWORD
@@ -2268,23 +2124,23 @@
     <!-- 备份恢复 -->
     <div class="page" id="page-backup">
       <div class="page-header">
-        <div class="page-title">备份与恢复 <small>数据安全</small></div>
+        <h2 class="page-title">备份与恢复 <small>数据安全</small></h2>
       </div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-title">📤 导出数据</div>
+          <h3 class="card-title">📤 导出数据</h3>
           <p style="font-size:12px;color:var(--sub);margin-bottom:16px;">
             将 KV 中所有数据（兑换码、配置、反馈、统计等）导出为 JSON 文件，用于备份。
           </p>
           <button class="btn primary" onclick="exportAllData()">导出全部数据</button>
         </div>
         <div class="card">
-          <div class="card-title">📥 导入数据</div>
+          <h3 class="card-title">📥 导入数据</h3>
           <p style="font-size:12px;color:var(--sub);margin-bottom:16px;">
             从 JSON 文件恢复数据到 KV。将覆盖已有数据，请谨慎操作。
           </p>
           <input type="file" id="import-file" accept=".json" style="margin-bottom:12px;" onchange="importData(event)">
-          <div style="font-size:11px;color:var(--accent5);">⚠️ 导入操作不可撤销</div>
+          <div style="font-size:11px;color:var(--danger);">⚠️ 导入操作不可撤销</div>
         </div>
       </div>
     </div>
@@ -2295,7 +2151,7 @@
 <!-- 重置密码模态框 -->
 <div class="modal-overlay" id="modal-password">
   <div class="modal">
-    <div class="modal-title">🔐 重置密码</div>
+    <h3 class="modal-title">🔐 重置密码</h3>
     <div class="modal-body">
       <div style="font-size:12px;color:var(--sub);margin-bottom:8px;">用户: <span id="pwd-username" style="color:var(--text);font-weight:600;"></span></div>
       <div style="font-size:12px;color:var(--sub);margin-bottom:6px;">新密码</div>
@@ -2311,11 +2167,11 @@
 <!-- 调整余额模态框 -->
 <div class="modal-overlay" id="modal-balance">
   <div class="modal">
-    <div class="modal-title">💰 调整余额</div>
+    <h3 class="modal-title">💰 调整余额</h3>
     <div class="modal-body">
       <div style="font-size:12px;color:var(--sub);margin-bottom:8px;">
         用户: <span id="bal-username" style="color:var(--text);font-weight:600;"></span>
-        &nbsp;|&nbsp; 当前余额: <span id="bal-current" style="color:var(--accent3);font-weight:600;"></span> 次
+        &nbsp;|&nbsp; 当前余额: <span id="bal-current" style="color:var(--accent);font-weight:600;"></span> 次
       </div>
       <div style="font-size:12px;color:var(--sub);margin-bottom:6px;">调整额度（正数增加，负数扣除）</div>
       <input type="number" id="bal-delta" placeholder="例如: 10 或 -5" style="width:100%;" oninput="updateBalancePreview()">
@@ -2333,18 +2189,18 @@
 <!-- 设置UID模态框 -->
 <div class="modal-overlay" id="modal-uid">
   <div class="modal">
-    <div class="modal-title">🆔 设置 UID</div>
+    <h3 class="modal-title">🆔 设置 UID</h3>
     <div class="modal-body">
       <div style="font-size:12px;color:var(--sub);margin-bottom:12px;">
         用户: <span id="uid-username" style="color:var(--text);font-weight:600;"></span>
-        &nbsp;|&nbsp; 当前 UID: <span id="uid-current" style="color:var(--accent6);font-weight:700;font-family:monospace;"></span>
+        &nbsp;|&nbsp; 当前 UID: <span id="uid-current" style="color:var(--accent);font-weight:700;font-family:monospace;"></span>
       </div>
       <div style="font-size:12px;color:var(--sub);margin-bottom:6px;">新 UID（格式：BT + 6位数字）</div>
       <input type="text" id="uid-input" placeholder="例如：BT000001" style="width:100%;font-family:monospace;letter-spacing:1px;text-transform:uppercase;" maxlength="8" oninput="validateUidInput()">
       <div style="font-size:11px;color:var(--sub);margin-top:6px;" id="uid-hint">
         💡 设置后，后续新注册用户的 UID 将从该数字之后继续递增
       </div>
-      <div style="font-size:11px;margin-top:8px;padding:8px;background:rgba(245,158,11,0.08);border-radius:6px;border:1px solid rgba(245,158,11,0.2);color:var(--accent4);">
+      <div style="font-size:11px;margin-top:8px;padding:8px;background:rgba(245,158,11,0.08);border-radius:var(--radius-sm);border:1px solid rgba(245,158,11,0.2);color:var(--warning);">
         ⚠️ 请确保 UID 不与现有用户重复，建议按注册顺序依次设置
       </div>
     </div>
@@ -2358,18 +2214,18 @@
 <!-- VIP设置模态框 -->
 <div class="modal-overlay" id="modal-vip">
   <div class="modal">
-    <div class="modal-title">👑 VIP设置</div>
+    <h3 class="modal-title">👑 VIP设置</h3>
     <div class="modal-body">
       <div style="font-size:12px;color:var(--sub);margin-bottom:12px;">
         用户: <span id="vip-username" style="color:var(--text);font-weight:600;"></span>
       </div>
       <div style="font-size:12px;color:var(--sub);margin-bottom:6px;">VIP状态</div>
       <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;font-size:12px;" onclick="document.getElementById('vip-status-off').checked=true">
+        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;text-align:center;font-size:12px;" onclick="document.getElementById('vip-status-off').checked=true">
           <input type="radio" name="vip-status" id="vip-status-off" value="0" style="margin-right:4px;">
           普通用户
         </label>
-        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;font-size:12px;background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,140,0,0.1));border-color:rgba(255,215,0,0.3);" onclick="document.getElementById('vip-status-on').checked=true">
+        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;text-align:center;font-size:12px;background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(251,191,36,0.05));border-color:rgba(251,191,36,0.3);" onclick="document.getElementById('vip-status-on').checked=true">
           <input type="radio" name="vip-status" id="vip-status-on" value="1" style="margin-right:4px;">
           VIP用户
         </label>
@@ -2391,7 +2247,7 @@
         <option value="180">6个月</option>
         <option value="365">1年</option>
       </select>
-      <div style="font-size:11px;color:var(--sub);margin-top:10px;padding:8px;background:rgba(255,215,0,0.05);border-radius:6px;border:1px solid rgba(255,215,0,0.1);">
+      <div style="font-size:11px;color:var(--sub);margin-top:10px;padding:8px;background:rgba(251,191,36,0.05);border-radius:var(--radius-sm);border:1px solid rgba(251,191,36,0.1);">
         💡 VIP用户享受无限对话次数，不扣除每日额度和余额
       </div>
     </div>
@@ -2405,7 +2261,7 @@
 <!-- 创建用户模态框 -->
 <div class="modal-overlay" id="modal-create-user">
   <div class="modal" style="width:460px;">
-    <div class="modal-title">👤 添加用户</div>
+    <h3 class="modal-title">👤 添加用户</h3>
     <div class="modal-body">
       <div class="form-row">
         <label>用户名</label>
@@ -2423,11 +2279,11 @@
       </div>
       <div style="font-size:12px;color:var(--sub);margin:14px 0 6px;">用户类型</div>
       <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;font-size:12px;" onclick="document.getElementById('cu-vip-off').checked=true;document.getElementById('cu-vip-level-wrap').style.display='none'">
+        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;text-align:center;font-size:12px;" onclick="document.getElementById('cu-vip-off').checked=true;document.getElementById('cu-vip-level-wrap').style.display='none'">
           <input type="radio" name="cu-vip-status" id="cu-vip-off" value="0" checked="" style="margin-right:4px;">
           普通用户
         </label>
-        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;font-size:12px;background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,140,0,0.1));border-color:rgba(255,215,0,0.3);" onclick="document.getElementById('cu-vip-on').checked=true;document.getElementById('cu-vip-level-wrap').style.display='block'">
+        <label style="flex:1;padding:8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;text-align:center;font-size:12px;background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(251,191,36,0.05));border-color:rgba(251,191,36,0.3);" onclick="document.getElementById('cu-vip-on').checked=true;document.getElementById('cu-vip-level-wrap').style.display='block'">
           <input type="radio" name="cu-vip-status" id="cu-vip-on" value="1" style="margin-right:4px;">
           VIP用户
         </label>
@@ -2443,7 +2299,7 @@
             <option value="5" selected="">👑 至尊VIP（最高级）</option>
           </select>
         </div>
-        <div style="font-size:11px;color:var(--sub);padding:8px;background:rgba(255,215,0,0.05);border-radius:6px;border:1px solid rgba(255,215,0,0.1);">
+        <div style="font-size:11px;color:var(--sub);padding:8px;background:rgba(251,191,36,0.05);border-radius:var(--radius-sm);border:1px solid rgba(251,191,36,0.1);">
           💡 VIP用户享受无限对话次数，创建即为永久VIP
         </div>
       </div>
@@ -2618,14 +2474,14 @@ async function loadDashboard() {
   if (!res.success) {
     document.getElementById('conn-badge').textContent = '● 离线';
     document.getElementById('conn-badge').style.background = 'rgba(239,68,68,0.1)';
-    document.getElementById('conn-badge').style.color = '#ef4444';
+    document.getElementById('conn-badge').style.color = 'var(--danger)';
     document.getElementById('conn-badge').style.borderColor = 'rgba(239,68,68,0.2)';
     return;
   }
   
   document.getElementById('conn-badge').textContent = '● 云端在线';
   document.getElementById('conn-badge').style.background = 'rgba(34,197,94,0.1)';
-  document.getElementById('conn-badge').style.color = '#22c55e';
+  document.getElementById('conn-badge').style.color = 'var(--success)';
   document.getElementById('conn-badge').style.borderColor = 'rgba(34,197,94,0.2)';
   
   const d = res;
@@ -2679,7 +2535,7 @@ function renderChart(weekData) {
     return `
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
         <div style="font-size:10px;color:var(--accent);font-weight:600;">${d.pv}</div>
-        <div style="width:100%;height:${h}%;background:linear-gradient(180deg,var(--accent),var(--accent2));border-radius:6px 6px 0 0;opacity:${0.4 + i*0.09};min-height:10px;"></div>
+        <div style="width:100%;height:${h}%;background:linear-gradient(180deg,var(--accent),var(--accent-2));border-radius:6px 6px 0 0;opacity:${0.4 + i*0.09};min-height:10px;"></div>
         <div style="font-size:10px;color:var(--sub);">${dayName}</div>
       </div>
     `;
@@ -2751,7 +2607,7 @@ async function loadCodeStats() {
   // 档次分布
   const byTier = res.byTier || {};
   const tierHtml = Object.entries(byTier).map(([tier, data]) => `
-    <div style="padding:12px;border-radius:10px;background:rgba(var(--glow-color),0.03);border:1px solid var(--border);">
+    <div style="padding:12px;border-radius:var(--radius-md);background:rgba(var(--accent-rgb),0.03);border:1px solid var(--border);">
       <div style="font-size:11px;color:var(--sub);">${TIER_NAMES[tier] || tier}</div>
       <div style="font-size:18px;font-weight:800;margin:4px 0;">${data.total}</div>
       <div style="font-size:10px;color:var(--sub);">已用 ${data.used} · 剩余 ${data.total - data.used}</div>
@@ -2775,7 +2631,7 @@ async function loadCodeList() {
   const tbody = document.getElementById('code-list');
   
   if (!res.success) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="empty" style="color:var(--danger);">${res.error}</td></tr>`;
     return;
   }
   
@@ -2838,7 +2694,7 @@ async function loadFeedback() {
   const tbody = document.getElementById('feedback-list');
   
   if (!res.success) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="empty" style="color:var(--danger);">${res.error}</td></tr>`;
     return;
   }
   
@@ -2893,7 +2749,7 @@ async function loadUserList() {
   const tbody = document.getElementById('user-list');
   
   if (!res.success) {
-    tbody.innerHTML = `<tr><td colspan="8" class="empty" style="color:var(--accent5);">${res.error}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty" style="color:var(--danger);">${res.error}</td></tr>`;
     document.getElementById('user-page-info').textContent = '加载失败';
     return;
   }
@@ -2969,7 +2825,7 @@ function renderUserList(users) {
       <tr>
         <td>
           <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-family:'SF Mono',Consolas,monospace;font-size:12px;color:var(--accent6);font-weight:700;letter-spacing:0.5px;">${escapeHtml(uid)}</span>
+            <span style="font-family:'SF Mono',Consolas,monospace;font-size:12px;color:var(--accent);font-weight:700;letter-spacing:0.5px;">${escapeHtml(uid)}</span>
             <button class="btn btn-sm" onclick="copyUid('${escapeHtml(uid)}')" title="复制 UID" style="padding:2px 6px;font-size:10px;">📋</button>
           </div>
         </td>
@@ -2977,7 +2833,7 @@ function renderUserList(users) {
           ${escapeHtml(username)}
         </td>
         <td>
-          <span class="tag ${isVip ? vipColors[vipLevel] || 'gold' : 'gray'}" style="${isVip ? 'background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border-color:rgba(255,215,0,0.3);color:#ffd700;' : ''}">
+          <span class="tag ${isVip ? vipColors[vipLevel] || 'gold' : 'gray'}" style="${isVip ? 'background:rgba(var(--accent-gold-rgb),0.1);border-color:rgba(var(--accent-gold-rgb),0.3);color:var(--accent-gold);' : ''}">
             ${vipNames[vipLevel] || (isVip ? 'VIP' : '普通用户')}
           </span>
         </td>
@@ -3048,10 +2904,10 @@ function validateUidInput() {
   input.value = val;
   
   if (/^BT\d{6}$/.test(val)) {
-    hint.style.color = 'var(--accent3)';
+    hint.style.color = 'var(--success)';
     hint.textContent = '✅ 格式正确';
   } else if (val.length > 0) {
-    hint.style.color = 'var(--accent5)';
+    hint.style.color = 'var(--danger)';
     hint.textContent = '❌ 格式错误，应为 BT + 6位数字';
   } else {
     hint.style.color = 'var(--sub)';
@@ -3363,7 +3219,7 @@ async function loadAnnounces() {
   const clWrap = document.getElementById('changelog-editor');
 
   if (!res.success) {
-    if (wrap) wrap.innerHTML = '<div class="empty" style="color:var(--accent5);">' + (res.error || '加载失败') + '</div>';
+    if (wrap) wrap.innerHTML = '<div class="empty" style="color:var(--danger);">' + (res.error || '加载失败') + '</div>';
     // API失败时保留默认更新日志，仅渲染编辑器
     renderChangelogEditor();
     return;
@@ -3414,7 +3270,7 @@ function renderAnnounces() {
     const content = a.content || '';
     const level = a.level || 'normal';
 
-    return '<div class="ann-item-' + level + '" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;">' +
+    return '<div class="ann-item-' + level + '" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:8px;">' +
       '<span style="font-size:12px;color:var(--sub);min-width:40px;">#' + (i+1) + '</span>' +
       '<select class="ann-level-sel" onchange="updateAnnounceLevel(' + i + ', this.value)">' +
         '<option value="normal" class="lvl-normal"' + (level === 'normal' ? ' selected' : '') + '>' + levelNames.normal + '</option>' +
@@ -3880,7 +3736,7 @@ function updateRealtimeChart() {
   wrap.innerHTML = rtChart.map((v, i) => {
     const h = Math.max(5, (v / maxVal) * 100);
     const opacity = 0.3 + (i / rtChart.length) * 0.7;
-    const color = v === maxVal ? 'var(--accent)' : 'var(--accent2)';
+    const color = v === maxVal ? 'var(--accent)' : 'var(--accent-2)';
     return '<div class="realtime-chart-bar" style="height:' + h + '%;background:linear-gradient(180deg,' + color + ',rgba(0,245,255,0.1));opacity:' + opacity + ';" title="' + v + '"></div>';
   }).join('');
 
@@ -3902,18 +3758,18 @@ async function pollHealth() {
       healthStats.successCount++;
       healthStats.isOnline = true;
       document.getElementById('health-status').textContent = '✅ 正常运行';
-      document.getElementById('health-status').style.color = '#22c55e';
+      document.getElementById('health-status').style.color = 'var(--success)';
       document.getElementById('health-tag').textContent = '在线';
       document.getElementById('health-tag').className = 'tag green';
-      document.getElementById('health-ring').style.background = '#22c55e';
+      document.getElementById('health-ring').style.background = 'var(--success)';
     }
   } catch (e) {
     healthStats.isOnline = false;
     document.getElementById('health-status').textContent = '❌ 连接失败';
-    document.getElementById('health-status').style.color = '#ef4444';
+    document.getElementById('health-status').style.color = 'var(--danger)';
     document.getElementById('health-tag').textContent = '离线';
     document.getElementById('health-tag').className = 'tag red';
-    document.getElementById('health-ring').style.background = '#ef4444';
+    document.getElementById('health-ring').style.background = 'var(--danger)';
     addActivityLog('⚠️', '健康检查失败: ' + e.message, 'down');
   }
 
@@ -3958,7 +3814,7 @@ async function pollOnlineUsersList() {
   wrap.innerHTML = users.map(u => {
     const isVip = u.isVip || false;
     const vipLevel = u.vipLevel || 0;
-    const vipTag = isVip ? '<span class="tag" style="background:rgba(255,215,0,0.1);color:#ffd700;border:1px solid rgba(255,215,0,0.2);">' + (vipNames[vipLevel] || 'VIP') + '</span>' : '';
+    const vipTag = isVip ? '<span class="tag" style="background:rgba(var(--accent-gold-rgb),0.1);color:var(--accent-gold);border:1px solid rgba(var(--accent-gold-rgb),0.2);">' + (vipNames[vipLevel] || 'VIP') + '</span>' : '';
     return '<div class="online-user-item">' +
       '<span class="status-dot online"></span>' +
       '<span style="font-weight:600;flex:1;">' + escapeHtml(u.username || '') + '</span>' +

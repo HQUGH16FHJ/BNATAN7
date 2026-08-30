@@ -2,204 +2,681 @@
 <html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>创建VIP账号 - 绊谈万能枢纽</title>
+    <title>创建 VIP 账号 - 管理后台</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 主题色 */
+            --accent-gold: #fbbf24;
+            --accent-gold-soft: rgba(251, 191, 36, 0.15);
+            --accent-gold-border: rgba(251, 191, 36, 0.35);
+            --accent: #00f5ff;
+            --accent-soft: rgba(0, 245, 255, 0.12);
+            --accent-border: rgba(0, 245, 255, 0.3);
+
+            /* 文本色阶 */
+            --text-primary: rgba(255, 255, 255, 0.92);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-tertiary: rgba(255, 255, 255, 0.38);
+
+            /* 玻璃拟态变量系统 */
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-bg-hover: rgba(255, 255, 255, 0.09);
+            --glass-blur: blur(20px) saturate(150%);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            --glass-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+
+            /* 边框色阶 */
+            --border: rgba(255, 255, 255, 0.12);
+            --border-strong: rgba(255, 255, 255, 0.18);
+
+            /* 状态色 */
+            --success: #34d399;
+            --success-bg: rgba(52, 211, 153, 0.12);
+            --success-border: rgba(52, 211, 153, 0.3);
+            --danger: #f87171;
+            --danger-bg: rgba(248, 113, 113, 0.12);
+            --danger-border: rgba(248, 113, 113, 0.3);
+
+            /* 三级圆角系统 */
+            --radius-sm: 8px;   /* 徽章、标签 */
+            --radius-md: 12px;  /* 按钮、输入框 */
+            --radius-lg: 16px;  /* 主卡片 */
+        }
+
+        html, body {
+            height: 100%;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Roboto, sans-serif;
+            background: #050510;
+            color: var(--text-primary);
+            line-height: 1.55;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px 16px;
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+
+        /* 宇宙背景装饰 */
+        .cosmos-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .cosmos-bg::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -20%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 60%);
+            filter: blur(60px);
+            animation: float-slow 80s ease-in-out infinite;
+        }
+
+        .cosmos-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -15%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.18) 0%, transparent 55%);
+            filter: blur(80px);
+            animation: float-slow 100s ease-in-out infinite reverse;
+        }
+
+        .star-field {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 60% 70%, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1.5px 1.5px at 40% 20%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 80% 50%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 15% 80%, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1.5px 1.5px at 90% 15%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 35% 90%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 70% 35%, rgba(0, 245, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 50% 60%, rgba(251, 191, 36, 0.5), transparent);
+            opacity: 0.8;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -15px); }
+        }
+
+        /* 主卡片 - 玻璃拟态 */
         .vip-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 450px;
+            position: relative;
+            z-index: 1;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 480px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: var(--radius-lg);
+            padding: 40px 36px;
+            box-shadow:
+                0 32px 64px -12px rgba(0, 0, 0, 0.5),
+                var(--glass-highlight),
+                var(--glass-shadow),
+                0 0 0 1px var(--glass-border) inset;
+            border: 1px solid transparent;
+            background-clip: padding-box;
         }
+
+        .vip-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0.02) 40%,
+                rgba(251, 191, 36, 0.1) 70%,
+                rgba(0, 245, 255, 0.08) 100%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* 头部 */
         .vip-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 36px;
         }
-        .vip-crown {
-            font-size: 60px;
-            margin-bottom: 10px;
+
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, var(--accent-gold-soft), var(--accent-soft));
+            border: 1px solid var(--accent-gold-border);
+            margin-bottom: 16px;
+            box-shadow:
+                0 8px 24px rgba(251, 191, 36, 0.2),
+                var(--glass-highlight);
         }
+
+        .vip-badge svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent-gold);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         .vip-title {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #fef3c7 0%, var(--accent-gold) 50%, #f59e0b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
+
         .vip-subtitle {
-            color: rgba(255,255,255,0.6);
             font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.55;
         }
+
+        /* 分区标题 */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 14px;
+            margin-top: 4px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 28px 0;
+        }
+
+        /* 表单组 */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
+
+        .form-group:last-of-type {
+            margin-bottom: 0;
+        }
+
         .form-label {
             display: block;
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
             margin-bottom: 8px;
+            line-height: 1.4;
         }
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s;
+
+        .form-label .required {
+            color: var(--accent-gold);
+            margin-left: 2px;
         }
-        .form-input:focus {
-            border-color: #ffd700;
-            box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 6px;
+            line-height: 1.4;
         }
-        .form-input::placeholder {
-            color: rgba(255,255,255,0.4);
+
+        /* 数字等宽 */
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+            -moz-font-feature-settings: "tnum";
+            -webkit-font-feature-settings: "tnum";
+            font-feature-settings: "tnum";
         }
+
+        /* 输入框 - 玻璃拟态 */
+        .form-input,
         .vip-select {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 15px;
+            height: 46px;
+            padding: 0 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
             outline: none;
-            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow:
+                var(--glass-highlight),
+                var(--glass-shadow),
+                0 1px 2px rgba(0, 0, 0, 0.1);
+            -webkit-appearance: none;
+            appearance: none;
         }
+
+        .form-input:hover,
+        .vip-select:hover {
+            border-color: var(--border-strong);
+            background: var(--glass-bg-hover);
+        }
+
+        .form-input:focus,
+        .vip-select:focus {
+            border-color: var(--accent-gold-border);
+            background: var(--glass-bg-hover);
+            box-shadow:
+                0 0 0 4px var(--accent-gold-soft),
+                var(--glass-highlight),
+                var(--glass-shadow);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        /* 下拉选择 */
+        .vip-select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 42px;
+        }
+
         .vip-select option {
-            background: #1a1a2e;
-            color: #fff;
+            background: #12122a;
+            color: var(--text-primary);
         }
+
+        /* 双列布局（等级和余额） */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        /* 主按钮 */
         .create-btn {
+            position: relative;
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            height: 50px;
+            margin-top: 28px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: var(--radius-md);
+            color: #1a1203;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0.01em;
+            box-shadow:
+                0 4px 16px rgba(251, 191, 36, 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.2) inset,
+                0 -1px 0 rgba(0, 0, 0, 0.1) inset;
         }
+
         .create-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+            transform: translateY(-1px);
+            box-shadow:
+                0 8px 24px rgba(251, 191, 36, 0.4),
+                0 1px 0 rgba(255, 255, 255, 0.25) inset,
+                0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+            filter: brightness(1.05);
         }
+
         .create-btn:active {
             transform: translateY(0);
+            filter: brightness(0.95);
+            box-shadow:
+                0 2px 8px rgba(251, 191, 36, 0.25),
+                0 1px 2px rgba(0, 0, 0, 0.2) inset;
         }
+
         .create-btn:disabled {
-            opacity: 0.6;
+            opacity: 0.65;
             cursor: not-allowed;
             transform: none;
+            filter: none;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.15);
         }
+
+        .btn-icon {
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: -2px;
+        }
+
+        /* 结果提示框 - 内联显示 */
         .result-box {
             margin-top: 20px;
-            padding: 16px;
-            border-radius: 10px;
+            padding: 16px 18px;
+            border-radius: var(--radius-md);
             display: none;
+            animation: slideDown 0.25s ease;
         }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .result-box.success {
-            background: rgba(0,255,128,0.1);
-            border: 1px solid rgba(0,255,128,0.3);
-            color: #00ff80;
             display: block;
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: var(--success);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow:
+                var(--glass-highlight),
+                var(--glass-shadow);
         }
+
         .result-box.error {
-            background: rgba(255,80,80,0.1);
-            border: 1px solid rgba(255,80,80,0.3);
-            color: #ff5050;
             display: block;
+            background: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            color: var(--danger);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow:
+                var(--glass-highlight),
+                var(--glass-shadow);
         }
+
         .result-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        .result-detail {
             font-size: 14px;
-            line-height: 1.6;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .divider {
-            height: 1px;
-            background: rgba(255,255,255,0.1);
-            margin: 20px 0;
+
+        .result-title svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
+
+        .result-detail {
+            font-size: 13px;
+            line-height: 1.7;
+            color: inherit;
+            opacity: 0.9;
+        }
+
+        .result-detail strong {
+            font-weight: 600;
+            opacity: 1;
+            font-variant-numeric: tabular-nums;
+            -moz-font-feature-settings: "tnum";
+            -webkit-font-feature-settings: "tnum";
+            font-feature-settings: "tnum";
+        }
+
+        .result-tip {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid currentColor;
+            opacity: 0.2;
+            font-size: 12px;
+        }
+
+        /* 底部提示 */
         .tip-text {
             font-size: 12px;
-            color: rgba(255,255,255,0.5);
+            color: var(--text-tertiary);
             text-align: center;
-            margin-top: 15px;
+            margin-top: 22px;
+            line-height: 1.55;
+        }
+
+        .tip-text .tip-icon {
+            color: var(--accent);
+            margin-right: 4px;
+        }
+
+        /* 响应式 - 移动端 */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px;
+                align-items: flex-start;
+                padding-top: 32px;
+            }
+
+            .vip-card {
+                padding: 28px 22px;
+                border-radius: var(--radius-lg);
+            }
+
+            .vip-title {
+                font-size: 22px;
+            }
+
+            .vip-badge {
+                width: 56px;
+                height: 56px;
+                border-radius: var(--radius-sm);
+            }
+
+            .vip-badge svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .vip-header {
+                margin-bottom: 28px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .create-btn {
+                height: 48px;
+                font-size: 14px;
+                margin-top: 24px;
+            }
+
+            .section-divider {
+                margin: 24px 0;
+            }
+        }
+
+        /* 加载状态 */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(26, 18, 3, 0.25);
+            border-top-color: #1a1203;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-right: 8px;
+            vertical-align: -3px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 减少动效偏好 */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .cosmos-bg::before,
+            .cosmos-bg::after {
+                animation: none;
+            }
+
+            .create-btn:hover {
+                transform: none;
+            }
+
+            .result-box {
+                animation: none;
+            }
+
+            .spinner {
+                animation: none;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="cosmos-bg">
+        <div class="star-field"></div>
+    </div>
+
     <div class="vip-card">
         <div class="vip-header">
-            <div class="vip-crown">👑</div>
-            <div class="vip-title">创建至尊VIP账号</div>
-            <div class="vip-subtitle">一键创建永久VIP，享受无限对话</div>
+            <div class="vip-badge">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+            </div>
+            <h1 class="vip-title">创建 VIP 账号</h1>
+            <p class="vip-subtitle">为用户开通 VIP 会员，享受专属权益</p>
+        </div>
+
+        <!-- 连接配置区 -->
+        <h2 class="section-label">连接配置</h2>
+
+        <div class="form-group">
+            <label class="form-label" for="workerUrl">
+                Worker 地址<span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="workerUrl" value="https://api.bantan.online" placeholder="请输入 Worker 地址">
+            <div class="form-hint">后端服务的完整 URL 地址</div>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Worker 地址</label>
-            <input type="text" class="form-input" id="workerUrl" placeholder="https://api.bantan.online" value="https://api.bantan.online">
+            <label class="form-label" for="adminPassword">
+                管理员密码<span class="required">*</span>
+            </label>
+            <input type="password" class="form-input" id="adminPassword" value="BANTAN777" placeholder="请输入管理员密码">
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- VIP 信息区 -->
+        <h2 class="section-label">VIP 信息</h2>
+
+        <div class="form-group">
+            <label class="form-label" for="username">
+                VIP 用户名<span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="username" value="BANTAN7" placeholder="请输入用户名">
         </div>
 
         <div class="form-group">
-            <label class="form-label">管理员密码</label>
-            <input type="password" class="form-input" id="adminPassword" placeholder="请输入管理员密码" value="BANTAN777">
+            <label class="form-label" for="password">
+                VIP 密码<span class="required">*</span>
+            </label>
+            <input type="password" class="form-input" id="password" value="BANTAN777" placeholder="请输入密码">
         </div>
 
-        <div class="divider"></div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="vipLevel">
+                    VIP 等级<span class="required">*</span>
+                </label>
+                <select class="vip-select" id="vipLevel">
+                    <option value="1">青铜 VIP</option>
+                    <option value="2">白银 VIP</option>
+                    <option value="3">黄金 VIP</option>
+                    <option value="4">钻石 VIP</option>
+                    <option value="5" selected="">至尊 VIP</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label class="form-label">VIP 用户名</label>
-            <input type="text" class="form-input" id="username" placeholder="请输入用户名" value="BANTAN7">
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">VIP 密码</label>
-            <input type="password" class="form-input" id="password" placeholder="请输入密码" value="BANTAN777">
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">VIP 等级</label>
-            <select class="vip-select" id="vipLevel">
-                <option value="1">🥉 青铜VIP</option>
-                <option value="2">🥈 白银VIP</option>
-                <option value="3">🥇 黄金VIP</option>
-                <option value="4">💎 钻石VIP</option>
-                <option value="5" selected="">👑 至尊VIP（最高级）</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">赠送余额（次）</label>
-            <input type="number" class="form-input" id="balance" placeholder="赠送对话次数" value="99999">
+            <div class="form-group">
+                <label class="form-label" for="balance">
+                    赠送余额<span class="required">*</span>
+                </label>
+                <input type="number" class="form-input tabular-nums" id="balance" value="99999" placeholder="次数">
+                <div class="form-hint">单位：对话次数</div>
+            </div>
         </div>
 
         <button class="create-btn" onclick="createVip()" id="createBtn">
-            ✨ 立即创建至尊VIP账号
+            <span class="btn-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px;">
+                    <path d="M12 5v14M5 12h14"></path>
+                </svg>
+            </span>
+            创建 VIP 账号
         </button>
 
         <div class="result-box" id="resultBox">
@@ -208,7 +685,13 @@
         </div>
 
         <div class="tip-text">
-            创建成功后，即可在主站登录享受VIP特权
+            <span class="tip-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4M12 8h.01"></path>
+                </svg>
+            </span>
+            创建成功后，用户即可在主站登录使用 VIP 权益
         </div>
     </div>
 
@@ -226,15 +709,26 @@
             const resultTitle = document.getElementById('resultTitle');
             const resultDetail = document.getElementById('resultDetail');
 
+            // 校验
             if (!workerUrl || !adminPassword || !username || !password) {
-                resultBox.className = 'result-box error';
-                resultTitle.textContent = '❌ 请填写完整信息';
-                resultDetail.textContent = '所有字段都不能为空';
+                showResult('error',
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> 请填写完整信息',
+                    '所有必填字段都不能为空，请检查后重试。'
+                );
                 return;
             }
 
+            if (isNaN(balance) || balance < 0) {
+                showResult('error',
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> 余额格式错误',
+                    '赠送余额必须为大于等于 0 的数字。'
+                );
+                return;
+            }
+
+            // 按钮加载状态
             btn.disabled = true;
-            btn.textContent = '创建中...';
+            btn.innerHTML = '<span class="spinner"></span>创建中...';
             resultBox.style.display = 'none';
 
             try {
@@ -255,33 +749,61 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    resultBox.className = 'result-box success';
-                    resultTitle.textContent = '🎉 ' + data.message;
-                    resultDetail.innerHTML = 
+                    showResult('success',
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ' + data.message,
                         'UID：<strong>' + (data.user.uid || '-') + '</strong><br>' +
                         '用户名：<strong>' + data.user.username + '</strong><br>' +
-                        'VIP等级：<strong>' + getVipName(data.user.vipLevel) + '</strong><br>' +
-                        '赠送余额：<strong>' + data.user.balance + ' 次</strong><br>' +
-                        '<br>💡 现在可以去主站登录使用了！';
+                        'VIP 等级：<strong>' + getVipName(data.user.vipLevel) + '</strong><br>' +
+                        '赠送余额：<strong>' + data.user.balance + ' 次</strong>' +
+                        '<div class="result-tip">现在可以去主站登录使用了</div>'
+                    );
                 } else {
-                    resultBox.className = 'result-box error';
-                    resultTitle.textContent = '❌ 创建失败';
-                    resultDetail.textContent = data.error || '未知错误';
+                    showResult('error',
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> 创建失败',
+                        data.error || '未知错误，请稍后重试。'
+                    );
                 }
             } catch (e) {
-                resultBox.className = 'result-box error';
-                resultTitle.textContent = '❌ 网络错误';
-                resultDetail.textContent = '无法连接到 Worker，请检查地址是否正确';
+                showResult('error',
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> 网络错误',
+                    '无法连接到 Worker 服务，请检查地址是否正确。'
+                );
             }
 
             btn.disabled = false;
-            btn.textContent = '✨ 立即创建至尊VIP账号';
+            btn.innerHTML = '<span class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px;"><path d="M12 5v14M5 12h14"/></svg></span>创建 VIP 账号';
+        }
+
+        function showResult(type, titleHtml, detailHtml) {
+            const resultBox = document.getElementById('resultBox');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultDetail = document.getElementById('resultDetail');
+
+            resultBox.className = 'result-box ' + type;
+            resultTitle.innerHTML = titleHtml;
+            resultDetail.innerHTML = detailHtml;
+            resultBox.style.display = 'block';
+
+            // 重置动画
+            resultBox.style.animation = 'none';
+            resultBox.offsetHeight;
+            resultBox.style.animation = '';
         }
 
         function getVipName(level) {
-            const names = ['', '🥉 青铜VIP', '🥈 白银VIP', '🥇 黄金VIP', '💎 钻石VIP', '👑 至尊VIP'];
+            const names = ['', '青铜 VIP', '白银 VIP', '黄金 VIP', '钻石 VIP', '至尊 VIP'];
             return names[level] || 'VIP';
         }
+
+        // 回车键提交
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const btn = document.getElementById('createBtn');
+                if (!btn.disabled) {
+                    createVip();
+                }
+            }
+        });
     </script>
 
 
