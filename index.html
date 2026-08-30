@@ -6039,6 +6039,32 @@
     </style>
 </head>
 <body>
+<script>
+// ===== 登录态路由：未登录自动跳转至个人工具箱 =====
+(function() {
+  try {
+    var token = localStorage.getItem('bantan_user_token');
+    var info = localStorage.getItem('bantan_user_info');
+    var userData = localStorage.getItem('bantan_user');
+    var isLoggedIn = false;
+    
+    if (token && info) isLoggedIn = true;
+    if (!isLoggedIn && userData) {
+      try {
+        var u = JSON.parse(userData);
+        if (u.isLoggedIn) isLoggedIn = true;
+      } catch(e) {}
+    }
+    
+    if (!isLoggedIn) {
+      // 未登录：跳转到个人工具箱入口页
+      window.location.replace('landing.html');
+    }
+  } catch(e) {
+    // localStorage 不可用时保留在当前页
+  }
+})();
+</script>
 
 <!-- 实时状态浮窗 -->
 <div class="rt-status-widget" id="rt-status-widget" onclick="toggleRtDetail()">
