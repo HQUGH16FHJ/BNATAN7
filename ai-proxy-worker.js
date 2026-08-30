@@ -146,6 +146,9 @@ export default {
     }
     if (path.startsWith('/api/admin/users/') && request.method === 'DELETE') {
       const username = path.split('/').pop();
+      if (isOwnerUsername(username, env)) {
+        return jsonResponse({ success: false, error: '站长账号不可删除' }, 403, origin);
+      }
       return handleDeleteUser(env, username, origin);
     }
     if (path.startsWith('/api/admin/users/') && path.endsWith('/balance') && request.method === 'POST') {
@@ -170,6 +173,22 @@ export default {
     }
     if (path === '/api/admin/invites/stats' && request.method === 'GET') {
       return handleAdminInviteStats(env, origin);
+    }
+
+    // 访客记录
+    if (path === '/api/admin/visitors' && request.method === 'GET') {
+      return handleAdminVisitors(env, url, origin);
+    }
+    if (path === '/api/admin/visitors/stats' && request.method === 'GET') {
+      return handleAdminVisitorStats(env, origin);
+    }
+
+    // ===== 站长账号管理 =====
+    if (path === '/api/admin/owner' && request.method === 'GET') {
+      return handleAdminGetOwner(env, origin);
+    }
+    if (path === '/api/admin/owner/password' && request.method === 'POST') {
+      return handleAdminResetOwnerPassword(request, env, origin);
     }
 
     // 反馈管理
@@ -433,6 +452,7 @@ async function handleUserRegister(request, env, origin) {
           remainingCount: dailyLimit + inviteReward,
           bonusCount: user.balance,
           isVip: false,
+          isOwner: isOwnerUsername(username, env),
           vipLevel: 0,
           inviteCode: myInviteCode,
           invitedBy: inviterUsername || null
@@ -455,7 +475,18 @@ async function handleUserLogin(request, env, origin) {
       return jsonResponse({ success: false, error: '请输入账号和密码' }, 400, origin);
     }
 
-    const userStr = await kv.get('user:' + username);
+    const adminUser = env.ADMIN_USERNAME || 'BANTAN7';
+    const adminPwd = env.ADMIN_PASSWORD || 'BANTAN777';
+    const isOwnerName = username === adminUser;
+
+    let userStr = await kv.get('user:' + username);
+
+    // 站长账号：用户系统中尚无记录时，凭后台管理员密码自动开通前台账号
+    if (!userStr && isOwnerName && password === adminPwd) {
+      const owner = await provisionOwnerUser(kv, env, username, password, getClientIP(request));
+      userStr = JSON.stringify(owner);
+    }
+
     if (!userStr) {
       return jsonResponse({ success: false, error: '账号不存在' }, 400, origin);
     }
@@ -463,7 +494,9 @@ async function handleUserLogin(request, env, origin) {
     const user = JSON.parse(userStr);
     const hashedPwd = await hashPassword(password);
 
-    if (user.password !== hashedPwd) {
+    // 站长账号同时接受后台管理员密码，一套密码通行前后台
+    const passwordOk = user.password === hashedPwd || (isOwnerName && password === adminPwd);
+    if (!passwordOk) {
       return jsonResponse({ success: false, error: '密码错误' }, 400, origin);
     }
 
@@ -503,6 +536,7 @@ async function handleUserLogin(request, env, origin) {
           totalUsed: user.totalUsed || 0,
           createdAt: user.createdAt,
           isVip: user.isVip || false,
+          isOwner: isOwnerUsername(username, env),
           vipLevel: user.vipLevel || 0,
           vipExpire: user.vipExpire || 0,
           inviteCode: user.inviteCode || '',
@@ -556,6 +590,7 @@ async function handleUserInfo(request, env, origin) {
       createdAt: user.createdAt,
       lastLogin: user.lastLogin,
       isVip: user.isVip || false,
+      isOwner: isOwnerUsername(user.username, env),
       vipLevel: user.vipLevel || 0,
       vipExpire: user.vipExpire || 0,
       inviteCode: user.inviteCode || '',
@@ -578,15 +613,15 @@ async function handleUserHeartbeat(request, env, origin) {
   if (!user) {
     return jsonResponse({ success: false, error: '未登录' }, 401, origin);
   }
-  const kv = getKV(env);
-  await kv.put('user:online:' + user.username, Date.now().toString(), { expirationTtl: ONLINE_TIMEOUT * 2 });
+  // 在线人数功能已下线（仪表盘不再展示），心跳不再写入 KV。
+  // 原因：前端每 30 秒上报一次，单个用户挂 8.5 小时就会耗尽 KV 每日 1000 次免费写入额度，
+  // 进而导致注册、邀请奖励、兑换码等所有写操作失败。
   return jsonResponse({ success: true }, 200, origin);
 }
 
 async function handleOnlineCount(env, origin) {
-  const kv = getKV(env);
-  const list = await kv.list({ prefix: 'user:online:', limit: 1000 });
-  return jsonResponse({ success: true, count: list.keys.length }, 200, origin);
+  // 在线人数功能已下线，直接返回 0，避免 KV list() 调用消耗每日额度
+  return jsonResponse({ success: true, count: 0 }, 200, origin);
 }
 
 // ==================== 邀请码系统 ====================
@@ -802,6 +837,56 @@ async function handleAdminInviteStats(env, origin) {
 
 // ==================== 管理员鉴权 ====================
 
+// 判断是否为站长账号（与后台管理员账号一致，由环境变量 ADMIN_USERNAME 控制，默认 BANTAN7）
+function isOwnerUsername(username, env) {
+  return !!username && username === (env.ADMIN_USERNAME || 'BANTAN7');
+}
+
+// 站长账号首次前台登录 / 后台初始化时，自动在用户系统中开通完整账号记录
+async function provisionOwnerUser(kv, env, username, password, registerIP) {
+  const hashedPwd = await hashPassword(password);
+  const uid = await generateUID(env);
+  const myInviteCode = await generateUniqueInviteCode(kv);
+
+  const user = {
+    uid,
+    username,
+    password: hashedPwd,
+    createdAt: Date.now(),
+    lastLogin: Date.now(),
+    registerIP: registerIP || 'owner-init',
+    balance: 0,              // 站长不限次数，余额仅作展示
+    totalUsed: 0,
+    dailyUsed: 0,
+    dailyResetDate: getToday(),
+    isVip: true,
+    vipLevel: 5,
+    vipExpire: 0,            // 永久
+    inviteCode: myInviteCode,
+    invitedBy: null,
+    isOwner: true,
+  };
+
+  await kv.put('user:' + username, JSON.stringify(user));
+  await incCounter(kv, 'stats:total:users');
+
+  // 同步邀请码映射与邀请统计
+  await kv.put('invite:code:' + myInviteCode, JSON.stringify({
+    username: username,
+    createdAt: Date.now(),
+    usedCount: 0
+  }));
+  await kv.put('invite:stats:' + username, JSON.stringify({
+    code: myInviteCode,
+    totalInvited: 0,
+    totalBonus: 0,
+    invitedUsers: []
+  }));
+
+  return user;
+}
+
+// 验证管理员权限（优先使用 X-Admin-Token 请求头，兼容 Cookie）
 async function verifyAdmin(request, env) {
   try {
     const token = request.headers.get('X-Admin-Token') || '';
@@ -871,7 +956,7 @@ async function handleChat(request, env, origin) {
     if (mode === 'proxy') {
       if (user) {
         // 检查VIP状态
-        const vipActive = user.isVip && (!user.vipExpire || user.vipExpire > Date.now());
+        const vipActive = (user.isVip && (!user.vipExpire || user.vipExpire > Date.now())) || isOwnerUsername(user.username, env);
 
         if (vipActive) {
           // VIP用户：无限次数，只统计使用量
@@ -1292,6 +1377,7 @@ async function handleUserList(env, url, origin) {
         lastLogin: user.lastLogin,
         registerIP: user.registerIP || '',
         online: !!online,
+        isOwner: isOwnerUsername(user.username, env),
         isVip: user.isVip || false,
         vipLevel: user.vipLevel || 0,
         vipExpire: user.vipExpire || 0,
@@ -1593,20 +1679,121 @@ async function handlePvStats(request, env, origin) {
     const kv = getKV(env);
     const today = getToday();
     const ip = getClientIP(request);
+    const ua = request.headers.get('User-Agent') || '';
 
+    // 访问路径（前端上报）
+    let path = '/';
+    try {
+      const body = await request.json().catch(() => ({}));
+      path = (body && body.path) || '/';
+    } catch (e) { /* 无 body 时用默认值 */ }
+
+    // PV 计数（保留 90 天）
     const pvKey = 'stats:pv:' + today;
     const pv = parseInt(await kv.get(pvKey) || '0');
     await kv.put(pvKey, (pv + 1).toString(), { expirationTtl: 86400 * 90 });
 
-    const uvKey = 'stats:uv:' + today + ':' + ip;
-    const uvExists = await kv.get(uvKey);
-    if (!uvExists) {
-      await kv.put(uvKey, '1', { expirationTtl: 86400 * 2 });
+    // 访客明细：同一 IP 当天只记一次（metadata 供后台 list 直接读取，无需额外 get；
+    // UV 不另设计数器，由后台 list 统计以节省写入次数）
+    const visitKey = 'visit:' + today + ':' + ip;
+    const visitExists = await kv.get(visitKey);
+    if (!visitExists) {
+      await kv.put(visitKey, '1', {
+        expirationTtl: 86400 * 90,
+        metadata: {
+          ip: ip,
+          ua: ua.substring(0, 256),
+          time: Date.now(),
+          path: String(path).substring(0, 128)
+        }
+      });
     }
 
     return jsonResponse({ success: true, pv: pv + 1 }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
+  }
+}
+
+// ==================== 访客记录（后台） ====================
+
+async function handleAdminVisitors(env, url, origin) {
+  try {
+    const kv = getKV(env);
+    if (!kv) {
+      return jsonResponse({ success: false, error: 'KV 未绑定' }, 500, origin);
+    }
+
+    const date = url.searchParams.get('date') || getToday();
+    // 日期格式校验，防止注入异常前缀
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return jsonResponse({ success: false, error: '日期格式无效' }, 400, origin);
+    }
+
+    const listed = await kv.list({ prefix: 'visit:' + date + ':', limit: 1000 });
+    const visitors = (listed.keys || [])
+      .map(k => k.metadata || null)
+      .filter(Boolean)
+      .sort((a, b) => (b.time || 0) - (a.time || 0));
+
+    const pv = parseInt(await kv.get('stats:pv:' + date) || '0');
+
+    return jsonResponse({
+      success: true,
+      date,
+      pv,
+      uv: visitors.length,
+      visitors,
+      truncated: listed.list_complete === false
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: '获取访客记录失败：' + e.message }, 500, origin);
+  }
+}
+
+async function handleAdminVisitorStats(env, origin) {
+  try {
+    const kv = getKV(env);
+    if (!kv) {
+      return jsonResponse({ success: false, error: 'KV 未绑定' }, 500, origin);
+    }
+
+    // 近 7 天 PV 走计数器（纯读取，0 写入 0 list）
+    const weekData = [];
+    let weekPv = 0;
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      const pv = parseInt(await kv.get('stats:pv:' + dateStr) || '0');
+      weekData.push({ date: dateStr, pv, uv: 0 });
+      weekPv += pv;
+    }
+
+    // UV 只统计今日/昨日（2 次 list，后台低频调用，不影响写入额度）
+    const countUv = async (dateStr) => {
+      const r = await kv.list({ prefix: 'visit:' + dateStr + ':', limit: 1000 });
+      return (r.keys || []).length;
+    };
+    const today = getToday();
+    const yesterdayObj = new Date();
+    yesterdayObj.setDate(yesterdayObj.getDate() - 1);
+    const yesterday = yesterdayObj.toISOString().split('T')[0];
+    const [todayUv, yesterdayUv] = await Promise.all([countUv(today), countUv(yesterday)]);
+    weekData[6].uv = todayUv;
+    weekData[5].uv = yesterdayUv;
+
+    return jsonResponse({
+      success: true,
+      todayPv: weekData[6].pv,
+      todayUv,
+      yesterdayPv: weekData[5].pv,
+      yesterdayUv,
+      weekPv,
+      weekData
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: '获取访客统计失败：' + e.message }, 500, origin);
   }
 }
 
@@ -1718,7 +1905,7 @@ async function handleGetSettings(env, origin) {
   }
 }
 
-async function handleSaveSettingsrequest, env, origin) {
+async function handleSaveSettings(request, env, origin) {
   try {
     const body = await request.json();
     const kv = getKV(env);
@@ -1728,6 +1915,80 @@ async function handleSaveSettingsrequest, env, origin) {
     return jsonResponse({ success: true }, 200, origin);
   } catch (e) {
     return jsonResponse({ success: false, error: e.message }, 500, origin);
+  }
+}
+
+// ==================== 站长账号管理 ====================
+async function handleAdminGetOwner(env, origin) {
+  try {
+    const kv = getKV(env);
+    if (!kv) {
+      return jsonResponse({ success: false, error: 'KV 未绑定' }, 500, origin);
+    }
+
+    const ownerName = env.ADMIN_USERNAME || 'BANTAN7';
+    const userStr = await kv.get('user:' + ownerName);
+
+    if (!userStr) {
+      return jsonResponse({
+        success: true,
+        owner: { username: ownerName, exists: false }
+      }, 200, origin);
+    }
+
+    const u = JSON.parse(userStr);
+    return jsonResponse({
+      success: true,
+      owner: {
+        username: ownerName,
+        exists: true,
+        uid: u.uid || '',
+        createdAt: u.createdAt || null,
+        lastLogin: u.lastLogin || null,
+        balance: u.balance || 0,
+        totalUsed: u.totalUsed || 0,
+        isVip: u.isVip || false,
+        vipLevel: u.vipLevel || 0,
+        vipExpire: u.vipExpire || null,
+        inviteCode: u.inviteCode || '',
+        invitedBy: u.invitedBy || null,
+        registerIP: u.registerIP || ''
+      }
+    }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: '获取站长账号信息失败：' + e.message }, 500, origin);
+  }
+}
+
+async function handleAdminResetOwnerPassword(request, env, origin) {
+  try {
+    const body = await request.json();
+    const newPassword = (body.newPassword || '').trim();
+    if (newPassword.length < 6 || newPassword.length > 32) {
+      return jsonResponse({ success: false, error: '密码长度需 6-32 位' }, 400, origin);
+    }
+
+    const kv = getKV(env);
+    if (!kv) {
+      return jsonResponse({ success: false, error: 'KV 未绑定' }, 500, origin);
+    }
+
+    const ownerName = env.ADMIN_USERNAME || 'BANTAN7';
+    const userStr = await kv.get('user:' + ownerName);
+
+    // 站长账号尚未开通：直接初始化创建（等同于"一键初始化站长前台账号"）
+    if (!userStr) {
+      await provisionOwnerUser(kv, env, ownerName, newPassword, 'owner-init');
+      return jsonResponse({ success: true, created: true, message: '站长前台账号已初始化创建，可用该密码在前台登录' }, 200, origin);
+    }
+
+    const user = JSON.parse(userStr);
+    user.password = await hashPassword(newPassword);
+    await kv.put('user:' + ownerName, JSON.stringify(user));
+
+    return jsonResponse({ success: true, created: false, message: '站长账号密码已重置' }, 200, origin);
+  } catch (e) {
+    return jsonResponse({ success: false, error: '重置失败：' + e.message }, 500, origin);
   }
 }
 

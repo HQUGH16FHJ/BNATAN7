@@ -5,6 +5,10 @@
 <title>绊谈 · 个人工具箱</title>
 <meta name="description" content="绊谈个人工具箱，600+ 实用工具一站直达。AI 对话、翻译、塔罗、开发者工具，开箱即用。">
 <meta name="theme-color" content="#00f5ff">
+<script>
+/* 动画门控：JS 可用时才启用入场隐藏态，保证无 JS / JS 报错时内容始终可见 */
+document.documentElement.classList.add('js-animate');
+</script>
 <style>
 /* ========== Reset & Tokens ========== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,6 +58,7 @@
 
   /* Transition */
   --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html { scroll-behavior: smooth; }
@@ -391,10 +396,39 @@ nav.scrolled {
 .hero h1 {
   font-size: clamp(38px, 6vw, 68px);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   margin-bottom: 20px;
   text-shadow: 0 0 40px rgba(0, 245, 255, 0.15);
+  text-wrap: balance;
+}
+
+/* 标题强调行：青→紫渐变文字 + 呼吸光晕 + 缓慢流动 */
+.hero-title .accent {
+  background: linear-gradient(115deg, #00f5ff 0%, #46e8ff 30%, #8b8cf8 70%, #7c3aed 100%);
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.hero-title .accent .char { -webkit-text-fill-color: transparent; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-title .accent {
+    animation: titleBreathe 4.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes titleBreathe {
+  0% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 7px rgba(0, 245, 255, 0.45));
+  }
+  100% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.60));
+  }
 }
 
 .hero-sub {
@@ -1267,89 +1301,74 @@ footer {
   color: var(--text);
 }
 
-/* ========== Scroll Reveal ========== */
-.reveal {
+/* ========== Scroll Reveal（.js-animate 门控：JS 不可用时内容始终可见） ========== */
+.js-animate .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
 }
-
-.reveal.visible {
+.js-animate .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal-stagger > * {
+.js-animate .reveal-scale {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.94);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
 }
-
-.reveal-stagger.visible > * {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal-scale.visible {
+.js-animate .reveal-scale.visible {
   opacity: 1;
   transform: scale(1);
 }
 
-.reveal-left {
+.js-animate .reveal-left {
   opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-36px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
 }
-.reveal-left.visible {
+.js-animate .reveal-left.visible {
   opacity: 1;
   transform: translateX(0);
 }
 
-.reveal-right {
+.js-animate .reveal-right {
   opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(36px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
 }
-.reveal-right.visible {
+.js-animate .reveal-right.visible {
   opacity: 1;
   transform: translateX(0);
 }
 
-.reveal-stagger > * {
+.js-animate .reveal-stagger > * {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
-
-.reveal-stagger.visible > * {
+.js-animate .reveal-stagger.visible > * {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
-.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
-.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.15s; }
-.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.2s; }
-.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.25s; }
-.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.3s; }
-.reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.35s; }
-.reveal-stagger.visible > *:nth-child(8) { transition-delay: 0.4s; }
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.06s; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.18s; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.24s; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.30s; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.36s; }
+.reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.42s; }
+.reveal-stagger.visible > *:nth-child(8) { transition-delay: 0.48s; }
 
-/* ========== Hero Title Character Reveal ========== */
-.hero-title .char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(30px) rotateX(-40deg);
-}
+/* ========== Hero Title Character Reveal（.char 由 JS 生成，仅在允许动画时存在） ========== */
+.hero-title .char { display: inline-block; will-change: transform, opacity; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-title .char {
-    animation: charReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  .js-animate .hero-title .char {
+    opacity: 0;
+    transform: translateY(28px) rotateX(-45deg);
+    animation: charReveal 0.6s var(--ease-out) both;
   }
 }
 
@@ -1366,37 +1385,134 @@ footer {
   display: inline-block;
 }
 
-/* ========== Bento 3D Tilt Entrance ========== */
+/* ========== 顶部滚动进度条 ========== */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 101;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 12px rgba(var(--glow-color), 0.5);
+  pointer-events: none;
+}
+
+/* ========== Hero 滚动提示（透明按钮 + 青紫渐变文字 + 呼吸光效） ========== */
+.scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  z-index: 2;
+  cursor: pointer;
+  /* button 重置：去掉浏览器默认白底 */
+  background: transparent;
+  border: none;
+  padding: 10px 18px;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'SF Mono', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* SCROLL 文字：青→紫渐变，缓慢流动 */
+.scroll-hint .scroll-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-indent: 5px; /* 抵消字间距导致的视觉偏移 */
+  text-transform: uppercase;
+  background: linear-gradient(100deg, #00f5ff 0%, #6ee7ff 25%, #8b8cf8 60%, #7c3aed 80%, #00f5ff 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 鼠标轮廓：青色边框 + 呼吸光晕 */
+.scroll-hint .mouse {
+  width: 22px; height: 34px;
+  border: 1.5px solid rgba(0, 245, 255, 0.55);
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.18), inset 0 0 8px rgba(0, 245, 255, 0.08);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* 滚轮小点：青紫渐变光点 */
+.scroll-hint .wheel {
+  position: absolute;
+  left: 50%; top: 7px;
+  width: 3px; height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #00f5ff, #7c3aed);
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.9);
+}
+
+.scroll-hint:hover .mouse {
+  border-color: rgba(124, 58, 237, 0.9);
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.45), inset 0 0 10px rgba(124, 58, 237, 0.2);
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .bento-grid.visible .bento-cell {
-    animation: bentoIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-    transform-origin: center bottom;
+  .scroll-hint .scroll-label {
+    animation: scrollLabelFlow 3.2s linear infinite;
   }
-  .bento-grid.visible .bento-cell:nth-child(1) { animation-delay: 0.05s; }
-  .bento-grid.visible .bento-cell:nth-child(2) { animation-delay: 0.1s; }
-  .bento-grid.visible .bento-cell:nth-child(3) { animation-delay: 0.15s; }
-  .bento-grid.visible .bento-cell:nth-child(4) { animation-delay: 0.2s; }
-  .bento-grid.visible .bento-cell:nth-child(5) { animation-delay: 0.25s; }
-  .bento-grid.visible .bento-cell:nth-child(6) { animation-delay: 0.3s; }
-  .bento-grid.visible .bento-cell:nth-child(7) { animation-delay: 0.35s; }
-  .bento-grid.visible .bento-cell:nth-child(8) { animation-delay: 0.4s; }
-}
-
-@keyframes bentoIn {
-  from {
-    opacity: 0;
-    transform: translateY(40px) rotateX(-15deg);
+  .scroll-hint .mouse {
+    animation: scrollMouseBreathe 2.6s ease-in-out infinite;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotateX(0);
+  .scroll-hint .wheel {
+    animation: wheelDrop 1.8s var(--ease-out) infinite;
   }
 }
 
-/* ========== Typewriter Placeholder ========== */
-.search-input.typing::placeholder {
-  opacity: 1;
+@keyframes scrollLabelFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 220% 50%; }
 }
+
+@keyframes scrollMouseBreathe {
+  0%, 100% {
+    border-color: rgba(0, 245, 255, 0.35);
+    box-shadow: 0 0 6px rgba(0, 245, 255, 0.1), inset 0 0 6px rgba(0, 245, 255, 0.05);
+  }
+  50% {
+    border-color: rgba(0, 245, 255, 0.85);
+    box-shadow: 0 0 18px rgba(0, 245, 255, 0.35), inset 0 0 10px rgba(0, 245, 255, 0.15);
+  }
+}
+
+@keyframes wheelDrop {
+  0% { opacity: 1; transform: translateY(0); }
+  70% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+@media (max-height: 640px) { .scroll-hint { display: none; } }
+
+/* ========== 导航当前区块高亮 ========== */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--glow-color), 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+.nav-links a.active { color: var(--accent); }
+.nav-links a.active::after { transform: scaleX(1); }
+
+/* hero-tag 作为 button 使用时的重置 */
+button.hero-tag { font-family: inherit; }
 
 /* ========== CTA Glow Pulse ========== */
 @media (prefers-reduced-motion: no-preference) {
@@ -1427,20 +1543,17 @@ footer {
   40%, 80% { transform: translateX(8px); }
 }
 
-/* ========== Modal Enhanced Entrance ========== */
+/* ========== Modal Entrance ========== */
 @media (prefers-reduced-motion: no-preference) {
   .modal-overlay.active .modal {
-    animation: modalBounce 0.5s cubic-bezier(0.16, 1.3, 0.3, 1) both;
+    animation: modalIn 0.45s var(--ease-out) both;
   }
 }
 
-@keyframes modalBounce {
+@keyframes modalIn {
   0% {
     opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  60% {
-    transform: scale(1.02) translateY(-4px);
+    transform: scale(0.94) translateY(16px);
   }
   100% {
     opacity: 1;
@@ -1448,24 +1561,20 @@ footer {
   }
 }
 
-/* ========== Preview Row Stagger ========== */
+/* ========== Preview Row Stagger（面板入场后逐行滑入，both 填充防闪烁） ========== */
 @media (prefers-reduced-motion: no-preference) {
-  .preview-row {
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: slideInRow 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  .js-animate .preview-row {
+    animation: rowIn 0.55s var(--ease-out) both;
   }
-  .preview-row:nth-child(1) { animation-delay: 0.5s; }
-  .preview-row:nth-child(2) { animation-delay: 0.6s; }
-  .preview-row:nth-child(3) { animation-delay: 0.7s; }
-  .preview-row:nth-child(4) { animation-delay: 0.8s; }
+  .js-animate .preview-row:nth-child(1) { animation-delay: 0.62s; }
+  .js-animate .preview-row:nth-child(2) { animation-delay: 0.72s; }
+  .js-animate .preview-row:nth-child(3) { animation-delay: 0.82s; }
+  .js-animate .preview-row:nth-child(4) { animation-delay: 0.92s; }
 }
 
-@keyframes slideInRow {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* ========== Orb Entrance ========== */
@@ -1493,30 +1602,43 @@ footer {
   opacity: 0.15;
 }
 
-/* ========== Hero Entry Animation ========== */
+/* ========== Hero Entry Choreography（眉题 → 标题逐字 → 副文 → 搜索 → 标签 → 面板 → 徽章） ========== */
 @media (prefers-reduced-motion: no-preference) {
-  .hero-eyebrow { animation: heroIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-  .hero-sub { animation: heroIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
-  .hero-search { animation: heroIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both; }
-  .hero-tags { animation: heroIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both; }
-  .hero-right { animation: heroInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
-  .hero-float-1 { animation: floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1s both; }
-  .hero-float-2 { animation: floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both; }
+  .js-animate .hero-eyebrow { animation: heroFadeUp 0.6s var(--ease-out) 0.05s both; }
+  .js-animate .hero-sub   { animation: heroFadeUp 0.7s var(--ease-out) 0.72s both; }
+  .js-animate .hero-search{ animation: heroFadeUp 0.7s var(--ease-out) 0.84s both; }
+  .js-animate .hero-tags  { animation: heroFadeUp 0.7s var(--ease-out) 0.96s both; }
+  .js-animate .hero-right { animation: heroPanelIn 0.9s var(--ease-out) 0.3s both; }
+  /* 徽章：入场一次 + 入场后持续轻柔漂浮 */
+  .js-animate .hero-float-1 { animation: floatIn 0.7s var(--ease-out) 1.05s both, floatBob 5s ease-in-out 1.9s infinite alternate; }
+  .js-animate .hero-float-2 { animation: floatIn 0.7s var(--ease-out) 1.18s both, floatBob 6.5s ease-in-out 2.1s infinite alternate; }
+  .js-animate .scroll-hint { animation: scrollHintIn 0.8s var(--ease-out) 1.5s both; }
 }
 
-@keyframes heroIn {
-  from { opacity: 0; transform: translateY(20px); }
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes heroInRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
+@keyframes heroPanelIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes floatIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.85) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes floatBob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-9px); }
+}
+
+/* 滚动提示入场：保留 translateX(-50%) 居中，避免动画覆盖定位 */
+@keyframes scrollHintIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 /* ========== Category Card Hover Lift + Subtle Glow ========== */
@@ -1531,6 +1653,8 @@ footer {
 
 /* ========== Responsive ========== */
 @media (max-width: 1024px) {
+  /* 堆叠布局下隐藏滚动提示，避免与预览面板重叠 */
+  .scroll-hint { display: none; }
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 48px;
@@ -1557,8 +1681,55 @@ footer {
 @media (max-width: 768px) {
   :root { --section-py: 72px; }
 
-  .nav-links { display: none; }
-  .nav-mobile-toggle { display: block; }
+  /* 移动端下拉菜单：max-height + 透明度过渡，链接逐条滑入 */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0 24px;
+    background: rgba(3, 3, 10, 0.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border-strong);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(var(--glow-color), 0.06) inset;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s var(--ease-out), opacity 0.3s ease, padding 0.4s var(--ease-out);
+  }
+  .nav-links.open {
+    max-height: 240px;
+    opacity: 1;
+    padding: 10px 24px 18px;
+  }
+  .nav-links li { width: 100%; }
+  .nav-links li a {
+    display: block;
+    padding: 13px 4px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .nav-links li:last-child a { border-bottom: none; }
+  .nav-links a::after { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-links.open li {
+      animation: menuItemIn 0.4s var(--ease-out) both;
+    }
+    .nav-links.open li:nth-child(1) { animation-delay: 0.06s; }
+    .nav-links.open li:nth-child(2) { animation-delay: 0.12s; }
+    .nav-links.open li:nth-child(3) { animation-delay: 0.18s; }
+  }
+  @keyframes menuItemIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .nav-mobile-toggle { display: block; transition: transform 0.3s var(--ease-out); }
+  .nav-mobile-toggle.open { transform: rotate(90deg); color: var(--accent); }
 
   .hero { padding-top: 70px; }
   .hero h1 { font-size: clamp(32px, 9vw, 48px); }
@@ -1591,32 +1762,128 @@ footer {
   .hero-float-2 { left: 0; bottom: 10px; }
 }
 
-/* ========== Reduced Motion Fallback ========== */
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal-stagger > * {
-    opacity: 1;
-    transform: none;
-    transition: none;
+/* ========== 手机竖屏优化 (≤480px) ========== */
+@media (max-width: 480px) {
+  :root { --section-py: 52px; }
+
+  .container,
+  .nav-inner { padding: 0 16px; }
+
+  /* 导航 */
+  .nav-logo { font-size: 15px; gap: 8px; }
+  .nav-logo-icon { width: 28px; height: 28px; font-size: 13px; }
+  .nav-cta { padding: 7px 13px; font-size: 12px; }
+
+  /* Hero */
+  .hero { padding-top: 52px; }
+  .hero h1 { font-size: clamp(28px, 8.5vw, 38px); margin-bottom: 14px; }
+  .hero-sub { font-size: 13.5px; line-height: 1.7; }
+  .hero-grid { gap: 36px; }
+
+  .search-box { width: 100%; }
+  .search-box input { font-size: 14px; padding: 0 14px; height: 46px; }
+  .search-btn { padding: 0 14px; font-size: 13px; white-space: nowrap; }
+
+  .hero-tags { gap: 6px; }
+  .hero-tag { padding: 4px 10px; font-size: 11px; }
+
+  /* 预览面板：隐藏悬浮徽章，避免遮挡 */
+  .hero-float-1,
+  .hero-float-2 { display: none; }
+  .preview-panel { border-radius: 16px; }
+
+  /* Bento 卡片：高度自适应，防止文字溢出 */
+  .bento-grid { grid-auto-rows: auto; gap: 12px; }
+  .bento-cell {
+    padding: 18px 16px;
+    min-height: 110px;
+    border-radius: 16px;
   }
-  .orb { animation: none; }
-  .eyebrow-dot { animation: none; }
+  .bento-title { font-size: 15px; }
+  .bento-desc { font-size: 12px; }
+
+  /* 分类卡片 */
+  .categories-grid { gap: 12px; }
+  .category-card { padding: 16px; gap: 12px; }
+
+  /* 数据条 */
+  .stats-band { grid-template-columns: repeat(2, 1fr); }
+  .stats-band > div { padding: 18px 12px; }
+
+  /* CTA */
+  .cta-card { padding: 32px 20px; border-radius: 18px; }
+  .cta-card h2 { font-size: 22px; }
+  .cta-buttons .btn { width: 100%; }
+
+  /* 区块标题 */
+  .section-head h2 { font-size: 22px; }
+
+  /* 弹窗 */
+  .modal-overlay { padding: 12px; align-items: flex-start; padding-top: 6vh; }
+  .modal { max-width: 100%; border-radius: 18px; }
+  .modal-header { padding: 20px 18px 0; }
+  .modal-tabs { padding: 0 18px; margin-bottom: 16px; }
+  .modal-body { padding: 0 18px 20px; }
+  .modal-logo { width: 42px; height: 42px; font-size: 19px; margin-bottom: 12px; }
+  .modal h3 { font-size: 18px; }
+
+  /* 页脚 */
+  footer { padding: 40px 0 28px; }
+  .footer-grid { gap: 24px; }
+}
+
+/* ========== 超窄屏 (≤360px) ========== */
+@media (max-width: 360px) {
+  .nav-cta { padding: 6px 10px; font-size: 11px; }
+  .hero h1 { font-size: 27px; }
+  .bento-cell { padding: 16px 14px; min-height: 100px; }
+  .stats-band > div { padding: 14px 10px; }
+}
+
+/* ========== Reduced Motion Fallback（全部内容立即可见、无位移动画） ========== */
+@media (prefers-reduced-motion: reduce) {
+  .js-animate .reveal,
+  .js-animate .reveal-scale,
+  .js-animate .reveal-left,
+  .js-animate .reveal-right,
+  .js-animate .reveal-stagger > *,
+  .js-animate .preview-row {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .orb,
+  .eyebrow-dot,
+  .scroll-hint .wheel,
+  .hero-float-dot,
   .hero-eyebrow,
-  .hero-title,
   .hero-sub,
   .hero-search,
   .hero-tags,
   .hero-right,
   .hero-float-1,
   .hero-float-2 {
-    animation: none;
-    opacity: 1;
-    transform: none;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
+  /* 滚动提示：保留水平居中，仅停用入场/呼吸动画；渐变文字静态显示 */
+  .scroll-hint {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;
+  }
+  .scroll-hint .scroll-label,
+  .scroll-hint .mouse { animation: none !important; }
+  html { scroll-behavior: auto; }
 }
 </style>
 </head>
 <body>
+
+<!-- 顶部滚动进度条 -->
+<div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- Background Orbs -->
 <div class="orb orb-1"></div>
@@ -1649,10 +1916,7 @@ footer {
           <span class="eyebrow-dot"></span>
           个人工具箱
         </div>
-        <h1 class="hero-title" id="hero-title"><span class="char" style="animation-delay:0.15s">
-</span>          <span class="char" style="animation-delay:0.19s">6</span><span class="char" style="animation-delay:0.22999999999999998s">0</span><span class="char" style="animation-delay:0.27s">0</span><span class="char" style="animation-delay:0.31s">+</span> <span class="char" style="animation-delay:0.35s">实</span><span class="char" style="animation-delay:0.39s">用</span><span class="char" style="animation-delay:0.43000000000000005s">工</span><span class="char" style="animation-delay:0.47s">具</span><br><span class="char" style="animation-delay:0.51s">
-</span>          <span class="accent"><span class="char" style="animation-delay:0.55s">一</span><span class="char" style="animation-delay:0.59s">站</span><span class="char" style="animation-delay:0.63s">直</span><span class="char" style="animation-delay:0.67s">达</span></span><span class="char" style="animation-delay:0.7100000000000001s">
-</span>        </h1>
+        <h1 class="hero-title" id="hero-title">600+ 实用工具<br><span class="accent">一站直达</span></h1>
         <p class="hero-sub">
           AI 对话、翻译、塔罗占卜、开发者工具、影音处理、教育学习。无需注册，开箱即用。登录解锁完整万能枢纽。
         </p>
@@ -1723,16 +1987,20 @@ footer {
       </div>
     </div>
   </div>
+  <button class="scroll-hint" type="button" aria-label="向下滚动查看工具">
+    <span class="mouse" aria-hidden="true"><span class="wheel"></span></span>
+    <span class="scroll-label">SCROLL</span>
+  </button>
 </section>
 
 <!-- Featured Tools Bento -->
 <section class="section" id="tools">
   <div class="container">
-    <div class="section-head reveal visible">
+    <div class="section-head reveal">
       <h2>高频工具，<span class="accent">随手可用</span></h2>
       <p>从 600+ 工具中精选的常用功能，点击即用，无需繁琐跳转。</p>
     </div>
-    <div class="bento-grid reveal-stagger visible" id="bento-grid">
+    <div class="bento-grid reveal-stagger" id="bento-grid">
       <div class="bento-cell span-2 purple" onclick="tryTool('AI 对话')">
         <div class="bento-bg-deco"></div>
         <div>
@@ -1799,11 +2067,11 @@ footer {
 <!-- Categories -->
 <section class="section" id="categories">
   <div class="container">
-    <div class="section-head reveal visible">
+    <div class="section-head reveal">
       <h2>全部分类，<span class="accent">应有尽有</span></h2>
       <p>覆盖生活、工作、学习、娱乐各场景，登录万能枢纽解锁全部。</p>
     </div>
-    <div class="categories-grid reveal-stagger visible">
+    <div class="categories-grid reveal-stagger">
       <div class="category-card" onclick="tryTool('AI 与生产力')">
         <div class="category-icon">✦</div>
         <div class="category-content">
@@ -1859,7 +2127,7 @@ footer {
 <!-- Stats Band -->
 <section class="section" style="padding-top: 0;">
   <div class="container">
-    <div class="stats-band reveal visible" id="stats-band">
+    <div class="stats-band reveal" id="stats-band">
       <div class="stat-item">
         <div class="stat-number" data-target="600" data-suffix="+">600+</div>
         <div class="stat-label">实用工具</div>
@@ -1883,7 +2151,7 @@ footer {
 <!-- FAQ -->
 <section class="section" id="faq">
   <div class="container">
-    <div class="section-head reveal visible">
+    <div class="section-head reveal">
       <div class="eyebrow">
         <span class="eyebrow-dot"></span>
         常见问题
@@ -2001,7 +2269,7 @@ footer {
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2024 绊谈 Bantan. All rights reserved.</span>
+      <span>© 2026 绊谈 Bantan. All rights reserved.</span>
       <span>Made with ✦ for better tools</span>
     </div>
   </div>
@@ -2079,28 +2347,84 @@ footer {
   } catch (e) {}
 })();
 
-// ========== Nav scroll effect ==========
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 20) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-}, { passive: true });
+// ========== 滚动系统：进度条 + 导航毛玻璃 + 区块高亮（单一 rAF 节流） ==========
+(function scrollSystem() {
+  const navbar = document.getElementById('navbar');
+  const progress = document.getElementById('scroll-progress');
+  const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  const spySections = navAnchors
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
 
-// ========== Scroll Reveal ==========
-const revealEls = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-scale, .reveal-left, .reveal-right');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const y = window.scrollY || document.documentElement.scrollTop;
+
+    // 导航毛玻璃
+    if (navbar) navbar.classList.toggle('scrolled', y > 20);
+
+    // 顶部进度条
+    if (progress) {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = docH > 0 ? Math.min(y / docH, 1) : 0;
+      progress.style.transform = 'scaleX(' + ratio + ')';
     }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-revealEls.forEach(el => revealObserver.observe(el));
+    // 区块高亮：取视口中线穿过的最后一个区块
+    const mid = y + window.innerHeight * 0.35;
+    let currentId = '';
+    spySections.forEach(sec => {
+      if (sec.offsetTop <= mid) currentId = sec.id;
+    });
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  function requestTick() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', requestTick, { passive: true });
+  window.addEventListener('resize', requestTick, { passive: true });
+  update();
+})();
+
+// ========== Scroll Reveal（IntersectionObserver + 故障安全兜底） ==========
+(function scrollReveal() {
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-scale, .reveal-left, .reveal-right');
+
+  const revealAll = () => revealEls.forEach(el => el.classList.add('visible'));
+
+  // 不支持 IO 时直接全部显现
+  if (!('IntersectionObserver' in window)) {
+    revealAll();
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // 故障安全：加载后 2.5s 仍未触发的元素强制显现，防止任何意外隐藏
+  window.addEventListener('load', () => {
+    setTimeout(revealAll, 2500);
+  });
+  // 极早兜底：DOM 就绪 4s 后（load 事件可能被慢资源拖住）
+  setTimeout(revealAll, 4000);
+})();
 
 // ========== Hero Title Character Reveal ==========
 (function animateHeroTitle() {
@@ -2139,8 +2463,8 @@ revealEls.forEach(el => revealObserver.observe(el));
   let charIndex = 0;
   chars.forEach(item => {
     if (item.type === 'char') {
-      const delay = 0.15 + charIndex * 0.04;
-      html += `<span class="char" style="animation-delay:${delay}s">${item.value}</span>`;
+      const delay = 0.18 + charIndex * 0.035;
+      html += `<span class="char" style="animation-delay:${delay.toFixed(3)}s">${item.value}</span>`;
       charIndex++;
     } else if (item.type === 'space') {
       html += ' ';
@@ -2201,29 +2525,6 @@ revealEls.forEach(el => revealObserver.observe(el));
   }, { threshold: 0.5 });
 
   counterObserver.observe(statsBand);
-})();
-
-// ========== Bento Grid 3D Entrance ==========
-(function animateBento() {
-  const bentoGrid = document.getElementById('bento-grid');
-  if (!bentoGrid) return;
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) {
-    bentoGrid.classList.add('visible');
-    return;
-  }
-
-  const bentoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        bentoObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  bentoObserver.observe(bentoGrid);
 })();
 
 // ========== FAQ Accordion ==========
@@ -2327,13 +2628,25 @@ function verifyLocalAccount(username, password) {
   return acc;
 }
 
+// 站长账号名（与 Worker 环境变量 ADMIN_USERNAME 默认值一致）
+const OWNER_USERNAME = 'BANTAN7';
+// 站长身份判断：以后端 isOwner 字段为准，旧版后端不返回时按用户名兜底
+function isOwnerAccount(userData) {
+  if (!userData) return false;
+  if (userData.isOwner === true) return true;
+  const name = (userData.username || userData.nickname || '').toUpperCase();
+  return name === OWNER_USERNAME;
+}
+
 function setLoginState(userData, token) {
+  const ownerFlag = isOwnerAccount(userData);
   // Landing page format
   localStorage.setItem('bantan_user', JSON.stringify({
     username: userData.username || userData.nickname,
     isLoggedIn: true,
     loginTime: Date.now(),
-    isVip: userData.isVip || false
+    isVip: userData.isVip || false,
+    isOwner: ownerFlag
   }));
   // Index.html compatible format
   localStorage.setItem('bantan_user_token', token || ('demo_' + Date.now()));
@@ -2341,6 +2654,7 @@ function setLoginState(userData, token) {
     username: userData.username || userData.nickname,
     nickname: userData.nickname || userData.username,
     isVip: userData.isVip || false,
+    isOwner: ownerFlag,
     vipLevel: userData.vipLevel || 0,
     avatar: userData.avatar || '',
     balance: userData.balance || 0,
@@ -2372,8 +2686,9 @@ async function handleLogin(e) {
   if (result.success && result.data) {
     // 后端登录成功
     setLoginState(result.data.user || result.data, result.data.token);
+    showToast(welcomeText(result.data.user || result.data, false), 2000);
     btn.textContent = '登录成功，跳转中...';
-    setTimeout(() => { window.location.href = 'index.html'; }, 800);
+    setTimeout(() => { window.location.href = 'index.html?welcome=1'; }, 800);
     return;
   }
 
@@ -2381,9 +2696,9 @@ async function handleLogin(e) {
   const localAcc = verifyLocalAccount(username, password);
   if (localAcc) {
     setLoginState(localAcc, null);
-    showToast('本地模式登录（不同步到后台）');
+    showToast(welcomeText(localAcc, false) + '（本地模式）', 2000);
     btn.textContent = '登录成功，跳转中...';
-    setTimeout(() => { window.location.href = 'index.html'; }, 800);
+    setTimeout(() => { window.location.href = 'index.html?welcome=1'; }, 800);
     return;
   }
 
@@ -2428,8 +2743,9 @@ async function handleRegister(e) {
   if (result.success && result.data) {
     // 后端注册成功
     setLoginState(result.data.user || result.data, result.data.token);
+    showToast(welcomeText(result.data.user || result.data, true));
     btn.textContent = '注册成功，跳转中...';
-    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+    setTimeout(() => { window.location.href = 'index.html?welcome=1&new=1'; }, 1000);
     return;
   }
 
@@ -2453,9 +2769,26 @@ async function handleRegister(e) {
   saveLocalAccount(username, pass);
   const acc = getLocalAccounts()[username.toLowerCase()];
   setLoginState(acc, null);
-  showToast('本地模式注册（不同步到后台）');
+  showToast(welcomeText(acc, true) + '（本地模式）');
   btn.textContent = '注册成功，跳转中...';
-  setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+  setTimeout(() => { window.location.href = 'index.html?welcome=1&new=1'; }, 1000);
+}
+
+// 登录/注册欢迎语（时段问候 + 身份定制）
+function welcomeText(user, isRegister) {
+  const name = (user && user.username) || '朋友';
+  const hour = new Date().getHours();
+  let period;
+  if (hour < 5) period = '夜深了';
+  else if (hour < 9) period = '早上好';
+  else if (hour < 12) period = '上午好';
+  else if (hour < 14) period = '中午好';
+  else if (hour < 18) period = '下午好';
+  else period = '晚上好';
+  if (isOwnerAccount(user)) {
+    return isRegister ? '👑 站长账号已就位，欢迎归来' : '👑 ' + period + '，站长！';
+  }
+  return isRegister ? '🎉 欢迎加入，' + name + '！' : period + '，' + name + '！欢迎回来';
 }
 
 // ========== Toast ==========
@@ -2501,24 +2834,98 @@ function tryTool(toolName) {
   openAuthModal();
 }
 
-// ========== Mobile nav ==========
-function toggleMobileNav() {
+// ========== Mobile nav（class 驱动，CSS 过渡开合） ==========
+function toggleMobileNav(force) {
   const links = document.querySelector('.nav-links');
-  if (links.style.display === 'flex') {
-    links.style.display = 'none';
-  } else {
-    links.style.display = 'flex';
-    links.style.flexDirection = 'column';
-    links.style.position = 'absolute';
-    links.style.top = '100%';
-    links.style.left = '0';
-    links.style.right = '0';
-    links.style.background = 'rgba(3, 3, 10, 0.95)';
-    links.style.backdropFilter = 'blur(20px)';
-    links.style.padding = '16px 24px';
-    links.style.borderBottom = '1px solid var(--border)';
+  const toggle = document.querySelector('.nav-mobile-toggle');
+  if (!links) return;
+  const willOpen = typeof force === 'boolean' ? force : !links.classList.contains('open');
+  links.classList.toggle('open', willOpen);
+  if (toggle) {
+    toggle.classList.toggle('open', willOpen);
+    toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
   }
 }
+
+// 点击菜单链接后自动收起
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => toggleMobileNav(false));
+});
+// 桌面端恢复宽度时确保菜单复位
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) toggleMobileNav(false);
+}, { passive: true });
+
+// ========== Hero 滚动提示：点击平滑滚动到工具区 ==========
+(function initScrollHint() {
+  const hint = document.querySelector('.scroll-hint');
+  const target = document.getElementById('tools');
+  if (!hint || !target) return;
+  hint.addEventListener('click', () => {
+    const top = target.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+})();
+
+// ========== 搜索框打字机占位符（聚焦时暂停，reduced-motion 下保持静态） ==========
+(function typewriterPlaceholder() {
+  const input = document.getElementById('heroSearch');
+  if (!input) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const phrases = [
+    '翻译，例如：中英文互译',
+    '塔罗占卜，抽一张今日牌',
+    '密码生成，强密码一键复制',
+    '网速测试，看看有多快',
+    'AI 对话，问点什么吧'
+  ];
+  const basePlaceholder = input.getAttribute('placeholder') || '';
+
+  let phraseIdx = 0;
+  let charIdx = 0;
+  let deleting = false;
+  let timer = null;
+
+  function tick() {
+    const phrase = phrases[phraseIdx];
+    if (!deleting) {
+      charIdx++;
+      input.setAttribute('placeholder', phrase.slice(0, charIdx));
+      if (charIdx === phrase.length) {
+        deleting = true;
+        timer = setTimeout(tick, 2200); // 完整展示停留
+        return;
+      }
+      timer = setTimeout(tick, 90);
+    } else {
+      charIdx--;
+      input.setAttribute('placeholder', phrase.slice(0, charIdx));
+      if (charIdx === 0) {
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        timer = setTimeout(tick, 300);
+        return;
+      }
+      timer = setTimeout(tick, 45);
+    }
+  }
+
+  function start() {
+    if (timer === null) timer = setTimeout(tick, 1800); // 等 Hero 入场结束后开始
+  }
+  function stop() {
+    clearTimeout(timer);
+    timer = null;
+    input.setAttribute('placeholder', basePlaceholder);
+    // 停止后重置状态，下次重新从第一条开始
+    phraseIdx = 0; charIdx = 0; deleting = false;
+  }
+
+  input.addEventListener('focus', stop);
+  input.addEventListener('blur', () => { if (!input.value.trim()) start(); });
+  start();
+})();
 
 // ========== Auto-redirect if logged in ==========
 (function checkLogin() {
@@ -2539,6 +2946,7 @@ function toggleMobileNav() {
     
     if (isLoggedIn) {
       // Already logged in - redirect to universal hub
+      window.__willRedirectToHub = true;
       document.body.style.opacity = '0';
       document.body.style.transition = 'opacity 0.3s';
       setTimeout(() => {
@@ -2548,6 +2956,22 @@ function toggleMobileNav() {
   } catch (e) {
     // localStorage not available, stay on landing
   }
+})();
+
+// ========== 访客统计（会话级节流：同一会话仅上报一次，节省 KV 写入；跳转主站时跳过） ==========
+(function reportPv() {
+  if (window.__willRedirectToHub) return;
+  try {
+    if (sessionStorage.getItem('bantan_pv_reported')) return;
+    sessionStorage.setItem('bantan_pv_reported', '1');
+  } catch (e) { return; }
+  try {
+    fetch(API_BASE + '/api/stats/pv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: '/landing.html' })
+    }).catch(() => {});
+  } catch (e) {}
 })();
 
 // ========== Smooth anchor scrolling with offset ==========

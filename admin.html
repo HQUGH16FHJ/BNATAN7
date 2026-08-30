@@ -1558,12 +1558,12 @@
         <span class="nav-icon">💬</span> 反馈收集
         <span class="nav-badge" id="fb-badge" style="display:none;">0</span>
       </div>
-      <div class="nav-item" onclick="switchPage('stats', this)">
-        <span class="nav-icon">📈</span> 访问统计
-      </div>
       <div class="nav-item" onclick="switchPage('invites', this)">
         <span class="nav-icon">🎉</span> 邀请记录
         <span class="nav-badge" style="background:linear-gradient(135deg,var(--accent-gold),var(--accent));color:#000;font-size:10px;">NEW</span>
+      </div>
+      <div class="nav-item" onclick="switchPage('stats', this)">
+        <span class="nav-icon">📈</span> 访客记录
       </div>
 
       <div class="nav-section">系统</div>
@@ -1572,6 +1572,11 @@
       </div>
       <div class="nav-item" onclick="switchPage('backup', this)">
         <span class="nav-icon">💾</span> 备份与恢复
+      </div>
+
+      <div class="nav-section">站长</div>
+      <div class="nav-item" onclick="switchPage('owner', this)">
+        <span class="nav-icon">👑</span> 站长账号
       </div>
     </div>
     <div class="sidebar-footer">
@@ -2153,13 +2158,81 @@
     <!-- 访问统计 -->
     <div class="page" id="page-stats">
       <div class="page-header">
-        <h2 class="page-title">访问统计 <small>PV · UV · 趋势</small></h2>
+        <div>
+          <h2 class="page-title">访客记录 <small>PV · UV · 近7天趋势 · 访客明细</small></h2>
+        </div>
+        <div class="header-actions">
+          <button class="btn primary" onclick="loadVisitorData()">🔄 刷新数据</button>
+        </div>
       </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">今日访问 PV</div>
+          <div class="stat-value" id="vs-pv-today">--</div>
+          <div class="stat-delta" id="vs-pv-yesterday">昨日 --</div>
+          <div class="stat-icon">👁️</div>
+        </div>
+        <div class="stat-card c2">
+          <div class="stat-label">今日访客 UV</div>
+          <div class="stat-value" id="vs-uv-today">--</div>
+          <div class="stat-delta" id="vs-uv-yesterday">昨日 --</div>
+          <div class="stat-icon">🧑‍🤝‍🧑</div>
+        </div>
+        <div class="stat-card c3">
+          <div class="stat-label">近7天 PV</div>
+          <div class="stat-value" id="vs-pv-week">--</div>
+          <div class="stat-delta">页面浏览总量</div>
+          <div class="stat-icon">📈</div>
+        </div>
+        <div class="stat-card c4">
+          <div class="stat-label">数据保留</div>
+          <div class="stat-value" style="font-size:22px;">90天</div>
+          <div class="stat-delta">访客明细自动过期</div>
+          <div class="stat-icon">🗄️</div>
+        </div>
+      </div>
+
       <div class="card">
-        <div style="text-align:center;padding:40px;color:var(--sub);">
-          <div style="font-size:48px;margin-bottom:12px;">📊</div>
-          <div style="font-size:14px;">详细统计图表</div>
-          <div style="font-size:12px;margin-top:6px;">开发中，敬请期待</div>
+        <h3 class="card-title">📈 近 7 天趋势</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th style="width:120px;">PV 浏览量</th>
+                <th style="width:120px;">UV 访客数</th>
+                <th>趋势</th>
+              </tr>
+            </thead>
+            <tbody id="visitor-week-list"><tr><td colspan="4" class="empty">加载中...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">
+          🧾 访客明细
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <select id="visitor-date" onchange="loadVisitorList()" style="font-size:12px;width:150px;"></select>
+            <button class="btn btn-sm" onclick="loadVisitorList()">🔍 查询</button>
+          </div>
+        </h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:150px;">访问时间</th>
+                <th style="width:140px;">IP</th>
+                <th>设备 / 浏览器</th>
+                <th style="width:120px;">入口页面</th>
+              </tr>
+            </thead>
+            <tbody id="visitor-list"><tr><td colspan="4" class="empty">加载中...</td></tr></tbody>
+          </table>
+        </div>
+        <div style="font-size:11px;color:var(--sub);margin-top:10px;">
+          💡 同一 IP 每天只记录一次首次访问；PV 为页面浏览次数（每次打开会话计 1 次）。
         </div>
       </div>
     </div>
@@ -2228,6 +2301,71 @@
           </p>
           <input type="file" id="import-file" accept=".json" style="margin-bottom:12px;" onchange="importData(event)">
           <div style="font-size:11px;color:var(--danger);">⚠️ 导入操作不可撤销</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 站长账号 -->
+    <div class="page" id="page-owner">
+      <div class="page-header">
+        <h2 class="page-title">站长账号 <small>站长身份信息与账号管理</small></h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">站长账号</div>
+          <div class="stat-value" id="owner-username" style="font-size:20px;">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">账号状态</div>
+          <div class="stat-value" id="owner-status" style="font-size:18px;">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">剩余次数</div>
+          <div class="stat-value" id="owner-balance">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">累计对话</div>
+          <div class="stat-value" id="owner-totalused">-</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">📋 账号信息</h3>
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:12px 16px;font-size:13px;max-width:560px;">
+          <div style="color:var(--sub);">用户名</div><div id="owner-info-username" style="font-weight:600;">-</div>
+          <div style="color:var(--sub);">UID</div><div id="owner-info-uid" style="font-family:monospace;">-</div>
+          <div style="color:var(--sub);">专属邀请码</div><div id="owner-info-code" style="font-family:monospace;font-weight:700;letter-spacing:2px;">-</div>
+          <div style="color:var(--sub);">注册时间</div><div id="owner-info-created" style="font-size:12px;">-</div>
+          <div style="color:var(--sub);">最后登录</div><div id="owner-info-login" style="font-size:12px;">-</div>
+          <div style="color:var(--sub);">注册 IP</div><div id="owner-info-ip" style="font-size:11px;font-family:monospace;word-break:break-all;">-</div>
+        </div>
+      </div>
+
+      <!-- 站长账号未开通时显示：一键初始化 -->
+      <div class="card" id="owner-init-card" style="display:none;border-color:rgba(251,191,36,0.35);">
+        <h3 class="card-title">🚀 一键初始化站长前台账号</h3>
+        <p style="font-size:12px;color:var(--sub);margin:0 0 12px;line-height:1.7;">
+          检测到站长账号（<strong id="owner-init-name" style="color:var(--text);">BANTAN7</strong>）还未在用户系统中注册，这就是前台登录不显示「👑 站长」身份的原因。<br>
+          设置一个前台登录密码后点击初始化，系统会自动创建站长用户记录（UID、邀请码、永久 VIP）；之后在万能枢纽用<strong style="color:var(--text);">站长账号 + 该密码</strong>登录即可显示站长身份。<br>
+          也可以不初始化——直接在前台登录框输入站长账号和<strong style="color:var(--text);">后台管理员密码</strong>，系统会自动开通。
+        </p>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="owner-init-password" placeholder="设置站长前台登录密码（6-32位）" style="flex:1;min-width:240px;">
+          <button class="btn primary" onclick="submitOwnerInit()">一键初始化</button>
+        </div>
+      </div>
+
+      <!-- 站长账号已开通时显示：重置密码 -->
+      <div class="card" id="owner-reset-card" style="display:none;">
+        <h3 class="card-title">🔑 修改站长账号密码</h3>
+        <p style="font-size:12px;color:var(--sub);margin:0 0 12px;line-height:1.7;">
+          此处修改的是站长在前台（万能枢纽）登录的<strong>用户账号密码</strong>。<br>
+          站长在前台也可以直接使用后台管理员密码（环境变量 <code style="background:var(--panel-2);padding:1px 6px;border-radius:4px;">ADMIN_PASSWORD</code>）登录。后台管理面板登录密码需在 Cloudflare 控制台 → Workers → 设置 → 环境变量中修改。
+        </p>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="owner-new-password" placeholder="输入新密码（6-32位）" style="flex:1;min-width:220px;">
+          <button class="btn primary" onclick="submitOwnerPassword()">重置密码</button>
         </div>
       </div>
     </div>
@@ -2553,6 +2691,8 @@ function switchPage(name, el) {
   if (name === 'announce') loadAnnounces();
   if (name === 'feedback') loadFeedback();
   if (name === 'invites') loadInviteData();
+  if (name === 'owner') loadOwnerInfo();
+  if (name === 'stats') loadVisitorData();
   if (name === 'settings') loadSettings();
 }
 
@@ -2991,11 +3131,13 @@ function renderUserList(users) {
         </td>
         <td style="font-weight:600;">
           ${escapeHtml(username)}
+          ${u.isOwner ? '<span class="tag" style="background:linear-gradient(135deg,#ef4444,#f59e0b);color:#fff;border:none;margin-left:6px;">👑 站长</span>' : ''}
         </td>
         <td>
+          ${u.isOwner ? '<span class="tag" style="background:linear-gradient(135deg,#ef4444,#f59e0b);color:#fff;border:none;">👑 站长账号</span>' : `
           <span class="tag ${isVip ? vipColors[vipLevel] || 'gold' : 'gray'}" style="${isVip ? 'background:rgba(var(--accent-gold-rgb),0.1);border-color:rgba(var(--accent-gold-rgb),0.3);color:var(--accent-gold);' : ''}">
             ${vipNames[vipLevel] || (isVip ? 'VIP' : '普通用户')}
-          </span>
+          </span>`}
         </td>
         <td><span class="tag ${balance > 50 ? 'green' : balance > 10 ? 'yellow' : 'red'}">${balance} 次</span></td>
         <td style="color:var(--sub);">${totalUsed} 次</td>
@@ -3008,7 +3150,9 @@ function renderUserList(users) {
             <button class="btn btn-sm" onclick="showAdjustBalance('${escapeHtml(username)}', ${balance})" title="调整余额">💰</button>
             <button class="btn btn-sm" onclick="copyUid('${escapeHtml(uid)}')" title="复制 UID">📋</button>
             <button class="btn btn-sm" onclick="showSetUid('${escapeHtml(username)}', '${escapeHtml(uid)}')" title="设置 UID">✏️</button>
-            <button class="btn btn-sm danger" onclick="deleteUser('${escapeHtml(username)}')" title="删除用户">🗑️</button>
+            ${u.isOwner
+              ? '<button class="btn btn-sm" disabled title="站长账号不可删除" style="opacity:0.35;cursor:not-allowed;">🔒</button>'
+              : `<button class="btn btn-sm danger" onclick="deleteUser('${escapeHtml(username)}')" title="删除用户">🗑️</button>`}
           </div>
         </td>
       </tr>
@@ -3620,6 +3764,191 @@ async function saveSettings() {
     showToast('设置已保存');
   } else {
     showToast(res.error || '保存失败');
+  }
+}
+
+// ==================== 访客记录 ====================
+function parseUA(ua) {
+  ua = ua || '';
+  let os = '未知设备';
+  if (/Windows NT 10/.test(ua)) os = '💻 Windows';
+  else if (/Windows/.test(ua)) os = '💻 Windows';
+  else if (/Android/.test(ua)) os = '📱 Android';
+  else if (/iPhone|iPad|iPod/.test(ua)) os = '📱 iOS';
+  else if (/Mac OS X/.test(ua)) os = '💻 macOS';
+  else if (/Linux/.test(ua)) os = '💻 Linux';
+
+  let browser = '未知浏览器';
+  if (/Edg\//.test(ua)) browser = 'Edge';
+  else if (/Chrome\//.test(ua) && !/Chromium/.test(ua)) browser = 'Chrome';
+  else if (/Firefox\//.test(ua)) browser = 'Firefox';
+  else if (/Safari\//.test(ua) && /Version\//.test(ua)) browser = 'Safari';
+  else if (/MicroMessenger\//.test(ua)) browser = '微信内置';
+  else if (/QQ\//.test(ua)) browser = 'QQ内置';
+
+  const mobile = /Mobi|Android|iPhone|iPad|iPod/.test(ua);
+  return { os, browser, mobile };
+}
+
+function maskIP(ip) {
+  if (!ip) return '-';
+  const parts = ip.split('.');
+  if (parts.length === 4) return parts[0] + '.' + parts[1] + '.*.*';
+  if (ip.includes(':')) return ip.split(':').slice(0, 3).join(':') + ':**';
+  return ip;
+}
+
+function initVisitorDateSelect(weekData) {
+  const sel = document.getElementById('visitor-date');
+  if (!sel || sel.options.length) return;
+  weekData.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.date;
+    const label = d.date === weekData[weekData.length - 1].date ? d.date + '（今天）' : d.date;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+  sel.value = weekData[weekData.length - 1].date;
+}
+
+async function loadVisitorData() {
+  const res = await api('/api/admin/visitors/stats');
+  if (!res.success) { showToast(res.error || '加载失败'); return; }
+
+  document.getElementById('vs-pv-today').textContent = res.todayPv || 0;
+  document.getElementById('vs-uv-today').textContent = res.todayUv || 0;
+  document.getElementById('vs-pv-yesterday').textContent = '昨日 ' + (res.yesterdayPv || 0);
+  document.getElementById('vs-uv-yesterday').textContent = '昨日 ' + (res.yesterdayUv || 0);
+  document.getElementById('vs-pv-week').textContent = res.weekPv || 0;
+
+  const maxPv = Math.max(1, ...res.weekData.map(d => d.pv));
+  document.getElementById('visitor-week-list').innerHTML = res.weekData.map(d => {
+    const pct = Math.max(2, Math.round(d.pv / maxPv * 100));
+    const isToday = d.date === res.weekData[res.weekData.length - 1].date;
+    const barColor = d.pv > 0 ? 'linear-gradient(90deg,var(--accent),var(--accent-2))' : 'var(--border)';
+    return `<tr>
+      <td style="white-space:nowrap;">${d.date}${isToday ? ' <span class="tag cyan" style="font-size:10px;">今天</span>' : ''}</td>
+      <td style="font-weight:700;color:var(--accent);">${d.pv}</td>
+      <td>${d.uv !== undefined ? d.uv : '--'}</td>
+      <td style="min-width:160px;">
+        <div style="background:var(--panel-2);border-radius:6px;height:14px;width:100%;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;background:${barColor};border-radius:6px;transition:width .4s;"></div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  initVisitorDateSelect(res.weekData);
+  loadVisitorList();
+}
+
+async function loadVisitorList() {
+  const sel = document.getElementById('visitor-date');
+  const date = sel && sel.value ? sel.value : '';
+  const tbody = document.getElementById('visitor-list');
+  const res = await api('/api/admin/visitors' + (date ? '?date=' + date : ''));
+  if (!res.success) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty" style="color:var(--danger);">${res.error || '加载失败'}</td></tr>`;
+    return;
+  }
+  const list = res.visitors || [];
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="empty">当天暂无访客记录</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(v => {
+    const info = parseUA(v.ua);
+    const path = v.path || '/';
+    const pageName = path.indexOf('landing') >= 0 ? '入口页' : path.indexOf('index') >= 0 ? '主站' : path;
+    return `<tr>
+      <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${v.time ? new Date(v.time).toLocaleString('zh-CN') : '-'}</td>
+      <td style="font-family:monospace;font-size:11px;">${maskIP(v.ip)}</td>
+      <td>
+        <span class="tag ${info.mobile ? 'cyan' : 'gray'}" style="margin-right:4px;">${info.os}</span>
+        <span class="tag gray">${info.browser}</span>
+      </td>
+      <td style="font-size:11px;">${pageName}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ==================== 站长账号 ====================
+async function loadOwnerInfo() {
+  const res = await api('/api/admin/owner');
+  if (!res.success) { showToast(res.error || '加载失败'); return; }
+  const o = res.owner || {};
+
+  document.getElementById('owner-username').textContent = o.username || '-';
+  document.getElementById('owner-info-username').textContent = o.username || '-';
+  const initNameEl = document.getElementById('owner-init-name');
+  if (initNameEl) initNameEl.textContent = o.username || 'BANTAN7';
+
+  const initCard = document.getElementById('owner-init-card');
+  const resetCard = document.getElementById('owner-reset-card');
+
+  if (!o.exists) {
+    document.getElementById('owner-status').innerHTML = '<span style="color:var(--warning);font-size:14px;">⚠️ 未开通前台账号</span>';
+    document.getElementById('owner-balance').textContent = '-';
+    document.getElementById('owner-totalused').textContent = '-';
+    document.getElementById('owner-info-uid').textContent = '-';
+    document.getElementById('owner-info-code').textContent = '-';
+    document.getElementById('owner-info-created').textContent = '-';
+    document.getElementById('owner-info-login').textContent = '-';
+    document.getElementById('owner-info-ip').textContent = '-';
+    if (initCard) initCard.style.display = '';
+    if (resetCard) resetCard.style.display = 'none';
+    return;
+  }
+
+  if (initCard) initCard.style.display = 'none';
+  if (resetCard) resetCard.style.display = '';
+
+  document.getElementById('owner-status').innerHTML = '<span style="color:var(--success);">✅ 已激活（站长）</span>';
+  document.getElementById('owner-balance').textContent = '∞ 无限';
+  document.getElementById('owner-totalused').textContent = o.totalUsed || 0;
+  document.getElementById('owner-info-uid').textContent = o.uid || '-';
+  document.getElementById('owner-info-code').textContent = o.inviteCode || '（前台打开邀请弹窗自动生成）';
+  document.getElementById('owner-info-created').textContent = o.createdAt ? new Date(o.createdAt).toLocaleString('zh-CN') : '-';
+  document.getElementById('owner-info-login').textContent = o.lastLogin ? new Date(o.lastLogin).toLocaleString('zh-CN') : '从未登录';
+  document.getElementById('owner-info-ip').textContent = o.registerIP || '-';
+}
+
+// 一键初始化站长前台账号（复用 owner/password 接口：账号不存在时后端自动创建）
+async function submitOwnerInit() {
+  const input = document.getElementById('owner-init-password');
+  const pwd = (input.value || '').trim();
+  if (pwd.length < 6 || pwd.length > 32) { showToast('密码长度需 6-32 位'); return; }
+  if (!confirm('将为站长账号创建前台用户记录，确认初始化吗？')) return;
+  const btn = input.parentElement.querySelector('button');
+  if (btn) { btn.disabled = true; btn.textContent = '初始化中...'; }
+  const res = await api('/api/admin/owner/password', {
+    method: 'POST',
+    body: JSON.stringify({ newPassword: pwd })
+  });
+  if (btn) { btn.disabled = false; btn.textContent = '一键初始化'; }
+  if (res.success) {
+    showToast(res.message || '站长前台账号已初始化');
+    input.value = '';
+    loadOwnerInfo();
+  } else {
+    showToast(res.error || '初始化失败');
+  }
+}
+
+async function submitOwnerPassword() {
+  const input = document.getElementById('owner-new-password');
+  const pwd = (input.value || '').trim();
+  if (pwd.length < 6 || pwd.length > 32) { showToast('密码长度需 6-32 位'); return; }
+  if (!confirm('确定重置站长账号的前台登录密码吗？')) return;
+  const res = await api('/api/admin/owner/password', {
+    method: 'POST',
+    body: JSON.stringify({ newPassword: pwd })
+  });
+  if (res.success) {
+    showToast('站长账号密码已重置');
+    input.value = '';
+  } else {
+    showToast(res.error || '重置失败');
   }
 }
 

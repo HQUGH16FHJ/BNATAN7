@@ -5961,8 +5961,9 @@
         /* ===== 实时状态浮窗 ===== */
         .rt-status-widget {
             position: fixed;
-            bottom: 70px;
-            right: 16px;
+            left: 16px;
+            bottom: 16px;
+            right: auto;
             z-index: 9998;
             display: flex;
             align-items: center;
@@ -5974,9 +5975,15 @@
             border: 1px solid rgba(0, 245, 255, 0.15);
             font-size: 12px;
             color: #8892b0;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: pointer;
             user-select: none;
+            max-width: calc(100vw - 32px);
+        }
+        /* AI 面板打开时：状态条停靠到面板下方（对齐面板左缘，避开右侧 FAB） */
+        body.ai-panel-open .rt-status-widget {
+            left: calc(100vw - clamp(12px, 3vw, 28px) - min(420px, calc(100vw - 24px)));
+            bottom: calc(clamp(135px, 18vw, 165px) - 46px);
         }
         [data-theme="light"] .rt-status-widget {
             background: rgba(255, 255, 255, 0.7);
@@ -6018,10 +6025,14 @@
         }
         @media (max-width: 768px) {
             .rt-status-widget {
-                bottom: 64px;
-                right: 8px;
+                left: 10px;
+                bottom: 10px;
                 padding: 6px 10px;
                 font-size: 11px;
+            }
+            body.ai-panel-open .rt-status-widget {
+                left: 12px;
+                bottom: calc(clamp(135px, 18vw, 165px) - 44px);
             }
             .rt-latency { display: none; }
         }
@@ -6215,7 +6226,7 @@
                     </button>
                     <div class="nav-user-dropdown" id="nav-user-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;min-width:180px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:8px;backdrop-filter:blur(20px);box-shadow:0 10px 40px rgba(0,0,0,0.3);z-index:1000;">
                         <div style="padding:10px 12px;border-bottom:1px solid var(--border);margin-bottom:4px;">
-                            <div style="font-size:12px;color:var(--sub);margin-bottom:2px;">当前用户</div>
+                            <div style="font-size:12px;color:var(--accent);margin-bottom:2px;" id="nav-dropdown-greeting">欢迎回来</div>
                             <div style="font-weight:600;font-size:14px;" id="nav-dropdown-username">用户</div>
                         </div>
                         <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" onclick="openUserProfile();closeNavUserDropdown();">
@@ -6223,6 +6234,9 @@
                         </div>
                         <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" onclick="openRedeemModal();closeNavUserDropdown();">
                             <span>🎁</span> 兑换码
+                        </div>
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" onclick="openInviteModal();closeNavUserDropdown();">
+                            <span>🎉</span> 邀请有礼
                         </div>
                         <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" id="nav-admin-entry" onclick="window.location.href='admin.html'">
                             <span>⚙️</span> 站长后台
@@ -11113,12 +11127,31 @@
             el._timer = setTimeout(() => el.classList.remove('show'), 3000);
         }
 
-        function showToast(msg) {
+        function showToast(msg, duration) {
             const el = document.getElementById('toast');
             el.textContent = msg;
             el.classList.add('show');
             clearTimeout(el._timer);
-            el._timer = setTimeout(() => el.classList.remove('show'), 2200);
+            el._timer = setTimeout(() => el.classList.remove('show'), duration || 2200);
+        }
+
+        // 登录/注册欢迎语：时段问候 + 身份定制
+        function buildWelcomeMsg(user, isRegister) {
+            const name = (user && user.username) || '朋友';
+            const hour = new Date().getHours();
+            let period;
+            if (hour < 5) period = '夜深了';
+            else if (hour < 9) period = '早上好';
+            else if (hour < 12) period = '上午好';
+            else if (hour < 14) period = '中午好';
+            else if (hour < 18) period = '下午好';
+            else period = '晚上好';
+            if (isOwnerAccount(user)) {
+                return isRegister ? '👑 站长账号已就位，欢迎归来' : '👑 ' + period + '，站长！全站权限已就绪';
+            }
+            return isRegister
+                ? '🎉 欢迎加入，' + name + '！'
+                : period + '，' + name + '！欢迎回来';
         }
 
         function copyText(text, label) {
@@ -13219,9 +13252,9 @@
 
         // 保存用户信息
         function saveUserInfo(info) {
-            _userState.info = info;
+            _userState.info = normalizeUserInfo(info);
             try {
-                localStorage.setItem('bantan_user_info', JSON.stringify(info));
+                localStorage.setItem('bantan_user_info', JSON.stringify(_userState.info));
             } catch(e) {}
         }
 
@@ -13242,7 +13275,7 @@
             try {
                 const info = localStorage.getItem('bantan_user_info');
                 if (info) {
-                    _userState.info = JSON.parse(info);
+                    _userState.info = normalizeUserInfo(JSON.parse(info));
                     return true;
                 }
             } catch(e) {}
@@ -13264,6 +13297,22 @@
             return !!_userState.token && !!_userState.info;
         }
 
+        // 站长账号名（与 Worker 环境变量 ADMIN_USERNAME 默认值一致）
+        const OWNER_USERNAME = 'BANTAN7';
+        // 站长身份判断：以后端 isOwner 字段为准，旧版后端不返回时按用户名兜底
+        function isOwnerAccount(info) {
+            if (!info) return false;
+            if (info.isOwner === true) return true;
+            const name = (info.username || info.nickname || '').toUpperCase();
+            return name === OWNER_USERNAME;
+        }
+        // 归一化用户信息：补全 isOwner 字段，兼容旧版后端
+        function normalizeUserInfo(info) {
+            if (!info || typeof info !== 'object') return info;
+            if (info.isOwner === undefined) info.isOwner = isOwnerAccount(info);
+            return info;
+        }
+
         // 更新用户信息 UI
         function updateUserUI() {
             const loginBtn = document.getElementById('ai-login-btn');
@@ -13282,20 +13331,28 @@
             const navAdminEntry = document.getElementById('nav-admin-entry');
 
             if (isUserLoggedIn() && _userState.info) {
+                const isOwner = isOwnerAccount(_userState.info);
                 if (loginBtn) loginBtn.style.display = 'none';
                 if (userInfo) userInfo.style.display = 'flex';
                 if (userNameEl) {
                     const isVip = _userState.info.isVip;
                     const vipLevel = _userState.info.vipLevel || 0;
                     const vipNames = ['', '🥉青铜', '🥈白银', '🥇黄金', '💎钻石', '👑至尊'];
-                    userNameEl.innerHTML = _userState.info.username || '用户' + 
-                        (isVip ? ' <span class="vip-badge-inline" style="background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;padding:2px 8px;border-radius:10px;font-size:12px;margin-left:6px;">' + (vipNames[vipLevel] || 'VIP') + '</span>' : '');
+                    let badgeHtml = '';
+                    if (isOwner) {
+                        badgeHtml = ' <span class="vip-badge-inline" style="background:linear-gradient(135deg,#ef4444,#f59e0b);color:#fff;padding:2px 8px;border-radius:10px;font-size:12px;margin-left:6px;box-shadow:0 2px 8px rgba(239,68,68,.4);">👑 站长</span>';
+                    } else if (isVip) {
+                        badgeHtml = ' <span class="vip-badge-inline" style="background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;padding:2px 8px;border-radius:10px;font-size:12px;margin-left:6px;">' + (vipNames[vipLevel] || 'VIP') + '</span>';
+                    }
+                    userNameEl.innerHTML = (_userState.info.username || '用户') + badgeHtml;
                 }
                 const total = (_userState.info.remainingCount || 0) + (_userState.info.bonusCount || 0);
                 if (userBalanceEl) userBalanceEl.textContent = total;
                 if (userAvatarEl) {
                     userAvatarEl.textContent = (_userState.info.username || 'U').charAt(0).toUpperCase();
-                    if (_userState.info.isVip) {
+                    if (isOwner) {
+                        userAvatarEl.style.background = 'linear-gradient(135deg,#ef4444,#f59e0b)';
+                    } else if (_userState.info.isVip) {
                         userAvatarEl.style.background = 'linear-gradient(135deg,#ffd700,#ff8c00)';
                     } else {
                         userAvatarEl.style.background = '';
@@ -13307,31 +13364,54 @@
                 if (navUserWrap) navUserWrap.style.display = 'flex';
                 if (navUserName) navUserName.textContent = _userState.info.username || '用户';
                 if (navDropdownUsername) navDropdownUsername.textContent = _userState.info.username || '用户';
+                const navGreeting = document.getElementById('nav-dropdown-greeting');
+                if (navGreeting) {
+                    const hour = new Date().getHours();
+                    let period;
+                    if (hour < 5) period = '夜深了';
+                    else if (hour < 9) period = '早上好';
+                    else if (hour < 12) period = '上午好';
+                    else if (hour < 14) period = '中午好';
+                    else if (hour < 18) period = '下午好';
+                    else period = '晚上好';
+                    navGreeting.textContent = isOwner
+                        ? '👑 ' + period + '，站长'
+                        : period + '，欢迎回来';
+                }
                 if (navUserAvatar) {
                     navUserAvatar.textContent = (_userState.info.username || 'U').charAt(0).toUpperCase();
-                    if (_userState.info.isVip) {
+                    if (isOwner) {
+                        navUserAvatar.style.background = 'linear-gradient(135deg,#ef4444,#f59e0b)';
+                    } else if (_userState.info.isVip) {
                         navUserAvatar.style.background = 'linear-gradient(135deg,#ffd700,#ff8c00)';
                     } else {
                         navUserAvatar.style.background = '';
                     }
                 }
-                // VIP徽章
+                // 徽章：站长优先于VIP
                 if (navVipBadge) {
-                    navVipBadge.style.display = _userState.info.isVip ? 'inline-block' : 'none';
-                    const vipLevel = _userState.info.vipLevel || 0;
-                    const vipNames = ['', '青铜', '白银', '黄金', '钻石', '至尊'];
-                    navVipBadge.textContent = vipNames[vipLevel] || 'VIP';
+                    if (isOwner) {
+                        navVipBadge.style.display = 'inline-block';
+                        navVipBadge.textContent = '👑 站长';
+                        navVipBadge.style.background = 'linear-gradient(135deg,#ef4444,#f59e0b)';
+                        navVipBadge.style.boxShadow = '0 2px 8px rgba(239,68,68,.4)';
+                    } else {
+                        navVipBadge.style.background = 'linear-gradient(135deg,#ffd700,#ff8c00)';
+                        navVipBadge.style.boxShadow = '';
+                        navVipBadge.style.display = _userState.info.isVip ? 'inline-block' : 'none';
+                        const vipLevel = _userState.info.vipLevel || 0;
+                        const vipNames = ['', '青铜', '白银', '黄金', '钻石', '至尊'];
+                        navVipBadge.textContent = vipNames[vipLevel] || 'VIP';
+                    }
                 }
 
-                // 站长后台入口：只有至尊VIP（等级5）才能看到
+                // 站长后台入口：仅站长账号可见（与VIP等级无关）
                 if (navAdminEntry) {
-                    const isSuperVip = _userState.info.isVip && _userState.info.vipLevel >= 5;
-                    navAdminEntry.style.display = isSuperVip ? 'flex' : 'none';
+                    navAdminEntry.style.display = isOwner ? 'flex' : 'none';
                 }
                 const adminEntry = document.getElementById('admin-entry');
                 if (adminEntry) {
-                    const isSuperVip = _userState.info.isVip && _userState.info.vipLevel >= 5;
-                    adminEntry.style.display = isSuperVip ? 'block' : 'none';
+                    adminEntry.style.display = isOwner ? 'block' : 'none';
                 }
 
                 updateRemainingCountUI();
@@ -13350,7 +13430,7 @@
                 const info = _userState.info;
                 const vipActive = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
                 const vipLevel = info.vipLevel || 0;
-                const isUnlimitedVip = vipActive && vipLevel >= 5; // 只有至尊VIP(5级)无限
+                const isUnlimitedVip = info.isOwner || (vipActive && vipLevel >= 5); // 站长无限；至尊VIP(5级)无限
                 const countEl = document.getElementById('ai-remaining-count');
                 const usageRemEl = document.getElementById('usage-remaining');
                 const usageDailyEl = document.getElementById('usage-daily');
@@ -13363,9 +13443,10 @@
                 const vipTipEl = document.getElementById('usage-vip-tip');
 
                 if (isUnlimitedVip) {
-                    // 至尊VIP：无限次数
-                    if (countEl) countEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">至尊VIP</span>';
-                    if (usageRemEl) usageRemEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">(至尊VIP无限)</span>';
+                    // 站长/至尊VIP：无限次数
+                    const unlimitedName = info.isOwner ? '站长' : '至尊VIP';
+                    if (countEl) countEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">' + unlimitedName + '</span>';
+                    if (usageRemEl) usageRemEl.innerHTML = '∞ <span style="font-size:12px;color:#ffd700;">(' + unlimitedName + '无限)</span>';
                     if (usageDailyEl) usageDailyEl.textContent = '无限';
                     if (bonusWrap) bonusWrap.style.display = 'none';
                     if (rechargeDaily) rechargeDaily.textContent = '无限';
@@ -13465,7 +13546,7 @@
                 }
                 updateUserUI();
                 startHeartbeat();
-                showToast('登录成功！');
+                showToast(buildWelcomeMsg(result.data.user, false), 3200);
                 closeAuthModal();
                 // 登录后刷新用户信息
                 fetchUserInfo();
@@ -13509,7 +13590,7 @@
                 }
                 updateUserUI();
                 startHeartbeat();
-                showToast('注册成功！');
+                showToast(buildWelcomeMsg(result.data.user, true), 3200);
                 closeAuthModal();
                 fetchUserInfo();
                 // 如果AI面板已打开，从服务端加载对话历史
@@ -13806,7 +13887,7 @@
                 const info = _userState.info;
                 const vipNames = ['普通用户', '🥉青铜VIP', '🥈白银VIP', '🥇黄金VIP', '💎钻石VIP', '👑至尊VIP'];
                 const isVip = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
-                const levelName = isVip ? (vipNames[info.vipLevel] || 'VIP用户') : '普通用户';
+                const levelName = info.isOwner ? '👑 站长' : (isVip ? (vipNames[info.vipLevel] || 'VIP用户') : '普通用户');
                 
                 document.getElementById('profile-avatar').textContent = (info.username || 'U').charAt(0).toUpperCase();
                 document.getElementById('profile-name').textContent = info.username || '用户';
@@ -13872,10 +13953,29 @@
         let _rtLatency = 0;
         let _rtDetailExpanded = false;
 
+        // 访客统计：会话级节流，同一会话仅上报一次，节省 KV 写入
+        let _pvReported = false;
+        function reportPvOnce() {
+            if (_pvReported) return;
+            try {
+                if (sessionStorage.getItem('bantan_pv_reported')) { _pvReported = true; return; }
+                sessionStorage.setItem('bantan_pv_reported', '1');
+                _pvReported = true;
+            } catch (e) { return; }
+            try {
+                fetch(getUserAPIUrl() + '/api/stats/pv', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path: '/index.html' })
+                }).catch(() => {});
+            } catch (e) {}
+        }
+
         function startRtPolling() {
             if (_rtHealthTimer) clearInterval(_rtHealthTimer);
             // 健康检查每 60 秒一次
             checkServerHealth();
+            reportPvOnce();
             _rtHealthTimer = setInterval(checkServerHealth, 60000);
         }
 
@@ -13966,6 +14066,23 @@
                     startHeartbeat();
                     fetchUserInfo();
                 }
+
+                // 从 landing 登录/注册跳转过来：弹出欢迎语后清除 URL 参数
+                try {
+                    const params = new URLSearchParams(window.location.search);
+                    if (params.get('welcome') === '1') {
+                        const isNew = params.get('new') === '1';
+                        const fireWelcome = () => {
+                            if (isUserLoggedIn()) showToast(buildWelcomeMsg(_userState.info, isNew), 3200);
+                        };
+                        if (isDemo) {
+                            setTimeout(fireWelcome, 600);
+                        } else {
+                            fetchUserInfo().then(fireWelcome).catch(fireWelcome);
+                        }
+                        history.replaceState(null, '', window.location.pathname);
+                    }
+                } catch (e) {}
             }
             // 启动实时状态监控（在线人数 + 服务健康检查）
             startRtPolling();
@@ -14158,9 +14275,9 @@
             // 登录用户：从用户信息中检查余额，不本地扣减（服务端扣减）
             if (isUserLoggedIn() && _userState.info) {
                 const info = _userState.info;
-                // 只有至尊VIP（等级5）无限次数，直接通过
+                // 站长 / 至尊VIP（等级5）无限次数，直接通过
                 const vipActive = info.isVip && (!info.vipExpire || info.vipExpire > Date.now());
-                const isUnlimitedVip = vipActive && (info.vipLevel || 0) >= 5;
+                const isUnlimitedVip = info.isOwner || (vipActive && (info.vipLevel || 0) >= 5);
                 if (isUnlimitedVip) {
                     return true;
                 }
@@ -14750,6 +14867,7 @@
             const panel = document.getElementById('ai-panel');
             const badge = document.getElementById('ai-badge');
             panel.classList.toggle('show');
+            document.body.classList.toggle('ai-panel-open', panel.classList.contains('show'));
             if (panel.classList.contains('show')) {
                 badge.style.display = 'none';
                 // 首次打开时恢复对话历史
