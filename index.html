@@ -14,8 +14,8 @@
         :root {
             --bg: #03030a;
             --bg-deep: #000005;
-            --text: #e8f0ff;
-            --sub: #8892b0;
+            --text: #c0e0ff;
+            --sub: #b8a4ff;
             --accent: #00f5ff;
             --accent-2: #7c3aed;
             --accent-gold: #fbbf24;
@@ -52,8 +52,8 @@
         [data-theme="light"] {
             --bg: #e4e8f0;
             --bg-deep: #d0d6e0;
-            --text: #0a0a1a;
-            --sub: #4a4a6a;
+            --text: #1a3a8c;
+            --sub: #8b5cf6;
             --accent: #0066ff;
             --accent-2: #7c3aed;
             --accent-gold: #f59e0b;
@@ -821,8 +821,8 @@
         /* ===== 首页 Hero 不对称分裂布局 ===== */
         .hero-grid {
             display: grid;
-            grid-template-columns: 60% 40%;
-            gap: clamp(16px, 2.5vw, 32px);
+            grid-template-columns: 1fr auto;
+            gap: clamp(20px, 3vw, 40px);
             align-items: center;
             min-height: 72vh;
             padding: clamp(20px, 4vh, 48px) 0;
@@ -875,22 +875,32 @@
         .hero-left h1 {
             font-size: clamp(56px, 10vw, 140px);
             font-weight: 800;
-            color: var(--text);
+            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -0.04em;
             line-height: 0.95;
             position: relative;
             margin: 0;
         }
         .hero-left h1 .accent {
-            color: var(--accent);
-            text-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+            background: none;
+            -webkit-background-clip: border;
+            background-clip: border;
+            -webkit-text-fill-color: #ffffff;
+            color: #ffffff;
+            text-shadow: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
         }
         .hero-subtitle {
             font-size: clamp(14px, 1.4vw, 18px);
-            color: var(--sub);
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: 0.02em;
             font-weight: 400;
-            opacity: 0.8;
             margin: 0;
             line-height: 1.7;
             max-width: 480px;
@@ -899,16 +909,18 @@
             display: flex;
             gap: 8px;
             align-items: stretch;
-            max-width: 560px;
+            max-width: 100%;
+            width: 100%;
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 6px;
+            padding: 8px;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), var(--glass-highlight);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             margin-top: clamp(8px, 1.5vh, 16px);
+            box-sizing: border-box;
         }
         .hero-search:focus-within {
             border-color: rgba(0, 245, 255, 0.3);
@@ -917,17 +929,25 @@
         }
         .hero-search select {
             flex: 0 0 auto;
-            min-width: 72px;
+            width: auto;
+            min-width: 56px;
+            max-width: 80px;
             background: rgba(var(--glow-color), 0.04);
             border: 1px solid rgba(var(--glow-color), 0.08);
             color: var(--text);
-            padding: 12px 14px;
-            font-size: 13px;
+            padding: 14px 20px 14px 8px;
+            font-size: 11px;
             border-radius: calc(var(--radius-lg) - 4px);
             cursor: pointer;
             outline: none;
             transition: all 0.2s;
             font-weight: 500;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236b7a99' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
         }
         .hero-search select:focus {
             border-color: rgba(var(--glow-color), 0.25);
@@ -937,10 +957,11 @@
             background: transparent;
             border: none;
             color: var(--text);
-            padding: 12px 16px;
-            font-size: 15px;
+            padding: 14px 16px;
+            font-size: 16px;
             outline: none;
             font-weight: 400;
+            min-width: 0;
         }
         .hero-search input::placeholder {
             color: var(--sub);
@@ -948,29 +969,32 @@
         }
         .hero-search-btn {
             flex: 0 0 auto;
-            padding: 12px 28px;
+            padding: 14px 32px;
+            font-size: 15px;
             font-weight: 600;
         }
         .hero-right {
             position: relative;
             z-index: 1;
+            flex-shrink: 0;
+            max-width: 280px;
         }
         .hero-hud {
             grid-template-columns: repeat(2, 1fr);
-            gap: clamp(8px, 1vw, 12px);
+            gap: clamp(6px, 0.8vw, 10px);
             margin: 0;
         }
         .hero-hud .hud-gauge {
-            padding: clamp(12px, 1.4vw, 18px) clamp(14px, 1.6vw, 20px);
+            padding: clamp(8px, 1vw, 12px) clamp(10px, 1.2vw, 14px);
         }
         .hero-hud .hud-gauge-value {
-            font-size: clamp(18px, 2.2vw, 28px);
+            font-size: clamp(14px, 1.6vw, 20px);
             font-weight: 700;
             font-variant-numeric: tabular-nums;
         }
         .hero-hud .hud-gauge-label {
-            font-size: clamp(9px, 0.8vw, 11px);
-            letter-spacing: 0.1em;
+            font-size: clamp(8px, 0.7vw, 10px);
+            letter-spacing: 0.08em;
         }
 
         /* ===== Bento 快捷导航 ===== */
@@ -1031,13 +1055,16 @@
         .bento-item .bento-title {
             font-size: clamp(11px, 1.1vw, 14px);
             font-weight: 700;
-            color: var(--text);
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: 0.02em;
         }
         .bento-item .bento-desc {
             font-size: clamp(9px, 0.8vw, 11px);
             color: var(--sub);
-            opacity: 0.45;
+            opacity: 0.6;
         }
 
         /* Bento featured - 工具箱 2x2 */
@@ -1412,10 +1439,18 @@
                 flex-wrap: wrap;
             }
             .hero-search select {
-                flex: 1 1 60px;
+                flex: 0 0 auto;
+                min-width: 56px;
+                max-width: 80px;
+                padding: 12px 18px 12px 8px;
+                font-size: 11px;
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
             }
             .hero-search input {
-                flex: 2 1 120px;
+                flex: 1 1 120px;
+                min-width: 0;
             }
             .dashboard-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1450,6 +1485,48 @@
             }
             .hero-left h1 { font-size: clamp(28px, 6vw, 48px); }
             .hero-hud { grid-template-columns: repeat(3, 1fr); }
+        }
+        /* 中等宽度（平板横屏/小笔记本） */
+        @media (min-width: 901px) and (max-width: 1200px) {
+            .hero-grid {
+                gap: clamp(12px, 2vw, 20px);
+            }
+            .hero-right {
+                max-width: 240px;
+            }
+            .hero-hud .hud-gauge {
+                padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);
+            }
+            .hero-hud .hud-gauge-value {
+                font-size: clamp(12px, 1.4vw, 16px);
+            }
+            .hero-search {
+                padding: 6px;
+                gap: 6px;
+            }
+            .hero-search select {
+                min-width: 48px;
+                max-width: 70px;
+                padding: 12px 16px 12px 6px;
+                font-size: 10px;
+            }
+            .hero-search input {
+                padding: 12px 12px;
+                font-size: 14px;
+            }
+            .hero-search-btn {
+                padding: 12px 20px;
+                font-size: 13px;
+            }
+        }
+        /* 大屏优化 */
+        @media (min-width: 1920px) {
+            .hero-right { max-width: 320px; }
+            .hero-search { max-width: 760px; }
+        }
+        @media (min-width: 2560px) {
+            .hero-right { max-width: 360px; }
+            .hero-search { max-width: 880px; }
         }
 
         /* 全息卡片 */
@@ -1989,14 +2066,18 @@
         .tool-card .name {
             font-size: clamp(11px, 1.2vw, 15px);
             font-weight: 700;
-            color: #fff;
-            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #00f5ff, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
         }
         .tool-card .desc {
             font-size: clamp(8px, 0.9vw, 12px);
             color: var(--sub);
             margin-top: 2px;
-            opacity: 0.4;
+            opacity: 0.6;
         }
         .tool-card .hot-tag {
             position: absolute;
@@ -5380,7 +5461,10 @@
         }
         .hud-gauge-label {
             font-size: clamp(8px, 0.7vw, 10px);
-            color: var(--sub);
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             margin-bottom: 4px;
@@ -5388,7 +5472,10 @@
         .hud-gauge-value {
             font-size: clamp(14px, 1.6vw, 20px);
             font-weight: 900;
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-variant-numeric: tabular-nums;
             display: flex;
             align-items: baseline;
@@ -5396,7 +5483,10 @@
         }
         .hud-gauge-unit {
             font-size: clamp(8px, 0.7vw, 10px);
-            color: var(--sub);
+            background: linear-gradient(90deg, var(--accent-2), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: 400;
         }
         .hud-bar {
@@ -6047,6 +6137,125 @@
             .cosmic-orb { animation: none !important; }
             html { scroll-behavior: auto !important; }
         }
+
+        /* ===== 彩色文字：缓慢平滑渐变（不闪烁） ===== */
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 50%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* 主标题 / 卡片标题 / 分类标题：彩虹缓慢流动渐变 */
+        h1, h2, h3, h4, h5, h6,
+        .mini-card .title,
+        .cat-title,
+        .buy-card-title,
+        .shortcut-section-title,
+        .gradient-text {
+            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 25%, #ec4899 50%, #fbbf24 72%, #34d399 90%, #00f5ff 100%) !important;
+            background-size: 400% 400% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: rainbowText 28s ease-in-out infinite !important;
+            text-shadow: none !important;
+        }
+        .cat-title {
+            border-bottom: 1px solid rgba(var(--glow-color), 0.28) !important;
+        }
+        /* 导航链接：青蓝紫渐变，激活态缓慢彩虹 */
+        .nav-links a {
+            background: linear-gradient(90deg, #00f5ff, #60a5fa, #a78bfa) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            text-shadow: none !important;
+        }
+        .nav-links a.active {
+            background: linear-gradient(135deg, #00f5ff, #ec4899, #fbbf24) !important;
+            background-size: 300% 300% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: rainbowText 24s ease-in-out infinite !important;
+            filter: drop-shadow(0 0 6px rgba(0, 245, 255, 0.5));
+        }
+        /* 数据统计：标签青绿渐变、数值金粉紫缓慢渐变 */
+        .stat-label {
+            background: linear-gradient(135deg, #34d399, #00f5ff, #60a5fa) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+        }
+        .stat-value, .stat-value--xl, .stat-value.accent {
+            background: linear-gradient(135deg, #fbbf24, #ec4899, #7c3aed) !important;
+            background-size: 300% 300% !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: rainbowText 26s ease-in-out infinite !important;
+            text-shadow: none !important;
+        }
+        /* 科技数据条文字：青绿渐变 */
+        .tech-bar {
+            background: linear-gradient(90deg, #34d399, #00f5ff) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+        }
+        /* 副标题：青紫粉渐变 */
+        .hero .subtitle, .hero-subtitle {
+            background: linear-gradient(90deg, #00f5ff, #7c3aed, #ec4899) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            text-shadow: none !important;
+        }
+        /* 量子标签：紫粉渐变 */
+        .quantum-tag {
+            background: linear-gradient(90deg, #a78bfa, #ec4899) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+        }
+        /* 汉堡菜单图标：青紫渐变 */
+        .hamburger {
+            background: linear-gradient(135deg, #00f5ff, #7c3aed) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+        }
+        /* 绊谈 logo：颜色渗透进界面，边缘自然融合（静态无溢出，柔化边缘） */
+        .logo {
+            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 50%, #fbbf24 100%) !important;
+            background-size: 100% 100% !important;
+            background-position: center !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+            -webkit-text-stroke: 0.5px transparent !important;
+            filter: drop-shadow(0 0 16px rgba(0, 245, 255, 0.18)) drop-shadow(0 0 32px rgba(124, 58, 237, 0.1)) blur(0.3px) !important;
+            animation: none !important;
+        }
+        /* ===== 从 landing 跳转过来的丝滑入场 ===== */
+        @keyframes welcomeFadeIn {
+            from { opacity: 0; transform: scale(0.98); filter: blur(6px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+        body.auth-ready #main-container {
+            animation: welcomeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
     </style>
 </head>
 <body>
@@ -6071,6 +6280,62 @@
     font-size: 14px;
     color: #64748b;
     z-index: 99999;
+  }
+
+  /* ===== 全站所有文字渐变色（兜底） ===== */
+  .cat-title, .cat-count, .cat-desc,
+  .mini-card .title, .mini-card .desc,
+  .nav-links a, .nav-user-name, .nav-dropdown-username,
+  .user-name, .user-balance-label,
+  .vip-badge-inline, .nav-vip-badge,
+  .tech-bar, .tech-bar-label, .tech-bar-value,
+  .stat-label, .stat-value, .stat-desc,
+  .section-title, .section-head p,
+  .shortcut-section-title, .buy-card-title, .buy-card-desc, .buy-card-price,
+  .faq-question, .faq-answer,
+  .feedback-title, .feedback-desc, .feedback-label,
+  .ai-chat-title, .ai-quick-btn, .ai-setting-label, .ai-setting-desc,
+  .footer, .footer *, .footer-bottom,
+  .modal-title, .modal-desc,
+  .label, .field-label,
+  .tag, .badge, .pill,
+  .preview-name, .preview-title, .preview-desc,
+  .hud-gauge-label, .hud-gauge-value,
+  .version-label, .version-date {
+      background-image: linear-gradient(135deg, #60a5fa 0%, #a78bfa 35%, #f472b6 65%, #fbbf24 100%) !important;
+      background-size: 200% 200% !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      color: transparent !important;
+  }
+  /* 数值类用金粉紫渐变 */
+  .stat-value, .stat-number, .user-balance-count, .tech-bar-value {
+      background-image: linear-gradient(135deg, #fbbf24, #ec4899, #7c3aed) !important;
+      background-size: 200% 200% !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      color: transparent !important;
+  }
+  /* 按钮文字保持可读性 — 不渐变 */
+  .btn, .btn-text, .search-btn, .cta-btn, .nav-cta,
+  button[class*="buy"], .buy-card-action {
+      -webkit-text-fill-color: #03030a !important;
+      color: #03030a !important;
+      background-image: none !important;
+  }
+  /* 输入框文字保持可读性 */
+  input, textarea, select {
+      -webkit-text-fill-color: #e8f0ff !important;
+      color: #e8f0ff !important;
+      background-image: none !important;
+  }
+  /* placeholder 不渐变 */
+  input::placeholder, textarea::placeholder {
+      -webkit-text-fill-color: initial !important;
+      color: rgba(170, 180, 200, 0.65) !important;
+      background-image: none !important;
   }
 </style>
 <script>
@@ -6100,7 +6365,7 @@
       // 已登录：解锁内容
       document.body.classList.add('auth-ready');
     } else {
-      // 未登录：跳转到个人工具箱入口页
+      // 未登录：跳转到万能枢纽入口页
       window.location.replace('landing.html');
     }
   } catch(e) {
@@ -6238,7 +6503,7 @@
                         <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" onclick="openInviteModal();closeNavUserDropdown();">
                             <span>🎉</span> 邀请有礼
                         </div>
-                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;" id="nav-admin-entry" onclick="window.location.href='admin.html'">
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:none;align-items:center;gap:8px;" id="nav-admin-entry" onclick="window.location.href='admin.html'">
                             <span>⚙️</span> 站长后台
                         </div>
                         <div style="height:1px;background:var(--border);margin:4px 0;"></div>
@@ -6535,7 +6800,7 @@
                     <span class="entry-icon">📋</span>
                     <div>
                         <div class="entry-title">更新日志</div>
-                        <div class="entry-desc">v3.1 · 视觉全面升级 <span class="entry-new">新</span></div>
+                        <div class="entry-desc">v3.6 · 品牌统一 . FAQ 修正 . 视觉优化 <span class="entry-new">新</span></div>
                     </div>
                 </div>
                 <span class="entry-arrow">→</span>
@@ -6593,7 +6858,7 @@
                     <div class="contact-item" onclick="window.open('https://www.douyin.com/user/self?from_tab_name=main','_blank')" role="button" tabindex="0"><div>🎵 抖音</div><div class="value">点击直达</div><button type="button" class="copy-btn">前往</button></div>
                     <div class="contact-item" onclick="window.open('https://github.com/','_blank')" role="button" tabindex="0"><div>🐙 GitHub</div><div class="value">点击直达</div><button type="button" class="copy-btn">前往</button></div>
                     <div class="contact-item" onclick="window.open('https://space.bilibili.com/','_blank')" role="button" tabindex="0"><div>📺 B站</div><div class="value">点击直达</div><button type="button" class="copy-btn">前往</button></div>
-                    <div class="contact-item" onclick="window.open('mailto:1429616034@qq.com','_blank')" role="button" tabindex="0"><div>📧 邮箱</div><div class="value">发送邮件</div><button type="button" class="copy-btn">前往</button></div>
+                    <div class="contact-item" onclick="window.open('mailto:g125668039@163.com','_blank')" role="button" tabindex="0"><div>📧 邮箱</div><div class="value">g125668039@163.com</div><button type="button" class="copy-btn" onclick="event.stopPropagation();copyText('g125668039@163.com','邮箱')">复制</button></div>
                 </div>
             </div>
             <!-- 免责声明 -->
@@ -7899,12 +8164,12 @@
                 <div class="changelog-header">
                     <span class="changelog-icon">📋</span>
                     <span class="changelog-title">更新日志</span>
-                    <span class="changelog-badge">v3.1 最新</span>
+                    <span class="changelog-badge">v3.6 最新</span>
                 </div>
                 <div style="padding:16px 20px 20px;display:flex;align-items:center;gap:12px;">
                     <div style="flex:1;">
-                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v3.1 · 视觉全面升级 · 宇宙风格</div>
-                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">彩虹旋转边框 · 玻璃拟态质感 · 全站宇宙主题焕新</div>
+                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v3.6 · 品牌统一 . FAQ 修正 . 视觉优化</div>
+                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">全站统一万能枢纽品牌 . Hero标题白色 . 打字机光标移除</div>
                     </div>
                     <div style="font-size:20px;color:var(--accent);transition:transform 0.3s;" class="entry-arrow">→</div>
                 </div>
@@ -10629,8 +10894,8 @@
             if (!el) return;
             
             const defaultAnns = [
-                { content: '✨ v3.1 视觉全面升级：宇宙风格 · 彩虹边框 · 玻璃拟态', level: 'important' },
-                { content: '🎨 全站宇宙深空背景 + 浮动光球，沉浸感拉满', level: 'normal' },
+                { content: '✨ v3.6 品牌统一：全站统一为「绊谈·万能枢纽」', level: 'important' },
+                { content: '🎨 Hero标题改为纯白色，移除打字机闪烁光标', level: 'normal' },
                 { content: '🌈 卡片彩虹旋转边框，悬浮交互更精致', level: 'normal' },
                 { content: '🆔 UID 身份系统上线，每位用户专属编号', level: 'normal' },
                 { content: '💡 有想法？点右下角 💬 反馈给站长～', level: 'normal' }
@@ -13299,17 +13564,22 @@
 
         // 站长账号名（与 Worker 环境变量 ADMIN_USERNAME 默认值一致）
         const OWNER_USERNAME = 'BANTAN7';
-        // 站长身份判断：以后端 isOwner 字段为准，旧版后端不返回时按用户名兜底
+        // 站长身份判断：始终根据用户名大小写敏感比较，不信任缓存的 isOwner 字段（修正旧版缓存错误）
         function isOwnerAccount(info) {
             if (!info) return false;
-            if (info.isOwner === true) return true;
-            const name = (info.username || info.nickname || '').toUpperCase();
-            return name === OWNER_USERNAME;
+            const name = info.username || info.nickname || '';
+            if (name) return name === OWNER_USERNAME;
+            return info.isOwner === true;
         }
-        // 归一化用户信息：补全 isOwner 字段，兼容旧版后端
+        // 归一化用户信息：始终根据用户名重新校验 isOwner（大小写敏感），修正旧版缓存中的错误值
         function normalizeUserInfo(info) {
             if (!info || typeof info !== 'object') return info;
-            if (info.isOwner === undefined) info.isOwner = isOwnerAccount(info);
+            const name = info.username || info.nickname || '';
+            if (name) {
+                info.isOwner = name === OWNER_USERNAME;
+            } else if (info.isOwner === undefined) {
+                info.isOwner = false;
+            }
             return info;
         }
 

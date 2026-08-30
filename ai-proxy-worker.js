@@ -930,13 +930,16 @@ async function handleChat(request, env, origin) {
   const ip = getClientIP(request);
   const dailyLimit = parseInt(env.DAILY_LIMIT || DEFAULT_DAILY_LIMIT);
 
-  // 速率限制
-  const rateKey = `rate:${ip}:${Math.floor(Date.now() / 60000)}`;
-  const rateCount = parseInt(await kv.get(rateKey) || '0');
-  if (rateCount >= RATE_LIMIT_PER_MIN) {
-    return jsonResponse({ error: '请求过于频繁，请稍后再试' }, 429, origin);
+  // 速率限制（仅对未登录用户写入KV，登录用户靠dailyUsed额度限制，省KV写入额度）
+  const userTokenHeader = request.headers.get('X-User-Token') || '';
+  if (!userTokenHeader) {
+    const rateKey = `rate:${ip}:${Math.floor(Date.now() / 60000)}`;
+    const rateCount = parseInt(await kv.get(rateKey) || '0');
+    if (rateCount >= RATE_LIMIT_PER_MIN) {
+      return jsonResponse({ error: '请求过于频繁，请稍后再试' }, 429, origin);
+    }
+    await kv.put(rateKey, (rateCount + 1).toString(), { expirationTtl: 120 });
   }
-  await kv.put(rateKey, (rateCount + 1).toString(), { expirationTtl: 120 });
 
   try {
     const body = await request.json();
@@ -1688,16 +1691,17 @@ async function handlePvStats(request, env, origin) {
       path = (body && body.path) || '/';
     } catch (e) { /* 无 body 时用默认值 */ }
 
-    // PV 计数（保留 90 天）
-    const pvKey = 'stats:pv:' + today;
-    const pv = parseInt(await kv.get(pvKey) || '0');
-    await kv.put(pvKey, (pv + 1).toString(), { expirationTtl: 86400 * 90 });
-
     // 访客明细：同一 IP 当天只记一次（metadata 供后台 list 直接读取，无需额外 get；
     // UV 不另设计数器，由后台 list 统计以节省写入次数）
     const visitKey = 'visit:' + today + ':' + ip;
     const visitExists = await kv.get(visitKey);
+    
+    // PV 计数：仅在新访客首次访问时更新（与访客记录合并写入，省KV额度）
+    // 回头客不再重复写PV，PV约等于UV，对工具站足够准确
     if (!visitExists) {
+      const pvKey = 'stats:pv:' + today;
+      const pv = parseInt(await kv.get(pvKey) || '0');
+      await kv.put(pvKey, (pv + 1).toString(), { expirationTtl: 86400 * 90 });
       await kv.put(visitKey, '1', {
         expirationTtl: 86400 * 90,
         metadata: {
