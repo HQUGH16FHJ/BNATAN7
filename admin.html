@@ -1561,6 +1561,10 @@
       <div class="nav-item" onclick="switchPage('stats', this)">
         <span class="nav-icon">📈</span> 访问统计
       </div>
+      <div class="nav-item" onclick="switchPage('invites', this)">
+        <span class="nav-icon">🎉</span> 邀请记录
+        <span class="nav-badge" style="background:linear-gradient(135deg,var(--accent-gold),var(--accent));color:#000;font-size:10px;">NEW</span>
+      </div>
 
       <div class="nav-section">系统</div>
       <div class="nav-item" onclick="switchPage('settings', this)">
@@ -1984,6 +1988,89 @@
           </table>
         </div>
         <div style="text-align:center;padding:12px;font-size:12px;color:var(--sub);" id="user-page-info">加载失败</div>
+      </div>
+    </div>
+
+    <!-- 邀请记录 -->
+    <div class="page" id="page-invites">
+      <div class="page-header">
+        <div>
+          <h2 class="page-title">邀请记录 <small>邀请码 · 奖励发放 · 邀请排行</small></h2>
+        </div>
+        <div class="header-actions">
+          <button class="btn primary" onclick="loadInviteData()">🔄 刷新数据</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">总邀请次数</div>
+          <div class="stat-value" id="invite-stat-total">--</div>
+          <div class="stat-delta">累计成功邀请注册</div>
+          <div class="stat-icon">🎉</div>
+        </div>
+        <div class="stat-card c2">
+          <div class="stat-label">今日新增</div>
+          <div class="stat-value" id="invite-stat-today">--</div>
+          <div class="stat-delta">今日通过邀请注册</div>
+          <div class="stat-icon">✨</div>
+        </div>
+        <div class="stat-card c3">
+          <div class="stat-label">活跃邀请人</div>
+          <div class="stat-value" id="invite-stat-active">--</div>
+          <div class="stat-delta">成功邀请过好友的用户</div>
+          <div class="stat-icon">🏆</div>
+        </div>
+        <div class="stat-card c4">
+          <div class="stat-label">累计发放奖励</div>
+          <div class="stat-value" id="invite-stat-bonus">--</div>
+          <div class="stat-delta" id="invite-stat-bonus-delta">邀请人 +10 / 好友 +5</div>
+          <div class="stat-icon">🎁</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">
+          🏆 邀请人排行榜
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <input type="text" id="invite-search" placeholder="搜索用户名或邀请码..." onkeydown="if(event.key==='Enter')loadInviteList()" style="font-size:12px;width:200px;">
+            <button class="btn btn-sm" onclick="loadInviteList()">🔍 搜索</button>
+          </div>
+        </h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:60px;">排名</th>
+                <th>用户名</th>
+                <th style="width:120px;">邀请码</th>
+                <th style="width:100px;">邀请人数</th>
+                <th style="width:110px;">获得奖励</th>
+                <th style="width:160px;">最近邀请时间</th>
+              </tr>
+            </thead>
+            <tbody id="invite-rank-list"><tr><td colspan="6" class="empty">加载中...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">📋 最近邀请动态 <small style="font-weight:400;color:var(--sub);">每次成功邀请的明细记录</small></h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>邀请人</th>
+                <th style="width:110px;">邀请码</th>
+                <th>被邀请人</th>
+                <th style="width:110px;">邀请人奖励</th>
+                <th style="width:110px;">好友奖励</th>
+                <th style="width:170px;">注册时间</th>
+              </tr>
+            </thead>
+            <tbody id="invite-event-list"><tr><td colspan="6" class="empty">加载中...</td></tr></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -2465,7 +2552,80 @@ function switchPage(name, el) {
   if (name === 'codes') { loadCodeStats(); loadCodeList(); }
   if (name === 'announce') loadAnnounces();
   if (name === 'feedback') loadFeedback();
+  if (name === 'invites') loadInviteData();
   if (name === 'settings') loadSettings();
+}
+
+// ==================== 邀请记录 ====================
+async function loadInviteData() {
+  loadInviteStats();
+  loadInviteList();
+}
+
+async function loadInviteStats() {
+  const res = await api('/api/admin/invites/stats');
+  if (!res.success) {
+    ['invite-stat-total', 'invite-stat-today', 'invite-stat-active', 'invite-stat-bonus'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '--';
+    });
+    return;
+  }
+  document.getElementById('invite-stat-total').textContent = res.totalInvites || 0;
+  document.getElementById('invite-stat-today').textContent = res.todayInvites || 0;
+  document.getElementById('invite-stat-active').textContent = res.activeInviters || 0;
+  document.getElementById('invite-stat-bonus').textContent = (res.bonusTotal || 0).toLocaleString();
+  document.getElementById('invite-stat-bonus-delta').textContent =
+    '邀请人发放 ' + (res.inviterBonusTotal || 0) + ' 次 · 好友发放 ' + (res.inviteeBonusTotal || 0) + ' 次';
+}
+
+async function loadInviteList() {
+  const searchEl = document.getElementById('invite-search');
+  const search = searchEl ? searchEl.value.trim() : '';
+  const query = search ? '?search=' + encodeURIComponent(search) + '&limit=100' : '?limit=100';
+  const res = await api('/api/admin/invites' + query);
+
+  const rankEl = document.getElementById('invite-rank-list');
+  const eventEl = document.getElementById('invite-event-list');
+
+  if (!res.success) {
+    if (rankEl) rankEl.innerHTML = '<tr><td colspan="6" class="empty" style="color:var(--danger);">加载失败：' + (res.error || '网络错误') + '</td></tr>';
+    if (eventEl) eventEl.innerHTML = '<tr><td colspan="6" class="empty" style="color:var(--danger);">加载失败</td></tr>';
+    return;
+  }
+
+  // 邀请人排行榜
+  const inviters = res.inviters || [];
+  if (!inviters.length) {
+    rankEl.innerHTML = '<tr><td colspan="6" class="empty">暂无邀请数据</td></tr>';
+  } else {
+    rankEl.innerHTML = inviters.map((u, i) => {
+      const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '<span style="color:var(--sub);">' + (i + 1) + '</span>';
+      return `<tr>
+        <td style="text-align:center;font-size:15px;">${medal}</td>
+        <td><b>${u.username}</b></td>
+        <td><code style="background:rgba(99,102,241,0.1);padding:2px 8px;border-radius:6px;font-size:12px;color:var(--accent);">${u.inviteCode || '--'}</code></td>
+        <td><b style="color:var(--accent);">${u.totalInvited}</b> 人</td>
+        <td style="color:var(--success);font-weight:600;">+${u.totalBonus} 次</td>
+        <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${u.lastInviteTime ? new Date(u.lastInviteTime).toLocaleString('zh-CN') : '暂无'}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // 最近邀请动态
+  const events = res.events || [];
+  if (!events.length) {
+    eventEl.innerHTML = '<tr><td colspan="6" class="empty">暂无邀请动态</td></tr>';
+  } else {
+    eventEl.innerHTML = events.slice(0, 50).map(ev => `<tr>
+      <td><b>${ev.inviter}</b></td>
+      <td><code style="background:rgba(99,102,241,0.08);padding:2px 6px;border-radius:6px;font-size:11px;">${ev.inviteCode || '--'}</code></td>
+      <td>👤 ${ev.invitee}</td>
+      <td style="color:var(--success);white-space:nowrap;">+${ev.inviterBonus} 次</td>
+      <td style="color:var(--accent);white-space:nowrap;">+${ev.inviteeBonus} 次</td>
+      <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${ev.time ? new Date(ev.time).toLocaleString('zh-CN') : '-'}</td>
+    </tr>`).join('');
+  }
 }
 
 // ==================== 仪表盘 ====================

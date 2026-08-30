@@ -6039,29 +6039,62 @@
     </style>
 </head>
 <body>
+<style>
+  /* ===== 前端防护：未登录时隐藏所有内容 ===== */
+  body:not(.auth-ready) #main-container,
+  body:not(.auth-ready) #ai-fab,
+  body:not(.auth-ready) #ai-panel,
+  body:not(.auth-ready) #rt-status-widget,
+  body:not(.auth-ready) #cmd-palette,
+  body:not(.auth-ready) #auth-modal-overlay,
+  body:not(.auth-ready) #redeem-modal-overlay,
+  body:not(.auth-ready) #profile-modal-overlay {
+    display: none !important;
+  }
+  body:not(.auth-ready)::before {
+    content: '验证中...';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #64748b;
+    z-index: 99999;
+  }
+</style>
 <script>
-// ===== 登录态路由：未登录自动跳转至个人工具箱 =====
+// ===== 登录态路由 + 前端防护 =====
 (function() {
   try {
     var token = localStorage.getItem('bantan_user_token');
     var info = localStorage.getItem('bantan_user_info');
     var userData = localStorage.getItem('bantan_user');
     var isLoggedIn = false;
-    
-    if (token && info) isLoggedIn = true;
+
+    if (token && info) {
+      // 额外校验：info 里必须有 username 字段
+      try {
+        var infoObj = JSON.parse(info);
+        if (infoObj && infoObj.username) isLoggedIn = true;
+      } catch(e) {}
+    }
     if (!isLoggedIn && userData) {
       try {
         var u = JSON.parse(userData);
-        if (u.isLoggedIn) isLoggedIn = true;
+        if (u.isLoggedIn && u.username) isLoggedIn = true;
       } catch(e) {}
     }
-    
-    if (!isLoggedIn) {
+
+    if (isLoggedIn) {
+      // 已登录：解锁内容
+      document.body.classList.add('auth-ready');
+    } else {
       // 未登录：跳转到个人工具箱入口页
       window.location.replace('landing.html');
     }
   } catch(e) {
-    // localStorage 不可用时保留在当前页
+    // localStorage 不可用：跳转到 landing
+    window.location.replace('landing.html');
   }
 })();
 </script>
@@ -8913,6 +8946,9 @@
                         <div class="dropdown-item" onclick="openRedeemModal()">
                             <span class="dropdown-icon">🎁</span>兑换码
                         </div>
+                        <div class="dropdown-item" onclick="openInviteModal()">
+                            <span class="dropdown-icon">🎉</span>邀请有礼
+                        </div>
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-item danger" onclick="doLogout()">
                             <span class="dropdown-icon">🚪</span>退出登录
@@ -9218,6 +9254,65 @@
                     <span class="price-tag">至尊卡</span>
                     <span class="price-count">500次</span>
                     <span class="price-money">¥68</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邀请有礼弹窗 -->
+    <div class="ai-settings-overlay modal-overlay-fixed" id="invite-modal-overlay" onclick="if(event.target===this)closeInviteModal()">
+        <div class="ai-settings-card redeem-modal-card">
+            <button class="auth-close-btn" onclick="closeInviteModal()" title="关闭">✕</button>
+            <div class="redeem-header">
+                <div class="redeem-icon">🎉</div>
+                <div class="redeem-title">邀请有礼</div>
+                <div class="redeem-subtitle">邀请好友注册绊谈，双方都能获得免费对话次数</div>
+            </div>
+
+            <div class="ai-setting-item">
+                <div class="ai-setting-label">我的专属邀请码</div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <div id="invite-code-display" style="flex:1;text-align:center;font-family:monospace;font-size:26px;font-weight:700;letter-spacing:6px;color:var(--accent);padding:10px 12px;border-radius:10px;background:rgba(var(--glow-color),0.05);border:1px dashed var(--border);">------</div>
+                    <button class="auth-submit-btn" style="flex:0 0 auto;padding:12px 20px;" onclick="copyInviteCode()">复制码</button>
+                </div>
+            </div>
+
+            <div class="ai-setting-item">
+                <div class="ai-setting-label">邀请链接（发给好友，注册自动带上邀请码）</div>
+                <div style="display:flex;gap:8px;">
+                    <input type="text" class="ai-setting-input" id="invite-link-display" readonly="" style="flex:1;font-size:11px;font-family:monospace;" value="登录后生成">
+                    <button class="auth-submit-btn" style="flex:0 0 auto;padding:0 16px;font-size:13px;" onclick="copyInviteLink()">复制链接</button>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:10px;margin:16px 0;">
+                <div style="flex:1;text-align:center;padding:14px 8px;border-radius:12px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);">
+                    <div style="font-size:22px;">🎁</div>
+                    <div style="font-size:12px;color:var(--sub);margin-top:4px;">好友通过链接注册</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--success);margin-top:2px;">好友 +5 次</div>
+                </div>
+                <div style="flex:1;text-align:center;padding:14px 8px;border-radius:12px;background:rgba(var(--glow-color),0.06);border:1px solid var(--border);">
+                    <div style="font-size:22px;">🏆</div>
+                    <div style="font-size:12px;color:var(--sub);margin-top:4px;">每成功邀请一位好友</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--accent);margin-top:2px;">你 +10 次</div>
+                </div>
+            </div>
+
+            <div class="redeem-balance-info">
+                <div class="balance-item">
+                    <span class="balance-label">已邀请好友</span>
+                    <span class="balance-value"><b id="invite-total-count">--</b> 人</span>
+                </div>
+                <div class="balance-item">
+                    <span class="balance-label">累计获得奖励</span>
+                    <span class="balance-value accent"><b id="invite-bonus-count">--</b> 次</span>
+                </div>
+            </div>
+
+            <div class="ai-setting-item" style="margin-top:14px;">
+                <div class="ai-setting-label">最近邀请记录</div>
+                <div id="invite-records" style="max-height:180px;overflow-y:auto;">
+                    <div style="text-align:center;color:var(--sub);font-size:12px;padding:14px;">加载中...</div>
                 </div>
             </div>
         </div>
@@ -13448,7 +13543,9 @@
             closeUserDropdown();
             if (!confirm('确定要退出登录吗？')) return;
 
-            if (_userState.token) {
+            // Demo 模式跳过后端登出 API
+            const isDemo = _userState.token && _userState.token.indexOf('demo_') === 0;
+            if (_userState.token && !isDemo) {
                 await userAPI('/api/user/logout', { method: 'POST' });
             }
 
@@ -13536,6 +13633,124 @@
         function closeRedeemModal() {
             const overlay = document.getElementById('redeem-modal-overlay');
             if (overlay) overlay.classList.remove('show');
+        }
+
+        // ===== 邀请有礼 =====
+        function openInviteModal() {
+            closeUserDropdown();
+            const overlay = document.getElementById('invite-modal-overlay');
+            if (overlay) {
+                overlay.classList.add('show');
+                loadMyInvite();
+            }
+        }
+
+        function closeInviteModal() {
+            const overlay = document.getElementById('invite-modal-overlay');
+            if (overlay) overlay.classList.remove('show');
+        }
+
+        async function loadMyInvite() {
+            const codeDisplay = document.getElementById('invite-code-display');
+            const recordsEl = document.getElementById('invite-records');
+
+            if (!isUserLoggedIn()) {
+                if (codeDisplay) codeDisplay.textContent = '请先登录';
+                document.getElementById('invite-link-display').value = '请先登录后查看';
+                document.getElementById('invite-total-count').textContent = '--';
+                document.getElementById('invite-bonus-count').textContent = '--';
+                if (recordsEl) recordsEl.innerHTML = '<div style="text-align:center;color:var(--sub);font-size:12px;padding:14px;">登录后即可查看你的专属邀请码</div>';
+                return;
+            }
+
+            if (codeDisplay) codeDisplay.textContent = '加载中...';
+            const result = await userAPI('/api/user/invite');
+
+            if (!result.success || !result.data) {
+                if (codeDisplay) codeDisplay.textContent = '加载失败';
+                if (recordsEl) recordsEl.innerHTML = '<div style="text-align:center;color:var(--danger);font-size:12px;padding:14px;">' + (result.message || '加载失败，请稍后重试') + '</div>';
+                return;
+            }
+
+            const d = result.data;
+            const code = d.inviteCode || '';
+            if (codeDisplay) codeDisplay.textContent = code || '------';
+
+            // 生成邀请链接（指向 landing.html 注册页，自动带邀请码）
+            const linkInput = document.getElementById('invite-link-display');
+            if (linkInput) {
+                const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'landing.html';
+                linkInput.value = base + '?invite=' + code;
+            }
+
+            document.getElementById('invite-total-count').textContent = d.totalInvited || 0;
+            document.getElementById('invite-bonus-count').textContent = d.totalBonus || 0;
+
+            // 最近邀请记录
+            const records = d.recentInvites || [];
+            if (!records.length) {
+                recordsEl.innerHTML = '<div style="text-align:center;color:var(--sub);font-size:12px;padding:14px;">还没有邀请记录，快把链接发给好友吧～</div>';
+            } else {
+                recordsEl.innerHTML = records.map(r => `
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:rgba(var(--glow-color),0.04);margin-bottom:6px;font-size:12px;">
+                        <span>👤 <b>${r.username}</b></span>
+                        <span style="color:var(--sub);font-size:11px;">${formatInviteTime(r.time)}</span>
+                        <span style="color:var(--accent);font-weight:600;white-space:nowrap;">+${r.bonus} 次</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function formatInviteTime(ts) {
+            if (!ts) return '';
+            const d = new Date(ts);
+            const pad = n => String(n).padStart(2, '0');
+            return `${d.getMonth() + 1}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+
+        function copyInviteCode() {
+            const code = (document.getElementById('invite-code-display').textContent || '').trim();
+            if (!code || code === '------' || code === '加载中...' || code === '请先登录' || code === '加载失败') {
+                showToast('邀请码尚未生成');
+                return;
+            }
+            copyToClipboard(code, '邀请码 ' + code + ' 已复制');
+        }
+
+        function copyInviteLink() {
+            const link = document.getElementById('invite-link-display').value || '';
+            if (!link || link.indexOf('http') !== 0) {
+                showToast('邀请链接尚未生成');
+                return;
+            }
+            copyToClipboard(link, '邀请链接已复制，快发给好友吧！');
+        }
+
+        function copyToClipboard(text, msg) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(
+                    () => showToast(msg),
+                    () => fallbackCopy(text, msg)
+                );
+            } else {
+                fallbackCopy(text, msg);
+            }
+        }
+
+        function fallbackCopy(text, msg) {
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast(msg);
+            } catch (e) {
+                showToast('复制失败，请手动复制');
+            }
         }
 
         async function doRedeem() {
@@ -13745,9 +13960,12 @@
             loadUserInfo();
             updateUserUI();
             if (isUserLoggedIn()) {
-                startHeartbeat();
-                // 启动时刷新用户信息
-                fetchUserInfo();
+                // Demo 模式（本地注册的账号）跳过后端 API 验证
+                const isDemo = _userState.token && _userState.token.indexOf('demo_') === 0;
+                if (!isDemo) {
+                    startHeartbeat();
+                    fetchUserInfo();
+                }
             }
             // 启动实时状态监控（在线人数 + 服务健康检查）
             startRtPolling();

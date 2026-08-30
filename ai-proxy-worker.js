@@ -1718,7 +1718,7 @@ async function handleGetSettings(env, origin) {
   }
 }
 
-async function handleSaveSettings(request, env, origin) {
+async function handleSaveSettingsrequest, env, origin) {
   try {
     const body = await request.json();
     const kv = getKV(env);
