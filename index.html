@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="塔罗占卜·星座查询·出生天数·开发者工具·白噪音·实用工具聚合枢纽">
-    <meta name="theme-color" content="#00f5ff">
+    <meta name="theme-color" content="#f59e0b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="./manifest.json">
@@ -12,24 +12,24 @@
     <style>
         /* ===== CSS 变量 ===== */
         :root {
-            --bg: #03030a;
-            --bg-deep: #000005;
-            --text: #c0e0ff;
-            --sub: #b8a4ff;
-            --accent: #00f5ff;
-            --accent-2: #7c3aed;
-            --accent-gold: #fbbf24;
+            --bg: #0a0805;
+            --bg-deep: #050302;
+            --text: #fff7ed;
+            --sub: #d6c7b8;
+            --accent: #f59e0b;
+            --accent-2: #fb7185;
+            --accent-gold: #38bdf8;
             --success: #34d399;
             --warning: #fbbf24;
             --danger: #ef4444;
-            --glass-bg: rgba(12, 12, 28, 0.5);
+            --glass-bg: rgba(28, 22, 14, 0.72);
             --glass-blur: blur(20px) saturate(150%);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glass-border: 1px solid rgba(245, 158, 11, 0.12);
             --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
             --glass-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-            --card-bg: rgba(10, 10, 30, 0.4);
-            --border: rgba(255, 255, 255, 0.1);
-            --glow-color: 0, 245, 255;
+            --card-bg: rgba(20, 15, 10, 0.5);
+            --border: rgba(245, 158, 11, 0.12);
+            --glow-color: 245, 158, 11;
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
@@ -38,24 +38,24 @@
             --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
             --nav-height: 56px;
             --neon-glow: 0 0 10px rgba(var(--glow-color), 0.3), 0 0 20px rgba(var(--glow-color), 0.15);
-            --aurora-1: linear-gradient(135deg, rgba(0,245,255,0.05), rgba(124,58,237,0.03));
+            --aurora-1: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,113,133,0.03));
             --glass-reflection: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.02) 100%);
             --edge-glow: 0 0 0 1px rgba(var(--glow-color),0.05), 0 0 12px rgba(var(--glow-color),0.04), inset 0 1px 0 rgba(255,255,255,0.04);
-            --deep-glow: 0 0 20px rgba(var(--glow-color),0.06), 0 0 40px rgba(124,58,237,0.03);
+            --deep-glow: 0 0 20px rgba(var(--glow-color),0.06), 0 0 40px rgba(251,113,133,0.03);
             --tech-grid: linear-gradient(rgba(var(--glow-color),0.008) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--glow-color),0.008) 1px, transparent 1px);
             --tech-grid-size: 24px 24px;
             --top-grad-line: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
-            --hero-aura: radial-gradient(circle, rgba(var(--glow-color), 0.1) 0%, rgba(124, 58, 237, 0.05) 40%, transparent 70%);
+            --hero-aura: radial-gradient(circle, rgba(var(--glow-color), 0.1) 0%, rgba(251, 113, 133, 0.05) 40%, transparent 70%);
             --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.02) 100%);
             --depth-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         [data-theme="light"] {
-            --bg: #e4e8f0;
-            --bg-deep: #d0d6e0;
-            --text: #1a3a8c;
+            --bg: #f5f0e8;
+            --bg-deep: #e8e0d8;
+            --text: #451a03;
             --sub: #8b5cf6;
-            --accent: #0066ff;
-            --accent-2: #7c3aed;
+            --accent: #d97706;
+            --accent-2: #fb7185;
             --accent-gold: #f59e0b;
             --success: #10b981;
             --warning: #f59e0b;
@@ -83,8 +83,8 @@
             font-family: var(--font);
             background: var(--bg);
             background-image:
-                radial-gradient(ellipse at 20% 0%, rgba(0,245,255,0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 10%, rgba(124,58,237,0.04) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 0%, rgba(245,158,11,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 10%, rgba(251,113,133,0.04) 0%, transparent 50%);
             background-attachment: fixed;
             color: var(--text);
             font-size: 16px;
@@ -98,36 +98,17 @@
         }
         /* CRT 扫描线已移除 - 过时复古效果 */
 
-        /* ===== 宇宙背景 ===== */
-        #cosmic-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -12;
-            pointer-events: none;
-            background:
-                radial-gradient(ellipse at 10% 20%, rgba(0, 245, 255, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 80%, rgba(124, 58, 237, 0.06) 0%, transparent 50%);
+        /* ===== UnicornStudio 交互背景 ===== */
+        .unicorn-bg {
+            position: fixed; inset: 0; z-index: -12; pointer-events: none;
+            width: 100vw; height: 100vh; overflow: hidden;
         }
-        #starfield {
-            position: fixed;
-            inset: 0;
-            z-index: -11;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-        #meteor-shower {
-            position: fixed;
-            inset: 0;
-            z-index: -10;
-            pointer-events: none;
-            display: none;
-        }
-        #led-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -9;
-            pointer-events: none;
-            display: none;
+        .unicorn-bg canvas { width: 100% !important; height: 100% !important; }
+        .bg-warm-overlay {
+            position: fixed; inset: 0; z-index: -11; pointer-events: none;
+            background: radial-gradient(ellipse at 20% 30%, rgba(245,158,11,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 70%, rgba(251,113,133,0.06) 0%, transparent 50%),
+                        linear-gradient(180deg, rgba(10,8,5,0.35) 0%, rgba(10,8,5,0.6) 100%);
         }
         .cosmic-orb {
             position: fixed;
@@ -144,7 +125,7 @@
         .cosmic-orb:nth-child(1) {
             width: 700px;
             height: 700px;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.22), transparent 70%);
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.22), transparent 70%);
             top: -20%;
             left: -15%;
             animation-duration: 90s;
@@ -152,7 +133,7 @@
         .cosmic-orb:nth-child(2) {
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.18), transparent 70%);
+            background: radial-gradient(circle, rgba(251, 113, 133, 0.18), transparent 70%);
             bottom: -15%;
             right: -10%;
             animation-duration: 100s;
@@ -253,7 +234,7 @@
         /* ===== 按钮 ===== */
         .btn {
             background: var(--accent);
-            color: #03030a;
+            color: #0a0805;
             border: none;
             padding: clamp(10px, 1.2vw, 16px) clamp(20px, 2.5vw, 36px);
             border-radius: var(--radius-md);
@@ -271,13 +252,13 @@
             position: relative;
             touch-action: manipulation;
             user-select: none;
-            box-shadow: 0 4px 20px rgba(0, 245, 255, 0.25);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
             font-family: inherit;
         }
         /* 按钮光泽扫过已移除 */
         .btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(0, 245, 255, 0.35);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);
             filter: brightness(1.08);
         }
         .btn:active {
@@ -307,7 +288,7 @@
         #boot-screen {
             position: fixed;
             inset: 0;
-            background: #03030a;
+            background: #0a0805;
             z-index: 99999;
             display: flex;
             justify-content: center;
@@ -351,23 +332,23 @@
             width: clamp(120px, 20vw, 180px);
             height: clamp(120px, 20vw, 180px);
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 245, 255, 0.1), transparent 70%);
-            border: 2px solid rgba(0, 245, 255, 0.1);
-            box-shadow: 0 0 150px rgba(0, 245, 255, 0.04), inset 0 0 150px rgba(0, 245, 255, 0.015);
+            background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.1), transparent 70%);
+            border: 2px solid rgba(245, 158, 11, 0.1);
+            box-shadow: 0 0 150px rgba(245, 158, 11, 0.04), inset 0 0 150px rgba(245, 158, 11, 0.015);
             animation: bootPulse 1.8s infinite alternate ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: clamp(30px, 6vw, 44px);
             font-weight: 900;
-            color: rgba(0, 245, 255, 0.08);
+            color: rgba(245, 158, 11, 0.08);
             letter-spacing: 0.25em;
             position: relative;
         }
         .boot-reactor .ring {
             position: absolute;
             border-radius: 50%;
-            border: 1px solid rgba(0, 245, 255, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.03);
             animation: bootRing linear infinite;
         }
         .boot-reactor .ring:nth-child(1) {
@@ -396,11 +377,11 @@
         @keyframes bootPulse {
             0% {
                 transform: scale(0.75);
-                box-shadow: 0 0 40px rgba(0, 245, 255, 0.02), inset 0 0 40px rgba(0, 245, 255, 0.005);
+                box-shadow: 0 0 40px rgba(245, 158, 11, 0.02), inset 0 0 40px rgba(245, 158, 11, 0.005);
             }
             100% {
                 transform: scale(1.18);
-                box-shadow: 0 0 200px rgba(0, 245, 255, 0.08), inset 0 0 200px rgba(0, 245, 255, 0.02);
+                box-shadow: 0 0 200px rgba(245, 158, 11, 0.08), inset 0 0 200px rgba(245, 158, 11, 0.02);
             }
         }
 
@@ -566,7 +547,7 @@
         }
         .nav-links a.active {
             color: var(--accent);
-            text-shadow: 0 0 8px var(--accent), 0 0 16px rgba(0, 245, 255, 0.4);
+            text-shadow: 0 0 8px var(--accent), 0 0 16px rgba(245, 158, 11, 0.4);
             letter-spacing: 0.05em;
         }
         /* 科技感指示器：左侧脉冲信号点 */
@@ -766,7 +747,7 @@
             height: clamp(320px, 56vw, 680px);
             background:
                 radial-gradient(circle, rgba(var(--glow-color), 0.1) 0%, transparent 55%),
-                radial-gradient(circle, rgba(124, 58, 237, 0.06) 30%, transparent 70%);
+                radial-gradient(circle, rgba(251, 113, 133, 0.06) 30%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             filter: blur(8px);
@@ -803,7 +784,7 @@
             opacity: 0.7;
             text-transform: uppercase;
             /* 副标题多层光晕，增强科技感 */
-            text-shadow: 0 0 8px rgba(var(--glow-color), 0.45), 0 0 18px rgba(var(--glow-color), 0.25), 0 0 32px rgba(124, 58, 237, 0.15);
+            text-shadow: 0 0 8px rgba(var(--glow-color), 0.45), 0 0 18px rgba(var(--glow-color), 0.25), 0 0 32px rgba(251, 113, 133, 0.15);
         }
         /* 科技感数据条 */
         .tech-bar {
@@ -837,7 +818,7 @@
             height: clamp(300px, 50vw, 600px);
             background:
                 radial-gradient(circle, rgba(var(--glow-color), 0.08) 0%, transparent 55%),
-                radial-gradient(circle, rgba(124, 58, 237, 0.04) 30%, transparent 65%);
+                radial-gradient(circle, rgba(251, 113, 133, 0.04) 30%, transparent 65%);
             border-radius: 50%;
             pointer-events: none;
             filter: blur(20px);
@@ -875,7 +856,7 @@
         .hero-left h1 {
             font-size: clamp(56px, 10vw, 140px);
             font-weight: 800;
-            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 50%, #fbbf24 100%);
+            background: linear-gradient(135deg, #f59e0b 0%, #fb7185 50%, #fbbf24 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -923,8 +904,8 @@
             box-sizing: border-box;
         }
         .hero-search:focus-within {
-            border-color: rgba(0, 245, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 0 20px rgba(0, 245, 255, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 0 20px rgba(245, 158, 11, 0.12);
             transform: translateY(-1px);
         }
         .hero-search select {
@@ -1036,8 +1017,8 @@
         }
         .bento-item:hover {
             transform: translateY(-2px);
-            border-color: rgba(0, 245, 255, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 245, 255, 0.08);
+            border-color: rgba(245, 158, 11, 0.2);
+            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.08);
         }
         .bento-item .bento-icon {
             font-size: clamp(20px, 2.2vw, 26px);
@@ -1071,8 +1052,8 @@
         .bento-featured {
             grid-column: span 2;
             grid-row: span 2;
-            background: linear-gradient(145deg, rgba(0, 245, 255, 0.08), rgba(124, 58, 237, 0.04));
-            border-color: rgba(0, 245, 255, 0.15);
+            background: linear-gradient(145deg, rgba(245, 158, 11, 0.08), rgba(251, 113, 133, 0.04));
+            border-color: rgba(245, 158, 11, 0.15);
             gap: 6px;
         }
         .bento-featured::after {
@@ -1088,7 +1069,7 @@
             font-size: clamp(40px, 5vw, 60px);
             margin-bottom: 8px;
             opacity: 0.9;
-            filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.3));
+            filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.3));
         }
         .bento-featured .bento-title {
             font-size: clamp(16px, 1.8vw, 22px);
@@ -1101,14 +1082,14 @@
         }
         .bento-featured:hover {
             transform: translateY(-2px);
-            border-color: rgba(0, 245, 255, 0.3);
-            box-shadow: 0 16px 48px rgba(0, 245, 255, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 16px 48px rgba(245, 158, 11, 0.12);
         }
 
         /* Bento purple - 关于我 */
         .bento-purple {
-            background: linear-gradient(145deg, rgba(124, 58, 237, 0.08), rgba(0, 245, 255, 0.03));
-            border-color: rgba(124, 58, 237, 0.15);
+            background: linear-gradient(145deg, rgba(251, 113, 133, 0.08), rgba(245, 158, 11, 0.03));
+            border-color: rgba(251, 113, 133, 0.15);
         }
         .bento-purple .bento-icon {
             color: #a78bfa;
@@ -1118,8 +1099,8 @@
         }
         .bento-purple:hover {
             transform: translateY(-2px);
-            border-color: rgba(124, 58, 237, 0.3);
-            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.1);
+            border-color: rgba(251, 113, 133, 0.3);
+            box-shadow: 0 12px 40px rgba(251, 113, 133, 0.1);
         }
 
         /* Bento wave - 影音 */
@@ -1307,12 +1288,12 @@
             background: rgba(var(--glow-color), 0.02);
         }
         .changelog-bar {
-            border-color: rgba(124, 58, 237, 0.15);
+            border-color: rgba(251, 113, 133, 0.15);
         }
         .changelog-bar:hover {
-            border-color: rgba(124, 58, 237, 0.3);
+            border-color: rgba(251, 113, 133, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.1);
+            box-shadow: 0 6px 20px rgba(251, 113, 133, 0.1);
         }
         .changelog-bar .entry-left {
             display: flex;
@@ -1334,7 +1315,7 @@
         }
         .changelog-bar .entry-arrow {
             font-size: 16px;
-            color: #7c3aed;
+            color: #fb7185;
             transition: transform 0.3s;
             font-weight: 700;
         }
@@ -1687,8 +1668,8 @@
             -webkit-backdrop-filter: blur(10px);
         }
         .quote-actions button:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 245, 255, 0.2);
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.2);
             color: var(--accent);
             transform: translateY(-1px);
         }
@@ -1954,12 +1935,12 @@
             padding-bottom: clamp(8px, 1vw, 14px);
             text-transform: uppercase;
             /* 发光增强：多层光晕，标题更醒目 */
-            text-shadow: 0 0 10px rgba(var(--glow-color), 0.2), 0 0 20px rgba(var(--glow-color), 0.12), 0 0 40px rgba(124, 58, 237, 0.06);
+            text-shadow: 0 0 10px rgba(var(--glow-color), 0.2), 0 0 20px rgba(var(--glow-color), 0.12), 0 0 40px rgba(251, 113, 133, 0.06);
             display: flex;
             align-items: center;
             gap: clamp(8px, 1vw, 16px);
             /* 标题下方科技感分割线：青→紫渐变细线 */
-            background-image: linear-gradient(90deg, rgba(var(--glow-color), 0.6) 0%, rgba(124, 58, 237, 0.3) 45%, transparent 85%);
+            background-image: linear-gradient(90deg, rgba(var(--glow-color), 0.6) 0%, rgba(251, 113, 133, 0.3) 45%, transparent 85%);
             background-size: 100% 1px;
             background-position: bottom;
             background-repeat: no-repeat;
@@ -1982,7 +1963,7 @@
             flex: 1;
             height: 1px;
             /* 后缀线：青紫渐变，过渡更柔和 */
-            background: linear-gradient(90deg, rgba(var(--glow-color), 0.22), rgba(124, 58, 237, 0.1), transparent);
+            background: linear-gradient(90deg, rgba(var(--glow-color), 0.22), rgba(251, 113, 133, 0.1), transparent);
         }
         .tool-grid {
             display: grid;
@@ -2066,7 +2047,7 @@
         .tool-card .name {
             font-size: clamp(11px, 1.2vw, 15px);
             font-weight: 700;
-            background: linear-gradient(135deg, #00f5ff, #7c3aed);
+            background: linear-gradient(135deg, #f59e0b, #fb7185);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -2208,7 +2189,7 @@
 
         /* ===== Bento 布局变体 ===== */
         .mini-card.featured {
-            background: linear-gradient(135deg, rgba(var(--glow-color), 0.06), rgba(124, 58, 237, 0.04));
+            background: linear-gradient(135deg, rgba(var(--glow-color), 0.06), rgba(251, 113, 133, 0.04));
             border-color: rgba(var(--glow-color), 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 30px rgba(var(--glow-color), 0.08), var(--glass-highlight);
         }
@@ -2237,7 +2218,7 @@
             width: 100%;
         }
         .quick-nav-featured {
-            background: linear-gradient(135deg, rgba(var(--glow-color), 0.12), rgba(124, 58, 237, 0.08)) !important;
+            background: linear-gradient(135deg, rgba(var(--glow-color), 0.12), rgba(251, 113, 133, 0.08)) !important;
             border: 1px solid rgba(var(--glow-color), 0.15);
             box-shadow: 0 0 20px rgba(var(--glow-color), 0.08);
         }
@@ -2478,14 +2459,14 @@
             border-bottom: 2px solid var(--accent-2);
             border-left: 2px solid var(--accent-2);
             border-bottom-left-radius: 4px;
-            box-shadow: -1px 1px 6px rgba(124, 58, 237, 0.3);
+            box-shadow: -1px 1px 6px rgba(251, 113, 133, 0.3);
         }
         #edu .mini-card .edu-corner.br {
             bottom: 6px; right: 6px;
             border-bottom: 2px solid var(--accent-2);
             border-right: 2px solid var(--accent-2);
             border-bottom-right-radius: 4px;
-            box-shadow: 1px 1px 6px rgba(124, 58, 237, 0.3);
+            box-shadow: 1px 1px 6px rgba(251, 113, 133, 0.3);
         }
 
         /* 移动端：减弱扫描动画以节省性能 */
@@ -2853,7 +2834,7 @@
             border: none;
             background:
                 radial-gradient(circle, rgba(var(--glow-color), 0.8) 0, rgba(var(--glow-color), 0) 3px) left center / 6px 1px no-repeat,
-                linear-gradient(90deg, rgba(var(--glow-color), 0.55) 0%, rgba(124, 58, 237, 0.3) 45%, transparent 100%);
+                linear-gradient(90deg, rgba(var(--glow-color), 0.55) 0%, rgba(251, 113, 133, 0.3) 45%, transparent 100%);
             margin: 6px 0 10px;
             opacity: 0.7;
         }
@@ -2908,10 +2889,10 @@
          ============================================================ */
         .section.active { position: relative; }
         #contact.active { --section-accent: #fbbf24; --section-tint: rgba(251, 191, 36, 0.06); }
-        #tools.active   { --section-accent: #00f5ff; --section-tint: rgba(0, 245, 255, 0.06); }
-        #media.active   { --section-accent: #7c3aed; --section-tint: rgba(124, 58, 237, 0.07); }
+        #tools.active   { --section-accent: #f59e0b; --section-tint: rgba(245, 158, 11, 0.06); }
+        #media.active   { --section-accent: #fb7185; --section-tint: rgba(251, 113, 133, 0.07); }
         #dev.active     { --section-accent: var(--accent); --section-tint: rgba(var(--glow-color), 0.06); }
-        #more.active    { --section-accent: var(--accent-2); --section-tint: rgba(124, 58, 237, 0.07); }
+        #more.active    { --section-accent: var(--accent-2); --section-tint: rgba(251, 113, 133, 0.07); }
 
         /* 页面背景色调：顶部径向光晕，营造控制台氛围（置于内容之下） */
         #contact.active::after,
@@ -2967,7 +2948,7 @@
         #contact-title {
             text-shadow: 0 0 10px rgba(251, 191, 36, 0.35), 0 0 22px rgba(251, 191, 36, 0.18);
             padding-bottom: clamp(8px, 1vw, 14px);
-            background-image: linear-gradient(90deg, rgba(251, 191, 36, 0.6) 0%, rgba(124, 58, 237, 0.3) 45%, transparent 85%);
+            background-image: linear-gradient(90deg, rgba(251, 191, 36, 0.6) 0%, rgba(251, 113, 133, 0.3) 45%, transparent 85%);
             background-size: 100% 1px;
             background-position: bottom;
             background-repeat: no-repeat;
@@ -2996,7 +2977,7 @@
         /* ===== 更新日志 ===== */
         .changelog-card {
             padding: clamp(14px, 2vw, 20px);
-            border-color: rgba(124, 58, 237, 0.15);
+            border-color: rgba(251, 113, 133, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -3005,7 +2986,7 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(251, 113, 133, 0.4), transparent);
         }
         .changelog-header {
             display: flex;
@@ -3026,8 +3007,8 @@
             font-size: 10px;
             padding: 3px 8px;
             border-radius: 10px;
-            background: rgba(124, 58, 237, 0.12);
-            color: #7c3aed;
+            background: rgba(251, 113, 133, 0.12);
+            color: #fb7185;
             font-weight: 700;
             letter-spacing: 0.05em;
         }
@@ -3042,7 +3023,7 @@
             border-left: 2px solid rgba(var(--glow-color), 0.15);
         }
         .changelog-item.latest {
-            border-left-color: rgba(124, 58, 237, 0.5);
+            border-left-color: rgba(251, 113, 133, 0.5);
         }
         .changelog-item::before {
             content: '';
@@ -3056,13 +3037,13 @@
             border: 2px solid var(--card-bg);
         }
         .changelog-item.latest::before {
-            background: #7c3aed;
-            box-shadow: 0 0 8px rgba(124, 58, 237, 0.6);
+            background: #fb7185;
+            box-shadow: 0 0 8px rgba(251, 113, 133, 0.6);
             animation: changelogPulse 2s ease-in-out infinite;
         }
         @keyframes changelogPulse {
-            0%, 100% { box-shadow: 0 0 8px rgba(124, 58, 237, 0.6); }
-            50% { box-shadow: 0 0 14px rgba(124, 58, 237, 0.9); }
+            0%, 100% { box-shadow: 0 0 8px rgba(251, 113, 133, 0.6); }
+            50% { box-shadow: 0 0 14px rgba(251, 113, 133, 0.9); }
         }
         .changelog-date {
             display: flex;
@@ -3085,7 +3066,7 @@
             letter-spacing: 0.08em;
         }
         .date-tag.new {
-            background: linear-gradient(135deg, #7c3aed, #7c3aed);
+            background: linear-gradient(135deg, #fb7185, #fb7185);
             color: #fff;
         }
         .changelog-version {
@@ -3122,8 +3103,8 @@
             color: #34d399;
         }
         .changelog-list-items .tag.opt {
-            background: rgba(0, 245, 255, 0.12);
-            color: #00f5ff;
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
         }
         .changelog-list-items .tag.fix {
             background: rgba(251, 191, 36, 0.12);
@@ -3132,7 +3113,7 @@
 
         /* 首页更新日志入口 */
         .changelog-entry {
-            border-color: rgba(124, 58, 237, 0.18);
+            border-color: rgba(251, 113, 133, 0.18);
             transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
@@ -3142,12 +3123,12 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(251, 113, 133, 0.5), transparent);
         }
         .changelog-entry:hover {
             transform: translateY(-2px);
-            border-color: rgba(124, 58, 237, 0.35);
-            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1);
+            border-color: rgba(251, 113, 133, 0.35);
+            box-shadow: 0 8px 24px rgba(251, 113, 133, 0.1);
         }
         .changelog-entry:active {
             transform: scale(0.98);
@@ -3181,7 +3162,7 @@
             font-size: 9px;
             padding: 1px 5px;
             border-radius: 6px;
-            background: linear-gradient(135deg, #7c3aed, #7c3aed);
+            background: linear-gradient(135deg, #fb7185, #fb7185);
             color: #fff;
             font-weight: 700;
             letter-spacing: 0.05em;
@@ -3190,7 +3171,7 @@
         }
         .entry-arrow {
             font-size: 16px;
-            color: #7c3aed;
+            color: #fb7185;
             transition: transform 0.3s;
             font-weight: 700;
         }
@@ -3273,11 +3254,11 @@
             border-color: rgba(52, 211, 153, 0.4);
         }
         .feedback-btn.qq {
-            background: rgba(0, 245, 255, 0.08);
-            border-color: rgba(0, 245, 255, 0.2);
+            background: rgba(245, 158, 11, 0.08);
+            border-color: rgba(245, 158, 11, 0.2);
         }
         .feedback-btn.qq:hover {
-            border-color: rgba(0, 245, 255, 0.4);
+            border-color: rgba(245, 158, 11, 0.4);
         }
         .fb-icon { font-size: 22px; }
         .fb-text { font-size: 12px; font-weight: 700; color: var(--text); }
@@ -3317,9 +3298,9 @@
             color: var(--text);
         }
         .fb-type-btn.active {
-            background: rgba(124, 58, 237, 0.15);
-            border-color: rgba(124, 58, 237, 0.4);
-            color: #7c3aed;
+            background: rgba(251, 113, 133, 0.15);
+            border-color: rgba(251, 113, 133, 0.4);
+            color: #fb7185;
             font-weight: 700;
         }
         .feedback-input {
@@ -3471,7 +3452,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 2px solid rgba(0, 245, 255, 0.6);
+            border: 2px solid rgba(245, 158, 11, 0.6);
             background:
                 radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 40%),
                 linear-gradient(135deg, #0a0a2e, #1a0a3e, #0a1a3e);
@@ -3489,11 +3470,11 @@
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             flex-shrink: 0;
             box-shadow:
-                0 0 0 0 rgba(0, 245, 255, 0.5),
-                0 0 0 0 rgba(124, 58, 237, 0.4),
-                0 12px 50px rgba(0, 245, 255, 0.3),
-                0 0 60px rgba(0, 245, 255, 0.35),
-                inset 0 0 20px rgba(0, 245, 255, 0.1);
+                0 0 0 0 rgba(245, 158, 11, 0.5),
+                0 0 0 0 rgba(251, 113, 133, 0.4),
+                0 12px 50px rgba(245, 158, 11, 0.3),
+                0 0 60px rgba(245, 158, 11, 0.35),
+                inset 0 0 20px rgba(245, 158, 11, 0.1);
             animation:
                 aiFabFloat 3s ease-in-out infinite,
                 aiFabPulse 2s ease-out infinite;
@@ -3503,7 +3484,7 @@
             height: 80%;
             position: relative;
             z-index: 1;
-            filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.6));
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.6));
         }
         #ai-fab::before {
             content: '';
@@ -3512,12 +3493,12 @@
             border-radius: 50%;
             padding: 3px;
             background: conic-gradient(from var(--ai-fab-angle, 0deg),
-                    #00f5ff,
-                    #7c3aed,
-                    #7c3aed,
+                    #f59e0b,
+                    #fb7185,
+                    #fb7185,
                     #fbbf24,
                     #34d399,
-                    #00f5ff);
+                    #f59e0b);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -3530,7 +3511,7 @@
             position: absolute;
             inset: -14px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.25) 0%, rgba(124, 58, 237, 0.15) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(251, 113, 133, 0.15) 40%, transparent 70%);
             filter: blur(8px);
             z-index: -1;
             animation: aiFabHalo 3s ease-in-out infinite;
@@ -3562,35 +3543,35 @@
         @keyframes aiFabPulse {
             0% {
                 box-shadow:
-                    0 0 0 0 rgba(0, 245, 255, 0.5),
-                    0 0 0 0 rgba(124, 58, 237, 0.35),
-                    0 10px 40px rgba(124, 58, 237, 0.5),
-                    0 0 50px rgba(0,245,255,0.4);
+                    0 0 0 0 rgba(245, 158, 11, 0.5),
+                    0 0 0 0 rgba(251, 113, 133, 0.35),
+                    0 10px 40px rgba(251, 113, 133, 0.5),
+                    0 0 50px rgba(245,158,11,0.4);
             }
             50% {
                 box-shadow:
-                    0 0 0 12px rgba(0, 245, 255, 0),
-                    0 0 0 24px rgba(124, 58, 237, 0),
-                    0 10px 40px rgba(124, 58, 237, 0.5),
-                    0 0 70px rgba(0,245,255,0.5);
+                    0 0 0 12px rgba(245, 158, 11, 0),
+                    0 0 0 24px rgba(251, 113, 133, 0),
+                    0 10px 40px rgba(251, 113, 133, 0.5),
+                    0 0 70px rgba(245,158,11,0.5);
             }
             100% {
                 box-shadow:
-                    0 0 0 0 rgba(0, 245, 255, 0),
-                    0 0 0 0 rgba(124, 58, 237, 0),
-                    0 10px 40px rgba(124, 58, 237, 0.5),
-                    0 0 50px rgba(0,245,255,0.4);
+                    0 0 0 0 rgba(245, 158, 11, 0),
+                    0 0 0 0 rgba(251, 113, 133, 0),
+                    0 10px 40px rgba(251, 113, 133, 0.5),
+                    0 0 50px rgba(245,158,11,0.4);
             }
         }
         #ai-fab:hover {
             transform: translateY(-4px) scale(1.18);
             animation-play-state: paused;
             box-shadow:
-                0 0 0 0 rgba(0, 245, 255, 0.6),
-                0 0 0 0 rgba(124, 58, 237, 0.4),
-                0 16px 50px rgba(124, 58, 237, 0.6),
-                0 0 80px rgba(0,245,255,0.5),
-                0 0 120px rgba(124, 58, 237, 0.25);
+                0 0 0 0 rgba(245, 158, 11, 0.6),
+                0 0 0 0 rgba(251, 113, 133, 0.4),
+                0 16px 50px rgba(251, 113, 133, 0.6),
+                0 0 80px rgba(245,158,11,0.5),
+                0 0 120px rgba(251, 113, 133, 0.25);
         }
         #ai-fab .ai-badge {
             position: absolute;
@@ -3684,11 +3665,11 @@
             width: min(420px, calc(100vw - 24px));
             max-height: min(620px, 75vh);
             border-radius: 24px;
-            border: 1px solid rgba(124, 58, 237, 0.25);
+            border: 1px solid rgba(251, 113, 133, 0.25);
             background: var(--glass-bg);
             backdrop-filter: blur(40px) saturate(250%);
             -webkit-backdrop-filter: blur(40px) saturate(250%);
-            box-shadow: 0 25px 100px rgba(0,0,0,0.35), 0 0 60px rgba(124,58,237,0.15);
+            box-shadow: 0 25px 100px rgba(0,0,0,0.35), 0 0 60px rgba(251,113,133,0.15);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -3705,7 +3686,7 @@
         }
         .ai-panel-header {
             padding: 10px 14px 8px;
-            background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(0,245,255,0.1));
+            background: linear-gradient(135deg, rgba(251,113,133,0.2), rgba(245,158,11,0.1));
             border-bottom: 1px solid rgba(255,255,255,0.06);
             display: flex;
             flex-wrap: wrap;
@@ -3727,14 +3708,14 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff, #7c3aed);
+            background: linear-gradient(135deg, #fb7185, #f59e0b, #fb7185);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
             flex-shrink: 0;
             position: relative;
-            box-shadow: 0 4px 15px rgba(124,58,237,0.4);
+            box-shadow: 0 4px 15px rgba(251,113,133,0.4);
         }
         .ai-avatar::after {
             content: '';
@@ -3760,7 +3741,7 @@
             font-size: 8px;
             padding: 1px 5px;
             border-radius: 4px;
-            background: linear-gradient(135deg, #fbbf24, #7c3aed);
+            background: linear-gradient(135deg, #fbbf24, #fb7185);
             color: white;
             font-weight: 900;
             letter-spacing: 0.5px;
@@ -3855,10 +3836,10 @@
             flex-shrink: 0;
         }
         .ai-msg-row.bot .ai-msg-avatar {
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
         }
         .ai-msg-row.user .ai-msg-avatar {
-            background: linear-gradient(135deg, #7c3aed, #fbbf24);
+            background: linear-gradient(135deg, #fb7185, #fbbf24);
         }
         .ai-msg-content {
             padding: 10px 14px;
@@ -3874,8 +3855,8 @@
             border-bottom-left-radius: 4px;
         }
         .ai-msg-row.user .ai-msg-content {
-            background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(0,245,255,0.25));
-            border: 1px solid rgba(124,58,237,0.25);
+            background: linear-gradient(135deg, rgba(251,113,133,0.35), rgba(245,158,11,0.25));
+            border: 1px solid rgba(251,113,133,0.25);
             border-bottom-right-radius: 4px;
         }
 
@@ -3986,15 +3967,15 @@
             padding: 6px 12px;
             font-size: 11px;
             border-radius: 16px;
-            background: rgba(124, 58, 237, 0.08);
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            background: rgba(251, 113, 133, 0.08);
+            border: 1px solid rgba(251, 113, 133, 0.15);
             color: var(--sub);
             cursor: pointer;
             transition: all 0.2s;
             font-weight: 500;
         }
         .ai-quick-btn:hover {
-            background: rgba(124, 58, 237, 0.15);
+            background: rgba(251, 113, 133, 0.15);
             color: var(--text);
             transform: translateY(-1px);
         }
@@ -4028,15 +4009,15 @@
             max-height: 100px;
         }
         .ai-input:focus {
-            border-color: rgba(124, 58, 237, 0.4);
-            box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
+            border-color: rgba(251, 113, 133, 0.4);
+            box-shadow: 0 0 0 3px rgba(251,113,133,0.08);
         }
         .ai-input::placeholder {
             color: var(--sub);
             opacity: 0.6;
         }
         .ai-send-btn {
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             border: none;
             color: white;
             width: 40px;
@@ -4048,13 +4029,13 @@
             align-items: center;
             justify-content: center;
             transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 4px 15px rgba(124,58,237,0.4);
+            box-shadow: 0 4px 15px rgba(251,113,133,0.4);
             flex-shrink: 0;
             margin-bottom: 2px;
         }
         .ai-send-btn:hover {
             transform: scale(1.1) rotate(-5deg);
-            box-shadow: 0 6px 25px rgba(124,58,237,0.5);
+            box-shadow: 0 6px 25px rgba(251,113,133,0.5);
         }
         .ai-send-btn:active {
             transform: scale(0.92);
@@ -4084,8 +4065,8 @@
 
         /* AI 欢迎横幅 */
         .ai-welcome-card {
-            background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(0,245,255,0.05));
-            border: 1px solid rgba(124,58,237,0.15);
+            background: linear-gradient(135deg, rgba(251,113,133,0.1), rgba(245,158,11,0.05));
+            border: 1px solid rgba(251,113,133,0.15);
             border-radius: 14px;
             padding: 12px;
             margin-bottom: 4px;
@@ -4185,7 +4166,7 @@
             font-size: 10px;
             padding: 2px 8px;
             border-radius: 10px;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             color: white;
             font-weight: 700;
         }
@@ -4211,7 +4192,7 @@
             box-sizing: border-box;
         }
         .ai-setting-input:focus {
-            border-color: rgba(124, 58, 237, 0.4);
+            border-color: rgba(251, 113, 133, 0.4);
         }
         .ai-setting-select {
             width: 100%;
@@ -4251,13 +4232,13 @@
             border: none;
         }
         .ai-settings-btn.primary {
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             color: white;
-            box-shadow: 0 4px 12px rgba(124,58,237,0.3);
+            box-shadow: 0 4px 12px rgba(251,113,133,0.3);
         }
         .ai-settings-btn.primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(124,58,237,0.4);
+            box-shadow: 0 6px 16px rgba(251,113,133,0.4);
         }
         .ai-settings-btn.secondary {
             background: rgba(var(--glow-color), 0.06);
@@ -4309,8 +4290,8 @@
             gap: 4px;
             padding: 5px 8px;
             border-radius: 20px;
-            background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(0,245,255,0.15));
-            border: 1px solid rgba(124,58,237,0.3);
+            background: linear-gradient(135deg, rgba(251,113,133,0.25), rgba(245,158,11,0.15));
+            border: 1px solid rgba(251,113,133,0.3);
             color: var(--text);
             font-size: 11px;
             font-weight: 600;
@@ -4343,8 +4324,8 @@
         }
         .ai-login-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(124,58,237,0.3);
-            border-color: rgba(0,245,255,0.4);
+            box-shadow: 0 4px 12px rgba(251,113,133,0.3);
+            border-color: rgba(245,158,11,0.4);
         }
         .login-icon {
             font-size: 14px;
@@ -4355,21 +4336,21 @@
             gap: 8px;
             padding: 4px 10px 4px 4px;
             border-radius: 24px;
-            background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(0,245,255,0.1));
-            border: 1px solid rgba(124,58,237,0.25);
+            background: linear-gradient(135deg, rgba(251,113,133,0.2), rgba(245,158,11,0.1));
+            border: 1px solid rgba(251,113,133,0.25);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
         }
         .ai-user-btn:hover {
-            border-color: rgba(0,245,255,0.4);
-            box-shadow: 0 4px 12px rgba(124,58,237,0.25);
+            border-color: rgba(245,158,11,0.4);
+            box-shadow: 0 4px 12px rgba(251,113,133,0.25);
         }
         .user-avatar {
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -4417,7 +4398,7 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 6px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px rgba(124,58,237,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px rgba(251,113,133,0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 100;
@@ -4472,7 +4453,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #7c3aed, #00f5ff, #7c3aed, #7c3aed);
+            background: linear-gradient(90deg, #fb7185, #f59e0b, #fb7185, #fb7185);
             background-size: 200% 100%;
             animation: gradientMove 3s linear infinite;
         }
@@ -4512,17 +4493,17 @@
             height: 56px;
             margin: 0 auto 10px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff, #7c3aed);
+            background: linear-gradient(135deg, #fb7185, #f59e0b, #fb7185);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            box-shadow: 0 8px 24px rgba(124,58,237,0.4);
+            box-shadow: 0 8px 24px rgba(251,113,133,0.4);
         }
         .auth-logo-text {
             font-size: 16px;
             font-weight: 900;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -4556,8 +4537,8 @@
             bottom: 4px;
             left: 4px;
             width: calc(50% - 4px);
-            background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(0,245,255,0.2));
-            border: 1px solid rgba(124,58,237,0.3);
+            background: linear-gradient(135deg, rgba(251,113,133,0.3), rgba(245,158,11,0.2));
+            border: 1px solid rgba(251,113,133,0.3);
             border-radius: 8px;
             transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -4576,19 +4557,19 @@
             padding: 12px;
             border-radius: 12px;
             border: none;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             color: white;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 4px 16px rgba(124,58,237,0.35);
+            box-shadow: 0 4px 16px rgba(251,113,133,0.35);
             margin-top: 8px;
             letter-spacing: 4px;
         }
         .auth-submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(124,58,237,0.45);
+            box-shadow: 0 8px 24px rgba(251,113,133,0.45);
         }
         .auth-submit-btn:active {
             transform: translateY(0);
@@ -4636,7 +4617,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #fbbf24, #7c3aed, #fbbf24);
+            background: linear-gradient(90deg, #fbbf24, #fb7185, #fbbf24);
             background-size: 200% 100%;
             animation: gradientMove 3s linear infinite;
         }
@@ -4697,7 +4678,7 @@
             gap: 12px;
             margin-top: 16px;
             padding: 14px;
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(124, 58, 237, 0.08));
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 113, 133, 0.08));
             border: 1px solid rgba(251, 191, 36, 0.25);
             border-radius: 12px;
         }
@@ -4762,7 +4743,7 @@
         }
         .price-item.hot {
             border-color: rgba(251, 191, 36, 0.4);
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(124, 58, 237, 0.04));
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(251, 113, 133, 0.04));
         }
         .price-tag {
             font-size: 11px;
@@ -4807,7 +4788,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #00f5ff, #7c3aed, #00f5ff);
+            background: linear-gradient(90deg, #f59e0b, #fb7185, #f59e0b);
             background-size: 200% 100%;
             animation: gradientMove 3s linear infinite;
         }
@@ -4820,14 +4801,14 @@
             height: 64px;
             margin: 0 auto 10px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #7c3aed, #00f5ff);
+            background: linear-gradient(135deg, #fb7185, #f59e0b);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 24px;
             font-weight: 700;
-            box-shadow: 0 8px 24px rgba(124,58,237,0.4);
+            box-shadow: 0 8px 24px rgba(251,113,133,0.4);
         }
         .profile-name {
             font-size: 18px;
@@ -5064,7 +5045,7 @@
         }
         .tarot-reversed-badge {
             font-size: 9px; color: var(--accent-2);
-            background: rgba(124,58,237,0.08); padding: 1px 6px; border-radius: 8px;
+            background: rgba(251,113,133,0.08); padding: 1px 6px; border-radius: 8px;
             margin-left: 4px;
         }
         #daily-tarot-history { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; justify-content: center; }
@@ -5302,14 +5283,14 @@
             padding: 10px 16px;
             margin: 12px auto 0;
             max-width: 680px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(124, 58, 237, 0.08), rgba(59, 130, 246, 0.1));
-            border: 1px solid rgba(124, 58, 237, 0.25);
+            background: linear-gradient(135deg, rgba(251, 113, 133, 0.12), rgba(251, 113, 133, 0.08), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(251, 113, 133, 0.25);
             border-radius: var(--radius-lg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             overflow: hidden;
             position: relative;
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08),
+            box-shadow: 0 4px 20px rgba(251, 113, 133, 0.08),
                         inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
         .announcement-bar::before {
@@ -5319,7 +5300,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.12), transparent);
             animation: annShine 4s ease-in-out infinite;
         }
         @keyframes annShine {
@@ -5330,7 +5311,7 @@
             font-size: 18px;
             flex-shrink: 0;
             animation: annBounce 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4));
+            filter: drop-shadow(0 0 8px rgba(251, 113, 133, 0.4));
             z-index: 1;
         }
         .ann-icon--dot {
@@ -5338,7 +5319,7 @@
             height: 8px;
             border-radius: 50%;
             background: #a78bfa;
-            box-shadow: 0 0 8px #7c3aed, 0 0 16px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 0 8px #fb7185, 0 0 16px rgba(251, 113, 133, 0.5);
             animation: annPulse 2s ease-in-out infinite;
         }
         @keyframes annPulse {
@@ -5540,7 +5521,7 @@
             height: clamp(600px, 100vw, 1200px);
             animation: orbitalRotate2 80s linear infinite reverse;
             border-style: dotted;
-            border-color: rgba(124, 58, 237, 0.04);
+            border-color: rgba(251, 113, 133, 0.04);
             will-change: transform;
         }
         @keyframes orbitalRotate1 {
@@ -5859,7 +5840,7 @@
             will-change: transform;
         }
         /* ===== 电竞优化页面专属样式 ===== */
-        #game .mini-card { border-left: 3px solid rgba(124,58,237,0.2); }
+        #game .mini-card { border-left: 3px solid rgba(251,113,133,0.2); }
         #game .hud-gauge { border-color: rgba(52,211,153,0.08); }
         #game::before {
             content: '';
@@ -6062,9 +6043,9 @@
             border-radius: 24px;
             background: rgba(10, 10, 30, 0.6);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 245, 255, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.15);
             font-size: 12px;
-            color: #8892b0;
+            color: #d6c7b8;
             transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: pointer;
             user-select: none;
@@ -6080,8 +6061,8 @@
             border-color: rgba(0, 102, 255, 0.15);
         }
         .rt-status-widget:hover {
-            border-color: rgba(0, 245, 255, 0.4);
-            box-shadow: 0 0 16px rgba(0, 245, 255, 0.1);
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.1);
         }
         .rt-status-dot {
             width: 8px; height: 8px;
@@ -6153,7 +6134,7 @@
         .buy-card-title,
         .shortcut-section-title,
         .gradient-text {
-            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 25%, #ec4899 50%, #fbbf24 72%, #34d399 90%, #00f5ff 100%) !important;
+            background: linear-gradient(135deg, #f59e0b 0%, #fb7185 25%, #ec4899 50%, #fbbf24 72%, #34d399 90%, #f59e0b 100%) !important;
             background-size: 400% 400% !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
@@ -6167,7 +6148,7 @@
         }
         /* 导航链接：青蓝紫渐变，激活态缓慢彩虹 */
         .nav-links a {
-            background: linear-gradient(90deg, #00f5ff, #60a5fa, #a78bfa) !important;
+            background: linear-gradient(90deg, #f59e0b, #60a5fa, #a78bfa) !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
@@ -6175,25 +6156,25 @@
             text-shadow: none !important;
         }
         .nav-links a.active {
-            background: linear-gradient(135deg, #00f5ff, #ec4899, #fbbf24) !important;
+            background: linear-gradient(135deg, #f59e0b, #ec4899, #fbbf24) !important;
             background-size: 300% 300% !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
             animation: rainbowText 24s ease-in-out infinite !important;
-            filter: drop-shadow(0 0 6px rgba(0, 245, 255, 0.5));
+            filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.5));
         }
         /* 数据统计：标签青绿渐变、数值金粉紫缓慢渐变 */
         .stat-label {
-            background: linear-gradient(135deg, #34d399, #00f5ff, #60a5fa) !important;
+            background: linear-gradient(135deg, #34d399, #f59e0b, #60a5fa) !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
         }
         .stat-value, .stat-value--xl, .stat-value.accent {
-            background: linear-gradient(135deg, #fbbf24, #ec4899, #7c3aed) !important;
+            background: linear-gradient(135deg, #fbbf24, #ec4899, #fb7185) !important;
             background-size: 300% 300% !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
@@ -6204,7 +6185,7 @@
         }
         /* 科技数据条文字：青绿渐变 */
         .tech-bar {
-            background: linear-gradient(90deg, #34d399, #00f5ff) !important;
+            background: linear-gradient(90deg, #34d399, #f59e0b) !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
@@ -6212,7 +6193,7 @@
         }
         /* 副标题：青紫粉渐变 */
         .hero .subtitle, .hero-subtitle {
-            background: linear-gradient(90deg, #00f5ff, #7c3aed, #ec4899) !important;
+            background: linear-gradient(90deg, #f59e0b, #fb7185, #ec4899) !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
@@ -6229,7 +6210,7 @@
         }
         /* 汉堡菜单图标：青紫渐变 */
         .hamburger {
-            background: linear-gradient(135deg, #00f5ff, #7c3aed) !important;
+            background: linear-gradient(135deg, #f59e0b, #fb7185) !important;
             -webkit-background-clip: text !important;
             background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
@@ -6237,7 +6218,7 @@
         }
         /* 绊谈 logo：颜色渗透进界面，边缘自然融合（静态无溢出，柔化边缘） */
         .logo {
-            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 50%, #fbbf24 100%) !important;
+            background: linear-gradient(135deg, #f59e0b 0%, #fb7185 50%, #fbbf24 100%) !important;
             background-size: 100% 100% !important;
             background-position: center !important;
             -webkit-background-clip: text !important;
@@ -6245,7 +6226,7 @@
             -webkit-text-fill-color: transparent !important;
             color: transparent !important;
             -webkit-text-stroke: 0.5px transparent !important;
-            filter: drop-shadow(0 0 16px rgba(0, 245, 255, 0.18)) drop-shadow(0 0 32px rgba(124, 58, 237, 0.1)) blur(0.3px) !important;
+            filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.18)) drop-shadow(0 0 32px rgba(251, 113, 133, 0.1)) blur(0.3px) !important;
             animation: none !important;
         }
         /* ===== 从 landing 跳转过来的丝滑入场 ===== */
@@ -6311,7 +6292,7 @@
   }
   /* 数值类用金粉紫渐变 */
   .stat-value, .stat-number, .user-balance-count, .tech-bar-value {
-      background-image: linear-gradient(135deg, #fbbf24, #ec4899, #7c3aed) !important;
+      background-image: linear-gradient(135deg, #fbbf24, #ec4899, #fb7185) !important;
       background-size: 200% 200% !important;
       -webkit-background-clip: text !important;
       background-clip: text !important;
@@ -6321,14 +6302,14 @@
   /* 按钮文字保持可读性 — 不渐变 */
   .btn, .btn-text, .search-btn, .cta-btn, .nav-cta,
   button[class*="buy"], .buy-card-action {
-      -webkit-text-fill-color: #03030a !important;
-      color: #03030a !important;
+      -webkit-text-fill-color: #0a0805 !important;
+      color: #0a0805 !important;
       background-image: none !important;
   }
   /* 输入框文字保持可读性 */
   input, textarea, select {
-      -webkit-text-fill-color: #e8f0ff !important;
-      color: #e8f0ff !important;
+      -webkit-text-fill-color: #fff7ed !important;
+      color: #fff7ed !important;
       background-image: none !important;
   }
   /* placeholder 不渐变 */
@@ -6402,17 +6383,9 @@
         </div>
     </div>
 
-    <!-- ===== 宇宙背景 ===== -->
-    <div id="cosmic-bg"></div>
-    <canvas id="starfield" width="762" height="839"></canvas>
-    <canvas id="meteor-shower" width="762" height="839"></canvas>
-    <canvas id="led-bg" width="762" height="839"></canvas>
-    <div class="cosmic-orb"></div>
-    <div class="cosmic-orb"></div>
-    <div class="cosmic-orb"></div>
-    <div class="cosmic-orb"></div>
-    <div class="cosmic-orb"></div>
-    <div class="cosmic-orb"></div>
+    <!-- UnicornStudio 交互背景 (登录后) -->
+    <div class="unicorn-bg" data-us-project="vcWiYF2t5QrebGQEPFzm" data-us-scale="1" data-us-dpi="1" data-us-lazyload="true" data-us-production="true" data-us-fps="30" style="width:100vw;height:100vh;"></div>
+    <div class="bg-warm-overlay"></div>
 
     <!-- 空间站轨道环装饰 -->
     <div class="station-orbital" aria-hidden="true"></div>
@@ -6512,7 +6485,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题" title="切换深色/浅色主题">🌓</button>
                 <button class="theme-toggle" onclick="openCmd()" aria-label="命令面板" title="Ctrl+K 命令面板" style="font-size:15px;">⌘</button>
                 <button class="hamburger" onclick="toggleMenu()" aria-label="切换菜单" id="hamburgerBtn">☰</button>
             </div>
@@ -6885,19 +6857,19 @@
                     <div style="font-size:clamp(18px,2vw,24px);font-weight:900;color:var(--accent);">HiBit Uninstaller v4.0.10</div>
                     <div style="font-size:clamp(12px,1.2vw,15px);color:var(--sub);margin-top:4px;">专业级软件卸载工具 · 彻底清除残留文件和注册表项</div>
                     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">强制卸载</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">注册表清理</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">启动项管理</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">服务管理</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">空文件夹清理</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">浏览器扩展</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">强制卸载</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">注册表清理</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">启动项管理</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">服务管理</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">空文件夹清理</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">浏览器扩展</span>
                     </div>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px;">
                     <a href="./HiBitUninstaller-setup-4.0.10.exe" download="" class="big-contact-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
                         ⬇️ 下载安装包 (4.4MB)
                     </a>
-                    <a href="https://hibit-uninstaller.com/" target="_blank" rel="noopener" class="big-contact-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(0,245,255,0.3);color:var(--accent);box-shadow:none;">
+                    <a href="https://hibit-uninstaller.com/" target="_blank" rel="noopener" class="big-contact-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(245,158,11,0.3);color:var(--accent);box-shadow:none;">
                         🌐 访问官网
                     </a>
                 </div>
@@ -6910,19 +6882,19 @@
                     <div style="font-size:clamp(18px,2vw,24px);font-weight:900;color:var(--accent);">MemReduct v3.5.2</div>
                     <div style="font-size:clamp(12px,1.2vw,15px);color:var(--sub);margin-top:4px;">轻量级内存清理工具 · 实时监控内存占用，一键释放系统资源</div>
                     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">内存清理</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">实时监控</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">自动清理</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">系统优化</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">开机启动</span>
-                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);color:var(--accent);">多语言</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">内存清理</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">实时监控</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">自动清理</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">系统优化</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">开机启动</span>
+                        <span style="font-size:11px;padding:2px 10px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--accent);">多语言</span>
                     </div>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px;">
                     <a href="./MemReduct-3.5.2-setup.exe" download="" class="big-contact-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
                         ⬇️ 下载安装包 (373KB)
                     </a>
-                    <a href="https://memreduct.org/" target="_blank" rel="noopener" class="big-contact-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(0,245,255,0.3);color:var(--accent);box-shadow:none;">
+                    <a href="https://memreduct.org/" target="_blank" rel="noopener" class="big-contact-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(245,158,11,0.3);color:var(--accent);box-shadow:none;">
                         🌐 访问官网
                     </a>
                 </div>
@@ -7857,8 +7829,8 @@
                     <div class="title">🎨 CSS 渐变生成器</div>
                     <div class="content">
                         <div class="flex-row" style="margin-bottom:8px;">
-                            <label style="font-size:12px;">起始色 <input type="color" id="grad-start" value="#00f5ff" style="width:48px;height:36px;" oninput="genGradient()"></label>
-                            <label style="font-size:12px;">结束色 <input type="color" id="grad-end" value="#7c3aed" style="width:48px;height:36px;" oninput="genGradient()"></label>
+                            <label style="font-size:12px;">起始色 <input type="color" id="grad-start" value="#f59e0b" style="width:48px;height:36px;" oninput="genGradient()"></label>
+                            <label style="font-size:12px;">结束色 <input type="color" id="grad-end" value="#fb7185" style="width:48px;height:36px;" oninput="genGradient()"></label>
                             <select id="grad-type" style="width:auto;" onchange="genGradient()" aria-label="渐变类型">
                                 <option value="linear">线性</option>
                                 <option value="radial">径向</option>
@@ -7866,8 +7838,8 @@
                             <input type="range" id="grad-angle" value="135" min="0" max="360" style="flex:1;min-width:80px;" oninput="genGradient()" aria-label="角度">
                             <span id="grad-angle-val" style="font-size:12px;color:var(--sub);min-width:36px;">135°</span>
                         </div>
-                        <div id="grad-preview" style="width:100%;height:60px;border-radius:12px;margin-bottom:6px;background:linear-gradient(135deg,#00f5ff,#7c3aed);"></div>
-                        <div class="result" id="grad-css" style="word-break:break-all;">linear-gradient(135deg, #00f5ff, #7c3aed)</div>
+                        <div id="grad-preview" style="width:100%;height:60px;border-radius:12px;margin-bottom:6px;background:linear-gradient(135deg,#f59e0b,#fb7185);"></div>
+                        <div class="result" id="grad-css" style="word-break:break-all;">linear-gradient(135deg, #f59e0b, #fb7185)</div>
                         <button type="button" class="btn btn-sm" onclick="copyGrad()">复制 CSS</button>
                     </div>
                 </div>
@@ -7908,7 +7880,7 @@
                     <div class="title">🎨 画板涂鸦</div>
                     <div class="content">
                         <div class="flex-row" style="margin-bottom:4px;">
-                            <input type="color" id="draw-color" value="#00f5ff" style="width:36px;height:32px;padding:0;border-radius:6px;">
+                            <input type="color" id="draw-color" value="#f59e0b" style="width:36px;height:32px;padding:0;border-radius:6px;">
                             <input type="range" id="draw-size" min="1" max="30" value="4" style="width:80px;accent-color:var(--accent);">
                             <button type="button" class="btn btn-sm" onclick="clearCanvas()">🗑️ 清除</button>
                             <button type="button" class="btn btn-sm" onclick="saveCanvas()">💾 保存</button>
@@ -7921,7 +7893,7 @@
                     <div class="title">🌈 调色板生成</div>
                     <div class="content">
                         <div class="flex-row" style="margin-bottom:6px;">
-                            <input type="color" id="palette-base" value="#00f5ff" style="width:36px;height:32px;padding:0;border-radius:6px;" oninput="genPalette()">
+                            <input type="color" id="palette-base" value="#f59e0b" style="width:36px;height:32px;padding:0;border-radius:6px;" oninput="genPalette()">
                             <select id="palette-scheme" style="width:auto;" onchange="genPalette()">
                                 <option value="analogous">类似色</option>
                                 <option value="complementary">互补色</option>
@@ -8202,13 +8174,13 @@
                                 <div style="font-size:10px;color:var(--sub);">当前FPS</div>
                                 <div style="font-size:clamp(24px,3vw,36px);font-weight:900;color:#34d399;" id="fps-current">0</div>
                             </div>
-                            <div style="text-align:center;padding:10px;background:rgba(0,245,255,0.04);border-radius:12px;">
+                            <div style="text-align:center;padding:10px;background:rgba(245,158,11,0.04);border-radius:12px;">
                                 <div style="font-size:10px;color:var(--sub);">平均FPS</div>
                                 <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--accent);" id="fps-avg">0</div>
                             </div>
-                            <div style="text-align:center;padding:10px;background:rgba(124,58,237,0.04);border-radius:12px;">
+                            <div style="text-align:center;padding:10px;background:rgba(251,113,133,0.04);border-radius:12px;">
                                 <div style="font-size:10px;color:var(--sub);">最低FPS</div>
-                                <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:#7c3aed;" id="fps-min">0</div>
+                                <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;color:#fb7185;" id="fps-min">0</div>
                             </div>
                             <div style="text-align:center;padding:10px;background:rgba(251,191,36,0.04);border-radius:12px;">
                                 <div style="font-size:10px;color:var(--sub);">最高FPS</div>
@@ -8221,7 +8193,7 @@
                 </div>
 
                 <!-- 输入延迟测试 -->
-                <div class="mini-card" style="border-color:rgba(0,245,255,0.12);">
+                <div class="mini-card" style="border-color:rgba(245,158,11,0.12);">
                     <div class="title">⚡ 输入延迟测试 · Input Lag</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">屏幕变绿时立即点击，测试你的反应延迟。电竞选手通常在150-250ms之间。</div>
@@ -8232,7 +8204,7 @@
                 </div>
 
                 <!-- 系统信息检测 -->
-                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);grid-column:1/-1;">
+                <div class="mini-card" style="border-color:rgba(251,113,133,0.12);grid-column:1/-1;">
                     <div class="title">💻 系统信息检测 · System Info</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">检测当前设备的硬件信息，包括CPU核心数、内存、GPU、屏幕分辨率等。</div>
@@ -8271,15 +8243,15 @@
                 </div>
 
                 <!-- 鼠标轮询率测试 -->
-                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);">
+                <div class="mini-card" style="border-color:rgba(251,113,133,0.12);">
                     <div class="title">🖱️ 鼠标轮询率测试 · Polling Rate</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">在区域内快速移动鼠标，测试鼠标报告率和响应速度。电竞鼠标通常为1000Hz。</div>
-                        <div id="mouse-test-area" style="width:100%;height:clamp(60px,10vh,80px);background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--sub);user-select:none;">在此区域内移动鼠标</div>
+                        <div id="mouse-test-area" style="width:100%;height:clamp(60px,10vh,80px);background:rgba(251,113,133,0.06);border:1px solid rgba(251,113,133,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--sub);user-select:none;">在此区域内移动鼠标</div>
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px;">
                             <div style="text-align:center;padding:6px;background:rgba(0,0,0,0.1);border-radius:10px;">
                                 <div style="font-size:9px;color:var(--sub);">事件/秒</div>
-                                <div style="font-size:clamp(16px,2vw,22px);font-weight:700;color:#7c3aed;" id="mouse-rate">0</div>
+                                <div style="font-size:clamp(16px,2vw,22px);font-weight:700;color:#fb7185;" id="mouse-rate">0</div>
                             </div>
                             <div style="text-align:center;padding:6px;background:rgba(0,0,0,0.1);border-radius:10px;">
                                 <div style="font-size:9px;color:var(--sub);">估算Hz</div>
@@ -8307,7 +8279,7 @@
                 </div>
 
                 <!-- 游戏设置推荐 -->
-                <div class="mini-card" style="border-color:rgba(0,245,255,0.12);grid-column:1/-1;">
+                <div class="mini-card" style="border-color:rgba(245,158,11,0.12);grid-column:1/-1;">
                     <div class="title">⚙️ 游戏设置推荐 · Settings Guide</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">根据你的设备性能，推荐最佳游戏画面和性能设置。</div>
@@ -8331,17 +8303,17 @@
                 </div>
 
                 <!-- 延迟知识科普 -->
-                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);">
+                <div class="mini-card" style="border-color:rgba(251,113,133,0.12);">
                     <div class="title">📚 延迟知识科普 · Latency Guide</div>
                     <div class="content">
                         <div style="font-size:11px;line-height:1.6;">
                             <div style="margin-bottom:6px;"><b style="color:var(--accent);">端到端延迟</b> = 鼠标点击 → 系统处理 → 网络传输 → 服务器 → 画面渲染</div>
                             <div style="display:grid;gap:3px;">
                                 <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(52,211,153,0.04);border-radius:6px;"><span>🖱️ 鼠标轮询率</span><span style="color:#34d399;">1ms (1000Hz)</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(0,245,255,0.04);border-radius:6px;"><span>💻 系统处理</span><span style="color:var(--accent);">2-5ms</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(124,58,237,0.04);border-radius:6px;"><span>🌐 网络传输</span><span style="color:#a78bfa;">10-50ms</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(245,158,11,0.04);border-radius:6px;"><span>💻 系统处理</span><span style="color:var(--accent);">2-5ms</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(251,113,133,0.04);border-radius:6px;"><span>🌐 网络传输</span><span style="color:#a78bfa;">10-50ms</span></div>
                                 <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(251,191,36,0.04);border-radius:6px;"><span>🖥️ 画面渲染</span><span style="color:#fbbf24;">4-16ms</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(124,58,237,0.04);border-radius:6px;"><span>📊 显示器</span><span style="color:#7c3aed;">1-8ms</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 6px;background:rgba(251,113,133,0.04);border-radius:6px;"><span>📊 显示器</span><span style="color:#fb7185;">1-8ms</span></div>
                             </div>
                             <div style="margin-top:6px;padding:6px;background:rgba(52,211,153,0.06);border-radius:8px;font-size:10px;color:#34d399;">💡 系统优化可降低2-10ms延迟，超频可降低5-15ms，两者叠加效果最佳</div>
                         </div>
@@ -8367,7 +8339,7 @@
                                 </div>
                                 <div style="font-size:9px;color:var(--sub);opacity:.5;margin-top:6px;">参考价：¥288 | 30-60min</div>
                             </div>
-                            <div style="padding:12px;background:linear-gradient(145deg,rgba(0,245,255,0.06),rgba(0,0,0,0.1));border:1px solid rgba(0,245,255,0.12);border-radius:14px;">
+                            <div style="padding:12px;background:linear-gradient(145deg,rgba(245,158,11,0.06),rgba(0,0,0,0.1));border:1px solid rgba(245,158,11,0.12);border-radius:14px;">
                                 <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px;">OS MAX · 魔王优化</div>
                                 <div style="font-size:10px;color:var(--sub);line-height:1.5;">
                                     ✅ 定制纯净系统部署<br>
@@ -8380,7 +8352,7 @@
                                 </div>
                                 <div style="font-size:9px;color:var(--sub);opacity:.5;margin-top:6px;">参考价：¥388 | 60-90min</div>
                             </div>
-                            <div style="padding:12px;background:linear-gradient(145deg,rgba(124,58,237,0.06),rgba(0,0,0,0.1));border:1px solid rgba(124,58,237,0.12);border-radius:14px;">
+                            <div style="padding:12px;background:linear-gradient(145deg,rgba(251,113,133,0.06),rgba(0,0,0,0.1));border:1px solid rgba(251,113,133,0.12);border-radius:14px;">
                                 <div style="font-size:12px;font-weight:700;color:#a78bfa;margin-bottom:4px;">OC TUNING · 超频调校</div>
                                 <div style="font-size:10px;color:var(--sub);line-height:1.5;">
                                     ✅ CPU降压超频<br>
@@ -8399,18 +8371,18 @@
                 </div>
 
                 <!-- 键盘按键测试器 -->
-                <div class="mini-card" style="border-color:rgba(0,245,255,0.12);">
+                <div class="mini-card" style="border-color:rgba(245,158,11,0.12);">
                     <div class="title">⌨️ 键盘按键测试 · Key Test</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">按下键盘任意键测试按键是否正常工作，支持N-Key Rollover多键同时按下检测。</div>
-                        <div id="keytest-area" style="width:100%;min-height:clamp(60px,10vh,80px);background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,1.2vw,16px);color:var(--sub);user-select:none;cursor:pointer;">点击此处后按键测试</div>
+                        <div id="keytest-area" style="width:100%;min-height:clamp(60px,10vh,80px);background:rgba(245,158,11,0.04);border:1px solid rgba(245,158,11,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,1.2vw,16px);color:var(--sub);user-select:none;cursor:pointer;">点击此处后按键测试</div>
                         <div id="keytest-result" style="text-align:center;margin-top:6px;font-size:11px;color:var(--sub);">等待按键输入...</div>
                         <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>检测键盘每个按键是否正常响应，支持多键同时按下检测NKRO。游戏玩家必备检测工具。</div>
                     </div>
                 </div>
 
                 <!-- 屏幕刷新率检测 -->
-                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);">
+                <div class="mini-card" style="border-color:rgba(251,113,133,0.12);">
                     <div class="title">🖥️ 屏幕刷新率检测 · Refresh Rate</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">通过动画帧计数检测屏幕实际刷新率。60Hz=普通，120Hz=高刷，144Hz=电竞，240Hz=专业电竞。</div>
@@ -8424,7 +8396,7 @@
                 </div>
 
                 <!-- 鼠标DPI计算器 -->
-                <div class="mini-card" style="border-color:rgba(124,58,237,0.12);">
+                <div class="mini-card" style="border-color:rgba(251,113,133,0.12);">
                     <div class="title">📐 鼠标DPI计算器 · DPI Calc</div>
                     <div class="content">
                         <div style="font-size:11px;color:var(--sub);opacity:.6;margin-bottom:6px;">在屏幕上水平移动鼠标一段距离，计算实际DPI。用于验证鼠标标称DPI是否准确。</div>
@@ -8435,7 +8407,7 @@
                             <input type="number" id="dpi-pixels" value="0" min="0" style="width:80px;font-size:11px;min-height:28px;padding:2px 4px;border-radius:8px;">
                             <button type="button" class="btn btn-sm" onclick="calcDPI()">计算</button>
                         </div>
-                        <div id="dpi-result" style="text-align:center;font-size:clamp(16px,2vw,22px);font-weight:700;color:#7c3aed;">-</div>
+                        <div id="dpi-result" style="text-align:center;font-size:clamp(16px,2vw,22px);font-weight:700;color:#fb7185;">-</div>
                         <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;">📝 <b>用途：</b>通过物理移动距离和屏幕像素位移计算鼠标实际DPI，验证鼠标精度。DPI=像素/英寸。</div>
                     </div>
                 </div>
@@ -9177,7 +9149,7 @@
                     <linearGradient id="aiLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"></stop>
                         <stop offset="40%" style="stop-color:#e0f7ff;stop-opacity:1"></stop>
-                        <stop offset="100%" style="stop-color:#00f5ff;stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1"></stop>
                     </linearGradient>
                     <filter id="aiLogoGlow" x="-50%" y="-50%" width="200%" height="200%">
                         <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
@@ -10487,7 +10459,7 @@
                 let level = '🐌 慢';
                 let color = '#ef4444';
                 if (elapsed < 200) { level = '🏆 电竞级'; color = '#34d399'; }
-                else if (elapsed < 300) { level = '✅ 优秀'; color = '#00f5ff'; }
+                else if (elapsed < 300) { level = '✅ 优秀'; color = '#f59e0b'; }
                 else if (elapsed < 400) { level = '⚠️ 一般'; color = '#fbbf24'; }
                 result.innerHTML = `<span style="font-size:clamp(18px,2.2vw,24px);font-weight:900;color:${color};">${elapsed}ms</span><br><span style="font-size:11px;color:var(--sub);">${level} | 平均${avg}ms | 最佳${best}ms | 第${latencyState.results.length}次</span>`;
                 latencyState.phase = 'done';
@@ -10554,7 +10526,7 @@
             let perfLevel = '入门级';
             let perfColor = '#ef4444';
             if (perfScore > 1500) { perfLevel = '电竞级 🏆'; perfColor = '#34d399'; }
-            else if (perfScore > 1000) { perfLevel = '高端级 ✅'; perfColor = '#00f5ff'; }
+            else if (perfScore > 1000) { perfLevel = '高端级 ✅'; perfColor = '#f59e0b'; }
             else if (perfScore > 600) { perfLevel = '中端级 ⚠️'; perfColor = '#fbbf24'; }
             html += `<div style="margin-top:8px;padding:10px;background:rgba(52,211,153,0.04);border-radius:12px;text-align:center;">
                 <div style="font-size:10px;color:var(--sub);">性能评分</div>
@@ -10587,7 +10559,7 @@
                     let level = '低速';
                     let color = '#ef4444';
                     if (mbps > 100) { level = '极速 🚀'; color = '#34d399'; }
-                    else if (mbps > 50) { level = '高速 ✅'; color = '#00f5ff'; }
+                    else if (mbps > 50) { level = '高速 ✅'; color = '#f59e0b'; }
                     else if (mbps > 20) { level = '中速 ⚠️'; color = '#fbbf24'; }
                     statusEl.innerHTML = `<span style="color:${color};">Mbps · ${level}</span><br><span style="font-size:9px;">下载${(blob.size/1024/1024).toFixed(1)}MB 用时${elapsed.toFixed(2)}s</span>`;
                     if (btn) { btn.disabled = false; btn.textContent = '🚀 开始测速'; }
@@ -10661,7 +10633,7 @@
                         let level = '入门级';
                         let color = '#ef4444';
                         if (score > 10000) { level = '电竞级 🏆'; color = '#34d399'; }
-                        else if (score > 5000) { level = '流畅级 ✅'; color = '#00f5ff'; }
+                        else if (score > 5000) { level = '流畅级 ✅'; color = '#f59e0b'; }
                         else if (score > 2000) { level = '基本级 ⚠️'; color = '#fbbf24'; }
                         levelEl.innerHTML = `<span style="color:${color};">${level}</span><br><span style="font-size:9px;">${frames}帧/${(elapsed/1000).toFixed(1)}s = ${fps.toFixed(0)}FPS</span>`;
                         showToast('性能跑分完成：' + score);
@@ -10763,10 +10735,10 @@
             }
             result.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:4px;">
                 <div style="padding:6px;background:rgba(52,211,153,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">纹理质量</div><div style="font-size:12px;font-weight:700;color:#34d399;">${tex}</div></div>
-                <div style="padding:6px;background:rgba(0,245,255,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">阴影质量</div><div style="font-size:12px;font-weight:700;color:var(--accent);">${shadow}</div></div>
-                <div style="padding:6px;background:rgba(124,58,237,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">抗锯齿</div><div style="font-size:12px;font-weight:700;color:#a78bfa;">${aa}</div></div>
+                <div style="padding:6px;background:rgba(245,158,11,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">阴影质量</div><div style="font-size:12px;font-weight:700;color:var(--accent);">${shadow}</div></div>
+                <div style="padding:6px;background:rgba(251,113,133,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">抗锯齿</div><div style="font-size:12px;font-weight:700;color:#a78bfa;">${aa}</div></div>
                 <div style="padding:6px;background:rgba(251,191,36,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">特效质量</div><div style="font-size:12px;font-weight:700;color:#fbbf24;">${effects}</div></div>
-                <div style="padding:6px;background:rgba(124,58,237,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">可视距离</div><div style="font-size:12px;font-weight:700;color:#7c3aed;">${lod}</div></div>
+                <div style="padding:6px;background:rgba(251,113,133,0.04);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">可视距离</div><div style="font-size:12px;font-weight:700;color:#fb7185;">${lod}</div></div>
                 <div style="padding:6px;background:rgba(0,0,0,0.06);border-radius:8px;"><div style="font-size:9px;color:var(--sub);">渲染缩放</div><div style="font-size:12px;font-weight:700;color:var(--text);">${render}</div></div>
             </div>
             <div style="margin-top:6px;font-size:10px;color:var(--sub);opacity:.7;">💡 ${note}</div>`;
@@ -10801,7 +10773,7 @@
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     // 高亮一下
                     el.style.transition = 'box-shadow 0.3s';
-                    el.style.boxShadow = '0 0 0 2px rgba(124, 58, 237, 0.4), 0 0 20px rgba(124, 58, 237, 0.3)';
+                    el.style.boxShadow = '0 0 0 2px rgba(251, 113, 133, 0.4), 0 0 20px rgba(251, 113, 133, 0.3)';
                     setTimeout(() => {
                         el.style.boxShadow = '';
                     }, 1500);
@@ -11213,7 +11185,7 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(0, 245, 255, ${alpha})`;
+                            ctx.strokeStyle = `rgba(245, 158, 11, ${alpha})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -11424,12 +11396,9 @@
         }
 
         function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            showCaption(next === 'light' ? '☀️ 亮色模式' : '🌙 暗色模式');
+            // 主题切换已禁用 — 强制深色
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
         }
 
         function toggleTrans() {
@@ -12368,10 +12337,11 @@
                     showCaption('已关闭');
                     e.preventDefault();
                 }
-                if (e.key === 'n' && !e.ctrlKey && !e.metaKey && !e.target.matches('input, textarea, select')) {
-                    toggleTheme();
-                    e.preventDefault();
-                }
+                // 主题切换快捷键已禁用 — 强制深色
+                // if (e.key === 'n' && !e.ctrlKey && !e.metaKey && !e.target.matches('input, textarea, select')) {
+                //     toggleTheme();
+                //     e.preventDefault();
+                // }
                 if (e.ctrlKey && e.key === 'h') {
                     e.preventDefault();
                     document.getElementById('shortcut-panel').classList.toggle('show');
@@ -12417,7 +12387,8 @@
             const ops = [
                 { icon: '🔮', label: '抽塔罗牌', cat: '功能', action: () => { navigate('more'); setTimeout(drawTarot, 300); } },
                 { icon: '🔐', label: '生成密码', cat: '功能', action: () => { navigate('more'); setTimeout(generatePassword, 300); } },
-                { icon: '🌡️', label: '切换主题', cat: '功能', action: () => toggleTheme() },
+                // 主题切换已从命令面板移除
+                // { icon: '🌡️', label: '切换主题', cat: '功能', action: () => toggleTheme() },
                 { icon: '📋', label: '查看剪贴板历史', cat: '功能', action: () => { navigate('more'); } },
                 { icon: '🍅', label: '开始番茄钟', cat: '功能', action: () => { navigate('more'); setTimeout(startPomodoro, 300); } },
                 { icon: '🎵', label: '白噪音播放器', cat: '功能', action: () => { navigate('more'); } },
@@ -12943,17 +12914,15 @@
         // 自动主题（跟随系统）
         // ============================================================
         function applySystemTheme() {
-            if (localStorage.getItem('themeManual') === '1') return;
-            const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const target = dark ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', target);
-            localStorage.setItem('theme', target);
+            // 系统主题检测已禁用 — 强制深色
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
         }
 
-        const origToggleTheme = window.toggleTheme;
+        // 主题切换 override 已禁用 — 强制深色
         window.toggleTheme = function() {
-            localStorage.setItem('themeManual', '1');
-            origToggleTheme();
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
         };
 
         // ============================================================
@@ -13415,7 +13384,7 @@
         // ============================================================
         function initCursorParticles() {
             if (_isMobile || _isLowPerf) return;
-            const colors = ['#00f5ff', '#7c3aed', '#34d399'];
+            const colors = ['#f59e0b', '#fb7185', '#34d399'];
             let lastTime = 0;
             document.addEventListener('mousemove', function(e) {
                 const now = Date.now();
@@ -15493,17 +15462,19 @@
         // 初始化
         // ============================================================
         window.onload = function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            // 强制深色主题 — 不再从 localStorage 读取
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
 
             setQuote(0);
             setTimeout(() => {
                 document.getElementById('boot-screen').classList.add('hidden');
             }, 1800);
 
-            initStarfield();
-            initMeteorShower();
-            initParticleBg();
+            // 旧背景已替换为 UnicornStudio — 注释掉旧的初始化
+            // initStarfield();
+            // initMeteorShower();
+            // initParticleBg();
             initPopulation();
             initAnnouncement();
             initVisitCounter();
@@ -15594,7 +15565,7 @@
             renderFav();
             addFavStars();
             initScrollReveal();
-            applySystemTheme();
+            // applySystemTheme() — 已禁用，强制深色
             renderDailyTarotHistory();
             genGradient();
             // 趣味工具集初始化
@@ -15606,8 +15577,8 @@
             initTiltCards();
             // 世界时钟定时更新（移除重复调用，上面已初始化）
 
-            // 监听系统主题变化
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemTheme);
+            // 系统主题监听已禁用 — 强制深色
+            // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemTheme);
 
             // Ctrl+K 命令面板
             document.addEventListener('keydown', function(e) {
@@ -15928,14 +15899,14 @@
             {n:80,s:'Hg',name:'汞',mass:200.6,cat:'过渡金属'},{n:82,s:'Pb',name:'铅',mass:207.2,cat:'后过渡金属'},
             {n:92,s:'U',name:'铀',mass:238.0,cat:'锕系'}
         ];
-        const catColors = {'非金属':'#34d399','稀有气体':'#7c3aed','碱金属':'#ef4444','碱土金属':'#fbbf24','过渡金属':'#00f5ff','后过渡金属':'#7c3aed','类金属':'#a855f7','锕系':'#f87171'};
+        const catColors = {'非金属':'#34d399','稀有气体':'#fb7185','碱金属':'#ef4444','碱土金属':'#fbbf24','过渡金属':'#f59e0b','后过渡金属':'#fb7185','类金属':'#a855f7','锕系':'#f87171'};
 
         window.renderPeriodicTable = function() {
             const container = document.getElementById('periodic-table');
             if (!container) return;
             container.innerHTML = elements.map(el => {
                 const color = catColors[el.cat] || '#888';
-                return `<div class="element-cell" data-n="${el.n}" data-s="${el.s}" data-name="${el.name}" onclick="showElement(${el.n})" style="cursor:pointer;padding:4px 2px;text-align:center;border:1px solid rgba(${color === '#00f5ff' ? '0,245,255' : '128,128,128'},0.15);border-radius:6px;background:rgba(var(--glow-color),0.02);transition:all 0.3s;">
+                return `<div class="element-cell" data-n="${el.n}" data-s="${el.s}" data-name="${el.name}" onclick="showElement(${el.n})" style="cursor:pointer;padding:4px 2px;text-align:center;border:1px solid rgba(${color === '#f59e0b' ? '245,158,11' : '128,128,128'},0.15);border-radius:6px;background:rgba(var(--glow-color),0.02);transition:all 0.3s;">
                     <div style="font-size:7px;color:var(--sub);">${el.n}</div>
                     <div style="font-size:clamp(10px,1vw,14px);font-weight:900;color:${color};">${el.s}</div>
                     <div style="font-size:6px;color:var(--sub);">${el.name}</div>
@@ -17296,7 +17267,7 @@
                         ctx.fillRect(0, 0, w, h);
                         const maxF = Math.max(60, ..._fpsSamples);
                         const step = w / Math.max(1, _fpsSamples.length);
-                        ctx.strokeStyle = '#00ff88';
+                        ctx.strokeStyle = '#f59e0b';
                         ctx.lineWidth = 2;
                         ctx.beginPath();
                         _fpsSamples.forEach((v, i) => {
@@ -17306,7 +17277,7 @@
                         });
                         ctx.stroke();
                         // 60FPS基准线
-                        ctx.strokeStyle = 'rgba(0,245,255,0.3)';
+                        ctx.strokeStyle = 'rgba(245,158,11,0.3)';
                         ctx.setLineDash([4, 4]);
                         ctx.beginPath();
                         ctx.moveTo(0, h - (60 / maxF) * h);
@@ -17362,7 +17333,7 @@
                 box.textContent = '点击重新开始';
                 let grade = '🐌 需要加油', color = '#ef4444';
                 if (lag < 200) { grade = '🏆 电竞级'; color = '#34d399'; }
-                else if (lag < 300) { grade = '⚡ 优秀'; color = '#00f5ff'; }
+                else if (lag < 300) { grade = '⚡ 优秀'; color = '#f59e0b'; }
                 else if (lag < 400) { grade = '👍 良好'; color = '#fbbf24'; }
                 res.innerHTML = `<span style="font-size:18px;font-weight:900;color:${color};">${lag}ms</span> <span style="color:var(--sub);">${grade}</span>`;
             }
@@ -17430,7 +17401,7 @@
                     if (speed) speed.textContent = bestSpeed.toFixed(1) + ' Mbps';
                     let grade = '网络较弱', color = '#ef4444';
                     if (bestSpeed >= 50) { grade = '电竞级网络 ⚡'; color = '#34d399'; }
-                    else if (bestSpeed >= 20) { grade = '适合竞技游戏'; color = '#00f5ff'; }
+                    else if (bestSpeed >= 20) { grade = '适合竞技游戏'; color = '#f59e0b'; }
                     else if (bestSpeed >= 5) { grade = '可日常游戏'; color = '#fbbf24'; }
                     if (status) status.innerHTML = `<span style="color:${color};">${grade}</span>`;
                     return;
@@ -17508,7 +17479,7 @@
                             if (score) score.textContent = result;
                             let g = '入门级', c = '#ef4444';
                             if (result >= 10000) { g = '🏆 电竞级'; c = '#34d399'; }
-                            else if (result >= 5000) { g = '⚡ 流畅级'; c = '#00f5ff'; }
+                            else if (result >= 5000) { g = '⚡ 流畅级'; c = '#f59e0b'; }
                             else if (result >= 2500) { g = '👍 标准级'; c = '#fbbf24'; }
                             if (level) level.innerHTML = `<span style="color:${c};">${g} · 约${Math.round(fps)}FPS</span>`;
                             return;
@@ -17575,10 +17546,10 @@
                 <div style="display:grid;gap:4px;">
                     <div style="text-align:center;font-size:12px;font-weight:700;color:#34d399;margin-bottom:4px;">${r}p · ${fps}FPS · ${fpsLabel}</div>
                     <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(52,211,153,0.04);border-radius:8px;font-size:11px;"><span>🌑 阴影质量</span><span style="color:var(--accent);font-weight:700;">${settings.shadow}</span></div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(0,245,255,0.04);border-radius:8px;font-size:11px;"><span>🎨 纹理质量</span><span style="color:var(--accent);font-weight:700;">${settings.texture}</span></div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(124,58,237,0.04);border-radius:8px;font-size:11px;"><span>🔬 抗锯齿</span><span style="color:var(--accent);font-weight:700;">${settings.aa}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(245,158,11,0.04);border-radius:8px;font-size:11px;"><span>🎨 纹理质量</span><span style="color:var(--accent);font-weight:700;">${settings.texture}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(251,113,133,0.04);border-radius:8px;font-size:11px;"><span>🔬 抗锯齿</span><span style="color:var(--accent);font-weight:700;">${settings.aa}</span></div>
                     <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(251,191,36,0.04);border-radius:8px;font-size:11px;"><span>✨ 后期处理</span><span style="color:var(--accent);font-weight:700;">${settings.post}</span></div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(124,58,237,0.04);border-radius:8px;font-size:11px;"><span>👁️ 视野距离</span><span style="color:var(--accent);font-weight:700;">${settings.view}</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(251,113,133,0.04);border-radius:8px;font-size:11px;"><span>👁️ 视野距离</span><span style="color:var(--accent);font-weight:700;">${settings.view}</span></div>
                     <div style="text-align:center;margin-top:4px;font-size:10px;color:#fbbf24;">💡 ${settings.note}</div>
                 </div>`;
         }
@@ -17778,6 +17749,6 @@
         };
     </script>
 
-
-
+<!-- UnicornStudio 官方自初始化嵌入 -->
+<script type="text/javascript">!function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();</script>
 </body></html>
