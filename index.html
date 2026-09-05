@@ -6913,6 +6913,17 @@
             <div class="glass-card">
                 <input type="text" id="tool-search" placeholder="🔍 搜索工具..." style="width:100%;" oninput="filterTools()" aria-label="搜索工具">
             </div>
+            <h2 class="cat-title">📡 社交与常用客户端</h2>
+            <div class="tool-grid">
+                <a href="https://weixin.qq.com/" target="_blank" rel="noopener" class="tool-card"><div>💬</div><div class="name">微信</div><div class="desc">社交通讯</div></a>
+                <a href="https://im.qq.com/index/#/" target="_blank" rel="noopener" class="tool-card"><div>🐧</div><div class="name">QQ</div><div class="desc">社交通讯</div></a>
+                <a href="https://music.163.com/" target="_blank" rel="noopener" class="tool-card"><div>🎵</div><div class="name">网易云音乐</div><div class="desc">音乐平台</div></a>
+                <a href="https://streamingtool.douyin.com/" target="_blank" rel="noopener" class="tool-card"><div>📡</div><div class="name">抖音直播伴侣</div><div class="desc">直播工具</div></a>
+                <a href="https://www.douyin.com/" target="_blank" rel="noopener" class="tool-card"><div>📱</div><div class="name">抖音</div><div class="desc">短视频</div></a>
+                <a href="https://music.douyin.com/qishui" target="_blank" rel="noopener" class="tool-card"><div>🎶</div><div class="name">汽水音乐</div><div class="desc">音乐平台</div></a>
+                <a href="https://www.todesk.com/" target="_blank" rel="noopener" class="tool-card"><div>🖥️</div><div class="name">ToDesk</div><div class="desc">远程控制</div></a>
+                <a href="https://uuyc.163.com/" target="_blank" rel="noopener" class="tool-card"><div>🎮</div><div class="name">UU远程</div><div class="desc">远程控制</div></a>
+            </div>
             <h2 class="cat-title" id="tools-title">🧠 AI与生产力</h2>
             <div class="tool-grid">
                 <a href="https://www.deepseek.com/" target="_blank" rel="noopener" class="tool-card"><div style="font-size:clamp(22px,2.8vw,28px);">🧠</div><div class="name">DeepSeek</div><div class="desc">大模型</div><span class="hot-tag">🔥</span></a>
@@ -17751,4 +17762,15 @@
 
 <!-- UnicornStudio 官方自初始化嵌入 -->
 <script type="text/javascript">!function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();</script>
+<script>
+/* 工具卡片去重：同一链接只保留首次出现的卡片，快捷入口不受影响。 */
+(() => {
+    const seen = new Set();
+    document.querySelectorAll('.tool-card[href]').forEach(card => {
+        const url = card.href.replace(/\/$/, '').toLowerCase();
+        if (seen.has(url)) card.remove();
+        else seen.add(url);
+    });
+})();
+</script>
 </body></html>
