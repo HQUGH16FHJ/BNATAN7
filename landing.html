@@ -3886,6 +3886,56 @@ document.querySelectorAll('.hero-tag, .hot-tool-card').forEach(function(el) {
   }
 })();
 
+// --- Festival date correction ---
+// 使用浏览器的 Chinese Lunar Calendar，避免把农历节日写死为某几个公历日期。
+(function() {
+  var now = new Date();
+  var solarMonth = now.getMonth() + 1;
+  var solarDay = now.getDate();
+  var lunarMonth = null;
+  var lunarDay = null;
+  try {
+    var parts = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', {
+      year: 'numeric', month: 'numeric', day: 'numeric'
+    }).formatToParts(now);
+    parts.forEach(function(part) {
+      if (part.type === 'month') lunarMonth = parseInt(part.value, 10);
+      if (part.type === 'day') lunarDay = parseInt(part.value, 10);
+    });
+  } catch (e) {}
+
+  var festival = null;
+  if (solarMonth === 1 && solarDay === 1) festival = { name: '元旦快乐', emoji: '🎆', color: 'linear-gradient(90deg,#3b82f6,#8b5cf6)' };
+  else if (solarMonth === 3 && solarDay === 8) festival = { name: '妇女节快乐', emoji: '🌷', color: 'linear-gradient(90deg,#ec4899,#f472b6)' };
+  else if (solarMonth === 3 && solarDay === 12) festival = { name: '植树节', emoji: '🌱', color: 'linear-gradient(90deg,#10b981,#22c55e)' };
+  else if (solarMonth === 4 && solarDay >= 4 && solarDay <= 6) festival = { name: '清明节', emoji: '🌿', color: 'linear-gradient(90deg,#10b981,#059669)' };
+  else if (solarMonth === 5 && solarDay >= 1 && solarDay <= 5) festival = { name: '劳动节快乐', emoji: '🛠️', color: 'linear-gradient(90deg,#f59e0b,#ef4444)' };
+  else if (solarMonth === 6 && solarDay === 1) festival = { name: '儿童节快乐', emoji: '🎈', color: 'linear-gradient(90deg,#06b6d4,#3b82f6)' };
+  else if (solarMonth === 7 && solarDay === 1) festival = { name: '建党节', emoji: '⭐', color: 'linear-gradient(90deg,#ef4444,#b91c1c)' };
+  else if (solarMonth === 8 && solarDay === 1) festival = { name: '建军节', emoji: '🎖️', color: 'linear-gradient(90deg,#166534,#22c55e)' };
+  else if (solarMonth === 9 && solarDay === 10) festival = { name: '教师节快乐', emoji: '🍎', color: 'linear-gradient(90deg,#f59e0b,#fb7185)' };
+  else if (solarMonth === 10 && solarDay >= 1 && solarDay <= 7) festival = { name: '国庆节快乐', emoji: '🎉', color: 'linear-gradient(90deg,#ef4444,#f59e0b)' };
+  else if (lunarMonth === 12 && lunarDay === 23) festival = { name: '小年快乐', emoji: '🏮', color: 'linear-gradient(90deg,#ef4444,#f59e0b)' };
+  else if (lunarMonth === 12 && lunarDay >= 29) festival = { name: '除夕快乐', emoji: '🧨', color: 'linear-gradient(90deg,#ef4444,#b91c1c)' };
+  else if (lunarMonth === 1 && lunarDay === 1) festival = { name: '春节快乐', emoji: '🧧', color: 'linear-gradient(90deg,#ef4444,#f59e0b)' };
+  else if (lunarMonth === 1 && lunarDay === 15) festival = { name: '元宵节快乐', emoji: '🏮', color: 'linear-gradient(90deg,#f59e0b,#ef4444)' };
+  else if (lunarMonth === 5 && lunarDay === 5) festival = { name: '端午安康', emoji: '🐲', color: 'linear-gradient(90deg,#10b981,#06b6d4)' };
+  else if (lunarMonth === 7 && lunarDay === 7) festival = { name: '七夕快乐', emoji: '💫', color: 'linear-gradient(90deg,#8b5cf6,#ec4899)' };
+  else if (lunarMonth === 8 && lunarDay === 15) festival = { name: '中秋快乐', emoji: '🌕', color: 'linear-gradient(90deg,#f59e0b,#fbbf24)' };
+  else if (lunarMonth === 9 && lunarDay === 9) festival = { name: '重阳安康', emoji: '🌼', color: 'linear-gradient(90deg,#f59e0b,#d97706)' };
+  else if (lunarMonth === 12 && lunarDay === 8) festival = { name: '腊八节', emoji: '🥣', color: 'linear-gradient(90deg,#a16207,#f59e0b)' };
+
+  var oldBanner = document.querySelector('.festival-banner');
+  if (oldBanner) oldBanner.remove();
+  if (festival) {
+    var banner = document.createElement('div');
+    banner.className = 'festival-banner';
+    banner.style.background = festival.color;
+    banner.textContent = festival.emoji + ' ' + festival.name + ' · 绊谈万能枢纽祝您节日愉快！';
+    document.body.insertBefore(banner, document.body.firstChild);
+  }
+})();
+
 // --- Contact Popup ---
 function showContact(type) {
   var popup = document.getElementById('contactPopup');
