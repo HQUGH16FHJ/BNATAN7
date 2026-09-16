@@ -1626,6 +1626,73 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
   .footer-link { padding: 6px 10px; font-size: 12px; }
 }
+  
+/* ========== 品牌故事卡片 ========== */
+.brand-story {
+  margin-top: 32px;
+  padding: clamp(24px, 3.5vw, 40px);
+  border: 1px solid rgba(var(--glow-color), 0.15);
+  border-radius: var(--radius-xl);
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.brand-story::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--glow-color), 0.4), rgba(251, 113, 133, 0.3), transparent);
+}
+.brand-story-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.brand-story-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--grad-accent);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(var(--glow-color), 0.35);
+}
+.brand-story-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.brand-story-body {
+  font-size: clamp(14px, 1.3vw, 16px);
+  color: var(--sub);
+  line-height: 1.9;
+}
+.brand-story-body p { margin-bottom: 14px; }
+.brand-story-body p:last-child { margin-bottom: 0; }
+.brand-story-body strong { color: var(--text); font-weight: 600; }
+.brand-story-body .hl { color: var(--accent); font-weight: 600; }
+.brand-story-slogan {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-style: italic;
+  color: var(--sub-2);
+}
 </style>
 </head>
 <body>
@@ -1781,7 +1848,22 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
     <div class="sr-visible" style="margin-top:28px;max-width:900px;margin-left:auto;margin-right:auto;">
       <p style="color:var(--sub);text-align:center;font-size:15px;line-height:1.9;">核心场景包括：AI 智能对话、在线翻译、密码生成、网速测试、塔罗占卜、星座查询、科技时钟，以及开发者工具、影音工具、教育学习和电竞工具。</p>
     </div>
+    
   </div>
+      <!-- 为什么叫绊谈 -->
+    <div class="brand-story">
+      <div class="brand-story-head">
+        <div class="brand-story-icon">绊</div>
+        <h3 class="brand-story-title">为什么叫「绊谈」？</h3>
+      </div>
+      <div class="brand-story-body">
+        <p><strong>「绊」</strong>，是连接、是羁绊，是人与人、人与工具之间那根看不见的线。</p>
+        <p><strong>「谈」</strong>，是交流、是对话，是我们在数字世界里彼此照亮的方式。</p>
+        <p>绊谈（Bantan）想做的事很简单——<span class="hl">用一个入口，连接你的所有需求</span>。</p>
+        <p>不管是写代码、学知识、找工作、查资料，还是只想找点乐子，绊谈都把 600+ 工具聚合在一起，让你不用再在不同网站之间反复跳转。</p>
+        <p class="brand-story-slogan">—— 连接需求，点亮可能 ✦</p>
+      </div>
+    </div>
 </section>
 
 <!-- Featured Tools Bento -->
