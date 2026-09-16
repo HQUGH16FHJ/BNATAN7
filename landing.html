@@ -1693,6 +1693,54 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
   font-style: italic;
   color: var(--sub-2);
 }
+    /* ========== 工具卡片悬停说明 ========== */
+.tool-hover-tip {
+  position: fixed;
+  z-index: 9600;
+  background: rgba(10, 10, 24, 0.96);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(var(--glow-color), 0.25);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  max-width: 280px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(var(--glow-color), 0.05);
+}
+.tool-hover-tip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tool-hover-tip .tip-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.tool-hover-tip .tip-desc {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.tool-hover-tip .tip-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 100px;
+  background: rgba(var(--glow-color), 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(var(--glow-color), 0.2);
+  font-weight: 500;
+}
+@media (pointer: coarse) {
+  .tool-hover-tip { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -3591,7 +3639,12 @@ function showContact(type) {
 </script>
 <!-- UnicornStudio 官方自初始化嵌入 -->
 <script type="text/javascript">!function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();</script>
-
+<!-- 工具卡片悬停说明 -->
+<div class="tool-hover-tip" id="toolHoverTip">
+  <div class="tip-title" id="tipTitle"></div>
+  <div class="tip-desc" id="tipDesc"></div>
+  <span class="tip-tag" id="tipTag"></span>
+</div>
 <!-- ========== 第 6 件：快捷键 / 隐藏彩蛋 ========== -->
 <script>
 (function() {
@@ -3789,5 +3842,77 @@ function showContact(type) {
   }
 })();
 </script>
+<script>
+(function() {
+  'use strict';
 
+  var toolInfo = {
+    'AI 智能对话': { desc: '多模型切换，支持上下文记忆，写作、编程、问答全能', tag: 'AI 智能' },
+    '塔罗占卜': { desc: '凯尔特十字牌阵，AI 驱动的塔罗牌解读', tag: '趣味' },
+    '网速测试': { desc: '实时测速，查看延迟和下载速度', tag: '网络工具' },
+    '在线翻译': { desc: '支持 100+ 种语言互译，实时翻译、文档翻译', tag: '语言工具' },
+    '密码生成': { desc: '高强度随机密码，可自定义长度和字符集', tag: '安全工具' },
+    '星座查询': { desc: '每日运势、星座配对、性格分析', tag: '趣味' },
+    '科技时钟': { desc: '精准时间、出生天数计算、世界时钟', tag: '实用工具' },
+    'AI 与生产力': { desc: '智能对话、文案生成、思维导图、待办清单', tag: '20+ 工具' },
+    '开发者工具': { desc: '格式化、加密、正则、颜色、JSON 处理', tag: '46+ 工具' },
+    '影音工具': { desc: '视频解析、音乐播放、格式转换、白噪音', tag: '16+ 工具' },
+    '教育学习': { desc: '成绩查询、课程表、题库、学习计时器', tag: '22+ 工具' },
+    '电竞娱乐': { desc: '帧率测试、反应训练、网速测试、游戏助手', tag: '18+ 工具' },
+    '宇宙工具集': { desc: '塔罗、星座、八字、罗盘、趣味测试', tag: '70+ 工具' },
+    'AI 对话': { desc: '多模型智能助手，支持上下文记忆', tag: 'AI 智能' },
+    '开发者工具箱': { desc: '46 项开发利器，格式化、加密、正则全都有', tag: '开发者' }
+  };
+
+  var tip = document.getElementById('toolHoverTip');
+  var tipTitle = document.getElementById('tipTitle');
+  var tipDesc = document.getElementById('tipDesc');
+  var tipTag = document.getElementById('tipTag');
+  if (!tip) return;
+
+  function getToolName(el) {
+    var nameEl = el.querySelector('.bento-title, .category-content h3, .preview-name');
+    return nameEl ? nameEl.textContent.trim() : '';
+  }
+
+  function showTip(el) {
+    var name = getToolName(el);
+    var info = toolInfo[name];
+    if (!info) return;
+
+    tipTitle.textContent = name;
+    tipDesc.textContent = info.desc;
+    tipTag.textContent = info.tag;
+
+    var rect = el.getBoundingClientRect();
+    var tipWidth = 280;
+    var left = rect.left + rect.width / 2 - tipWidth / 2;
+    var top = rect.bottom + 12;
+
+    if (left + tipWidth > window.innerWidth - 12) {
+      left = window.innerWidth - tipWidth - 12;
+    }
+    if (left < 12) left = 12;
+    if (top + 160 > window.innerHeight) {
+      top = rect.top - 160 - 12;
+    }
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.classList.add('visible');
+  }
+
+  function hideTip() {
+    tip.classList.remove('visible');
+  }
+
+  document.querySelectorAll('.bento-cell, .category-card, .preview-row').forEach(function(el) {
+    el.addEventListener('mouseenter', function() { showTip(el); });
+    el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('click', hideTip);
+  });
+
+  window.addEventListener('scroll', hideTip, { passive: true });
+})();
+</script>
 </body></html>
