@@ -2717,7 +2717,6 @@ input::placeholder, textarea::placeholder {
 </section>
 
 <!-- Footer -->
-<!-- Footer -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -2754,64 +2753,70 @@ input::placeholder, textarea::placeholder {
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 绊谈 Bantan. All rights reserved.</span>
-      <span style="color:var(--sub-2);">登录后可在「关于我」页面联系站长 · <a href="license.html" style="color:var(--accent);text-decoration:none;">使用许可</a></span>
+    <div class="footer-bottom" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;position:relative;padding-top:28px;">
+      <div style="position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.3),rgba(251,113,133,0.2),transparent);"></div>
+
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#f59e0b,#fb7185);display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;box-shadow:0 0 12px rgba(245,158,11,0.35);">绊</div>
+          <span style="font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:700;font-size:14px;letter-spacing:-0.01em;background:linear-gradient(135deg,#f59e0b,#fb7185);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">绊谈 Bantan</span>
+        </div>
+        <span style="width:1px;height:14px;background:linear-gradient(180deg,transparent,rgba(245,158,11,0.3),transparent);"></span>
+        <span style="font-size:13px;color:var(--sub-2);letter-spacing:0.02em;">© 2026 · 保留所有权利</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;">
+        <a href="license.html" class="footer-link">使用许可</a>
+        <span class="footer-divider"></span>
+        <a href="changelog.html" class="footer-link">更新日志</a>
+        <span class="footer-divider"></span>
+        <a href="#" onclick="openAuthModal();return false;" class="footer-link">联系站长</a>
+      </div>
     </div>
   </div>
 </footer>
-<!-- Auth Modal -->
-<div class="modal-overlay" id="authModal" onclick="if(event.target===this)closeAuthModal()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAuthModal()">×</button>
-    <div class="modal-header">
-      <div class="modal-logo">绊</div>
-      <h3 id="modalTitle">登录绊谈</h3>
-      <p class="modal-sub" id="modalSub">登录后进入万能枢纽，解锁全部工具</p>
-    </div>
-    <div class="modal-tabs">
-      <button class="modal-tab active" data-tab="login" onclick="switchTab('login')">登录</button>
-      <button class="modal-tab" data-tab="register" onclick="switchTab('register')">注册</button>
-    </div>
-    <div class="modal-body">
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label class="form-label">用户名</label>
-          <input type="text" class="form-input" id="loginUser" placeholder="请输入用户名" required="">
-        </div>
-        <div class="form-group">
-          <label class="form-label">密码</label>
-          <input type="password" class="form-input" id="loginPass" placeholder="请输入密码" required="">
-        </div>
-        <button type="submit" class="btn btn-primary modal-submit">登录</button>
-      </form>
-      <form id="registerForm" onsubmit="handleRegister(event)" style="display:none;">
-        <div class="form-group">
-          <label class="form-label">用户名</label>
-          <input type="text" class="form-input" id="regUser" placeholder="3-20 个字符" required="">
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">密码</label>
-            <input type="password" class="form-input" id="regPass" placeholder="至少 6 位" required="">
-          </div>
-          <div class="form-group">
-            <label class="form-label">确认密码</label>
-            <input type="password" class="form-input" id="regPass2" placeholder="再次输入" required="">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">邀请码（选填）</label>
-          <input type="text" class="form-input" id="regCode" placeholder="有邀请码可获得额外福利">
-        </div>
-        <button type="submit" class="btn btn-primary modal-submit">注册账号</button>
-      </form>
-    </div>
-    <div class="modal-footer">
-      登录即表示同意 <a href="#" onclick="event.preventDefault();openLegalModal('terms')">服务条款</a> 和 <a href="#" onclick="event.preventDefault();openLegalModal('privacy')">隐私政策</a>
-    </div>
-  </div>
-</div>
+
+<style>
+.footer-link {
+  position: relative;
+  color: var(--sub-2);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-link:hover {
+  color: var(--accent);
+  background: rgba(245, 158, 11, 0.06);
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: translateX(-50%);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-link:hover::after {
+  width: 60%;
+}
+.footer-divider {
+  width: 1px;
+  height: 12px;
+  background: linear-gradient(180deg, transparent, rgba(245, 158, 11, 0.25), transparent);
+  margin: 0 2px;
+}
+@media (max-width: 600px) {
+  .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+  .footer-link { padding: 6px 10px; font-size: 12px; }
+}
+</style>
 
 <script>
 // ========== Aurora Canvas — flowing gradient background ==========
