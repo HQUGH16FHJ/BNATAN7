@@ -6362,9 +6362,23 @@
   }
 </style>
 <script>
-// ===== 登录态路由 + 前端防护 =====
+// ===== 登录态路由 + 前端防护 + 爬虫放行 =====
 (function() {
   try {
+    var ua = navigator.userAgent || '';
+
+    // ===== 爬虫白名单：命中则不跳转，直接放行内容 =====
+    // 覆盖主流搜索引擎 + AI 引擎爬虫
+    var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|Sogou|360Spider|ShenmaSpider|Bytespider|GPTBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|YouBot|CCBot|cohere-ai|Meta-ExternalAgent|FacebookBot|Twitterbot|Slackbot|TelegramBot|Discordbot/i.test(ua);
+
+    if (isCrawler) {
+      // 爬虫：解锁内容，显示全部 GEO 内容，不跳转
+      document.body.classList.add('auth-ready');
+      document.documentElement.setAttribute('data-crawler', '1');
+      return;
+    }
+
+    // ===== 正常用户逻辑 =====
     var token = localStorage.getItem('bantan_user_token');
     var info = localStorage.getItem('bantan_user_info');
     var userData = localStorage.getItem('bantan_user');
