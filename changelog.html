@@ -2,22 +2,27 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>更新日志 - 绊谈万能枢纽 v3.7 | bantan.online</title>
-<meta name="description" content="绊谈万能枢纽完整更新日志，最新 v3.7 版本接入 UnicornStudio 交互背景与极光日落配色。">
-<meta name="keywords" content="绊谈更新日志,bantan更新,万能枢纽版本,UnicornStudio">
+<title>更新日志 - 绊谈万能枢纽 v3.8 | bantan.online</title>
+<meta name="description" content="绊谈万能枢纽完整更新日志，最新 v3.8 版本新增品牌故事、隐藏彩蛋、SEO 优化与导航体验升级。">
+<meta name="keywords" content="绊谈更新日志,bantan更新,万能枢纽版本,UnicornStudio,品牌故事,隐藏彩蛋">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bantan.online/changelog.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="更新日志 - 绊谈万能枢纽">
-<meta property="og:description" content="最新 v3.7：UnicornStudio 交互背景、极光日落配色。">
+<meta property="og:description" content="最新 v3.8：品牌故事、隐藏彩蛋、SEO 优化与导航体验升级。">
 <meta property="og:url" content="https://bantan.online/changelog.html">
+<meta property="og:image" content="https://bantan.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bantan.online/og-image.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "更新日志 - 绊谈万能枢纽",
   "url": "https://bantan.online/changelog.html",
-  "description": "绊谈万能枢纽版本更新记录，最新版本 v3.7。",
+  "description": "绊谈万能枢纽版本更新记录，最新版本 v3.8。",
   "inLanguage": "zh-CN",
   "isPartOf": {
     "@type": "WebSite",
@@ -376,6 +381,16 @@
     background: var(--accent-2-soft);
     border: 1px solid var(--accent-2-border);
   }
+  .change-type.fix {
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+  }
+  .change-type.opt {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+  }
   .change-text {
     font-size: 14px;
     color: var(--text-secondary);
@@ -463,8 +478,6 @@
   }
 
   /* ===== Responsive ===== */
-
-  /* Tablet (768px and below) */
   @media (max-width: 768px) {
     .page { padding: 36px 20px 48px; }
     .page-header h1 { font-size: 32px; }
@@ -475,7 +488,6 @@
     .version-card { padding: 20px 22px; }
   }
 
-  /* Mobile (600px and below) */
   @media (max-width: 600px) {
     .page { padding: 28px 16px 40px; }
     .back-link { margin-bottom: 28px; }
@@ -509,7 +521,6 @@
     .page-footer { padding-top: 36px; }
   }
 
-  /* Small Mobile (400px and below) */
   @media (max-width: 400px) {
     .page { padding: 24px 14px 36px; }
     .page-header h1 { font-size: 24px; }
@@ -518,660 +529,24 @@
     .version-card .card-version { font-size: 16px; }
   }
 
-  /* Large Desktop (1440px+) */
   @media (min-width: 1440px) {
     .page { max-width: 760px; padding: 64px 24px 80px; }
     .page-header h1 { font-size: 48px; }
   }
 
-  /* 减少动效偏好 */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-
     html { scroll-behavior: auto; }
-
-    .cosmic-orb {
-      animation: none;
-    }
-
+    .cosmic-orb { animation: none; }
     .featured-version:hover,
     .version-card:hover,
-    .compact-version:hover {
-      transform: none;
-    }
+    .compact-version:hover { transform: none; }
   }
 </style>
-
-<!-- ===== OMNI UI v3 — Premium shared enhancement layer ===== -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<style>/* =====================================================================
-   OMNI UI v5 — CYBER NEON 赛博霓虹全面重设计
-   霓虹绿/品红/电蓝 · 全特效背景 · 深度玻璃 · 赛博朋克美学
-   ===================================================================== */
-
-/* ===== 字体 ===== */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
-
-/* ===== 强制覆盖 CSS 变量 — 赛博霓虹主题 ===== */
-:root,
-[data-theme="light"],
-[data-theme="dark"] {
-    /* 背景 — 纯黑深空 */
-    --bg: #000005 !important;
-    --bg-deep: #000000 !important;
-    --bg-elevated: #0f0c08 !important;
-    --bg-card: rgba(28, 22, 14, 0.6) !important;
-
-    /* 文字 — 霓虹白 */
-    --text: rgba(220, 255, 240, 0.98) !important;
-    --text-bright: #ffffff !important;
-    --text-primary: rgba(220, 255, 240, 0.98) !important;
-    --text-secondary: rgba(160, 200, 190, 0.88) !important;
-    --text-tertiary: rgba(130, 160, 155, 0.72) !important;
-    --text-muted: rgba(100, 130, 125, 0.6) !important;
-    --sub: rgba(180, 220, 210, 0.85) !important;
-
-    /* 主题色 — 霓虹三原色 */
-    --accent: #f59e0b !important;          /* 霓虹绿 */
-    --accent-2: #fb7185 !important;        /* 品红 */
-    --accent-gold: #38bdf8 !important;     /* 电蓝 */
-    --accent-soft: rgba(245, 158, 11, 0.12) !important;
-    --accent-border: rgba(245, 158, 11, 0.3) !important;
-
-    /* 状态色 */
-    --success: #f59e0b !important;
-    --warning: #ffaa00 !important;
-    --danger: #fb7185 !important;
-
-    /* 玻璃拟态 — 赛博风 */
-    --glass-bg: rgba(6, 8, 18, 0.65) !important;
-    --glass-blur: blur(24px) saturate(200%) !important;
-    --glass-border: 1px solid rgba(245, 158, 11, 0.12) !important;
-    --glass-highlight: inset 0 1px 0 rgba(245, 158, 11, 0.06) !important;
-    --glass-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3) !important;
-
-    /* 边框 — 霓虹微光 */
-    --border: rgba(245, 158, 11, 0.1) !important;
-    --border-strong: rgba(245, 158, 11, 0.25) !important;
-    --border-subtle: rgba(255, 255, 255, 0.05) !important;
-
-    /* 发光 */
-    --glow-color: 0, 255, 136 !important;
-    --neon-glow: 0 0 10px rgba(245, 158, 11, 0.4), 0 0 20px rgba(245, 158, 11, 0.2), 0 0 40px rgba(245, 158, 11, 0.1) !important;
-
-    /* 字体 — 赛博朋克风 */
-    --font: 'Rajdhani', 'Noto Sans SC', -apple-system, 'Segoe UI', sans-serif !important;
-    --font-body: 'Rajdhani', 'Noto Sans SC', -apple-system, sans-serif !important;
-    --font-display: 'Orbitron', 'Noto Sans SC', system-ui, sans-serif !important;
-
-    /* 圆角 */
-    --radius-sm: 6px !important;
-    --radius-md: 10px !important;
-    --radius-lg: 14px !important;
-}
-
-html { color-scheme: dark !important; }
-html[data-theme="light"] { color-scheme: dark !important; }
-
-/* ===== 全局基础 ===== */
-body, .page, .container, .wrap, main, section, article {
-    color: rgba(220, 255, 240, 0.98) !important;
-    background: #000005 !important;
-    background-color: #000005 !important;
-    font-family: 'Rajdhani', 'Noto Sans SC', -apple-system, 'Segoe UI', sans-serif !important;
-    letter-spacing: 0.01em;
-}
-
-/* ===== 标题 — 赛博朋克字体 ===== */
-h1, h2, h3, h4, h5, h6,
-.hero-title, .section-title, .page-title, .card-title,
-.logo-text, .version-title, .featured-version h2, .featured-version h3,
-.vip-title, .panel-title, .modal-title {
-    color: rgba(255, 255, 255, 0.99) !important;
-    font-family: 'Orbitron', 'Noto Sans SC', system-ui, sans-serif !important;
-    letter-spacing: 0.02em;
-    text-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
-}
-
-/* ===== 正文 ===== */
-p, .sub, .hero-subtitle, .lead, .desc, .card-desc, .stat-desc,
-.version-desc, .change-desc, .highlight-desc, .bento-desc,
-.form-hint, .helper-text, .login-tip, .subtitle, .section-desc,
-.faq-answer, .ann-content, .change-text, .hud-gauge-label,
-.stat-label, .field-label, .form-label {
-    color: rgba(160, 200, 190, 0.9) !important;
-}
-
-small, .text-muted, .text-secondary, .muted, .tag, .badge-text,
-.time, .date, .version-date, .meta, .timestamp {
-    color: rgba(130, 160, 155, 0.72) !important;
-}
-
-/* ===== 链接 — 霓虹绿 ===== */
-a { color: rgba(245, 158, 11, 0.95) !important; transition: all 0.3s ease !important; }
-a:hover { color: rgba(245, 158, 11, 1) !important; text-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
-
-/* ===== 输入框 ===== */
-input, select, textarea {
-    transition: all 0.3s ease !important;
-    background: rgba(245, 158, 11, 0.03) !important;
-    border: 1px solid rgba(245, 158, 11, 0.12) !important;
-    border-radius: 10px !important;
-    color: rgba(220, 255, 240, 0.98) !important;
-    font-family: 'Rajdhani', 'Noto Sans SC', sans-serif !important;
-}
-input:focus, select:focus, textarea:focus {
-    background: rgba(245, 158, 11, 0.06) !important;
-    border-color: rgba(245, 158, 11, 0.5) !important;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1), 0 0 20px rgba(245, 158, 11, 0.15) !important;
-    outline: none !important;
-}
-input::placeholder, textarea::placeholder { color: rgba(100, 130, 125, 0.5) !important; }
-
-/* ===== 背景 ===== */
-body {
-    background: #000005 !important;
-    background-image:
-        radial-gradient(ellipse at 15% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 30%, rgba(251, 113, 133, 0.06) 0%, transparent 45%),
-        radial-gradient(ellipse at 50% 100%, rgba(0, 212, 255, 0.05) 0%, transparent 50%) !important;
-    background-attachment: fixed !important;
-}
-
-/* ===== Aurora 画布 ===== */
-#omni-aurora, #omni-aurora-overlay, #aurora-canvas {
-    position: fixed; inset: 0; z-index: -6; pointer-events: none;
-}
-#omni-aurora { opacity: 0.65; }
-#omni-aurora-overlay { opacity: 0.3; }
-#omni-particles { position: fixed; inset: 0; z-index: -4; pointer-events: none; }
-
-/* ===== 噪点 + 赛博网格 ===== */
-#omni-noise {
-    position: fixed; inset: 0; z-index: -5; pointer-events: none; opacity: 0.03; mix-blend-mode: screen;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url("data:application/octet-stream;base64,W3sibmFtZSI6Ii51cGxvYWRzIiwidHlwZSI6ImRpcmVjdG9yeSJ9LHsibmFtZSI6Im9tbmktdWktdjMuanMiLCJ0eXBlIjoiZmlsZSJ9LHsibmFtZSI6ImNoYW5nZWxvZy5odG1sIiwidHlwZSI6ImZpbGUifSx7Im5hbWUiOiIuc2NyZWVuc2hvdHMiLCJ0eXBlIjoiZGlyZWN0b3J5In0seyJuYW1lIjoib21uaWh1Yi5odG1sIiwidHlwZSI6ImZpbGUifSx7Im5hbWUiOiJhaS1wcm94eS13b3JrZXIuanMiLCJ0eXBlIjoiZmlsZSJ9LHsibmFtZSI6Im9tbmktdWktdjMuY3NzIiwidHlwZSI6ImZpbGUifSx7Im5hbWUiOiJjcmVhdGUtdmlwLmh0bWwiLCJ0eXBlIjoiZmlsZSJ9LHsibmFtZSI6IndyYW5nbGVyLnRvbWwiLCJ0eXBlIjoiZmlsZSJ9LHsibmFtZSI6Ii50cmFlLWh0bWwtc2hhcmUtcGFja2FnZXMiLCJ0eXBlIjoiZGlyZWN0b3J5In0seyJuYW1lIjoiaW5kZXguaHRtbCIsInR5cGUiOiJmaWxlIn0seyJuYW1lIjoiZGVzaWduLXByZXZpZXcuaHRtbCIsInR5cGUiOiJmaWxlIn0seyJuYW1lIjoi6YOo572y5oyH5Y2XLmh0bWwiLCJ0eXBlIjoiZmlsZSJ9LHsibmFtZSI6Im5lYnVsYS11aS5odG1sIiwidHlwZSI6ImZpbGUifSx7Im5hbWUiOiJsYW5kaW5nLmh0bWwiLCJ0eXBlIjoiZmlsZSJ9LHsibmFtZSI6ImFkbWluLmh0bWwiLCJ0eXBlIjoiZmlsZSJ9XQ==")'/%3E%3C/svg%3E");
-}
-#omni-grid {
-    position: fixed; inset: 0; z-index: -7; pointer-events: none; opacity: 0.015;
-    background-image:
-        linear-gradient(rgba(245, 158, 11, 1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(245, 158, 11, 1) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
-}
-
-/* ===== 赛博扫描线 ===== */
-#omni-scanlines {
-    position: fixed; inset: 0; z-index: -3; pointer-events: none; opacity: 0.025;
-    background: repeating-linear-gradient(0deg, rgba(245, 158, 11, 0.5) 0px, transparent 1px, transparent 3px, rgba(245, 158, 11, 0.3) 4px);
-}
-
-/* ===== 玻璃拟态卡片 — 赛博风 ===== */
-.glass-card, .holo-card, .login-card, .version-card, .vip-card,
-.highlight-item, .stat-card, .data-card, .card,
-.glass, [class*="glass"]:not(.glass-blur):not(.omni-ui),
-.bento-item, .tool-card, .tool-item, .tool-btn,
-.featured-version, .announcement-bar, .faq-item, .faq-q,
-.rank, .cat, .fcard, .hot-tool-card, .preview-panel,
-.data-table, .table-wrap {
-    background: linear-gradient(145deg, rgba(8, 10, 24, 0.72) 0%, rgba(2, 2, 8, 0.6) 100%) !important;
-    backdrop-filter: blur(24px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-    border: 1px solid rgba(245, 158, 11, 0.1) !important;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(245, 158, 11, 0.05),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.3) !important;
-    position: relative;
-    border-radius: 14px !important;
-}
-
-/* 卡片霓虹边框光线 */
-.glass-card::before, .holo-card::before, .login-card::before, .vip-card::before,
-.version-card::before, .highlight-item::before, .stat-card::before,
-.bento-item::before, .tool-card::before {
-    content: '';
-    position: absolute; top: 0; left: 15%; right: 15%; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.6), rgba(251, 113, 133, 0.4), transparent);
-    opacity: 0; transition: opacity 0.5s ease, left 0.5s ease, right 0.5s ease;
-    z-index: 2; pointer-events: none;
-}
-.glass-card:hover::before, .holo-card:hover::before, .login-card:hover::before, .vip-card:hover::before,
-.version-card:hover::before, .highlight-item:hover::before, .stat-card:hover::before,
-.bento-item:hover::before, .tool-card:hover::before {
-    opacity: 1; left: 0; right: 0;
-}
-
-/* 卡片光泽扫掠 */
-.glass-card::after, .holo-card::after, .login-card::after, .vip-card::after,
-.version-card::after, .highlight-item::after, .stat-card::after {
-    content: '';
-    position: absolute; top: -60%; left: -60%; width: 220%; height: 220%;
-    background: linear-gradient(135deg, transparent 42%, rgba(245, 158, 11, 0.04) 50%, transparent 58%);
-    transform: translate(-110%, -110%);
-    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none; z-index: 1;
-}
-.glass-card:hover::after, .holo-card:hover::after, .login-card:hover::after, .vip-card:hover::after,
-.version-card:hover::after, .highlight-item:hover::after, .stat-card:hover::after {
-    transform: translate(60%, 60%);
-}
-
-/* ===== 悬浮效果 — 霓虹发光 ===== */
-.glass-card:hover, .holo-card:hover, .login-card:hover, .vip-card:hover,
-.version-card:hover, .highlight-item:hover, .stat-card:hover,
-.data-card:hover, .card:hover,
-.bento-item:hover, .tool-card:hover, .tool-item:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        0 0 30px rgba(245, 158, 11, 0.12),
-        0 0 60px rgba(251, 113, 133, 0.06),
-        inset 0 1px 0 rgba(245, 158, 11, 0.08) !important;
-    border-color: rgba(245, 158, 11, 0.25) !important;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.4s ease !important;
-}
-
-/* ===== 渐变文字 — 霓虹三色 ===== */
-.hero-title .accent, .logo .accent, .accent-text,
-[class*="gradient-text"], .vip-title {
-    background: linear-gradient(120deg, #f59e0b 0%, #38bdf8 35%, #fb7185 70%, #f59e0b 100%) !important;
-    -webkit-background-clip: text !important; background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-size: 200% auto !important;
-    animation: omniNeonShift 5s ease-in-out infinite !important;
-    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.3));
-}
-@keyframes omniNeonShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-.version-number, .card-version {
-    background: linear-gradient(135deg, #f59e0b, #38bdf8) !important;
-    -webkit-background-clip: text !important; background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    font-weight: 800 !important;
-}
-
-/* ===== 滚动进度条 — 霓虹 ===== */
-#omni-scroll-progress {
-    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-    background: linear-gradient(90deg, #f59e0b, #38bdf8, #fb7185, #f59e0b);
-    background-size: 200% 100%;
-    z-index: 99999; transition: width 0.1s ease;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.6), 0 0 20px rgba(251, 113, 133, 0.3);
-    animation: omniNeonShift 3s linear infinite;
-}
-
-/* ===== 自定义光标 ===== */
-#omni-cursor-dot, #omni-cursor-ring {
-    position: fixed; top: 0; left: 0; z-index: 99998; pointer-events: none;
-    border-radius: 50%; transform: translate(-50%, -50%); mix-blend-mode: screen;
-}
-#omni-cursor-dot {
-    width: 6px; height: 6px; background: #f59e0b;
-    box-shadow: 0 0 8px #f59e0b, 0 0 16px rgba(245, 158, 11, 0.5);
-    transition: transform 0.1s ease;
-}
-#omni-cursor-ring {
-    width: 36px; height: 36px; border: 1.5px solid rgba(245, 158, 11, 0.6);
-    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s, border-color 0.25s;
-    box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
-}
-#omni-cursor-ring.omni-hover {
-    width: 64px; height: 64px; background: rgba(245, 158, 11, 0.06);
-    border-color: rgba(245, 158, 11, 0.4);
-    box-shadow: 0 0 24px rgba(245, 158, 11, 0.15);
-}
-#omni-cursor-trail { position: fixed; inset: 0; z-index: 99997; pointer-events: none; }
-
-/* ===== 滚动条 — 霓虹 ===== */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.4); }
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.5), rgba(251, 113, 133, 0.5));
-    border-radius: 4px; border: 1px solid transparent; background-clip: padding-box;
-    box-shadow: 0 0 6px rgba(245, 158, 11, 0.15);
-}
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.8), rgba(251, 113, 133, 0.6));
-    background-clip: padding-box;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
-}
-
-/* ===== 按钮 — 赛博风 ===== */
-.btn, button[class*="btn"], .create-btn, .hero-search-btn, .nav-login-btn, .back-link {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    position: relative; overflow: hidden; cursor: pointer;
-    border-radius: 10px !important;
-    font-family: 'Rajdhani', 'Noto Sans SC', sans-serif !important;
-    font-weight: 600; letter-spacing: 0.03em;
-}
-.btn::after, button[class*="btn"]::after, .create-btn::after {
-    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%;
-    background: rgba(245, 158, 11, 0.08); transform: translate(-50%, -50%);
-    transition: width 0.5s ease, height 0.5s ease; pointer-events: none; z-index: 0;
-}
-.btn:hover::after, button[class*="btn"]:hover::after, .create-btn:hover::after { width: 360px; height: 360px; }
-.btn:hover, button[class*="btn"]:hover, .create-btn:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15), 0 0 20px rgba(251, 113, 133, 0.08) !important;
-}
-.btn:active, button[class*="btn"]:active, .create-btn:active { transform: translateY(0) scale(0.97) !important; }
-.btn.primary, .btn-primary, button[class*="primary"] {
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2) !important;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(0, 212, 255, 0.1)) !important;
-    border: 1px solid rgba(245, 158, 11, 0.3) !important;
-}
-.btn.primary:hover, .btn-primary:hover {
-    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3), 0 0 40px rgba(251, 113, 133, 0.1) !important;
-    border-color: rgba(245, 158, 11, 0.5) !important;
-}
-
-/* ===== 导航栏 ===== */
-.nav, .sidebar, header[class*="nav"], .top-nav, .navbar {
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    background: rgba(0, 0, 5, 0.8) !important;
-    border-bottom: 1px solid rgba(245, 158, 11, 0.08) !important;
-    transition: all 0.3s ease !important;
-}
-.nav.omni-scrolled, .sidebar.omni-scrolled {
-    background: rgba(0, 0, 5, 0.95) !important;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 158, 11, 0.03) !important;
-    border-bottom-color: rgba(245, 158, 11, 0.15) !important;
-}
-.nav-links a, .nav-item {
-    position: relative; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    color: rgba(160, 200, 190, 0.85) !important;
-    font-family: 'Rajdhani', 'Noto Sans SC', sans-serif !important;
-    font-weight: 500; letter-spacing: 0.02em;
-}
-.nav-links a::after {
-    content: ''; position: absolute; bottom: -2px; left: 50%; width: 0; height: 2px;
-    background: linear-gradient(90deg, #f59e0b, #fb7185); transform: translateX(-50%);
-    transition: width 0.3s ease; border-radius: 2px;
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
-}
-.nav-links a:hover::after, .nav-links a.active::after { width: 72%; }
-.nav-links a:hover { color: #f59e0b !important; transform: translateY(-1px); text-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
-
-/* ===== Bento / 工具卡片 ===== */
-.bento-item, .tool-card, .tool-item, .tool-btn {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    position: relative; overflow: hidden;
-}
-.bento-item::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(245, 158, 11, 0.1) 0%, transparent 50%);
-    opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 0;
-}
-.bento-item:hover::before { opacity: 1; }
-.bento-item:hover, .tool-card:hover, .tool-item:hover, .tool-btn:hover {
-    transform: translateY(-6px) scale(1.02) !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(245, 158, 11, 0.1) !important;
-    border-color: rgba(245, 158, 11, 0.2) !important;
-}
-.bento-icon { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important; }
-.bento-item:hover .bento-icon { transform: scale(1.25) rotate(-5deg) !important; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4)); }
-
-/* ===== 滚动揭示 ===== */
-.omni-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-.omni-reveal.omni-visible { opacity: 1 !important; transform: translateY(0) !important; }
-
-/* ===== HUD 进度条 ===== */
-.hud-bar-fill {
-    background: linear-gradient(90deg, #f59e0b, #38bdf8, #fb7185) !important;
-    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    position: relative; overflow: hidden; border-radius: inherit;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
-}
-.hud-bar-fill::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-    animation: omniBarShine 2s linear infinite;
-}
-@keyframes omniBarShine { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
-
-/* ===== 涟漪 ===== */
-.omni-ripple { position: absolute; border-radius: 50%; background: rgba(245, 158, 11, 0.2); transform: scale(0); animation: omniRipple 0.6s ease-out; pointer-events: none; z-index: 0; }
-@keyframes omniRipple { to { transform: scale(4); opacity: 0; } }
-
-/* ===== 标题装饰条 ===== */
-.section-title, h2[id*="-title"], .page-header h1 { position: relative; padding-left: 16px; }
-.section-title::before, h2[id*="-title"]::before, .page-header h1::before {
-    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    width: 3px; height: 70%; background: linear-gradient(180deg, #f59e0b, #fb7185);
-    border-radius: 2px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
-}
-
-/* ===== 统计数字 ===== */
-.stat-value, .stat-number, [class*="count"] {
-    color: rgba(255, 255, 255, 0.99) !important;
-    font-weight: 700 !important;
-    font-family: 'Orbitron', 'Noto Sans SC', sans-serif !important;
-}
-
-/* ===== 表格 ===== */
-th { color: rgba(245, 158, 11, 0.9) !important; background: rgba(245, 158, 11, 0.05) !important; }
-td { color: rgba(160, 200, 190, 0.88) !important; }
-.data-table tr, table tbody tr { transition: background 0.2s ease !important; }
-.data-table tr:hover, table tbody tr:hover { background: rgba(245, 158, 11, 0.03) !important; }
-
-/* ===== 杂项 ===== */
-.analog-clock { box-shadow: 0 0 40px rgba(245, 158, 11, 0.05), inset 0 0 30px rgba(245, 158, 11, 0.02) !important; transition: transform 0.4s ease !important; }
-.analog-clock:hover { transform: scale(1.03) !important; }
-#ai-fab, .fab { transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important; }
-#ai-fab:hover, .fab:hover { transform: scale(1.12) !important; box-shadow: 0 8px 36px rgba(245, 158, 11, 0.2) !important; }
-.login-card .logo, .login-card [class*="logo"], .vip-badge { animation: omniLogoFloat 3s ease-in-out infinite; }
-@keyframes omniLogoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.nav-badge, .badge { animation: omniBadgePulse 2s ease-in-out infinite; color: rgba(220, 255, 240, 0.96) !important; }
-@keyframes omniBadgePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-.back-link { transition: all 0.3s ease !important; backdrop-filter: blur(12px) !important; color: rgba(160, 200, 190, 0.85) !important; }
-.back-link:hover { transform: translateX(-4px) !important; color: #f59e0b !important; background: rgba(245, 158, 11, 0.05) !important; }
-.announcement-bar { backdrop-filter: blur(16px) saturate(180%) !important; border: 1px solid rgba(245, 158, 11, 0.08) !important; transition: all 0.3s ease !important; }
-.announcement-bar:hover { border-color: rgba(245, 158, 11, 0.15) !important; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.04) !important; }
-.footer, .footer * { color: rgba(130, 160, 155, 0.7) !important; }
-.footer a:hover { color: rgba(245, 158, 11, 0.9) !important; }
-
-/* ===== 滚动修复 ===== */
-body { overflow-x: clip; max-width: 100vw; }
-html { overflow-y: auto !important; overflow-x: hidden; }
-
-/* ===== 移动端 + 减少动画 ===== */
-@media (max-width: 768px) {
-    #omni-cursor-dot, #omni-cursor-ring, #omni-cursor-trail { display: none; }
-    .bento-item:hover { transform: translateY(-2px) scale(1.01) !important; }
-    .nav-item:hover { transform: none !important; }
-    .section-title, h2[id*="-title"] { padding-left: 12px; }
-    #omni-aurora { opacity: 0.4; }
-    #omni-scanlines { opacity: 0.015; }
-}
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    .omni-reveal { opacity: 1 !important; transform: none !important; }
-    #omni-aurora, #omni-particles, #omni-scanlines { display: none; }
-}
-</style>
-
-
-<style id="pro-fix-patch">
-/* ===== FIX 1: Text Contrast (WCAG AA) ===== */
-body { color: rgba(240, 244, 255, 0.95) !important; }
-p, .sub, .hero-subtitle, .lead, .version-date, .ann-content,
-.change-text, .bento-desc, .hud-gauge-label,
-.version-desc, .change-desc, .highlight-desc,
-.card-desc, .stat-desc, .stat-label,
-.form-hint, .helper-text, .login-tip,
-[class*="hint"], [class*="helper"], [class*="desc"]:not([class*="card"]),
-.subtitle, .section-desc, .faq-answer {
-    color: rgba(200, 210, 230, 0.9) !important;
-}
-input::placeholder, textarea::placeholder {
-    color: rgba(170, 180, 200, 0.65) !important;
-}
-.stat-value, .stat-number {
-    color: rgba(255, 255, 255, 0.98) !important;
-}
-.label, .field-label, [class*="label"]:not([class*="nav"]) {
-    color: rgba(220, 230, 245, 0.95) !important;
-}
-
-/* ===== FIX 2: Glass Card Borders Stronger ===== */
-.glass-card, .holo-card, .login-card, .version-card,
-.highlight-item, .stat-card, .data-card, .card,
-.glass, [class*="glass"]:not(.glass-blur) {
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    background: rgba(15, 17, 32, 0.6) !important;
-}
-
-/* ===== FIX 3: Overflow - prevent right-edge cutoff ===== */
-.login-card, .version-card, .highlight-item, .stat-card {
-    overflow: visible !important;
-}
-.login-card::after, .version-card::after, .highlight-item::after {
-    overflow: hidden;
-}
-/* Keep shimmer inside but don't clip content */
-.glass-card, .holo-card, .card {
-    overflow: visible !important;
-}
-.glass-card::before, .holo-card::before, .login-card::before,
-.version-card::before, .highlight-item::before, .stat-card::before {
-    overflow: hidden;
-}
-
-/* ===== FIX 4: Landing Preview Panel ===== */
-.preview-panel {
-    overflow: hidden !important;
-    max-height: none !important;
-}
-.preview-panel .preview-list {
-    overflow: visible !important;
-}
-
-/* ===== FIX 5: Admin Sidebar Visibility ===== */
-.sidebar {
-    z-index: 100 !important;
-    box-shadow: 2px 0 30px rgba(0, 0, 0, 0.3) !important;
-}
-.sidebar .nav-item {
-    color: rgba(200, 210, 225, 0.9) !important;
-}
-.sidebar .nav-item.active {
-    color: rgba(245, 158, 11, 0.95) !important;
-}
-
-/* ===== FIX 6: Changelog Right Edge Glow ===== */
-.version-card, .featured-version {
-    overflow: visible !important;
-    margin-right: 4px !important;
-}
-
-/* ===== FIX 7: Create-VIP Form Width ===== */
-.login-card, .vip-form-card, .create-form {
-    max-width: 520px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 32px !important;
-}
-
-/* ===== FIX 8: Section Spacing ===== */
-.form-section + .form-section {
-    margin-top: 24px !important;
-    padding-top: 24px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
-}
-
-/* ===== FIX 9: Landing Body Text ===== */
-.hero-subtitle, .section-desc, .faq-answer {
-    color: rgba(195, 205, 225, 0.92) !important;
-    line-height: 1.65 !important;
-}
-
-/* ===== FIX 10: Bento Card Text ===== */
-.bento-desc, .bento-sub, .bento-text {
-    color: rgba(185, 195, 215, 0.88) !important;
-}
-
-/* ===== FIX 11: Category Card Text ===== */
-.category-card p, .category-card .cat-desc {
-    color: rgba(190, 200, 220, 0.85) !important;
-}
-
-/* ===== FIX 12: Footer Text ===== */
-.footer, .footer * {
-    color: rgba(180, 190, 210, 0.7) !important;
-}
-.footer a:hover {
-    color: rgba(245, 158, 11, 0.9) !important;
-}
-
-/* ===== FIX 13: Badge / Tag Text ===== */
-.badge, .tag, .nav-badge, .pill {
-    color: rgba(240, 245, 255, 0.95) !important;
-}
-
-/* ===== FIX 14: Admin Stat Cards ===== */
-.stat-card .stat-value, .data-card .stat-value {
-    font-size: 2rem !important;
-    font-weight: 800 !important;
-}
-.stat-card .stat-label, .data-card .stat-label {
-    color: rgba(190, 200, 220, 0.8) !important;
-    font-size: 0.85rem !important;
-}
-
-/* ===== FIX 15: Scroll Reveal - don't hide if no JS ===== */
-.sr-hidden { opacity: 0; }
-html.js-animate .sr-hidden { opacity: 0; }
-
-/* ===== FIX 16: Prevent horizontal scroll (without breaking vertical) ===== */
-html { overflow-y: auto !important; overflow-x: hidden; }
-body { overflow-x: clip; max-width: 100vw; }
-
-/* ===== FIX 17: Responsive adjustments ===== */
-@media (max-width: 768px) {
-    .login-card, .vip-form-card, .create-form {
-        padding: 20px !important;
-        margin: 0 12px !important;
-    }
-    .version-card, .featured-version {
-        margin-right: 0 !important;
-    }
-}
-
-/* ===== 彩色文字：缓慢平滑渐变（不闪烁） ===== */
-@keyframes rainbowTextSlow {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 50%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 50%; }
-    100% { background-position: 0% 50%; }
-}
-.version-number, .version-title, .card-version, .card-title,
-.highlight-item h3, .compact-version-num, .compact-title {
-    background: linear-gradient(135deg, #f59e0b 0%, #fb7185 25%, #f97316 50%, #38bdf8 72%, #fbbf24 90%, #f59e0b 100%) !important;
-    background-size: 400% 400% !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    color: transparent !important;
-    animation: rainbowTextSlow 28s ease-in-out infinite !important;
-    text-shadow: none !important;
-}
-</style>
-
 </head>
 <body>
 
@@ -1200,63 +575,98 @@ body { overflow-x: clip; max-width: 100vw; }
     <!-- Featured: Latest Version -->
     <section class="featured-version" aria-label="最新版本">
       <div class="version-meta">
-        <h2 class="version-number">v3.7</h2>
+        <h2 class="version-number">v3.8</h2>
         <span class="version-label">最新版本</span>
       </div>
-      <h3 class="version-title">极光日落 . UnicornStudio 交互背景 . 深色主题统一</h3>
-      <div class="version-date">2026.08.31</div>
+      <h3 class="version-title">品牌故事 · 隐藏彩蛋 · SEO 完善 · 导航体验</h3>
+      <div class="version-date">2026.09.17</div>
 
       <div class="highlights">
         <div class="highlight-item">
-          <h3>UnicornStudio WebGL 背景</h3>
-          <p>未登录页与登录后界面分别接入 UnicornStudio 交互式 WebGL 场景,鼠标可交互,背景随光标动态变化</p>
+          <h3>「为什么叫绊谈」品牌故事</h3>
+          <p>落地页新增品牌故事卡片，讲述「绊」与「谈」的由来，连接需求，点亮可能</p>
         </div>
         <div class="highlight-item">
-          <h3>极光日落配色</h3>
-          <p>全站切换为暖色系:琥珀金 #f59e0b、珊瑚玫 #fb7185、天空蓝 #38bdf8,底色深暖黑 #0a0805</p>
+          <h3>三组隐藏彩蛋</h3>
+          <p>Konami 代码（↑↑↓↓←→←→BA）粒子雨、Ctrl+K 快捷搜索、点击 logo 5 次小绊谈现身</p>
         </div>
         <div class="highlight-item">
-          <h3>深色主题强制</h3>
-          <p>移除深色/浅色切换按钮、键盘快捷键 N、命令面板条目、系统主题监听器,无论设备设置始终深色</p>
+          <h3>SEO 基础完善</h3>
+          <p>sitemap.xml、manifest.json、robots.txt 指向、og:image 分享图全套上线，收录与分享预览全面提速</p>
         </div>
         <div class="highlight-item">
-          <h3>性能优化</h3>
-          <p>UnicornStudio 渲染参数降低(scale 0.5 / dpi 1 / fps 30 / lazyLoad),旧背景 JS 清理,GPU 负载降 80%+</p>
+          <h3>导航体验升级</h3>
+          <p>index.html logo 点击返回 landing，导航栏 logo 间隔点改为 CSS 小圆点，视觉更精致</p>
         </div>
         <div class="highlight-item">
-          <h3>暖色叠加层</h3>
-          <p>背景上方增加暖色径向渐变叠加,让 UnicornStudio 场景与极光日落配色自然融合</p>
+          <h3>PWA 支持</h3>
+          <p>manifest.json 支持「添加到主屏幕」，手机端可像原生应用一样打开绊谈</p>
         </div>
         <div class="highlight-item">
-          <h3>文字颜色更新</h3>
-          <p>主文字改为暖白 #fff7ed,副文字暖灰 #d6c7b8,全站 425 处色值批量替换,零残留</p>
+          <h3>分享预览图</h3>
+          <p>1200×630 的 og-image.png，微信 / Twitter / Facebook 分享时自动显示品牌预览图</p>
         </div>
       </div>
+    </section>
+
+    <!-- v3.7 -->
+    <section class="version-card" aria-label="v3.7 更新">
+      <div class="card-header">
+        <h2 class="card-version">v3.7</h2>
+        <span class="card-title">极光日落 · UnicornStudio 交互背景 · 深色主题统一</span>
+        <span class="card-date">2026.08.31</span>
+      </div>
+      <ul class="change-items">
+        <li class="change-item">
+          <span class="change-type add">新增</span>
+          <span class="change-text">UnicornStudio WebGL 背景，未登录页与登录后界面分别接入，鼠标可交互</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type improve">优化</span>
+          <span class="change-text">全站切换极光日落配色：琥珀金、珊瑚玫、天空蓝，底色深暖黑</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type improve">优化</span>
+          <span class="change-text">强制深色主题，移除切换按钮与系统主题监听，始终深色</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type improve">优化</span>
+          <span class="change-text">UnicornStudio 渲染参数降低，GPU 负载降 80%+</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type add">新增</span>
+          <span class="change-text">暖色叠加层，让 WebGL 场景与极光日落配色自然融合</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type improve">优化</span>
+          <span class="change-text">主文字暖白 #fff7ed，副文字暖灰 #d6c7b8，全站 425 处色值批量替换</span>
+        </li>
+      </ul>
     </section>
 
     <!-- v3.6 -->
     <section class="version-card" aria-label="v3.6 更新">
       <div class="card-header">
         <h2 class="card-version">v3.6</h2>
-        <span class="card-title">品牌统一 . FAQ 修正 . 视觉优化</span>
+        <span class="card-title">品牌统一 · FAQ 修正 · 视觉优化</span>
         <span class="card-date">2026.08.31</span>
       </div>
       <ul class="change-items">
         <li class="change-item">
           <span class="change-type improve">优化</span>
-          <span class="change-text">全站统一为「绊谈·万能枢纽」,导航栏 logo、页面标题、Hero 标识、工具预览栏同步更新</span>
+          <span class="change-text">全站统一为「绊谈·万能枢纽」，导航栏 logo、页面标题、Hero 标识同步更新</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type fix">修复</span>
+          <span class="change-text">常见问题回答修正，明确登录使用规则</span>
         </li>
         <li class="change-item">
           <span class="change-type improve">优化</span>
-          <span class="change-text">修正常见问题回答,明确登录使用规则,去除误导性描述</span>
+          <span class="change-text">Hero 主标题改为纯白色，移除打字机闪烁光标</span>
         </li>
         <li class="change-item">
           <span class="change-type improve">优化</span>
-          <span class="change-text">Hero 主标题改为纯白色,移除打字机闪烁光标,视觉更干净</span>
-        </li>
-        <li class="change-item">
-          <span class="change-type improve">优化</span>
-          <span class="change-text">移除未登录界面用户评价区块,停止 hero 区浮动徽章竖向动画</span>
+          <span class="change-text">移除未登录界面用户评价区块，停止 hero 区浮动徽章竖向动画</span>
         </li>
       </ul>
     </section>
@@ -1265,7 +675,7 @@ body { overflow-x: clip; max-width: 100vw; }
     <section class="version-card" aria-label="v3.5 更新">
       <div class="card-header">
         <h2 class="card-version">v3.5</h2>
-        <span class="card-title">功能大升级 . 12项新功能</span>
+        <span class="card-title">功能大升级 · 12 项新功能</span>
         <span class="card-date">2026.08.31</span>
       </div>
       <ul class="change-items">
@@ -1303,7 +713,6 @@ body { overflow-x: clip; max-width: 100vw; }
       </ul>
     </section>
 
-    <!-- Previous versions section -->
     <div class="section-label">
       <span class="label-text">往期更新</span>
       <span class="label-line"></span>
@@ -1313,7 +722,7 @@ body { overflow-x: clip; max-width: 100vw; }
     <section class="version-card" aria-label="v3.3 更新">
       <div class="card-header">
         <h2 class="card-version">v3.3</h2>
-        <span class="card-title">Premium 布局 . 丝滑跳转 . 高级质感</span>
+        <span class="card-title">Premium 布局 · 丝滑跳转 · 高级质感</span>
         <span class="card-date">2026.08.31</span>
       </div>
       <ul class="change-items">
@@ -1328,7 +737,7 @@ body { overflow-x: clip; max-width: 100vw; }
     <section class="version-card" aria-label="v3.2 更新">
       <div class="card-header">
         <h2 class="card-version">v3.2</h2>
-        <span class="card-title">彩色文字 . 背景修复 . Logo 渗透融合</span>
+        <span class="card-title">彩色文字 · 背景修复 · Logo 渗透融合</span>
         <span class="card-date">2026.08.31</span>
       </div>
       <ul class="change-items">
@@ -1343,7 +752,7 @@ body { overflow-x: clip; max-width: 100vw; }
     <section class="version-card" aria-label="v3.1 更新">
       <div class="card-header">
         <h2 class="card-version">v3.1</h2>
-        <span class="card-title">视觉全面升级 . 宇宙风格</span>
+        <span class="card-title">视觉全面升级 · 宇宙风格</span>
         <span class="card-date">2026.08.30</span>
       </div>
       <ul class="change-items">
@@ -1424,34 +833,28 @@ body { overflow-x: clip; max-width: 100vw; }
       </ul>
     </section>
 
-    <!-- v2.8 - compact style (oldest) -->
+    <!-- v2.8 - compact -->
     <section class="compact-version" aria-label="v2.8 更新">
       <div class="compact-header">
         <h2 class="compact-version-num">v2.8</h2>
-        <span class="compact-title">全面上线 . 基础功能</span>
+        <span class="compact-title">全面上线 · 基础功能</span>
         <span class="compact-date">2026.08.28</span>
       </div>
       <ul class="compact-items">
-        <li>用户系统 . 注册 / 登录 / 每日免费额度 / VIP 会员体系</li>
-        <li>AI 对话 . 多模型支持，VIP 无限畅聊</li>
-        <li>VIP 会员 . 青铜 / 白银 / 黄金 / 钻石 / 至尊 五档等级</li>
-        <li>个人中心 . 余额查询 / VIP 状态 / 使用记录</li>
-        <li>公告系统 . 重要通知及时送达</li>
+        <li>用户系统 · 注册 / 登录 / 每日免费额度 / VIP 会员体系</li>
+        <li>AI 对话 · 多模型支持，VIP 无限畅聊</li>
+        <li>VIP 会员 · 青铜 / 白银 / 黄金 / 钻石 / 至尊 五档等级</li>
+        <li>个人中心 · 余额查询 / VIP 状态 / 使用记录</li>
+        <li>公告系统 · 重要通知及时送达</li>
         <li>一键 VIP 快速开通通道</li>
       </ul>
     </section>
 
     <!-- Footer -->
     <footer class="page-footer">
-      绊谈万能枢纽 . 更新日志
+      绊谈万能枢纽 · 更新日志
     </footer>
 
   </div>
-
-
-
-
-<!-- ===== OMNI UI v3 — Premium animations ===== -->
-<script src="#"></script>
 
 </body></html>
