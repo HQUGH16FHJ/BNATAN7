@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用许可与版权声明 - 绊谈 · 万能枢纽</title>
+<meta name="description" content="绊谈 · 万能枢纽的使用许可与版权声明。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f59e0b'/%3E%3Cstop offset='1' stop-color='%23fb7185'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='48' fill='url(%23g)'/%3E%3Ctext x='96' y='132' font-size='110' font-weight='900' text-anchor='middle' fill='%23fff' font-family='system-ui,sans-serif'%3E%E7%BB%8A%3C/text%3E%3C/svg%3E">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0805;
+  --text: #fff7ed;
+  --sub: #d6c7b8;
+  --sub-2: #8a7e72;
+  --accent: #f59e0b;
+  --accent-2: #fb7185;
+  --accent-gold: #38bdf8;
+  --success: #34d399;
+  --border: rgba(245, 158, 11, 0.12);
+  --card-bg: rgba(20, 15, 10, 0.5);
+  --glow-color: 245, 158, 11;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, 'PingFang SC', sans-serif;
+  --font-body: 'Outfit', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-2));
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { scroll-behavior: smooth; color-scheme: dark; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(251, 113, 133, 0.05) 0%, transparent 45%);
+  background-attachment: fixed;
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 16px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--glow-color), 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--glow-color), 0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+  mask: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+  -webkit-mask: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(var(--glow-color), 0.08) 0%, rgba(251, 113, 133, 0.04) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(60px);
+}
+
+/* ===== 导航 ===== */
+.lic-nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  max-width: 1000px;
+  margin: 16px auto 0;
+  padding: 0 24px;
+}
+.lic-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(10, 8, 5, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(245, 158, 11, 0.12);
+  border-radius: 100px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.lic-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+.lic-logo-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: var(--grad-accent);
+  border-radius: 10px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 0 20px rgba(var(--glow-color), 0.3);
+}
+.lic-back {
+  font-size: 13px;
+  color: var(--sub);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  transition: all 0.25s var(--ease-out);
+}
+.lic-back:hover {
+  color: var(--accent);
+  border-color: rgba(var(--glow-color), 0.3);
+  background: rgba(var(--glow-color), 0.08);
+  transform: translateY(-1px);
+}
+
+/* ===== 主容器 ===== */
+.lic-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ===== Hero ===== */
+.lic-hero {
+  text-align: center;
+  margin-bottom: 48px;
+  padding: 40px 20px 20px;
+}
+.lic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(var(--glow-color), 0.08);
+  border: 1px solid rgba(var(--glow-color), 0.15);
+  margin-bottom: 20px;
+}
+.lic-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.lic-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shinySweep 6s ease-in-out infinite;
+}
+@keyframes shinySweep {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
+}
+.lic-hero p {
+  font-size: 16px;
+  color: var(--sub);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ===== 卡片 ===== */
+.lic-card {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: clamp(28px, 4vw, 48px);
+  margin-bottom: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+.lic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--glow-color), 0.4), rgba(251, 113, 133, 0.3), transparent);
+}
+.lic-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.lic-card-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(var(--glow-color), 0.1);
+  border: 1px solid rgba(var(--glow-color), 0.2);
+  font-size: 24px;
+  color: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 24px rgba(var(--glow-color), 0.15);
+}
+.lic-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.lic-card-subtitle {
+  font-size: 13px;
+  color: var(--sub-2);
+  letter-spacing: 0.05em;
+}
+
+/* ===== 正文 ===== */
+.lic-section {
+  margin-bottom: 28px;
+}
+.lic-section:last-child {
+  margin-bottom: 0;
+}
+.lic-section-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lic-section-title::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--grad-accent);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(var(--glow-color), 0.6);
+}
+.lic-section p {
+  color: var(--sub);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.lic-section p:last-child {
+  margin-bottom: 0;
+}
+.lic-section strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.lic-section ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 12px 0;
+}
+.lic-section ul li {
+  position: relative;
+  padding-left: 24px;
+  color: var(--sub);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+.lic-section ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ===== 权限表格 ===== */
+.lic-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0;
+  font-size: 14px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.lic-table th {
+  background: rgba(var(--glow-color), 0.06);
+  color: var(--accent);
+  font-weight: 700;
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.lic-table td {
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+  color: var(--sub);
+}
+.lic-table tr:hover td {
+  background: rgba(var(--glow-color), 0.02);
+}
+.lic-table .perm-yes { color: var(--success); font-weight: 700; }
+.lic-table .perm-no { color: #ef4444; font-weight: 700; }
+.lic-table .perm-cond { color: var(--accent-gold); font-weight: 600; }
+
+/* ===== 信息网格 ===== */
+.lic-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.lic-info-item {
+  padding: 16px 18px;
+  background: rgba(var(--glow-color), 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s var(--ease-out);
+}
+.lic-info-item:hover {
+  border-color: rgba(var(--glow-color), 0.25);
+  background: rgba(var(--glow-color), 0.05);
+  transform: translateY(-2px);
+}
+.lic-info-label {
+  font-size: 11px;
+  color: var(--sub-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.lic-info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-word;
+}
+.lic-info-value a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.lic-info-value a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* ===== 底部 ===== */
+.lic-footer {
+  text-align: center;
+  padding: 40px 20px 20px;
+  font-size: 13px;
+  color: var(--sub-2);
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+}
+.lic-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.lic-footer a:hover {
+  text-decoration: underline;
+}
+.lic-footer-sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--sub);
+}
+.lic-footer-sign-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--grad-accent);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 800;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 640px) {
+  .lic-container { padding: 32px 16px 60px; }
+  .lic-card { padding: 24px 20px; }
+  .lic-card-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .lic-table th, .lic-table td { padding: 10px 12px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="lic-nav">
+  <div class="lic-nav-inner">
+    <a href="landing.html" class="lic-logo">
+      <span class="lic-logo-icon">绊</span>
+      <span>绊谈 · 万能枢纽</span>
+    </a>
+    <a href="landing.html" class="lic-back">← 返回首页</a>
+  </div>
+</nav>
+
+<main class="lic-container">
+
+  <div class="lic-hero">
+    <div class="lic-badge">
+      <span class="lic-badge-dot"></span>
+      License & Copyright
+    </div>
+    <h1>使用许可与版权声明</h1>
+    <p>请在使用绊谈 · 万能枢纽前，仔细阅读以下条款。</p>
+  </div>
+
+  <!-- 版权声明 -->
+  <div class="lic-card">
+    <div class="lic-card-header">
+      <div class="lic-card-icon">©</div>
+      <div>
+        <div class="lic-card-title">版权声明</div>
+        <div class="lic-card-subtitle">Copyright Notice</div>
+      </div>
+    </div>
+    <div class="lic-section">
+      <p><strong>版权所有 © 2026 绊谈 Bantan，保留所有权利。</strong></p>
+      <p>绊谈 · 万能枢纽（域名：<strong>bantan.online</strong>）的全部原创内容，包括但不限于：</p>
+      <ul>
+        <li>网站页面设计、视觉样式、配色方案</li>
+        <li>前端代码、后端逻辑、数据接口</li>
+        <li>自研的内嵌工具（如帧率测试、塔罗占卜、成绩分析等）</li>
+        <li>品牌标识、名称、Logo 及相关文字</li>
+        <li>网站文案、说明文字、FAQ 内容</li>
+      </ul>
+      <p>均受《中华人民共和国著作权法》及相关国际版权条约保护，未经版权所有者书面许可，任何人不得复制、修改、传播、商用或用于其他未经授权的用途。</p>
+    </div>
+  </div>
+
+  <!-- 使用许可 -->
+  <div class="lic-card">
+    <div class="lic-card-header">
+      <div class="lic-card-icon">⚖️</div>
+      <div>
+        <div class="lic-card-title">使用许可</div>
+        <div class="lic-card-subtitle">Terms of Use</div>
+      </div>
+    </div>
+
+    <table class="lic-table">
+      <thead>
+        <tr>
+          <th>行为</th>
+          <th>说明</th>
+          <th>是否允许</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>个人使用</strong></td>
+          <td>用于个人学习、娱乐、日常任务</td>
+          <td class="perm-yes">✅ 允许</td>
+        </tr>
+        <tr>
+          <td><strong>小圈子分享</strong></td>
+          <td>分享给熟人、朋友等小范围人群</td>
+          <td class="perm-yes">✅ 允许</td>
+        </tr>
+        <tr>
+          <td><strong>学习参考</strong></td>
+          <td>查看代码逻辑，学习前端技术</td>
+          <td class="perm-yes">✅ 允许</td>
+        </tr>
+        <tr>
+          <td><strong>商业使用</strong></td>
+          <td>将本站用于盈利性项目或服务</td>
+          <td class="perm-no">❌ 禁止</td>
+        </tr>
+        <tr>
+          <td><strong>二次分发</strong></td>
+          <td>复制本站代码并公开发布</td>
+          <td class="perm-no">❌ 禁止</td>
+        </tr>
+        <tr>
+          <td><strong>公开引流</strong></td>
+          <td>大规模网络转发、引流、推广</td>
+          <td class="perm-no">❌ 禁止</td>
+        </tr>
+        <tr>
+          <td><strong>移除版权</strong></td>
+          <td>删除或隐藏版权声明和品牌标识</td>
+          <td class="perm-no">❌ 禁止</td>
+        </tr>
+        <tr>
+          <td><strong>保留声明</strong></td>
+          <td>如获授权使用，需保留版权信息</td>
+          <td class="perm-cond">⚠️ 必须</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="lic-section" style="margin-top: 20px;">
+      <p style="font-size: 14px; color: var(--sub-2);">简单来说：<strong style="color: var(--sub);">你可以自己用、分享给朋友、学习代码，但不能拿它赚钱、不能公开发布、不能去掉「绊谈」的品牌信息。</strong></p>
+    </div>
+  </div>
+
+  <!-- 第三方内容说明 -->
+  <div class="lic-card">
+    <div class="lic-card-header">
+      <div class="lic-card-icon">🔗</div>
+      <div>
+        <div class="lic-card-title">第三方内容说明</div>
+        <div class="lic-card-subtitle">Third-Party Content</div>
+      </div>
+    </div>
+    <div class="lic-section">
+      <p>本站包含大量指向第三方网站的外链（如 AI 工具、软件官网、在线服务等）。这些第三方内容：</p>
+      <ul>
+        <li>版权归各自所有者所有，本站不主张任何权利</li>
+        <li>本站仅做链接整理与展示，不对其内容、安全性、可用性负责</li>
+        <li>访问第三方链接时，请遵守该网站的使用条款和隐私政策</li>
+      </ul>
+      <p>如第三方内容所有者认为本站的链接展示侵犯了您的权益，请联系站长，我们会及时处理。</p>
+    </div>
+  </div>
+
+  <!-- 项目信息 -->
+  <div class="lic-card">
+    <div class="lic-card-header">
+      <div class="lic-card-icon">✦</div>
+      <div>
+        <div class="lic-card-title">项目信息</div>
+        <div class="lic-card-subtitle">绊谈 · 万能枢纽</div>
+      </div>
+    </div>
+
+    <div class="lic-info-grid">
+      <div class="lic-info-item">
+        <div class="lic-info-label">项目名称</div>
+        <div class="lic-info-value">绊谈 · 万能枢纽</div>
+      </div>
+      <div class="lic-info-item">
+        <div class="lic-info-label">官方网站</div>
+        <div class="lic-info-value"><a href="https://bantan.online/" target="_blank" rel="noopener">bantan.online</a></div>
+      </div>
+      <div class="lic-info-item">
+        <div class="lic-info-label">版权所有者</div>
+        <div class="lic-info-value">绊谈 Bantan</div>
+      </div>
+      <div class="lic-info-item">
+        <div class="lic-info-label">首次发布</div>
+        <div class="lic-info-value">2026 年</div>
+      </div>
+      <div class="lic-info-item">
+        <div class="lic-info-label">许可类型</div>
+        <div class="lic-info-value">保留所有权利</div>
+      </div>
+      <div class="lic-info-item">
+        <div class="lic-info-label">联系方式</div>
+        <div class="lic-info-value"><a href="mailto:g125668039@163.com">g125668039@163.com</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 免责声明 -->
+  <div class="lic-card" style="border-color: rgba(251, 191, 36, 0.15);">
+    <div class="lic-card-header">
+      <div class="lic-card-icon" style="background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.2); color: #fbbf24;">⚠️</div>
+      <div>
+        <div class="lic-card-title">免责声明</div>
+        <div class="lic-card-subtitle">Disclaimer</div>
+      </div>
+    </div>
+    <div class="lic-section">
+      <p>本站属于个人制作的工具聚合站点，所有外部链接均跳转至第三方网站。本站仅做链接整理展示，不对第三方站点的内容、安全与可用性承担责任。</p>
+      <p>全部内容仅限个人学习娱乐，禁止用于任何商业用途。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。</p>
+      <p>本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。请自觉远离各类违法违规内容。</p>
+    </div>
+  </div>
+
+  <footer class="lic-footer">
+    <div class="lic-footer-sign">
+      <span class="lic-footer-sign-icon">绊</span>
+      <span>绊谈 · 万能枢纽</span>
+    </div>
+    <p>© 2026 绊谈 Bantan · 保留所有权利</p>
+    <p style="margin-top: 8px;">
+      <a href="landing.html">首页</a> ·
+      <a href="changelog.html">更新日志</a> ·
+      <a href="mailto:g125668039@163.com">联系我们</a>
+    </p>
+  </footer>
+
+</main>
+
+</body>
+</html>
