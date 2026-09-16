@@ -1,0 +1,25 @@
+{
+  "name": "绊谈 · 万能枢纽",
+  "short_name": "绊谈",
+  "description": "600+ 免费在线工具一站直达",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0a0805",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait-primary",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
