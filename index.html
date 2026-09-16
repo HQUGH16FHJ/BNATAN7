@@ -9304,11 +9304,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
     <!-- ===== 回到顶部 ===== -->
     <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部" title="回到顶部">↑</button>
-<!-- ===== 小绊谈浮动按钮 ===== -->
-<div class="bantan-fab" id="bantanFab" onclick="openBantanContact()" title="找小绊谈谈">
-  <div class="bantan-fab-tip">找小绊谈谈 💬</div>
-  <div class="bantan-fab-avatar">绊</div>
-</div>
     <!-- ===== AI 助手悬浮按钮 ===== -->
     <div class="ai-fab-wrap">
         <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="小绊谈 AI 智能对话">
@@ -17951,34 +17946,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         showToast('✦ ' + getGreeting(), 3200);
       }
     }, 1500);
-  });
-})();
-</script>
-
-<script>
-/* ========== 小绊谈浮动按钮 ========== */
-(function() {
-  'use strict';
-
-  window.openBantanContact = function() {
-    if (typeof toggleAIPanel === 'function') {
-      var panel = document.getElementById('ai-panel');
-      if (panel && !panel.classList.contains('show')) {
-        toggleAIPanel();
-      }
-      if (typeof showToast === 'function') {
-        showToast('小绊谈在线，有什么可以帮你的？✨');
-      }
-    } else if (typeof openFeedback === 'function') {
-      openFeedback();
-    }
-  };
-
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
-      e.preventDefault();
-      window.openBantanContact();
-    }
   });
 })();
 </script>
