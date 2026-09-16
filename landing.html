@@ -3593,3 +3593,206 @@ function showContact(type) {
 <!-- UnicornStudio 官方自初始化嵌入 -->
 <script type="text/javascript">!function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();</script>
 </body></html>
+<!-- ========== 第 6 件：快捷键 / 隐藏彩蛋 ========== -->
+<script>
+(function() {
+  'use strict';
+
+  /* ========== A. Konami 代码彩蛋 ========== */
+  var konamiSeq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  var konamiIdx = 0;
+  var konamiActive = false;
+
+  document.addEventListener('keydown', function(e) {
+    if (konamiActive) return;
+    var key = e.key;
+    if (key === konamiSeq[konamiIdx] || key.toLowerCase() === konamiSeq[konamiIdx]) {
+      konamiIdx++;
+      if (konamiIdx === konamiSeq.length) {
+        konamiIdx = 0;
+        triggerKonami();
+      }
+    } else {
+      konamiIdx = 0;
+    }
+  });
+
+  function triggerKonami() {
+    if (konamiActive) return;
+    konamiActive = true;
+    showToast('🎮 隐藏彩蛋已解锁！', 3000);
+
+    // 金色粒子雨
+    var colors = ['#f59e0b','#fb7185','#fbbf24','#38bdf8','#a78bfa'];
+    var particles = [];
+    for (var i = 0; i < 60; i++) {
+      var p = document.createElement('div');
+      var size = 4 + Math.random() * 8;
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      p.style.cssText = 'position:fixed;z-index:99998;pointer-events:none;border-radius:50%;' +
+        'width:' + size + 'px;height:' + size + 'px;background:' + color + ';' +
+        'left:' + (Math.random() * 100) + 'vw;top:-20px;' +
+        'box-shadow:0 0 12px ' + color + ';' +
+        'transition:transform ' + (2 + Math.random() * 2) + 's linear, opacity ' + (2 + Math.random() * 2) + 's linear;';
+      document.body.appendChild(p);
+      particles.push({
+        el: p,
+        x: (Math.random() - 0.5) * 200,
+        y: window.innerHeight + 40,
+        rot: Math.random() * 720 - 360
+      });
+    }
+    requestAnimationFrame(function() {
+      particles.forEach(function(p) {
+        p.el.style.transform = 'translate(' + p.x + 'px, ' + p.y + 'px) rotate(' + p.rot + 'deg)';
+        p.el.style.opacity = '0';
+      });
+    });
+    setTimeout(function() {
+      particles.forEach(function(p) { p.el.remove(); });
+    }, 4500);
+
+    // logo 脉冲
+    var logoIcon = document.querySelector('.nav-logo-icon');
+    if (logoIcon) {
+      logoIcon.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s';
+      logoIcon.style.transform = 'scale(1.4) rotate(-12deg)';
+      logoIcon.style.boxShadow = '0 0 60px rgba(245,158,11,0.9)';
+      setTimeout(function() {
+        logoIcon.style.transform = '';
+        logoIcon.style.boxShadow = '';
+      }, 800);
+    }
+
+    // 页面短暂暖色闪烁
+    var flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;inset:0;z-index:99997;pointer-events:none;' +
+      'background:radial-gradient(circle at 50% 50%, rgba(245,158,11,0.18), transparent 60%);' +
+      'opacity:1;transition:opacity 1.2s ease;';
+    document.body.appendChild(flash);
+    requestAnimationFrame(function() { flash.style.opacity = '0'; });
+    setTimeout(function() { flash.remove(); }, 1400);
+
+    setTimeout(function() { konamiActive = false; }, 5000);
+  }
+
+  /* ========== B. Ctrl+K / Cmd+K 快捷搜索 ========== */
+  document.addEventListener('keydown', function(e) {
+    var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    var modifier = isMac ? e.metaKey : e.ctrlKey;
+    if (modifier && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      var search = document.getElementById('heroSearch');
+      if (search) {
+        search.focus();
+        search.select();
+        // 高亮脉冲
+        var box = search.closest('.search-box');
+        if (box) {
+          box.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+          box.style.boxShadow = '0 0 0 4px rgba(245,158,11,0.25), 0 0 40px rgba(245,158,11,0.15)';
+          box.style.borderColor = 'rgba(245,158,11,0.6)';
+          setTimeout(function() {
+            box.style.boxShadow = '';
+            box.style.borderColor = '';
+          }, 1200);
+        }
+      }
+    }
+  });
+
+  /* ========== C. 点击 logo 5 次彩蛋 ========== */
+  var logoClicks = 0;
+  var logoTimer = null;
+
+  document.addEventListener('click', function(e) {
+    var logo = e.target.closest('.nav-logo');
+    if (!logo) return;
+    logoClicks++;
+    clearTimeout(logoTimer);
+    logoTimer = setTimeout(function() { logoClicks = 0; }, 2000);
+
+    if (logoClicks >= 5) {
+      logoClicks = 0;
+      triggerLogoEgg();
+    }
+  });
+
+  function triggerLogoEgg() {
+    showToast('✦ 你找到了小绊谈！', 2500);
+
+    // 浮动「绊」字表情
+    var msgs = ['✦','绊','⚡','◇','✧','◎','⟐','◷','⚿'];
+    for (var i = 0; i < 12; i++) {
+      (function(idx) {
+        setTimeout(function() {
+          var el = document.createElement('div');
+          el.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+          var startX = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+          el.style.cssText = 'position:fixed;z-index:99998;pointer-events:none;' +
+            'left:' + startX + 'px;top:60%;' +
+            'font-size:' + (20 + Math.random() * 20) + 'px;' +
+            'color:var(--accent);font-family:var(--font-display);font-weight:800;' +
+            'text-shadow:0 0 20px rgba(245,158,11,0.8);' +
+            'transition:transform 1.6s cubic-bezier(0.16,1,0.3,1), opacity 1.6s ease;';
+          document.body.appendChild(el);
+          requestAnimationFrame(function() {
+            el.style.transform = 'translate(' + ((Math.random() - 0.5) * 400) + 'px, -' + (200 + Math.random() * 200) + 'px) scale(1.5) rotate(' + ((Math.random() - 0.5) * 360) + 'deg)';
+            el.style.opacity = '0';
+          });
+          setTimeout(function() { el.remove(); }, 1800);
+        }, idx * 80);
+      })(i);
+    }
+
+    // 小绊谈头像短暂出现
+    var avatar = document.createElement('div');
+    avatar.textContent = '绊';
+    avatar.style.cssText = 'position:fixed;z-index:99999;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);' +
+      'width:120px;height:120px;border-radius:36px;' +
+      'background:linear-gradient(135deg,#f59e0b,#fb7185);' +
+      'display:flex;align-items:center;justify-content:center;' +
+      'font-size:60px;font-weight:900;color:#fff;font-family:var(--font-display);' +
+      'box-shadow:0 0 80px rgba(245,158,11,0.8), 0 0 160px rgba(251,113,133,0.5);' +
+      'transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;';
+    document.body.appendChild(avatar);
+    requestAnimationFrame(function() {
+      avatar.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+    setTimeout(function() {
+      avatar.style.transform = 'translate(-50%,-50%) scale(0)';
+      avatar.style.opacity = '0';
+    }, 1600);
+    setTimeout(function() { avatar.remove(); }, 2200);
+  }
+
+  /* ========== Toast（如果页面没有，就创建一个） ========== */
+  if (typeof window.showToast !== 'function') {
+    window.showToast = function(msg, duration) {
+      var toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);' +
+          'background:rgba(12,12,32,0.95);backdrop-filter:blur(20px);color:#fff7ed;' +
+          'padding:12px 24px;border-radius:12px;font-size:14px;z-index:99999;' +
+          'border:1px solid rgba(245,158,11,0.3);' +
+          'box-shadow:0 10px 40px rgba(0,0,0,0.4), 0 0 30px rgba(245,158,11,0.2);' +
+          'transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),opacity 0.3s;' +
+          'opacity:0;pointer-events:none;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      requestAnimationFrame(function() {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+      });
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-80px)';
+      }, duration || 2500);
+    };
+  }
+})();
+</script>
