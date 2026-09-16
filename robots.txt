@@ -1,4 +1,40 @@
+# 绊谈 · 万能枢纽 | bantan.online
+# robots.txt - 爬虫抓取规则
+# 最后更新：2026-09-17
+
 User-agent: *
 Allow: /
+Allow: /landing.html
+Allow: /index.html
+Allow: /changelog.html
+Disallow: /admin.html
+Disallow: /create-vip.html
+Disallow: /ai-proxy-worker.js
+Disallow: /api/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin.html
+Disallow: /create-vip.html
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /create-vip.html
+
+User-agent: GPTBot
+Allow: /landing.html
+Allow: /index.html
+Allow: /changelog.html
+
+User-agent: ClaudeBot
+Allow: /landing.html
+Allow: /index.html
+Allow: /changelog.html
+
+User-agent: Bytespider
+Allow: /landing.html
+Allow: /index.html
+Allow: /changelog.html
 
 Sitemap: https://bantan.online/sitemap.xml
