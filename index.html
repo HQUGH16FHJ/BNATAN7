@@ -6284,6 +6284,87 @@
         body.auth-ready #main-container {
             animation: welcomeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+              /* ============================================================
+           AI 悬浮球 + 聊天面板 修复补丁
+           ============================================================ */
+
+        /* 1. AI 悬浮球容器：提到最高层级 */
+        .ai-fab-wrap {
+            z-index: 99999 !important;
+            isolation: isolate;
+            pointer-events: none;
+        }
+        .ai-fab-wrap > * {
+            pointer-events: auto;
+        }
+
+        /* 2. AI 悬浮球本体：去掉 backdrop-filter，强制正圆 */
+        #ai-fab {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-radius: 50% !important;
+            aspect-ratio: 1 / 1;
+            width: 80px !important;
+            height: 80px !important;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(255,255,255,0.18) 0%, transparent 42%),
+                linear-gradient(135deg, #0a0a2e, #1a0a3e, #0a1a3e) !important;
+            z-index: 99999 !important;
+            will-change: transform;
+        }
+        #ai-fab::after {
+            border-radius: 50% !important;
+        }
+
+        /* 3. AI 聊天面板：层级最高 */
+        #ai-panel {
+            z-index: 99998 !important;
+            width: min(420px, calc(100vw - 24px)) !important;
+            min-width: 280px;
+        }
+
+        /* 4. 欢迎卡片按钮：窄屏换行 */
+        .ai-welcome-grid {
+            flex-wrap: wrap !important;
+            justify-content: space-between;
+        }
+        .ai-welcome-item {
+            flex: 1 1 40% !important;
+            min-width: 100px;
+            white-space: nowrap;
+        }
+
+        /* 5. 输入区域换行 */
+        .ai-input-wrap {
+            flex-wrap: wrap !important;
+        }
+        .ai-input-area {
+            flex: 1 1 180px;
+            min-width: 0;
+        }
+
+        /* 6. 消息气泡文字不裁切 */
+        .ai-msg-content {
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        /* 7. 快捷按钮换行 */
+        .ai-quick-actions {
+            flex-wrap: wrap !important;
+        }
+
+        /* 8. 移动端悬浮球适配 */
+        @media (max-width: 480px) {
+            #ai-fab {
+                width: 60px !important;
+                height: 60px !important;
+            }
+            .ai-fab-wrap {
+                right: 14px !important;
+                bottom: 70px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -9169,7 +9250,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <div style="font-size:clamp(10px,1vw,12px);color:var(--sub);line-height:1.7;opacity:.8;">本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。</div>
             </div>
         </section>
-        <<div class="footer">
+      <div class="footer">
     <div class="footer-statusbar">
         <span class="status-dot" data-status="online"></span>
         <span class="footer-syslabel">系统在线</span>
