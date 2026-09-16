@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0805">
+<title>页面走丢了 · 绊谈 Bantan</title>
+<meta name="description" content="你访问的页面暂时找不到了，返回绊谈万能枢纽继续探索。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f59e0b'/%3E%3Cstop offset='1' stop-color='%23fb7185'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='48' fill='url(%23g)'/%3E%3Ctext x='96' y='132' font-size='110' font-weight='900' text-anchor='middle' fill='%23fff' font-family='system-ui,sans-serif'%3E%E7%BB%8A%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0a0805;
+  --bg-deep: #050302;
+  --text: #fff7ed;
+  --sub: #d6c7b8;
+  --sub-2: #8a7e72;
+  --accent: #f59e0b;
+  --accent-2: #fb7185;
+  --accent-gold: #38bdf8;
+  --border: rgba(245, 158, 11, 0.12);
+  --card-bg: rgba(20, 15, 10, 0.5);
+  --glass-blur: blur(24px) saturate(160%);
+  --glow-color: 245, 158, 11;
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-2));
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 15%, rgba(245, 158, 11, 0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 75%, rgba(251, 113, 133, 0.08) 0%, transparent 45%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 网格背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(245, 158, 11, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 75%);
+}
+
+/* 光晕球 */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .orb { animation: orbFloat 90s infinite alternate ease-in-out; }
+}
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, -40px) scale(1.15); }
+}
+.orb-a {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22), transparent 70%);
+  top: -20%; left: -15%;
+  opacity: 0.2;
+}
+.orb-b {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(251, 113, 133, 0.18), transparent 70%);
+  bottom: -15%; right: -10%;
+  opacity: 0.2;
+  animation-duration: 100s;
+  animation-delay: -30s;
+}
+.orb-c {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.15), transparent 70%);
+  top: 40%; right: -5%;
+  opacity: 0.15;
+  animation-duration: 110s;
+  animation-delay: -60s;
+}
+
+/* 主容器 */
+.wrap {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 720px);
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* Logo */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--grad-accent);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.35);
+}
+.logo-text {
+  background: linear-gradient(135deg, #f59e0b, #fb7185);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 404 数字 */
+.code {
+  font-family: var(--font-display);
+  font-size: clamp(100px, 22vw, 200px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  background: linear-gradient(135deg, #fff7ed 15%, #f59e0b 48%, #fb7185 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 60px rgba(245, 158, 11, 0.15));
+  margin-bottom: 8px;
+}
+
+/* 标题 */
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 24px 0 16px;
+}
+h1 .accent {
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 描述 */
+.desc {
+  color: var(--sub);
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.8;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* 路径面板 */
+.panel {
+  margin: 36px auto 0;
+  padding: 24px 28px;
+  max-width: 560px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.4), rgba(251, 113, 133, 0.3), transparent);
+}
+.path {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--accent);
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+/* 按钮 */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+a, button {
+  min-height: 44px;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.3s;
+  border: none;
+}
+.primary {
+  background: var(--grad-accent);
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.25);
+}
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(245, 158, 11, 0.4);
+}
+.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.secondary:hover {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* 提示 */
+.hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--sub-2);
+  line-height: 1.7;
+}
+
+/* 底部 */
+.footer {
+  margin-top: 48px;
+  font-size: 12px;
+  color: var(--sub-2);
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .actions { flex-direction: column; }
+  a, button { width: 100%; }
+  .panel { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+<div class="orb orb-c"></div>
+
+<main class="wrap" aria-labelledby="title">
+
+  <div class="logo">
+    <span class="mark">绊</span>
+    <span class="logo-text">绊谈 · 万能枢纽</span>
+  </div>
+
+  <div class="code" aria-label="404">404</div>
+
+  <h1 id="title">这个页面<span class="accent">走丢了</span></h1>
+
+  <p class="desc">
+    你访问的页面暂时找不到了。<br>
+    别担心，绊谈还有很多工具等你探索。
+  </p>
+
+  <section class="panel">
+    <span class="path" id="path">正在读取页面地址…</span>
+    <div class="actions">
+      <a class="primary" href="./landing.html">返回绊谈首页</a>
+      <button class="secondary" type="button" onclick="history.back()">返回上一页</button>
+    </div>
+  </section>
+
+  <p class="hint">如果你认为这是一个错误，可以从首页重新进入对应工具。</p>
+
+  <div class="footer">© 2026 绊谈 Bantan · 连接需求，点亮可能 ✦</div>
+
+</main>
+
+<script>
+document.getElementById('path').textContent =
+  window.location.pathname + window.location.search;
+</script>
+
+</body>
+</html>
