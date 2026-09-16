@@ -1,5 +1,1 @@
-# www.bantan.online -> bantan.online (301)
-https://www.bantan.online/* https://bantan.online/:splat 301
-
-# bantan.eu.cc -> bantan.online (301)
-https://bantan.eu.cc/* https://bantan.online/:splat 301
+/  /landing.html  200
