@@ -2717,6 +2717,7 @@ input::placeholder, textarea::placeholder {
 </section>
 
 <!-- Footer -->
+<!-- Footer -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -2749,16 +2750,16 @@ input::placeholder, textarea::placeholder {
           <li><a href="#" onclick="openAuthModal();return false;">关于绊谈</a></li>
           <li><a href="#" onclick="event.preventDefault();openLegalModal('terms')">服务条款</a></li>
           <li><a href="#" onclick="event.preventDefault();openLegalModal('privacy')">隐私政策</a></li>
+          <li><a href="license.html">使用许可</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 绊谈 Bantan. All rights reserved.</span>
-      <span style="color:var(--sub-2);">登录后可在「关于我」页面联系站长</span>
+      <span style="color:var(--sub-2);">登录后可在「关于我」页面联系站长 · <a href="license.html" style="color:var(--accent);text-decoration:none;">使用许可</a></span>
     </div>
   </div>
 </footer>
-
 <!-- Auth Modal -->
 <div class="modal-overlay" id="authModal" onclick="if(event.target===this)closeAuthModal()">
   <div class="modal">
