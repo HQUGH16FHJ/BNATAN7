@@ -6365,7 +6365,85 @@
       color: rgba(170, 180, 200, 0.65) !important;
       background-image: none !important;
   }
-</style>
+  /* ========== 小绊谈浮动按钮 ========== */
+.bantan-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bantan-fab:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+.bantan-fab-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f59e0b, #fb7185);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  position: relative;
+  animation: bantanFloat 3s ease-in-out infinite;
+}
+.bantan-fab-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #34d399;
+  border: 2px solid var(--bg, #0a0805);
+  box-shadow: 0 0 8px #34d399;
+  animation: bantanPulse 2s ease-in-out infinite;
+}
+@keyframes bantanFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes bantanPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+.bantan-fab-tip {
+  background: rgba(10, 10, 24, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #fff7ed);
+  white-space: nowrap;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.bantan-fab:hover .bantan-fab-tip {
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (max-width: 600px) {
+  .bantan-fab { right: 14px; bottom: 90px; }
+  .bantan-fab-avatar { width: 48px; height: 48px; font-size: 24px; border-radius: 15px; }
+  .bantan-fab-tip { display: none; }
+}
+  </style>
 <script>
 // ===== 登录态路由 + 前端防护 + 爬虫放行 =====
 (function() {
@@ -6508,8 +6586,21 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     <div class="container" id="main-container">
 
         <!-- 导航栏（带汉堡菜单） -->
-        <header class="nav" role="navigation" aria-label="主导航"><a href="landing.html" class="logo" style="text-decoration:none;">绊谈枢纽 <span class="quantum-tag">✦ 终极</span></a>
-            <div class="nav-actions">
+        <header class="nav" role="navigation" aria-label="主导航"><a href="landing.html" class="logo" style="text-decoration:none;">
+  <span style="display:inline-flex;align-items:center;gap:8px;">
+    <svg width="28" height="28" viewBox="0 0 64 64" style="vertical-align:middle;filter:drop-shadow(0 0 12px rgba(245,158,11,0.5));">
+      <defs>
+        <linearGradient id="bantan-avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f59e0b"/>
+          <stop offset="100%" stop-color="#fb7185"/>
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="18" fill="url(#bantan-avatar-grad)"/>
+      <text x="32" y="44" font-size="34" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="system-ui,sans-serif">绊</text>
+    </svg>
+    绊谈枢纽 <span class="quantum-tag">✦ 终极</span>
+  </span>
+</a>
                 <button class="nav-login-btn" id="nav-login-btn" onclick="openAuthModal()">
                     <span>👤</span>
                     <span class="login-label">登录 / 注册</span>
@@ -9213,7 +9304,11 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
     <!-- ===== 回到顶部 ===== -->
     <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部" title="回到顶部">↑</button>
-
+<!-- ===== 小绊谈浮动按钮 ===== -->
+<div class="bantan-fab" id="bantanFab" onclick="openBantanContact()" title="找小绊谈谈">
+  <div class="bantan-fab-tip">找小绊谈谈 💬</div>
+  <div class="bantan-fab-avatar">绊</div>
+</div>
     <!-- ===== AI 助手悬浮按钮 ===== -->
     <div class="ai-fab-wrap">
         <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="小绊谈 AI 智能对话">
@@ -17833,6 +17928,58 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         if (seen.has(url)) card.remove();
         else seen.add(url);
     });
+})();
+</script>
+          <script>
+/* ========== 小绊谈问候语 ========== */
+(function() {
+  'use strict';
+
+  function getGreeting() {
+    var hour = new Date().getHours();
+    if (hour < 5) return '夜深了，注意休息哦 🌙';
+    if (hour < 9) return '早上好，今天想用点什么工具？☀️';
+    if (hour < 12) return '上午好，试试新上线的功能吧 ✨';
+    if (hour < 14) return '中午好，别忘了午休 😊';
+    if (hour < 18) return '下午好，今天过得怎么样？🍵';
+    return '晚上好，欢迎回到绊谈 🌆';
+  }
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      if (typeof showToast === 'function') {
+        showToast('✦ ' + getGreeting(), 3200);
+      }
+    }, 1500);
+  });
+})();
+</script>
+
+<script>
+/* ========== 小绊谈浮动按钮 ========== */
+(function() {
+  'use strict';
+
+  window.openBantanContact = function() {
+    if (typeof toggleAIPanel === 'function') {
+      var panel = document.getElementById('ai-panel');
+      if (panel && !panel.classList.contains('show')) {
+        toggleAIPanel();
+      }
+      if (typeof showToast === 'function') {
+        showToast('小绊谈在线，有什么可以帮你的？✨');
+      }
+    } else if (typeof openFeedback === 'function') {
+      openFeedback();
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+      e.preventDefault();
+      window.openBantanContact();
+    }
+  });
 })();
 </script>
 </body></html>
