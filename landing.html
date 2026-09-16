@@ -2160,7 +2160,58 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
     </div>
   </div>
 </footer>
-
+<!-- Auth Modal（登录/注册弹窗） -->
+<div class="modal-overlay" id="authModal" onclick="if(event.target===this)closeAuthModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal()">×</button>
+    <div class="modal-header">
+      <div class="modal-logo">绊</div>
+      <h3 id="modalTitle">登录绊谈</h3>
+      <p class="modal-sub" id="modalSub">登录后进入万能枢纽，解锁全部工具</p>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-tab="login" onclick="switchTab('login')">登录</button>
+      <button class="modal-tab" data-tab="register" onclick="switchTab('register')">注册</button>
+    </div>
+    <div class="modal-body">
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">用户名</label>
+          <input type="text" class="form-input" id="loginUser" placeholder="请输入用户名" required="">
+        </div>
+        <div class="form-group">
+          <label class="form-label">密码</label>
+          <input type="password" class="form-input" id="loginPass" placeholder="请输入密码" required="">
+        </div>
+        <button type="submit" class="btn btn-primary modal-submit">登录</button>
+      </form>
+      <form id="registerForm" onsubmit="handleRegister(event)" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">用户名</label>
+          <input type="text" class="form-input" id="regUser" placeholder="3-20 个字符" required="">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">密码</label>
+            <input type="password" class="form-input" id="regPass" placeholder="至少 6 位" required="">
+          </div>
+          <div class="form-group">
+            <label class="form-label">确认密码</label>
+            <input type="password" class="form-input" id="regPass2" placeholder="再次输入" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">邀请码（选填）</label>
+          <input type="text" class="form-input" id="regCode" placeholder="有邀请码可获得额外福利">
+        </div>
+        <button type="submit" class="btn btn-primary modal-submit">注册账号</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      登录即表示同意 <a href="#" onclick="event.preventDefault();openLegalModal('terms')">服务条款</a> 和 <a href="#" onclick="event.preventDefault();openLegalModal('privacy')">隐私政策</a>
+    </div>
+  </div>
+</div>
 <script>
 // ========== Aurora Canvas — flowing gradient background ==========
 (function auroraCanvas() {
