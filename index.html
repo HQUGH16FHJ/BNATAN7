@@ -6369,8 +6369,7 @@
 
     // ===== 爬虫白名单：命中则不跳转，直接放行内容 =====
     // 覆盖主流搜索引擎 + AI 引擎爬虫
-    var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|Sogou|360Spider|ShenmaSpider|Bytespider|GPTBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|YouBot|CCBot|cohere-ai|Meta-ExternalAgent|FacebookBot|Twitterbot|Slackbot|TelegramBot|Discordbot/i.test(ua);
-
+var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|Sogou|360Spider|ShenmaSpider|Bytespider|GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|YouBot|CCBot|cohere-ai|Meta-ExternalAgent|FacebookBot|Twitterbot|Slackbot|TelegramBot|Discordbot|Google-Extended|Applebot-Extended|Amazonbot|PetalBot|YisouSpider|Qwantify|SeekportBot|MojeekBot|Kimi|Moonshot|DeepSeek|Doubao|Bytedance|Yuanbao|Tencent|ERNIE|Baidu-AI|Xiaoyi|Huawei|Qwen|Tongyi|Zhipu|GLM|MiniMax|01-AI|StepFun|iFlytek|Spark|360-AI|Netease|Youdao/i.test(ua);
     if (isCrawler) {
       // 爬虫：解锁内容，显示全部 GEO 内容，不跳转
       document.body.classList.add('auth-ready');
