@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>使用许可与版权声明 - 绊谈 · 万能枢纽</title>
 <meta name="description" content="绊谈 · 万能枢纽的使用许可与版权声明。">
 <meta name="robots" content="index, follow">
@@ -435,6 +435,39 @@ body::after {
   .lic-card { padding: 24px 20px; }
   .lic-card-header { flex-direction: column; align-items: flex-start; gap: 12px; }
   .lic-table th, .lic-table td { padding: 10px 12px; font-size: 13px; }
+}
+</style>
+<style id="adaptive-hardening-v38">
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+img, svg, canvas {
+  max-width: 100%;
+}
+.lic-container, .lic-card, .lic-info-item {
+  min-width: 0;
+}
+.lic-section, .lic-info-value, .lic-footer {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .lic-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lic-table thead, .lic-table tbody {
+    display: table;
+    width: 100%;
+    min-width: 480px;
+  }
 }
 </style>
 </head>

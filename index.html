@@ -15,11 +15,17 @@
 <meta property="og:description" content="中文在线工具聚合平台，600+ 免费工具一站直达。">
 <meta property="og:url" content="https://bantan.online/index.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bantan.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="绊谈 · 万能枢纽在线工具平台">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bantan.online/og-image.png">
 <meta name="theme-color" content="#f59e0b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='48' fill='%230a0a1a'/%3E%3Ctext x='96' y='130' font-size='120' text-anchor='middle' fill='%2300f5ff'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
@@ -6279,7 +6285,98 @@
         body.auth-ready #main-container {
             animation: welcomeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-    </style>
+</style>
+<style id="adaptive-hardening-v38">
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+img, svg, canvas, video {
+    max-width: 100%;
+}
+#main-container, .container, .section, .mini-grid, .tool-grid, .quick-grid,
+.dashboard-grid, .stats-row, .mini-card, .tool-card, .glass-card, .holo-card {
+    min-width: 0;
+}
+.mini-card .content, .result, .tool-card, .quick-item {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.flex-row {
+    flex-wrap: wrap;
+}
+.nav {
+    max-width: calc(100vw - 20px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+}
+.nav .logo {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+input, select, textarea, button {
+    max-width: 100%;
+}
+.ai-fab-wrap {
+    right: calc(24px + env(safe-area-inset-right, 0px));
+    bottom: calc(clamp(85px, 10vh, 120px) + env(safe-area-inset-bottom, 0px));
+}
+#ai-panel {
+    right: calc(24px + env(safe-area-inset-right, 0px));
+    bottom: calc(clamp(145px, 16vh, 175px) + env(safe-area-inset-bottom, 0px));
+    max-height: min(620px, calc(100dvh - 170px - env(safe-area-inset-bottom, 0px)));
+}
+#back-to-top {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+@media (max-width: 768px) {
+    .container {
+        width: min(96%, calc(100% - 20px));
+    }
+    .ai-fab-wrap {
+        right: calc(14px + env(safe-area-inset-right, 0px));
+        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    }
+    #ai-panel {
+        right: calc(12px + env(safe-area-inset-right, 0px));
+        bottom: calc(140px + env(safe-area-inset-bottom, 0px));
+        width: calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+        max-height: calc(100dvh - 158px - env(safe-area-inset-bottom, 0px));
+    }
+}
+@media (max-width: 380px) {
+    .container {
+        width: calc(100% - 16px);
+    }
+    .mini-card, .glass-card, .holo-card {
+        border-radius: 14px;
+    }
+    .quick-grid, .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media (max-height: 600px) and (orientation: landscape) {
+    #ai-panel {
+        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        max-height: calc(100dvh - 84px - env(safe-area-inset-bottom, 0px));
+    }
+    .ai-fab-wrap {
+        bottom: calc(62px + env(safe-area-inset-bottom, 0px));
+    }
+}
+@media (min-width: 1920px) {
+    .ai-fab-wrap { bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
+    #ai-panel { bottom: calc(190px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (min-width: 2560px) {
+    .ai-fab-wrap { bottom: calc(135px + env(safe-area-inset-bottom, 0px)); }
+    #ai-panel { bottom: calc(210px + env(safe-area-inset-bottom, 0px)); }
+}
+</style>
 </head>
 <body>
 <style>
@@ -6504,7 +6601,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
         <!-- 导航栏（带汉堡菜单） -->
         <header class="nav" role="navigation" aria-label="主导航">
-            <span class="logo">绊谈枢纽 <span class="quantum-tag">✦ 终极</span></span>
+            <a href="landing.html" class="logo" title="返回首页" style="text-decoration:none;">绊谈枢纽 <span class="quantum-tag">✦ 终极</span></a>
             <div class="nav-actions">
                 <button class="nav-login-btn" id="nav-login-btn" onclick="openAuthModal()">
                     <span>👤</span>
@@ -6827,19 +6924,12 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     <span class="entry-icon">📋</span>
                     <div>
                         <div class="entry-title">更新日志</div>
-                        <div class="entry-desc">v3.6 · 品牌统一 . FAQ 修正 . 视觉优化 <span class="entry-new">新</span></div>
+                        <div class="entry-desc">v3.8 · 品牌故事 . 隐藏彩蛋 . SEO 完善 <span class="entry-new">新</span></div>
                     </div>
                 </div>
                 <span class="entry-arrow">→</span>
             </div>
 
-            <!-- 免责声明 - 底部低调条 -->
-            <div class="disclaimer-bar">
-                <div class="disclaimer-title">⚠️ 免责声明</div>
-                <div>本站属于个人制作的工具聚合站点，所有外部链接均跳转至第三方网站。本站仅做链接整理展示，不对第三方站点的内容、安全与可用性承担责任。全部内容仅限个人学习娱乐，禁止用于任何商业用途。</div>
-                <div class="hint-title">📢 使用提示</div>
-                <div>本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。</div>
-            </div>
         </section>
 
         <!-- ===== 关于我 ===== -->
@@ -7208,75 +7298,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     </div>
                 </div>
 
-                <!-- CSS渐变生成 -->
-                <div class="mini-card">
-                    <div class="title">🎨 CSS渐变生成</div>
-                    <div class="content">
-                        <input type="color" id="grad-c1" value="#00ffff" style="width:48%;height:36px;border:none;background:none;cursor:pointer;border-radius:8px;">
-                        <input type="color" id="grad-c2" value="#ff00ff" style="width:48%;height:36px;border:none;background:none;cursor:pointer;border-radius:8px;">
-                        <select id="grad-type" onchange="genGradient()" style="width:100%;margin-top:4px;">
-                            <option value="linear">线性渐变</option>
-                            <option value="radial">径向渐变</option>
-                            <option value="conic">锥形渐变</option>
-                        </select>
-                        <button type="button" class="btn btn-sm" onclick="genGradient()" style="margin-top:4px;">生成</button>
-                        <div id="grad-preview" style="width:100%;height:40px;border-radius:8px;margin-top:4px;background:linear-gradient(135deg,#00ffff,#ff00ff);"></div>
-                        <div class="result" id="grad-result" style="font-size:10px;word-break:break-all;">background: linear-gradient(135deg, #00ffff, #ff00ff);</div>
-                        <button type="button" class="btn btn-sm btn-outline" onclick="copyText(document.getElementById('grad-result').textContent,'渐变代码')" style="margin-top:2px;">复制代码</button>
-                    </div>
-                </div>
-
-                <!-- JWT解码 -->
-                <div class="mini-card">
-                    <div class="title">🔓 JWT解码</div>
-                    <div class="content">
-                        <textarea id="jwt-input" rows="3" style="width:100%;font-size:10px;font-family:monospace;" placeholder="粘贴JWT令牌..."></textarea>
-                        <button type="button" class="btn btn-sm" onclick="decodeJWT()" style="margin-top:4px;">解码</button>
-                        <div class="result" id="jwt-result" style="max-height:180px;overflow-y:auto;font-size:10px;"><span style="color:var(--sub);">粘贴JWT后解码</span></div>
-                    </div>
-                </div>
-
-                <!-- 正则表达式测试 -->
-                <div class="mini-card span-2">
-                    <div class="title">🧪 正则表达式</div>
-                    <div class="content">
-                        <input type="text" id="regex-pattern" placeholder="正则模式 如 \\d+" style="width:100%;font-family:monospace;font-size:11px;" value="\\d+">
-                        <textarea id="regex-text" rows="3" style="width:100%;margin-top:4px;font-family:monospace;font-size:11px;" placeholder="测试文本">abc123def456</textarea>
-                        <div class="flex-row" style="margin-top:4px;">
-                            <button type="button" class="btn btn-sm" onclick="testRegex()">测试</button>
-                            <label style="font-size:11px;color:var(--sub);"><input type="checkbox" id="regex-g" checked=""> 全局</label>
-                            <label style="font-size:11px;color:var(--sub);"><input type="checkbox" id="regex-i"> 忽略大小写</label>
-                        </div>
-                        <div class="result" id="regex-result"><span style="color:var(--sub);">点击测试</span></div>
-                    </div>
-                </div>
-
-                <!-- 哈希生成 -->
-                <div class="mini-card">
-                    <div class="title">#️⃣ 哈希生成</div>
-                    <div class="content">
-                        <input type="text" id="hash-input" placeholder="输入文本" style="width:100%;" value="hello">
-                        <div class="flex-row" style="margin-top:4px;">
-                            <button type="button" class="btn btn-sm" onclick="genHash('sha256')">SHA-256</button>
-                            <button type="button" class="btn btn-sm" onclick="genHash('sha1')">SHA-1</button>
-                            <button type="button" class="btn btn-sm" onclick="genHash('md5')">MD5</button>
-                        </div>
-                        <div class="result" id="hash-result" style="font-size:10px;word-break:break-all;">输入文本后选择算法</div>
-                    </div>
-                </div>
-
-                <!-- Lorem生成 -->
-                <div class="mini-card">
-                    <div class="title">📝 Lorem生成</div>
-                    <div class="content">
-                        <div class="flex-row">
-                            <input type="number" id="lorem-count" value="3" min="1" max="20" style="width:50px;" aria-label="段落数">
-                            <button type="button" class="btn btn-sm" onclick="genLorem()">生成</button>
-                        </div>
-                        <div class="result" id="lorem-result" style="max-height:120px;overflow-y:auto;font-size:11px;">点击生成</div>
-                    </div>
-                </div>
-
                 <!-- Cron表达式 -->
                 <div class="mini-card">
                     <div class="title">⏰ Cron表达式</div>
@@ -7385,15 +7406,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <div class="result" id="pwd-result">点击生成</div>
                     </div>
                 </div>
-                <!-- 二维码 -->
-                <div class="mini-card">
-                    <div class="title">📱 二维码</div>
-                    <div class="content">
-                        <input type="text" id="qr-input" placeholder="输入文本或链接" aria-label="二维码内容">
-                        <button type="button" class="btn btn-sm" onclick="generateQR()" style="margin-top:4px;">生成</button>
-                        <div class="result" id="qr-result">输入内容后生成</div>
-                    </div>
-                </div>
                 <!-- 设备信息 -->
                 <div class="mini-card">
                     <div class="title">🖥️ 设备信息</div>
@@ -7432,13 +7444,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <input type="number" id="convert-input" placeholder="数值" style="width:100%;margin-top:4px;" aria-label="换算数值">
                         <button type="button" class="btn btn-sm" onclick="convertUnit()" style="margin-top:4px;">换算</button>
                         <div class="result" id="convert-result">输入数值</div>
-                    </div>
-                </div>
-                <!-- 世界时钟 -->
-                <div class="mini-card">
-                    <div class="title">🕐 世界时钟</div>
-                    <div class="content">
-                        <div id="world-clock"><div>北京: <strong style="color:var(--accent);">14:31:46</strong></div><div>东京: <strong style="color:var(--accent);">15:31:46</strong></div><div>纽约: <strong style="color:var(--accent);">02:31:46</strong></div><div>伦敦: <strong style="color:var(--accent);">07:31:46</strong></div></div>
                     </div>
                 </div>
                 <!-- 计算器 -->
@@ -7580,16 +7585,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <div class="result" id="loan-result">请输入参数</div>
                     </div>
                 </div>
-                <!-- BMI -->
-                <div class="mini-card">
-                    <div class="title">🏋️ BMI</div>
-                    <div class="content">
-                        <input type="number" id="bmi-height" placeholder="身高 (cm)" aria-label="身高">
-                        <input type="number" id="bmi-weight" placeholder="体重 (kg)" style="margin-top:4px;" aria-label="体重">
-                        <button type="button" class="btn btn-sm" onclick="calcBMI()" style="margin-top:4px;">计算</button>
-                        <div class="result" id="bmi-result">请输入参数</div>
-                    </div>
-                </div>
                 <!-- 纪念日 -->
                 <div class="mini-card">
                     <div class="title">💝 纪念日</div>
@@ -7712,30 +7707,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         </div>
                         <textarea id="typing-area" rows="2" placeholder="开始打字测试..." style="margin-top:4px;" disabled=""></textarea>
                         <div class="result" id="typing-result">等待测试</div>
-                    </div>
-                </div>
-                <!-- 倒计时器 -->
-                <div class="mini-card">
-                    <div class="title">⏱️ 倒计时器</div>
-                    <div class="content">
-                        <div class="flex-row">
-                            <input type="number" id="timer-minutes" placeholder="分" value="5" style="width:60px;" aria-label="分钟">
-                            <input type="number" id="timer-seconds" placeholder="秒" value="0" style="width:60px;" aria-label="秒">
-                            <button type="button" class="btn btn-sm" onclick="startTimer()">开始</button>
-                            <button type="button" class="btn btn-sm" onclick="resetTimer()">重置</button>
-                        </div>
-                        <div class="result" id="timer-display" style="font-size:clamp(22px,2.6vw,32px);text-align:center;font-weight:900;color:var(--accent);">05:00</div>
-                    </div>
-                </div>
-                <!-- 随机选择 -->
-                <div class="mini-card">
-                    <div class="title">🎯 随机选择</div>
-                    <div class="content">
-                        <textarea id="picker-input" rows="2" placeholder="选项1
-选项2
-选项3" style="width:100%;"></textarea>
-                        <button type="button" class="btn btn-sm" onclick="randomPicker()" style="margin-top:4px;">随机选一个</button>
-                        <div class="result" id="picker-result">输入选项</div>
                     </div>
                 </div>
                 <!-- Base64 -->
@@ -8202,12 +8173,12 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <div class="changelog-header">
                     <span class="changelog-icon">📋</span>
                     <span class="changelog-title">更新日志</span>
-                    <span class="changelog-badge">v3.6 最新</span>
+                    <span class="changelog-badge">v3.8 最新</span>
                 </div>
                 <div style="padding:16px 20px 20px;display:flex;align-items:center;gap:12px;">
                     <div style="flex:1;">
-                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v3.6 · 品牌统一 . FAQ 修正 . 视觉优化</div>
-                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">全站统一万能枢纽品牌 . Hero标题白色 . 打字机光标移除</div>
+                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v3.8 · 品牌故事 . 隐藏彩蛋 . SEO 完善</div>
+                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">新增品牌故事与隐藏彩蛋 . 完善 PWA、分享预览与搜索引擎配置</div>
                     </div>
                     <div style="font-size:20px;color:var(--accent);transition:transform 0.3s;" class="entry-arrow">→</div>
                 </div>
@@ -8923,20 +8894,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     </div>
                 </div>
 
-                <!-- 考试倒计时 -->
-                <div class="mini-card">
-                    <div class="title">⏰ 考试倒计时</div>
-                    <div class="content">
-                        <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;">
-                            <input type="text" id="exam-name" placeholder="考试名称" style="flex:2;min-width:80px;">
-                            <input type="date" id="exam-date" style="flex:1;min-width:120px;">
-                            <button type="button" class="btn btn-sm" onclick="addExam()">添加</button>
-                        </div>
-                        <div id="exam-list" style="margin-top:6px;"></div>
-                        <div style="font-size:10px;color:var(--sub);opacity:.5;margin-top:4px;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;">📝 <b>用途说明：</b>添加考试名称和日期，自动计算距离考试还有多少天。支持多个考试同时倒计时，数据本地保存，适合期中期末考试、中考高考倒计时管理。</div>
-                    </div>
-                </div>
-
                 <!-- 做题时间倒计时 -->
                 <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);grid-column:1 / -1;">
                     <div class="title">⏱️ 做题时间倒计时 · 带响声</div>
@@ -9159,7 +9116,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <span style="opacity:.3">|</span>
                 <span>节点 ORBIT-01</span>
                 <span style="opacity:.3">|</span>
-                <span>版本 2026.ULT</span>
+                <span>版本 v3.8</span>
                 <span style="opacity:.3">|</span>
                 <span>👥 <span style="display:none;">访问</span> <span id="visit-count">0</span></span>
             </div>
@@ -9168,7 +9125,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <a href="license.html" style="color:inherit;text-decoration:none;">使用许可</a> &nbsp;|&nbsp;
                 <a href="changelog.html" style="color:inherit;text-decoration:none;">更新日志</a> &nbsp;|&nbsp;
                 <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp;
-                <kbd>空格</kbd> 换台言 &nbsp;|&nbsp;
+                <kbd>空格</kbd> 换名言 &nbsp;|&nbsp;
                 <kbd>F</kbd> 搜索 &nbsp;|&nbsp;
                 <kbd>M</kbd> 翻译
             </div>
@@ -10938,10 +10895,10 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             if (!el) return;
             
             const defaultAnns = [
-                { content: '✨ v3.6 品牌统一：全站统一为「绊谈·万能枢纽」', level: 'important' },
-                { content: '🎨 Hero标题改为纯白色，移除打字机闪烁光标', level: 'normal' },
-                { content: '🌈 卡片彩虹旋转边框，悬浮交互更精致', level: 'normal' },
-                { content: '🆔 UID 身份系统上线，每位用户专属编号', level: 'normal' },
+                { content: '✨ v3.8 已上线：品牌故事、隐藏彩蛋与导航体验全面升级', level: 'important' },
+                { content: '📖 落地页新增「为什么叫绊谈」品牌故事', level: 'normal' },
+                { content: '🎮 Konami、Ctrl+K 与 Logo 五次点击彩蛋已加入', level: 'normal' },
+                { content: '🚀 PWA、分享预览图和搜索引擎配置已完善', level: 'normal' },
                 { content: '💡 有想法？点右下角 💬 反馈给站长～', level: 'normal' }
             ];
             
@@ -15185,8 +15142,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 if (_aiState.history.length === 0) {
                     loadAIChatHistory();
                 }
-                // 更新音效按钮状态
-                updateSoundBtn();
                 setTimeout(() => {
                     const input = document.getElementById('ai-input');
                     input.focus();
@@ -17014,10 +16969,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             const css = document.getElementById('play-css').value;
             const js = document.getElementById('play-js').value;
             const iframe = document.getElementById('play-output');
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.open();
-            doc.write(`<html><head><style>${css}</style></head><body>${html}<scr` + `ipt>${js}</scr` + `ipt></body></html>`);
-            doc.close();
+            iframe.srcdoc = `<html><head><style>${css}</style></head><body>${html}<scr` + `ipt>${js}</scr` + `ipt></body></html>`;
             showToast('预览已刷新');
         };
 
@@ -17060,74 +17012,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             document.getElementById('http-status-result').innerHTML = 
                 `<div style="color:${info.color};font-weight:700;font-size:14px;">${code} ${info.desc}</div>` +
                 `<div style="margin-top:4px;font-size:11px;color:var(--sub);">${info.detail}</div>`;
-        };
-
-        // CSS渐变生成
-        window.genGradient = function() {
-            const c1 = document.getElementById('grad-c1').value;
-            const c2 = document.getElementById('grad-c2').value;
-            const type = document.getElementById('grad-type').value;
-            let css;
-            if (type === 'linear') css = `linear-gradient(135deg, ${c1}, ${c2})`;
-            else if (type === 'radial') css = `radial-gradient(circle, ${c1}, ${c2})`;
-            else css = `conic-gradient(${c1}, ${c2}, ${c1})`;
-            document.getElementById('grad-preview').style.background = css;
-            document.getElementById('grad-result').textContent = `background: ${css};`;
-        };
-
-        // JWT解码
-        window.decodeJWT = function() {
-            const token = document.getElementById('jwt-input').value.trim();
-            if (!token) return;
-            try {
-                const parts = token.split('.');
-                if (parts.length < 2) throw '格式错误';
-                const decode = (str) => {
-                    str = str.replace(/-/g, '+').replace(/_/g, '/');
-                    while (str.length % 4) str += '=';
-                    return JSON.parse(decodeURIComponent(escape(atob(str))));
-                };
-                const header = decode(parts[0]);
-                const payload = decode(parts[1]);
-                let html = '<div style="font-weight:700;color:var(--accent);">Header</div>';
-                html += '<pre style="white-space:pre-wrap;font-size:10px;">' + JSON.stringify(header, null, 2) + '</pre>';
-                html += '<div style="font-weight:700;color:var(--accent-2);margin-top:6px;">Payload</div>';
-                html += '<pre style="white-space:pre-wrap;font-size:10px;">' + JSON.stringify(payload, null, 2) + '</pre>';
-                if (payload.exp) {
-                    const expDate = new Date(payload.exp * 1000);
-                    const expired = Date.now() > payload.exp * 1000;
-                    html += `<div style="margin-top:6px;color:${expired ? '#ef4444' : '#22c55e'};font-size:10px;">过期时间: ${expDate.toLocaleString()} ${expired ? '(已过期)' : '(有效)'}</div>`;
-                }
-                if (parts[2]) html += '<div style="margin-top:6px;font-size:10px;color:var(--sub);">Signature: ' + parts[2].substring(0, 20) + '...</div>';
-                document.getElementById('jwt-result').innerHTML = html;
-            } catch(e) {
-                document.getElementById('jwt-result').innerHTML = '<span style="color:#ef4444;">JWT格式错误，请检查输入</span>';
-            }
-        };
-
-        // 正则表达式测试
-        window.testRegex = function() {
-            const pattern = document.getElementById('regex-pattern').value;
-            const text = document.getElementById('regex-text').value;
-            if (!pattern || !text) return;
-            try {
-                let flags = '';
-                if (document.getElementById('regex-g').checked) flags += 'g';
-                if (document.getElementById('regex-i').checked) flags += 'i';
-                const regex = new RegExp(pattern, flags);
-                const matches = text.match(regex);
-                if (matches) {
-                    let highlighted = text.replace(regex, (m) => `<mark style="background:rgba(0,255,255,0.2);color:var(--accent);padding:0 2px;border-radius:2px;">${m}</mark>`);
-                    document.getElementById('regex-result').innerHTML = 
-                        `<div style="color:#22c55e;font-weight:700;">匹配 ${matches.length} 个结果</div>` +
-                        `<div style="margin-top:4px;font-size:11px;">${highlighted}</div>` +
-                        `<div style="margin-top:4px;font-size:10px;color:var(--sub);">匹配项: ${matches.map(m => '"' + m + '"').join(', ')}</div>`;
-                } else {
-                    document.getElementById('regex-result').innerHTML = '<span style="color:#f59e0b;">无匹配结果</span>';
-                }
-            } catch(e) {
-                document.getElementById('regex-result').innerHTML = '<span style="color:#ef4444;">正则表达式错误: ' + e.message + '</span>';
-            }
         };
 
         // 哈希生成 (使用SubtleCrypto for SHA)

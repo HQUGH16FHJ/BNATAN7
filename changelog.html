@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>更新日志 - 绊谈万能枢纽 v3.8 | bantan.online</title>
 <meta name="description" content="绊谈万能枢纽完整更新日志，最新 v3.8 版本新增品牌故事、隐藏彩蛋、SEO 优化与导航体验升级。">
 <meta name="keywords" content="绊谈更新日志,bantan更新,万能枢纽版本,UnicornStudio,品牌故事,隐藏彩蛋">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bantan.online/changelog.html">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <meta property="og:type" content="article">
 <meta property="og:title" content="更新日志 - 绊谈万能枢纽">
 <meta property="og:description" content="最新 v3.8：品牌故事、隐藏彩蛋、SEO 优化与导航体验升级。">
@@ -547,6 +550,41 @@
     .compact-version:hover { transform: none; }
   }
 </style>
+<style id="adaptive-hardening-v38">
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+img, svg, canvas {
+  max-width: 100%;
+}
+.container, .version-card, .featured-version, .compact-version {
+  min-width: 0;
+}
+.change-text, .highlight-item p, .lead {
+  overflow-wrap: anywhere;
+}
+code, pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+@media (max-width: 400px) {
+  .page-header h1, .version-number {
+    overflow-wrap: anywhere;
+  }
+  .version-meta {
+    flex-wrap: wrap;
+  }
+  .cosmic-orb {
+    display: none;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -558,7 +596,7 @@
   <div class="page">
 
     <!-- Back button -->
-    <a href="index.html" class="back-link" aria-label="返回首页">
+    <a href="landing.html" class="back-link" aria-label="返回首页">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 12H5M12 19l-7-7 7-7"></path>
       </svg>
