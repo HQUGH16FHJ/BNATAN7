@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="dark"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<meta name="baidu-site-verification" content="codeva-YLjTyR5ttz" />
+<meta name="baidu-site-verification" content="codeva-B7zYgqNLsM" />
 <title>绊谈 · 万能枢纽 - 600+ 免费在线工具一站直达 | bantan.online</title>
 <meta name="description" content="绊谈（bantan.online）是中文在线工具聚合平台，提供 600+ 免费工具：AI 对话、在线翻译、塔罗占卜、星座查询、开发者工具、教育学习、电竞优化。无需下载，注册即用。">
 <meta name="keywords" content="绊谈,bantan,bantan.online,万能枢纽,在线工具,AI对话,塔罗占卜,开发者工具,教育工具,电竞优化,帧率测试">
@@ -13,13 +13,8 @@
 <meta property="og:site_name" content="绊谈 · 万能枢纽">
 <meta property="og:title" content="绊谈 · 万能枢纽 - 600+ 免费在线工具">
 <meta property="og:description" content="中文在线工具聚合平台，600+ 免费工具一站直达。">
-<meta property="og:url" content="https://bantan.online/">
+<meta property="og:url" content="https://bantan.online/index.html">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://bantan.online/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="绊谈 · 万能枢纽 - 600+ 免费在线工具一站直达">
-<meta name="twitter:image" content="https://bantan.online/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f59e0b">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3713,7 +3708,7 @@
             max-height: min(620px, 75vh);
             border-radius: 24px;
             border: 1px solid rgba(251, 113, 133, 0.25);
-            background: rgba(15, 12, 8, 0.92);
+            background: var(--glass-bg);
             backdrop-filter: blur(40px) saturate(250%);
             -webkit-backdrop-filter: blur(40px) saturate(250%);
             box-shadow: 0 25px 100px rgba(0,0,0,0.35), 0 0 60px rgba(251,113,133,0.15);
@@ -6284,87 +6279,6 @@
         body.auth-ready #main-container {
             animation: welcomeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-              /* ============================================================
-           AI 悬浮球 + 聊天面板 修复补丁
-           ============================================================ */
-
-        /* 1. AI 悬浮球容器：提到最高层级 */
-        .ai-fab-wrap {
-            z-index: 99999 !important;
-            isolation: isolate;
-            pointer-events: none;
-        }
-        .ai-fab-wrap > * {
-            pointer-events: auto;
-        }
-
-        /* 2. AI 悬浮球本体：去掉 backdrop-filter，强制正圆 */
-        #ai-fab {
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-            border-radius: 50% !important;
-            aspect-ratio: 1 / 1;
-            width: 80px !important;
-            height: 80px !important;
-            background:
-                radial-gradient(circle at 30% 20%, rgba(255,255,255,0.18) 0%, transparent 42%),
-                linear-gradient(135deg, #0a0a2e, #1a0a3e, #0a1a3e) !important;
-            z-index: 99999 !important;
-            will-change: transform;
-        }
-        #ai-fab::after {
-            border-radius: 50% !important;
-        }
-
-        /* 3. AI 聊天面板：层级最高 */
-        #ai-panel {
-            z-index: 99998 !important;
-            width: min(420px, calc(100vw - 24px)) !important;
-            min-width: 280px;
-        }
-
-        /* 4. 欢迎卡片按钮：窄屏换行 */
-        .ai-welcome-grid {
-            flex-wrap: wrap !important;
-            justify-content: space-between;
-        }
-        .ai-welcome-item {
-            flex: 1 1 40% !important;
-            min-width: 100px;
-            white-space: nowrap;
-        }
-
-        /* 5. 输入区域换行 */
-        .ai-input-wrap {
-            flex-wrap: wrap !important;
-        }
-        .ai-input-area {
-            flex: 1 1 180px;
-            min-width: 0;
-        }
-
-        /* 6. 消息气泡文字不裁切 */
-        .ai-msg-content {
-            word-break: break-word;
-            overflow-wrap: anywhere;
-        }
-
-        /* 7. 快捷按钮换行 */
-        .ai-quick-actions {
-            flex-wrap: wrap !important;
-        }
-
-        /* 8. 移动端悬浮球适配 */
-        @media (max-width: 480px) {
-            #ai-fab {
-                width: 60px !important;
-                height: 60px !important;
-            }
-            .ai-fab-wrap {
-                right: 14px !important;
-                bottom: 70px !important;
-            }
-        }
     </style>
 </head>
 <body>
@@ -6446,7 +6360,7 @@
       color: rgba(170, 180, 200, 0.65) !important;
       background-image: none !important;
   }
-  </style>
+</style>
 <script>
 // ===== 登录态路由 + 前端防护 + 爬虫放行 =====
 (function() {
@@ -6589,21 +6503,9 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     <div class="container" id="main-container">
 
         <!-- 导航栏（带汉堡菜单） -->
-        <header class="nav" role="navigation" aria-label="主导航"><a href="landing.html" class="logo" style="text-decoration:none;">
-  <span style="display:inline-flex;align-items:center;gap:8px;">
-    <svg width="28" height="28" viewBox="0 0 64 64" style="vertical-align:middle;filter:drop-shadow(0 0 12px rgba(245,158,11,0.5));">
-      <defs>
-        <linearGradient id="bantan-avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#f59e0b"/>
-          <stop offset="100%" stop-color="#fb7185"/>
-        </linearGradient>
-      </defs>
-      <rect width="64" height="64" rx="18" fill="url(#bantan-avatar-grad)"/>
-      <text x="32" y="44" font-size="34" font-weight="900" text-anchor="middle" fill="#ffffff" font-family="system-ui,sans-serif">绊</text>
-    </svg>
-    绊谈枢纽 <span class="quantum-tag">✦ 终极</span>
-  </span>
-</a>
+        <header class="nav" role="navigation" aria-label="主导航">
+            <span class="logo">绊谈枢纽 <span class="quantum-tag">✦ 终极</span></span>
+            <div class="nav-actions">
                 <button class="nav-login-btn" id="nav-login-btn" onclick="openAuthModal()">
                     <span>👤</span>
                     <span class="login-label">登录 / 注册</span>
@@ -6929,14 +6831,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     </div>
                 </div>
                 <span class="entry-arrow">→</span>
-            </div>
-
-            <!-- 免责声明 - 底部低调条 -->
-            <div class="disclaimer-bar">
-                <div class="disclaimer-title">⚠️ 免责声明</div>
-                <div>本站属于个人制作的工具聚合站点，所有外部链接均跳转至第三方网站。本站仅做链接整理展示，不对第三方站点的内容、安全与可用性承担责任。全部内容仅限个人学习娱乐，禁止用于任何商业用途。</div>
-                <div class="hint-title">📢 使用提示</div>
-                <div>本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。</div>
             </div>
         </section>
 
@@ -9250,26 +9144,32 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <div style="font-size:clamp(10px,1vw,12px);color:var(--sub);line-height:1.7;opacity:.8;">本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。</div>
             </div>
         </section>
-      <div class="footer">
-    <div class="footer-statusbar">
-        <span class="status-dot" data-status="online"></span>
-        <span class="footer-syslabel">系统在线</span>
-        <span style="opacity:.3">|</span>
-        <span>节点 ORBIT-01</span>
-        <span style="opacity:.3">|</span>
-        <span>版本 2026.ULT</span>
-        <span style="opacity:.3">|</span>
-        <span>👥 <span style="display:none;">访问</span> <span id="visit-count">0</span></span>
+        <!-- 免责声明 - 底部低调条 -->
+            <div class="disclaimer-bar">
+                <div class="disclaimer-title">⚠️ 免责声明</div>
+        <div class="footer">
+            <div class="footer-statusbar">
+                <span class="status-dot" data-status="online"></span>
+                <span class="footer-syslabel">系统在线</span>
+                <span style="opacity:.3">|</span>
+                <span>节点 ORBIT-01</span>
+                <span style="opacity:.3">|</span>
+                <span>版本 2026.ULT</span>
+                <span style="opacity:.3">|</span>
+                <span>👥 <span style="display:none;">访问</span> <span id="visit-count">0</span></span>
+            </div>
+            <div class="footer-main" id="footer-main">
+                © 2026 绊谈 · 终极版 &nbsp;|&nbsp;
+                <a href="license.html" style="color:inherit;text-decoration:none;">使用许可</a> &nbsp;|&nbsp;
+                <a href="changelog.html" style="color:inherit;text-decoration:none;">更新日志</a> &nbsp;|&nbsp;
+                <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp;
+                <kbd>空格</kbd> 换台言 &nbsp;|&nbsp;
+                <kbd>F</kbd> 搜索 &nbsp;|&nbsp;
+                <kbd>M</kbd> 翻译
+            </div>
+        </div>
     </div>
-    <div class="footer-main" id="footer-main">
-    © 2026 绊谈 · 终极版 &nbsp;|&nbsp;
-    <a href="license.html" style="color:var(--accent);text-decoration:none;">使用许可</a> &nbsp;|&nbsp;
-    <a href="changelog.html" style="color:var(--accent);text-decoration:none;">更新日志</a> &nbsp;|&nbsp;
-    <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp;
-    <kbd>空格</kbd> 换名言 &nbsp;|&nbsp;
-    <kbd>F</kbd> 搜索 &nbsp;|&nbsp;
-    <kbd>M</kbd> 翻译
-</div>
+
     <!-- ===== 反馈弹窗 ===== -->
     <div class="feedback-overlay" id="feedback-overlay" onclick="if(event.target===this)closeFeedback()">
         <div class="feedback-card">
@@ -9307,6 +9207,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
     <!-- ===== 回到顶部 ===== -->
     <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部" title="回到顶部">↑</button>
+
     <!-- ===== AI 助手悬浮按钮 ===== -->
     <div class="ai-fab-wrap">
         <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="小绊谈 AI 智能对话">
