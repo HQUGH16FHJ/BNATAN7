@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">小绊谈</title>
+  <desc id="desc">绊谈万能枢纽的智能助手品牌形象</desc>
+  <defs>
+    <linearGradient id="bodyGradient" x1="28" y1="22" x2="210" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="0.52" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <linearGradient id="visorGradient" x1="62" y1="70" x2="177" y2="157" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#090b18"/>
+    </linearGradient>
+    <radialGradient id="eyeGlow" cx="0" cy="0" r="1" gradientTransform="translate(96 111) rotate(45) scale(26)">
+      <stop stop-color="#a7f3ff"/>
+      <stop offset="0.5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#f59e0b" flood-opacity=".24"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M120 25v18" stroke="#fbbf24" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="120" cy="18" r="10" fill="#38bdf8"/>
+    <circle cx="120" cy="18" r="4" fill="#fff"/>
+    <rect x="34" y="38" width="172" height="170" rx="58" fill="url(#bodyGradient)"/>
+    <path d="M61 64c12-17 34-26 59-26 25 0 48 9 60 26" fill="none" stroke="#fff7ed" stroke-opacity=".32" stroke-width="9" stroke-linecap="round"/>
+    <rect x="58" y="72" width="124" height="86" rx="39" fill="url(#visorGradient)"/>
+    <ellipse cx="97" cy="112" rx="15" ry="18" fill="url(#eyeGlow)"/>
+    <ellipse cx="145" cy="112" rx="15" ry="18" fill="url(#eyeGlow)"/>
+    <ellipse cx="102" cy="105" rx="5" ry="6" fill="#fff"/>
+    <ellipse cx="150" cy="105" rx="5" ry="6" fill="#fff"/>
+    <path d="M101 138c12 10 26 10 38 0" fill="none" stroke="#fb7185" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="47" cy="118" r="11" fill="#fb7185"/>
+    <circle cx="193" cy="118" r="11" fill="#38bdf8"/>
+    <path d="M70 180h100" stroke="#fff7ed" stroke-opacity=".32" stroke-width="7" stroke-linecap="round"/>
+    <path d="M83 197h74" stroke="#fff7ed" stroke-opacity=".18" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="120" cy="178" r="11" fill="#0a0805"/>
+    <text x="120" y="183" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" font-weight="800" fill="#fbbf24">绊</text>
+  </g>
+</svg>

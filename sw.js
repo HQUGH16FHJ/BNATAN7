@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v3.8';
+const CACHE_NAME = 'bantan-static-v3.9';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -7,6 +7,18 @@ const CORE_ASSETS = [
   '/license.html',
   '/manifest.json',
   '/favicon.svg',
+  '/xiaobantan.svg',
+  '/confirm-dialog.css',
+  '/confirm-dialog.js',
+  '/profile-center.css',
+  '/profile-center.js',
+  '/legacy-tools.js',
+  '/experience-v4.css',
+  '/experience-v4.js',
+  '/reactbits-v4.css',
+  '/reactbits-v4.js',
+  '/uiverse-v4.css',
+  '/uiverse-v4.js',
   '/favicon.ico',
   '/apple-touch-icon.png',
   '/android-chrome-192x192.png',

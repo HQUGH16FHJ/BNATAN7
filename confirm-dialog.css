@@ -1,0 +1,123 @@
+.bantan-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(5, 3, 2, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+.bantan-confirm-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+.bantan-confirm-card {
+  width: min(94vw, 420px);
+  padding: 24px;
+  border: 1px solid rgba(245, 158, 11, 0.14);
+  border-radius: 20px;
+  color: #fff7ed;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(245, 158, 11, 0.09), transparent 40%),
+    rgba(18, 14, 11, 0.97);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55);
+  transform: translateY(18px) scale(0.96);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bantan-confirm-overlay.show .bantan-confirm-card {
+  transform: translateY(0) scale(1);
+}
+.bantan-confirm-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  font-size: 22px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.bantan-confirm-card[data-tone="danger"] .bantan-confirm-icon {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.22);
+}
+.bantan-confirm-card[data-tone="success"] .bantan-confirm-icon {
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.22);
+}
+.bantan-confirm-title {
+  margin: 0;
+  color: inherit;
+  font-size: 19px;
+  font-weight: 900;
+}
+.bantan-confirm-message {
+  margin: 9px 0 0;
+  color: #d6c7b8;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.bantan-confirm-detail {
+  margin-top: 14px;
+  padding: 11px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  color: #d6c7b8;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.bantan-confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+.bantan-confirm-btn {
+  min-height: 44px;
+  border: 0;
+  border-radius: 13px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.bantan-confirm-btn:hover {
+  transform: translateY(-1px);
+}
+.bantan-confirm-btn.cancel {
+  color: #fff7ed;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.bantan-confirm-btn.confirm {
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #fb7185);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.2);
+}
+.bantan-confirm-card[data-tone="danger"] .bantan-confirm-btn.confirm {
+  background: linear-gradient(135deg, #ef4444, #fb7185);
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.22);
+}
+@media (max-width: 420px) {
+  .bantan-confirm-overlay {
+    align-items: flex-end;
+    padding: 12px;
+  }
+  .bantan-confirm-card {
+    width: 100%;
+    border-radius: 20px 20px 16px 16px;
+  }
+  .bantan-confirm-actions {
+    grid-template-columns: 1fr;
+  }
+}

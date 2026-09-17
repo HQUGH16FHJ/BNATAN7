@@ -1,0 +1,151 @@
+/* Adapted from Uiverse.io components under the MIT License. */
+.bnt-search-input.uiverse-wave-input {
+  border: 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 0;
+  background-color: transparent;
+  background-image: linear-gradient(90deg, #38bdf8, #f59e0b, #fb7185);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 0 2px;
+  transition: background-size 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+.bnt-search-input.uiverse-wave-input:focus {
+  border-bottom-color: transparent;
+  background-size: 100% 2px;
+  box-shadow: none;
+}
+
+.uiverse-search-submit {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(245, 158, 11, 0.2) 55%, rgba(251, 113, 133, 0.2));
+}
+.uiverse-search-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-120%) skewX(-28deg);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.uiverse-search-submit:hover::before {
+  transform: translateX(120%) skewX(-28deg);
+}
+.uiverse-search-submit > * {
+  position: relative;
+  z-index: 1;
+}
+.uiverse-arrow {
+  display: inline-flex;
+  margin-left: 7px;
+  transform: translateX(-3px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.uiverse-search-submit:hover .uiverse-arrow {
+  transform: translateX(2px);
+}
+
+.uiverse-multi-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 1px 20px 8px;
+  color: #8a9ab0;
+  font-size: 10px;
+}
+.uiverse-multi-label {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.uiverse-switch {
+  position: relative;
+  width: 54px;
+  height: 28px;
+  padding: 3px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(8, 10, 16, 0.9);
+  box-shadow: inset 0 2px 7px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+.uiverse-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.uiverse-switch-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.uiverse-switch-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #56647a, #283241);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 3px 8px rgba(0, 0, 0, 0.5);
+  transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+.uiverse-switch-dot {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #ef565f;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: border-color 0.3s ease, left 0.3s ease, right 0.3s ease;
+}
+.uiverse-switch input:checked + .uiverse-switch-track .uiverse-switch-thumb {
+  left: 26px;
+  background: linear-gradient(145deg, #55d6a0, #147a5a);
+}
+.uiverse-switch input:checked + .uiverse-switch-track .uiverse-switch-dot {
+  right: 33px;
+  border-color: #55d6a0;
+}
+
+.uiverse-block-loader {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 6px);
+  gap: 2px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.uiverse-block-loader span {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: #38bdf8;
+  animation: uiverseBlock 0.85s ease-in-out infinite;
+}
+.uiverse-block-loader span:nth-child(2) { animation-delay: 0.12s; }
+.uiverse-block-loader span:nth-child(3) { animation-delay: 0.24s; }
+.uiverse-block-loader span:nth-child(4) { animation-delay: 0.36s; }
+@keyframes uiverseBlock {
+  0%, 100% { transform: scale(0.7); opacity: 0.45; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.uiverse-loader-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uiverse-block-loader span {
+    animation: none;
+  }
+}

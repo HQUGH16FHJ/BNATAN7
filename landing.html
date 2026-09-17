@@ -1751,7 +1751,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
   .tool-hover-tip { display: none !important; }
 }
 </style>
-<style id="adaptive-hardening-v38">
+<style id="adaptive-hardening-v39">
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -1836,13 +1836,130 @@ nav#navbar {
 @media (min-width: 2400px) {
   :root { --max-w: 1440px; }
 }
+
+/* v3.9 unified brand */
+.nav-logo-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.brand-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.65);
+}
+.online-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid rgba(52, 211, 153, 0.18);
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.06);
+  color: #a7f3d0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.online-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+  animation: onlinePulse 2s ease-out infinite;
+}
+.online-status[data-state="offline"] {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.06);
+}
+.online-status[data-state="offline"] .online-status-dot {
+  background: #ef4444;
+  animation: none;
+}
+@keyframes onlinePulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.48); }
+  70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.page-loader .loader-logo {
+  width: 82px;
+  height: 82px;
+  padding: 8px;
+  overflow: visible;
+}
+.page-loader .loader-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: mascotFloat 2.6s ease-in-out infinite;
+}
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-7px) rotate(1deg); }
+}
+.brand-story-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 170px;
+  gap: 28px;
+  align-items: center;
+}
+.brand-story-character {
+  text-align: center;
+}
+.brand-story-character img {
+  width: 150px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  filter: drop-shadow(0 18px 34px rgba(245, 158, 11, 0.2));
+  animation: mascotFloat 3.4s ease-in-out infinite;
+}
+.brand-story-character strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--text);
+  font-size: 15px;
+}
+.brand-story-character span {
+  display: block;
+  margin-top: 3px;
+  color: var(--sub-2);
+  font-size: 11px;
+}
+@media (max-width: 680px) {
+  .brand-story-body {
+    grid-template-columns: 1fr;
+  }
+  .brand-story-character {
+    grid-row: 1;
+  }
+  .brand-story-character img {
+    width: 118px;
+  }
+}
+@media (max-width: 420px) {
+  .online-status {
+    padding: 7px;
+  }
+  .online-status-text {
+    display: none;
+  }
+}
 </style>
+<link rel="stylesheet" href="./confirm-dialog.css">
+<link rel="stylesheet" href="./experience-v4.css">
+<link rel="stylesheet" href="./reactbits-v4.css">
+<link rel="stylesheet" href="./uiverse-v4.css">
 </head>
 <body>
 
 <!-- Page Loader -->
 <div class="page-loader" id="pageLoader">
-  <div class="loader-logo">绊</div>
+  <div class="loader-logo"><img src="xiaobantan.svg" alt="小绊谈正在加载"></div>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
 </div>
 
@@ -1866,7 +1983,7 @@ nav#navbar {
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <div class="nav-logo-icon">绊</div>
-绊谈<span style="display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--accent);margin:0 6px;vertical-align:middle;"></span>万能枢纽
+      <span class="nav-logo-brand">绊谈 <span class="brand-dot"></span> 万能枢纽</span>
     </a>
     <ul class="nav-links">
       <li><a href="#tools">精选工具</a></li>
@@ -1875,6 +1992,10 @@ nav#navbar {
     </ul>
     <button class="nav-cta" onclick="openAuthModal()">立即体验</button>
     <div class="nav-clock" id="navClock">--:--</div>
+    <div class="online-status" id="onlineStatus" data-state="checking" title="网站连接状态">
+      <span class="online-status-dot"></span>
+      <span class="online-status-text">ONLINE</span>
+    </div>
     <button class="nav-mobile-toggle" onclick="toggleMobileNav()" aria-label="打开菜单">☰</button>
   </div>
 </nav>
@@ -2000,11 +2121,19 @@ nav#navbar {
         <h3 class="brand-story-title">为什么叫「绊谈」？</h3>
       </div>
       <div class="brand-story-body">
-        <p><strong>「绊」</strong>，是连接、是羁绊，是人与人、人与工具之间那根看不见的线。</p>
-        <p><strong>「谈」</strong>，是交流、是对话，是我们在数字世界里彼此照亮的方式。</p>
-        <p>绊谈（Bantan）想做的事很简单——<span class="hl">用一个入口，连接你的所有需求</span>。</p>
-        <p>不管是写代码、学知识、找工作、查资料，还是只想找点乐子，绊谈都把 600+ 工具聚合在一起，让你不用再在不同网站之间反复跳转。</p>
-        <p class="brand-story-slogan">—— 连接需求，点亮可能 ✦</p>
+        <div class="brand-story-copy">
+          <p><strong>「绊」</strong>，是连接、是羁绊，是人与人、人与工具之间那根看不见的线。</p>
+          <p><strong>「谈」</strong>，是交流、是对话，是我们在数字世界里彼此照亮的方式。</p>
+          <p>绊谈（Bantan）想做的事很简单——<span class="hl">用一个入口，连接你的所有需求</span>。</p>
+          <p>不管是写代码、学知识、找工作、查资料，还是只想找点乐子，绊谈都把 600+ 工具聚合在一起，让你不用再在不同网站之间反复跳转。</p>
+          <p><strong>小绊谈</strong>是绊谈的品牌伙伴与 AI 向导，负责陪你搜索、推荐和解答问题，让每一次使用都像一次轻松的交谈。</p>
+          <p class="brand-story-slogan">—— 连接需求，点亮可能 ✦</p>
+        </div>
+        <div class="brand-story-character" aria-label="小绊谈品牌形象">
+          <img src="xiaobantan.svg" alt="小绊谈品牌形象">
+          <strong>小绊谈</strong>
+          <span>你的万能枢纽向导</span>
+        </div>
       </div>
     </div>
 </section>
@@ -2933,7 +3062,7 @@ async function handleLogin(e) {
     setLoginState(result.data.user || result.data, result.data.token);
     showToast(welcomeText(result.data.user || result.data, false), 2000);
     btn.textContent = '登录成功，跳转中...';
-    smoothRedirect('index.html?welcome=1');
+    smoothRedirect(buildIndexRedirect({ welcome: '1' }));
     return;
   }
 
@@ -2943,7 +3072,7 @@ async function handleLogin(e) {
     setLoginState(localAcc, null);
     showToast(welcomeText(localAcc, false) + '（本地模式）', 2000);
     btn.textContent = '登录成功，跳转中...';
-    smoothRedirect('index.html?welcome=1');
+    smoothRedirect(buildIndexRedirect({ welcome: '1' }));
     return;
   }
 
@@ -2990,7 +3119,7 @@ async function handleRegister(e) {
     setLoginState(result.data.user || result.data, result.data.token);
     showToast(welcomeText(result.data.user || result.data, true));
     btn.textContent = '注册成功，跳转中...';
-    smoothRedirect('index.html?welcome=1&new=1');
+    smoothRedirect(buildIndexRedirect({ welcome: '1', new: '1' }));
     return;
   }
 
@@ -3016,7 +3145,7 @@ async function handleRegister(e) {
   setLoginState(acc, null);
   showToast(welcomeText(acc, true) + '（本地模式）');
   btn.textContent = '注册成功，跳转中...';
-  smoothRedirect('index.html?welcome=1&new=1');
+  smoothRedirect(buildIndexRedirect({ welcome: '1', new: '1' }));
 }
 
 // 登录/注册欢迎语（时段问候 + 身份定制）
@@ -3057,6 +3186,49 @@ function showToast(msg) {
   }, 2500);
 }
 
+function setPendingSearch(value) {
+  const query = String(value || '').trim();
+  if (!query) return;
+  try {
+    localStorage.setItem('bantan_pending_search', query);
+    sessionStorage.setItem('bantan_pending_search', query);
+  } catch (e) {}
+}
+
+function getPendingSearch() {
+  try {
+    return new URLSearchParams(window.location.search).get('q')
+      || sessionStorage.getItem('bantan_pending_search')
+      || localStorage.getItem('bantan_pending_search')
+      || '';
+  } catch (e) {
+    return '';
+  }
+}
+
+function buildIndexRedirect(extraParams) {
+  const params = new URLSearchParams();
+  Object.entries(extraParams || {}).forEach(([key, value]) => params.set(key, value));
+  const query = getPendingSearch().trim();
+  if (query) params.set('q', query);
+  return 'index.html' + (params.toString() ? '?' + params.toString() : '');
+}
+
+function updateOnlineStatus() {
+  const badge = document.getElementById('onlineStatus');
+  if (!badge) return;
+  const online = navigator.onLine !== false;
+  badge.dataset.state = online ? 'online' : 'offline';
+  const text = badge.querySelector('.online-status-text');
+  if (text) text.textContent = online ? 'ONLINE' : 'OFFLINE';
+  badge.title = online ? '网络连接正常' : '当前处于离线状态';
+}
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+document.addEventListener('DOMContentLoaded', updateOnlineStatus);
+updateOnlineStatus();
+
 // Close modal on Escape
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeAuthModal();
@@ -3066,15 +3238,18 @@ document.addEventListener('keydown', (e) => {
 function doSearch() {
   const query = document.getElementById('heroSearch').value.trim();
   if (!query) return;
+  setPendingSearch(query);
   tryTool(query);
 }
 
 function quickSearch(term) {
   document.getElementById('heroSearch').value = term;
+  setPendingSearch(term);
   tryTool(term);
 }
 
 function tryTool(toolName) {
+  setPendingSearch(toolName);
   // Open auth modal - user needs to login for full access
   openAuthModal();
 }
@@ -3197,7 +3372,7 @@ window.addEventListener('resize', () => {
       document.body.style.transform = 'scale(0.98)';
       document.body.style.filter = 'blur(4px)';
       setTimeout(() => {
-        window.location.href = 'index.html';
+        window.location.href = buildIndexRedirect({ welcome: '1' });
       }, 400);
     }
   } catch (e) {
@@ -4010,4 +4185,8 @@ function showContact(type) {
   window.addEventListener('scroll', hideTip, { passive: true });
 })();
 </script>
+<script src="./confirm-dialog.js"></script>
+<script src="./experience-v4.js"></script>
+<script src="./reactbits-v4.js"></script>
+<script src="./uiverse-v4.js"></script>
 </body></html>

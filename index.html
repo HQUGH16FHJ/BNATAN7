@@ -6286,7 +6286,7 @@
             animation: welcomeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 </style>
-<style id="adaptive-hardening-v38">
+<style id="adaptive-hardening-v39">
 html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -6376,7 +6376,152 @@ input, select, textarea, button {
     .ai-fab-wrap { bottom: calc(135px + env(safe-area-inset-bottom, 0px)); }
     #ai-panel { bottom: calc(210px + env(safe-area-inset-bottom, 0px)); }
 }
+.ai-avatar img,
+.ai-fab-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.ai-fab-logo {
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.55));
+}
+.boot-mascot {
+    width: 74px;
+    height: 74px;
+    object-fit: contain;
+    position: relative;
+    z-index: 3;
+    filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.45));
+    animation: mascotBootFloat 2.4s ease-in-out infinite;
+}
+@keyframes mascotBootFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-7px) scale(1.04); }
+}
+.logout-modal-overlay {
+    z-index: 10050 !important;
+}
+.logout-confirm-card {
+    width: min(94vw, 420px);
+    max-width: 420px !important;
+    padding: 30px 26px 24px;
+    text-align: center;
+    border-color: rgba(251, 113, 133, 0.2);
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55), 0 0 50px rgba(251, 113, 133, 0.08);
+}
+.logout-confirm-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 113, 133, 0.14));
+    border: 1px solid rgba(251, 113, 133, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.logout-confirm-door {
+    color: #fb7185;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    transform: translateX(1px);
+}
+.logout-confirm-title {
+    margin: 0;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 900;
+}
+.logout-confirm-desc {
+    margin: 10px auto 18px;
+    max-width: 330px;
+    color: var(--sub);
+    font-size: 13px;
+    line-height: 1.7;
+}
+.logout-user-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 20px;
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: rgba(var(--glow-color), 0.04);
+}
+.logout-user-avatar {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    color: #0a0805;
+    font-size: 16px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fbbf24, #fb7185);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+.logout-user-name {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 800;
+}
+.logout-user-uid {
+    margin-top: 3px;
+    color: var(--sub);
+    font-size: 11px;
+}
+.logout-confirm-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.logout-btn {
+    min-height: 44px;
+    border: 0;
+    border-radius: 13px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.logout-btn:hover {
+    transform: translateY(-1px);
+}
+.logout-btn.cancel {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+}
+.logout-btn.confirm {
+    color: #fff;
+    background: linear-gradient(135deg, #ef4444, #fb7185);
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.22);
+}
+.logout-btn.confirm:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+}
+@media (max-width: 420px) {
+    .logout-confirm-card {
+        padding: 26px 18px 18px;
+        border-radius: 20px;
+    }
+    .logout-confirm-actions {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
+<link rel="stylesheet" href="./confirm-dialog.css">
+<link rel="stylesheet" href="./profile-center.css">
+<link rel="stylesheet" href="./experience-v4.css">
+<link rel="stylesheet" href="./reactbits-v4.css">
+<link rel="stylesheet" href="./uiverse-v4.css">
 </head>
 <body>
 <style>
@@ -6531,7 +6676,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             <div class="ring"></div>
             <div class="ring"></div>
             <div class="ring"></div>
-            ✦
+            <img class="boot-mascot" src="xiaobantan.svg" alt="">
         </div>
     </div>
 
@@ -6601,7 +6746,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
         <!-- 导航栏（带汉堡菜单） -->
         <header class="nav" role="navigation" aria-label="主导航">
-            <a href="landing.html" class="logo" title="返回首页" style="text-decoration:none;">绊谈枢纽 <span class="quantum-tag">✦ 终极</span></a>
+            <a href="landing.html" class="logo" title="返回首页" style="text-decoration:none;">绊谈 <span style="color:var(--accent);-webkit-text-fill-color:var(--accent);">·</span> 万能枢纽 <span class="quantum-tag">v4.0</span></a>
             <div class="nav-actions">
                 <button class="nav-login-btn" id="nav-login-btn" onclick="openAuthModal()">
                     <span>👤</span>
@@ -6632,7 +6777,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                             <span>⚙️</span> 站长后台
                         </div>
                         <div style="height:1px;background:var(--border);margin:4px 0;"></div>
-                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;color:var(--danger);" onclick="doLogout();closeNavUserDropdown();">
+                        <div style="padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;color:var(--danger);" onclick="openLogoutConfirm();closeNavUserDropdown();">
                             <span>🚪</span> 退出登录
                         </div>
                     </div>
@@ -6924,7 +7069,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     <span class="entry-icon">📋</span>
                     <div>
                         <div class="entry-title">更新日志</div>
-                        <div class="entry-desc">v3.8 · 品牌故事 . 隐藏彩蛋 . SEO 完善 <span class="entry-new">新</span></div>
+                        <div class="entry-desc">v4.0 · 全网搜索 . 星轨动画 . 滑动体验 <span class="entry-new">新</span></div>
                     </div>
                 </div>
                 <span class="entry-arrow">→</span>
@@ -7300,6 +7445,65 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
                 <!-- Cron表达式 -->
                 <div class="mini-card">
+                    <div class="title">🎨 CSS渐变生成 · 经典</div>
+                    <div class="content">
+                        <input type="color" id="legacy-grad-c1" value="#00ffff" style="width:48%;height:36px;border:none;background:none;cursor:pointer;border-radius:8px;">
+                        <input type="color" id="legacy-grad-c2" value="#ff00ff" style="width:48%;height:36px;border:none;background:none;cursor:pointer;border-radius:8px;">
+                        <select id="legacy-grad-type" onchange="legacyGenGradient()" style="width:100%;margin-top:4px;">
+                            <option value="linear">线性渐变</option>
+                            <option value="radial">径向渐变</option>
+                            <option value="conic">锥形渐变</option>
+                        </select>
+                        <button type="button" class="btn btn-sm" onclick="legacyGenGradient()" style="margin-top:4px;">生成</button>
+                        <div id="legacy-grad-preview" style="width:100%;height:40px;border-radius:8px;margin-top:4px;background:linear-gradient(135deg,#00ffff,#ff00ff);"></div>
+                        <div class="result" id="legacy-grad-result" style="font-size:10px;word-break:break-all;">background: linear-gradient(135deg, #00ffff, #ff00ff);</div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="title">🔓 JWT解码 · 经典</div>
+                    <div class="content">
+                        <textarea id="legacy-jwt-input" rows="3" style="width:100%;font-size:10px;font-family:monospace;" placeholder="粘贴JWT令牌..."></textarea>
+                        <button type="button" class="btn btn-sm" onclick="legacyDecodeJWT()" style="margin-top:4px;">解码</button>
+                        <div class="result" id="legacy-jwt-result" style="max-height:180px;overflow-y:auto;font-size:10px;"><span style="color:var(--sub);">粘贴JWT后解码</span></div>
+                    </div>
+                </div>
+                <div class="mini-card span-2">
+                    <div class="title">🧪 正则表达式 · 经典</div>
+                    <div class="content">
+                        <input type="text" id="legacy-regex-pattern" placeholder="正则模式 如 \\d+" style="width:100%;font-family:monospace;font-size:11px;" value="\\d+">
+                        <textarea id="legacy-regex-text" rows="3" style="width:100%;margin-top:4px;font-family:monospace;font-size:11px;" placeholder="测试文本">abc123def456</textarea>
+                        <div class="flex-row" style="margin-top:4px;">
+                            <button type="button" class="btn btn-sm" onclick="legacyTestRegex()">测试</button>
+                            <label style="font-size:11px;color:var(--sub);"><input type="checkbox" id="legacy-regex-g" checked=""> 全局</label>
+                            <label style="font-size:11px;color:var(--sub);"><input type="checkbox" id="legacy-regex-i"> 忽略大小写</label>
+                        </div>
+                        <div class="result" id="legacy-regex-result"><span style="color:var(--sub);">点击测试</span></div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="title">#️⃣ 哈希生成 · 经典</div>
+                    <div class="content">
+                        <input type="text" id="legacy-hash-input" placeholder="输入文本" style="width:100%;" value="hello">
+                        <div class="flex-row" style="margin-top:4px;">
+                            <button type="button" class="btn btn-sm" onclick="genHash('sha256','legacy-hash-input','legacy-hash-result')">SHA-256</button>
+                            <button type="button" class="btn btn-sm" onclick="genHash('sha1','legacy-hash-input','legacy-hash-result')">SHA-1</button>
+                            <button type="button" class="btn btn-sm" onclick="genHash('md5','legacy-hash-input','legacy-hash-result')">MD5</button>
+                        </div>
+                        <div class="result" id="legacy-hash-result" style="font-size:10px;word-break:break-all;">输入文本后选择算法</div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="title">📝 Lorem生成 · 经典</div>
+                    <div class="content">
+                        <div class="flex-row">
+                            <input type="number" id="legacy-lorem-count" value="3" min="1" max="20" style="width:50px;" aria-label="段落数">
+                            <button type="button" class="btn btn-sm" onclick="legacyGenLorem()">生成</button>
+                        </div>
+                        <div class="result" id="legacy-lorem-result" style="max-height:120px;overflow-y:auto;font-size:11px;">点击生成</div>
+                    </div>
+                </div>
+
+                <div class="mini-card">
                     <div class="title">⏰ Cron表达式</div>
                     <div class="content">
                         <input type="text" id="cron-input" placeholder="*/5 * * * *" style="width:100%;font-family:monospace;font-size:11px;" value="*/5 * * * *">
@@ -7406,6 +7610,14 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <div class="result" id="pwd-result">点击生成</div>
                     </div>
                 </div>
+                <div class="mini-card">
+                    <div class="title">📱 二维码 · 经典</div>
+                    <div class="content">
+                        <input type="text" id="legacy-qr-input" placeholder="输入文本或链接" aria-label="二维码内容">
+                        <button type="button" class="btn btn-sm" onclick="legacyGenerateQR()" style="margin-top:4px;">生成</button>
+                        <div class="result" id="legacy-qr-result">输入内容后生成</div>
+                    </div>
+                </div>
                 <!-- 设备信息 -->
                 <div class="mini-card">
                     <div class="title">🖥️ 设备信息</div>
@@ -7444,6 +7656,12 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <input type="number" id="convert-input" placeholder="数值" style="width:100%;margin-top:4px;" aria-label="换算数值">
                         <button type="button" class="btn btn-sm" onclick="convertUnit()" style="margin-top:4px;">换算</button>
                         <div class="result" id="convert-result">输入数值</div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="title">🕐 世界时钟 · 经典</div>
+                    <div class="content">
+                        <div id="legacy-world-clock"><div>等待同步...</div></div>
                     </div>
                 </div>
                 <!-- 计算器 -->
@@ -7585,6 +7803,15 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <div class="result" id="loan-result">请输入参数</div>
                     </div>
                 </div>
+                <div class="mini-card">
+                    <div class="title">🏋️ BMI · 经典</div>
+                    <div class="content">
+                        <input type="number" id="legacy-bmi-height" placeholder="身高 (cm)" aria-label="身高">
+                        <input type="number" id="legacy-bmi-weight" placeholder="体重 (kg)" style="margin-top:4px;" aria-label="体重">
+                        <button type="button" class="btn btn-sm" onclick="legacyCalcBMI()" style="margin-top:4px;">计算</button>
+                        <div class="result" id="legacy-bmi-result">请输入参数</div>
+                    </div>
+                </div>
                 <!-- 纪念日 -->
                 <div class="mini-card">
                     <div class="title">💝 纪念日</div>
@@ -7707,6 +7934,26 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         </div>
                         <textarea id="typing-area" rows="2" placeholder="开始打字测试..." style="margin-top:4px;" disabled=""></textarea>
                         <div class="result" id="typing-result">等待测试</div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="title">⏱️ 倒计时器 · 经典</div>
+                    <div class="content">
+                        <div class="flex-row">
+                            <input type="number" id="legacy-timer-minutes" placeholder="分" value="5" style="width:60px;" aria-label="分钟">
+                            <input type="number" id="legacy-timer-seconds" placeholder="秒" value="0" style="width:60px;" aria-label="秒">
+                            <button type="button" class="btn btn-sm" onclick="legacyStartTimer()">开始</button>
+                            <button type="button" class="btn btn-sm" onclick="legacyResetTimer()">重置</button>
+                        </div>
+                        <div class="result" id="legacy-timer-display" style="font-size:clamp(22px,2.6vw,32px);text-align:center;font-weight:900;color:var(--accent);">05:00</div>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="title">🎯 随机选择 · 经典</div>
+                    <div class="content">
+                        <textarea id="legacy-picker-input" rows="2" placeholder="选项1&#10;选项2&#10;选项3" style="width:100%;"></textarea>
+                        <button type="button" class="btn btn-sm" onclick="legacyRandomPicker()" style="margin-top:4px;">随机选一个</button>
+                        <div class="result" id="legacy-picker-result">输入选项</div>
                     </div>
                 </div>
                 <!-- Base64 -->
@@ -8173,12 +8420,12 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <div class="changelog-header">
                     <span class="changelog-icon">📋</span>
                     <span class="changelog-title">更新日志</span>
-                    <span class="changelog-badge">v3.8 最新</span>
+                    <span class="changelog-badge">v4.0 最新</span>
                 </div>
                 <div style="padding:16px 20px 20px;display:flex;align-items:center;gap:12px;">
                     <div style="flex:1;">
-                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v3.8 · 品牌故事 . 隐藏彩蛋 . SEO 完善</div>
-                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">新增品牌故事与隐藏彩蛋 . 完善 PWA、分享预览与搜索引擎配置</div>
+                        <div style="font-size:clamp(13px,1.2vw,15px);font-weight:700;color:var(--text);margin-bottom:4px;">v4.0 · 全网搜索 . 星轨动画 . 滑动体验</div>
+                        <div style="font-size:clamp(11px,1vw,12px);color:var(--sub);">支持百度、Bing、Google、知乎、B站、GitHub、淘宝等网站搜索与横滑入口</div>
                     </div>
                     <div style="font-size:20px;color:var(--accent);transition:transform 0.3s;" class="entry-arrow">→</div>
                 </div>
@@ -8894,6 +9141,17 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     </div>
                 </div>
 
+                <div class="mini-card">
+                    <div class="title">⏰ 考试倒计时 · 经典</div>
+                    <div class="content">
+                        <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;">
+                            <input type="text" id="legacy-exam-name" placeholder="考试名称" style="flex:2;min-width:80px;">
+                            <input type="date" id="legacy-exam-date" style="flex:1;min-width:120px;">
+                            <button type="button" class="btn btn-sm" onclick="legacyAddExam()">添加</button>
+                        </div>
+                        <div id="legacy-exam-list" style="margin-top:6px;"></div>
+                    </div>
+                </div>
                 <!-- 做题时间倒计时 -->
                 <div class="mini-card" style="border-color:rgba(var(--glow-color),0.12);grid-column:1 / -1;">
                     <div class="title">⏱️ 做题时间倒计时 · 带响声</div>
@@ -9116,7 +9374,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <span style="opacity:.3">|</span>
                 <span>节点 ORBIT-01</span>
                 <span style="opacity:.3">|</span>
-                <span>版本 v3.8</span>
+                <span>版本 v4.0</span>
                 <span style="opacity:.3">|</span>
                 <span>👥 <span style="display:none;">访问</span> <span id="visit-count">0</span></span>
             </div>
@@ -9173,25 +9431,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     <!-- ===== AI 助手悬浮按钮 ===== -->
     <div class="ai-fab-wrap">
         <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="小绊谈 AI 智能对话">
-            <svg class="ai-fab-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="aiLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"></stop>
-                        <stop offset="40%" style="stop-color:#e0f7ff;stop-opacity:1"></stop>
-                        <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1"></stop>
-                    </linearGradient>
-                    <filter id="aiLogoGlow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
-                        <feMerge>
-                            <feMergeNode in="blur"></feMergeNode>
-                            <feMergeNode in="blur"></feMergeNode>
-                            <feMergeNode in="blur"></feMergeNode>
-                            <feMergeNode in="SourceGraphic"></feMergeNode>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <text x="50" y="68" text-anchor="middle" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="56" font-weight="900" fill="url(#aiLogoGrad)" filter="url(#aiLogoGlow)" font-style="italic">AI</text>
-            </svg>
+            <img class="ai-fab-logo" src="xiaobantan.svg" alt="">
             <span class="ai-badge" id="ai-badge">✨</span>
         </button>
     </div>
@@ -9199,7 +9439,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     <!-- ===== AI 聊天面板 ===== -->
     <div id="ai-panel">
         <div class="ai-panel-header">
-            <div class="ai-avatar">🤖</div>
+            <div class="ai-avatar"><img src="xiaobantan.svg" alt="小绊谈"></div>
             <div class="ai-header-info">
                 <div class="ai-title">小绊谈 AI <span class="pro-badge">PRO</span></div>
                 <div class="ai-subtitle"><span class="dot"></span>在线 · 智能对话 · 剩余 <b id="ai-remaining-count">--</b> 次</div>
@@ -9230,7 +9470,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                             <span class="dropdown-icon">🎉</span>邀请有礼
                         </div>
                         <div class="dropdown-divider"></div>
-                        <div class="dropdown-item danger" onclick="doLogout()">
+                        <div class="dropdown-item danger" onclick="openLogoutConfirm()">
                             <span class="dropdown-icon">🚪</span>退出登录
                         </div>
                     </div>
@@ -9632,6 +9872,29 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     <span class="info-label">会员等级</span>
                     <span class="info-value" id="profile-level">普通用户</span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 退出登录确认弹窗 -->
+    <div class="ai-settings-overlay modal-overlay-fixed logout-modal-overlay" id="logout-modal-overlay" onclick="if(event.target===this)closeLogoutConfirm()">
+        <div class="ai-settings-card logout-confirm-card" role="dialog" aria-modal="true" aria-labelledby="logout-confirm-title">
+            <button class="auth-close-btn" onclick="closeLogoutConfirm()" aria-label="关闭退出确认">✕</button>
+            <div class="logout-confirm-icon">
+                <span class="logout-confirm-door">↪</span>
+            </div>
+            <h3 id="logout-confirm-title" class="logout-confirm-title">确认退出登录？</h3>
+            <p class="logout-confirm-desc">退出后需要重新登录才能继续使用账号功能。你的收藏、便签和本地工具数据仍会保留。</p>
+            <div class="logout-user-preview">
+                <div class="logout-user-avatar" id="logout-user-avatar">U</div>
+                <div>
+                    <div class="logout-user-name" id="logout-user-name">当前用户</div>
+                    <div class="logout-user-uid" id="logout-user-uid">UID: --</div>
+                </div>
+            </div>
+            <div class="logout-confirm-actions">
+                <button type="button" class="logout-btn cancel" onclick="closeLogoutConfirm()">取消</button>
+                <button type="button" class="logout-btn confirm" id="logout-confirm-btn" onclick="confirmLogout()">退出登录</button>
             </div>
         </div>
     </div>
@@ -10342,11 +10605,12 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         function renderNavTools(filter) {
             const container = document.getElementById('nav-tools-container');
             if (!container) return;
-            const filtered = filter
-                ? navTools.filter(t =>
-                    t.name.toLowerCase().includes(filter.toLowerCase()) ||
-                    t.desc.toLowerCase().includes(filter.toLowerCase()) ||
-                    t.cat.toLowerCase().includes(filter.toLowerCase()))
+            const terms = String(filter || '').toLowerCase().split(/\s+/).filter(Boolean);
+            const filtered = terms.length
+                ? navTools.filter(t => {
+                    const haystack = (t.name + ' ' + t.desc + ' ' + t.cat).toLowerCase();
+                    return terms.every(term => haystack.includes(term));
+                })
                 : navTools;
             // 按分类分组
             const categories = {};
@@ -10378,6 +10642,37 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         };
         // 初始化渲染
         renderNavTools('');
+
+        // 跨页面搜索词：landing -> 登录/注册 -> index 自动定位
+        window.consumePendingSearch = function() {
+            let query = '';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                query = (params.get('q') || sessionStorage.getItem('bantan_pending_search') || localStorage.getItem('bantan_pending_search') || '').trim();
+                sessionStorage.removeItem('bantan_pending_search');
+                localStorage.removeItem('bantan_pending_search');
+            } catch (e) {}
+            if (!query) return;
+
+            const navSearch = document.getElementById('nav-tool-search');
+            if (navSearch) navSearch.value = query;
+            renderNavTools(query);
+
+            const toolSearch = document.getElementById('tool-search');
+            if (toolSearch) {
+                toolSearch.value = query;
+                if (typeof filterTools === 'function') filterTools();
+            }
+
+            navigate('nav');
+            showToast('已为你定位：' + query, 2600);
+
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('q');
+                history.replaceState(null, '', url.pathname + url.search + url.hash);
+            } catch (e) {}
+        };
 
         // ============================================================
         // 电竞优化工具集
@@ -10895,10 +11190,11 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             if (!el) return;
             
             const defaultAnns = [
-                { content: '✨ v3.8 已上线：品牌故事、隐藏彩蛋与导航体验全面升级', level: 'important' },
-                { content: '📖 落地页新增「为什么叫绊谈」品牌故事', level: 'normal' },
-                { content: '🎮 Konami、Ctrl+K 与 Logo 五次点击彩蛋已加入', level: 'normal' },
-                { content: '🚀 PWA、分享预览图和搜索引擎配置已完善', level: 'normal' },
+                { content: '✨ v4.0 星轨体验版上线：全网搜索与滑动界面全面升级', level: 'important' },
+                { content: '🌐 万能枢纽搜索支持百度、Bing、Google、知乎、B站、GitHub、淘宝等网站', level: 'normal' },
+                { content: '🎞️ 新增滚动揭示、卡片倾斜、页面过渡和全网站点横滑轨道', level: 'normal' },
+                { content: '🛰️ 更新日志升级为版本观测站，许可证升级为数字档案馆', level: 'normal' },
+                { content: '📱 新增移动端底部快捷栏和分页式搜索面板', level: 'normal' },
                 { content: '💡 有想法？点右下角 💬 反馈给站长～', level: 'normal' }
             ];
             
@@ -13689,6 +13985,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 if (navLoginBtn) navLoginBtn.style.display = 'flex';
                 if (navUserWrap) navUserWrap.style.display = 'none';
             }
+            if (window.BantanProfile) window.BantanProfile.applyToPage();
         }
 
         // 更新剩余次数 UI（覆盖原有逻辑，登录用户显示服务端数据）
@@ -13887,10 +14184,65 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             }
         }
 
-        // 退出登录
-        async function doLogout() {
+        // 退出登录确认弹窗
+        function openLogoutConfirm() {
             closeUserDropdown();
-            if (!confirm('确定要退出登录吗？')) return;
+            const overlay = document.getElementById('logout-modal-overlay');
+            const avatar = document.getElementById('logout-user-avatar');
+            const name = document.getElementById('logout-user-name');
+            const uid = document.getElementById('logout-user-uid');
+            const confirmBtn = document.getElementById('logout-confirm-btn');
+
+            let info = _userState.info;
+            if (!info) {
+                try { info = JSON.parse(localStorage.getItem('bantan_user_info') || 'null'); } catch (e) {}
+            }
+
+            const username = info?.nickname || info?.username || '当前用户';
+            const userUid = info?.uid || info?.id || info?.userId || '--';
+            if (avatar) avatar.textContent = String(username).slice(0, 1).toUpperCase();
+            if (avatar && window.BantanProfile) {
+                window.BantanProfile.applyAvatarToElement(avatar, window.BantanProfile.getSettings(), String(username).slice(0, 1).toUpperCase());
+            }
+            if (name) name.textContent = username;
+            if (uid) uid.textContent = 'UID: ' + userUid;
+            if (confirmBtn) {
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = '退出登录';
+            }
+            if (overlay) overlay.classList.add('show');
+            setTimeout(() => {
+                const cancelBtn = overlay?.querySelector('.logout-btn.cancel');
+                if (cancelBtn) cancelBtn.focus();
+            }, 180);
+        }
+
+        function closeLogoutConfirm() {
+            const overlay = document.getElementById('logout-modal-overlay');
+            if (overlay) overlay.classList.remove('show');
+        }
+
+        document.addEventListener('keydown', event => {
+            const overlay = document.getElementById('logout-modal-overlay');
+            if (event.key === 'Escape' && overlay?.classList.contains('show')) {
+                event.preventDefault();
+                closeLogoutConfirm();
+            }
+        });
+
+        async function confirmLogout() {
+            const btn = document.getElementById('logout-confirm-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = '正在退出...';
+            }
+            await doLogout();
+        }
+
+        // 执行退出
+        async function doLogout() {
+            closeLogoutConfirm();
+            closeUserDropdown();
 
             // Demo 模式跳过后端登出 API
             const isDemo = _userState.token && _userState.token.indexOf('demo_') === 0;
@@ -15287,8 +15639,16 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             showToast('对话已导出 ✨');
         }
 
-        function clearAIChat() {
-            if (!confirm('确定要清空对话记录吗？')) return;
+        async function clearAIChat() {
+            const confirmed = await BantanDialog.confirm({
+                title: '清空对话记录？',
+                message: '小绊谈与你的当前对话将被清空，无法恢复。',
+                confirmText: '确认清空',
+                cancelText: '保留对话',
+                tone: 'danger',
+                icon: '⌫'
+            });
+            if (!confirmed) return;
             const messages = document.getElementById('ai-messages');
             const modeBadgeHtml = _aiState.useAPI
                 ? '<span class="ai-mode-indicator"><span class="dot"></span>大模型模式</span> &nbsp;已接入真实大模型，什么都能问！'
@@ -15494,6 +15854,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             localStorage.setItem('theme', 'dark');
 
             setQuote(0);
+            consumePendingSearch();
             setTimeout(() => {
                 document.getElementById('boot-screen').classList.add('hidden');
             }, 1800);
@@ -16071,8 +16432,15 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             URL.revokeObjectURL(url);
             showToast('课程表已导出');
         };
-        window.clearSchedule = function() {
-            if (confirm('确定清空课程表吗？')) {
+        window.clearSchedule = async function() {
+            const confirmed = await BantanDialog.confirm({
+                title: '清空课程表？',
+                message: '当前课程表内容将被删除。',
+                confirmText: '确认清空',
+                tone: 'danger',
+                icon: '⌫'
+            });
+            if (confirmed) {
                 localStorage.removeItem('schedule');
                 renderSchedule();
                 showToast('课程表已清空');
@@ -16263,8 +16631,15 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             localStorage.setItem('mistakes', JSON.stringify(mistakes));
             showMistakes();
         };
-        window.clearMistakes = function() {
-            if (confirm('确定清空所有错题吗？')) {
+        window.clearMistakes = async function() {
+            const confirmed = await BantanDialog.confirm({
+                title: '清空错题本？',
+                message: '所有已保存的错题将被删除，无法恢复。',
+                confirmText: '确认清空',
+                tone: 'danger',
+                icon: '⌫'
+            });
+            if (confirmed) {
                 localStorage.removeItem('mistakes');
                 showMistakes();
                 showToast('错题本已清空');
@@ -16360,8 +16735,15 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             localStorage.setItem('studyPlans', JSON.stringify(plans));
             renderPlan();
         };
-        window.clearPlan = function() {
-            if (confirm('确定清空学习计划吗？')) {
+        window.clearPlan = async function() {
+            const confirmed = await BantanDialog.confirm({
+                title: '清空学习计划？',
+                message: '当前学习计划和完成状态将被删除。',
+                confirmText: '确认清空',
+                tone: 'danger',
+                icon: '⌫'
+            });
+            if (confirmed) {
                 localStorage.removeItem('studyPlans');
                 renderPlan();
                 showToast('学习计划已清空');
@@ -17015,11 +17397,13 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         };
 
         // 哈希生成 (使用SubtleCrypto for SHA)
-        window.genHash = async function(algo) {
-            const input = document.getElementById('hash-input').value;
+        window.genHash = async function(algo, inputId, resultId) {
+            const input = document.getElementById(inputId || 'hash-input').value;
+            const resultElement = document.getElementById(resultId || 'hash-result');
+            const normalizedAlgo = String(algo || '').toLowerCase();
             if (!input) return;
             try {
-                if (algo === 'md5') {
+                if (normalizedAlgo === 'md5') {
                     // 简易MD5实现
                     function md5(str) {
                         function r(n,r){var t=(65535&n)+(65535&r);return(65535&(n>>16)+(r>>16)+(t>>16))<<16|65535&t}
@@ -17036,18 +17420,23 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         return g(d)
                     }
                     const result = md5(input);
-                    document.getElementById('hash-result').innerHTML = '<strong style="color:var(--accent);">MD5:</strong><br>' + result;
+                    resultElement.innerHTML = '<strong style="color:var(--accent);">MD5:</strong><br>' + result;
                 } else {
                     const encoder = new TextEncoder();
                     const data = encoder.encode(input);
-                    const hashBuffer = await crypto.subtle.digest(algo, data);
+                    const webCryptoAlgo = normalizedAlgo === 'sha256'
+                        ? 'SHA-256'
+                        : normalizedAlgo === 'sha1'
+                            ? 'SHA-1'
+                            : algo;
+                    const hashBuffer = await crypto.subtle.digest(webCryptoAlgo, data);
                     const hashArray = Array.from(new Uint8Array(hashBuffer));
                     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                    const label = algo.toUpperCase();
-                    document.getElementById('hash-result').innerHTML = `<strong style="color:var(--accent);">${label}:</strong><br>${hashHex}`;
+                    const label = String(webCryptoAlgo).toUpperCase();
+                    resultElement.innerHTML = `<strong style="color:var(--accent);">${label}:</strong><br>${hashHex}`;
                 }
             } catch(e) {
-                document.getElementById('hash-result').innerHTML = '<span style="color:#ef4444;">哈希生成失败: ' + e.message + '</span>';
+                resultElement.innerHTML = '<span style="color:#ef4444;">哈希生成失败: ' + e.message + '</span>';
             }
         };
 
@@ -17718,4 +18107,10 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     });
 })();
 </script>
+<script src="./profile-center.js"></script>
+<script src="./confirm-dialog.js"></script>
+<script src="./legacy-tools.js"></script>
+<script src="./experience-v4.js"></script>
+<script src="./reactbits-v4.js"></script>
+<script src="./uiverse-v4.js"></script>
 </body></html>
