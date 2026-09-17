@@ -69,13 +69,13 @@
   function addTextEffects() {
     const mainTitle = document.querySelector('h1');
     if (mainTitle) {
-      if (page === 'changelog' || page === 'license') {
+      if (mainTitle.querySelector('.char')) {
+        mainTitle.classList.add('rb-hero-title-visible');
+      } else if (page === 'changelog' || page === 'license') {
         splitText(mainTitle);
         mainTitle.classList.add('rb-gradient-text');
-      } else if (!mainTitle.querySelector('.char')) {
-        mainTitle.classList.add('rb-shiny-text');
       } else {
-        mainTitle.classList.add('rb-gradient-text');
+        mainTitle.classList.add('rb-shiny-text');
       }
     }
     document.querySelectorAll('.section-head h2, .section-title, .page-header h1').forEach((element, index) => {

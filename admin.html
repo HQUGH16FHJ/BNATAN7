@@ -2222,6 +2222,7 @@ div.main {
     line-height: 1.7 !important;
 }
 </style>
+<link rel="stylesheet" href="./confirm-dialog.css">
 
 </head>
 <body>
@@ -3749,7 +3750,14 @@ function copyCode(code) {
 }
 
 async function deleteCode(code) {
-  if (!confirm('确定删除兑换码 ' + code + ' 吗？')) return;
+  const confirmed = await BantanDialog.confirm({
+    title: '删除兑换码？',
+    message: '兑换码 ' + code + ' 删除后将无法继续使用。',
+    confirmText: '删除',
+    tone: 'danger',
+    icon: '⌫'
+  });
+  if (!confirmed) return;
   const res = await api('/api/admin/codes/' + code, { method: 'DELETE' });
   if (res.success) {
     showToast('已删除');
@@ -3810,7 +3818,14 @@ async function loadFeedback() {
 }
 
 async function deleteFeedback(id) {
-  if (!confirm('确定删除这条反馈吗？')) return;
+  const confirmed = await BantanDialog.confirm({
+    title: '删除反馈？',
+    message: '这条反馈记录将被永久删除。',
+    confirmText: '删除',
+    tone: 'danger',
+    icon: '⌫'
+  });
+  if (!confirmed) return;
   const res = await api('/api/admin/feedback/' + id, { method: 'DELETE' });
   if (res.success) {
     showToast('已删除');
@@ -4154,7 +4169,15 @@ async function confirmSetVip() {
 
 // 删除用户
 async function deleteUser(username) {
-  if (!confirm('确定删除用户 ' + username + ' 吗？此操作不可恢复！')) return;
+  const confirmed = await BantanDialog.confirm({
+    title: '删除用户？',
+    message: '确定删除用户 ' + username + ' 吗？',
+    detail: '账号、额度和相关用户数据可能无法恢复。',
+    confirmText: '确认删除',
+    tone: 'danger',
+    icon: '!'
+  });
+  if (!confirmed) return;
   
   const res = await api('/api/admin/users/' + encodeURIComponent(username), {
     method: 'DELETE'
@@ -4238,15 +4261,18 @@ let announceList = [];   // 滚动公告（含预警等级）
 // 默认更新日志（首次加载即显示，保存后写入 KV）
 let changelogData = [
   {
-    version: 'v3.8',
-    title: '品牌故事 . 隐藏彩蛋 . SEO完善 . 导航体验',
+    version: 'v3.9',
+    title: '小绊谈品牌形象 . ONLINE状态 . 搜索接力 . 全端适配',
     date: '2026.09.17',
     items: [
-      { tag: 'add', text: '落地页新增「为什么叫绊谈」品牌故事卡片' },
-      { tag: 'add', text: '新增 Konami、Ctrl+K 与 Logo 五次点击隐藏彩蛋' },
-      { tag: 'opt', text: '完善 manifest、sitemap、robots、分享预览图与 PWA 支持' },
-      { tag: 'opt', text: '优化 index 导航 Logo 返回逻辑与全站响应式显示' },
-      { tag: 'fix', text: '清理重复工具 ID，修复二维码、BMI、倒计时等工具交互' },
+      { tag: 'add', text: '新增小绊谈品牌形象，接入加载动画、品牌故事与 AI 助手' },
+      { tag: 'add', text: '落地页新增 ONLINE / OFFLINE 动态网络状态' },
+      { tag: 'add', text: 'landing 搜索词支持跨登录传递并在 index 自动定位' },
+      { tag: 'opt', text: '统一「绊谈 · 万能枢纽」品牌视觉与导航体验' },
+      { tag: 'add', text: '用户中心 2.0 上线，新增头像工坊、签名和快速操作' },
+      { tag: 'add', text: '新增统一确认弹窗组件，替换全站浏览器 confirm' },
+      { tag: 'add', text: '新增品牌化退出登录确认弹窗，展示当前用户信息' },
+      { tag: 'fix', text: '复核手机、平板、Mac、2K、4K 与横屏安全区布局' },
     ]
   },
   {
@@ -4490,8 +4516,15 @@ function removeClItem(vi, ii) {
   }
 }
 
-function removeClVersion(vi) {
-  if (!confirm('确定删除此版本？')) return;
+async function removeClVersion(vi) {
+  const confirmed = await BantanDialog.confirm({
+    title: '删除此版本？',
+    message: '该更新日志版本及其内容将被删除。',
+    confirmText: '删除',
+    tone: 'danger',
+    icon: '⌫'
+  });
+  if (!confirmed) return;
   changelogData.splice(vi, 1);
   renderChangelogEditor();
 }
@@ -4716,7 +4749,14 @@ async function submitOwnerInit() {
   const input = document.getElementById('owner-init-password');
   const pwd = (input.value || '').trim();
   if (pwd.length < 6 || pwd.length > 32) { showToast('密码长度需 6-32 位'); return; }
-  if (!confirm('将为站长账号创建前台用户记录，确认初始化吗？')) return;
+  const confirmed = await BantanDialog.confirm({
+    title: '初始化站长账号？',
+    message: '将为站长账号创建前台用户记录。',
+    confirmText: '确认初始化',
+    tone: 'warning',
+    icon: '⚙'
+  });
+  if (!confirmed) return;
   const btn = input.parentElement.querySelector('button');
   if (btn) { btn.disabled = true; btn.textContent = '初始化中...'; }
   const res = await api('/api/admin/owner/password', {
@@ -4737,7 +4777,14 @@ async function submitOwnerPassword() {
   const input = document.getElementById('owner-new-password');
   const pwd = (input.value || '').trim();
   if (pwd.length < 6 || pwd.length > 32) { showToast('密码长度需 6-32 位'); return; }
-  if (!confirm('确定重置站长账号的前台登录密码吗？')) return;
+  const confirmed = await BantanDialog.confirm({
+    title: '重置站长密码？',
+    message: '站长前台登录密码将立即更新。',
+    confirmText: '确认重置',
+    tone: 'danger',
+    icon: '!'
+  });
+  if (!confirmed) return;
   const res = await api('/api/admin/owner/password', {
     method: 'POST',
     body: JSON.stringify({ newPassword: pwd })
@@ -4764,11 +4811,19 @@ async function exportAllData() {
   }
 }
 
-function importData(event) {
+async function importData(event) {
   const file = event.target.files[0];
   if (!file) return;
   
-  if (!confirm('导入将覆盖所有数据，确定继续吗？')) {
+  const confirmed = await BantanDialog.confirm({
+    title: '覆盖导入数据？',
+    message: '导入操作将覆盖现有数据。',
+    detail: '请确认备份文件来源可靠，覆盖后可能无法恢复。',
+    confirmText: '覆盖导入',
+    tone: 'danger',
+    icon: '!'
+  });
+  if (!confirmed) {
     event.target.value = '';
     return;
   }
@@ -5561,4 +5616,5 @@ updateApiStatus();
 })();
 </script>
 
+<script src="./confirm-dialog.js"></script>
 </body></html>

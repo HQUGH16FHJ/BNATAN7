@@ -1,0 +1,28 @@
+.mascot-state-image {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+}
+.mascot-state-image[data-mascot-state="thinking"] {
+  animation: mascotThink 1.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.3));
+}
+.mascot-state-image[data-mascot-state="happy"] {
+  animation: mascotHappy 0.65s cubic-bezier(0.16, 1, 0.3, 1) 2;
+  filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.32));
+}
+.mascot-state-image[data-mascot-state="alert"] {
+  animation: mascotAlert 0.5s ease 2;
+  filter: drop-shadow(0 0 18px rgba(251, 113, 133, 0.34));
+}
+@keyframes mascotThink {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(2deg) translateY(-5px); }
+}
+@keyframes mascotHappy {
+  0%, 100% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.08) rotate(-4deg); }
+}
+@keyframes mascotAlert {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}

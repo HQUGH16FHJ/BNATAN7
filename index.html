@@ -6522,6 +6522,10 @@ input, select, textarea, button {
 <link rel="stylesheet" href="./experience-v4.css">
 <link rel="stylesheet" href="./reactbits-v4.css">
 <link rel="stylesheet" href="./uiverse-v4.css">
+<link rel="stylesheet" href="./advanced-motion-v4.css">
+<link rel="stylesheet" href="./mascot-state.css">
+<link rel="stylesheet" href="./ui-interactions-v4.css">
+<link rel="stylesheet" href="./about-v4.css">
 </head>
 <body>
 <style>
@@ -6676,7 +6680,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             <div class="ring"></div>
             <div class="ring"></div>
             <div class="ring"></div>
-            <img class="boot-mascot" src="xiaobantan.svg" alt="">
+            <img class="boot-mascot" src="xiaobantan-v2.svg" alt="">
         </div>
     </div>
 
@@ -6787,7 +6791,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             </div>
             <div class="nav-links" id="navLinks">
                 <a class="active" data-target="home" onclick="navigate('home')" role="button" tabindex="0">首页</a>
-                <a data-target="contact" onclick="navigate('contact')" role="button" tabindex="0">关于我</a>
+                <a href="about.html" role="button" tabindex="0">关于我</a>
                 <a data-target="tools" onclick="navigate('tools')" role="button" tabindex="0">工具箱</a>
                 <a data-target="media" onclick="navigate('media')" role="button" tabindex="0">影音</a>
                 <a data-target="dev" onclick="navigate('dev')" role="button" tabindex="0">开发</a>
@@ -6882,7 +6886,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     <div class="bento-title">工具箱</div>
                     <div class="bento-desc">AI · 游戏 · 系统 · 73 个工具</div>
                 </button>
-                <button type="button" class="bento-item bento-purple" onclick="navigate('contact')">
+                <button type="button" class="bento-item bento-purple" onclick="window.location.href='about.html'">
                     <div class="bento-icon">◎</div>
                     <div class="bento-title">关于我</div>
                     <div class="bento-desc">服务 · 联系</div>
@@ -7077,63 +7081,107 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 
         </section>
 
-        <!-- ===== 关于我 ===== -->
+        <!-- ===== 关于我入口 ===== -->
         <section class="section" id="contact" aria-labelledby="contact-title">
-            <div class="about-grid">
-                <div class="service-info">
-                    <h2 id="contact-title">💻 免费远程电脑优化</h2>
-                    <p style="font-size:clamp(13px,1.2vw,16px);opacity:0.6;">专注解决系统卡顿、软件配置、驱动安装、网络加速等问题，一对一远程支持。</p>
-                    <div class="price">完全免费</div>
+            <a href="about.html" class="about-entry-card">
+                <img src="xiaobantan-v2.svg" alt="小绊谈个人播客">
+                <div>
+                    <div class="about-entry-kicker">PERSONAL PODCAST / ABOUT BANTAN</div>
+                    <h2 class="about-entry-title" id="contact-title">关于我 · 免费远程电脑优化</h2>
+                    <p class="about-entry-desc">以个人播客方式介绍绊谈、小绊谈、免费远程电脑优化服务、处理流程和联系方式。</p>
                 </div>
-                <div class="profile-card" style="text-align:center;">
-                    <div style="font-size:clamp(40px,6vw,64px);">🛸</div>
-                    <div style="font-size:clamp(20px,2.4vw,30px);font-weight:900;margin-top:4px;">绊谈</div>
-                    <div style="font-size:clamp(12px,1.2vw,16px);color:var(--accent);margin-top:4px;">🟢 在线可接单</div>
-                    <div style="margin-top:6px;font-size:clamp(12px,1.1vw,15px);color:var(--sub);opacity:0.3;">“用技术让世界更简单”</div>
-                </div>
-            </div>
-            <!-- 服务特性 -->
-            <div class="glass-card holo-card" style="margin-top:8px;">
-                <div style="font-weight:900;color:var(--accent);margin-bottom:8px;font-size:clamp(14px,1.4vw,18px);display:flex;align-items:center;gap:6px;">
-                    <span class="tech-bar-dot"></span> 服务范围
-                </div>
-                <div class="quick-grid">
-                    <div class="quick-item"><span class="icon">⚡</span><span>系统加速</span></div>
-                    <div class="quick-item"><span class="icon">🔧</span><span>软件配置</span></div>
-                    <div class="quick-item"><span class="icon">🖥️</span><span>驱动安装</span></div>
-                    <div class="quick-item"><span class="icon">🌐</span><span>网络优化</span></div>
-                    <div class="quick-item"><span class="icon">🦠</span><span>病毒查杀</span></div>
-                    <div class="quick-item"><span class="icon">📦</span><span>环境搭建</span></div>
-                    <div class="quick-item"><span class="icon">💾</span><span>数据恢复</span></div>
-                    <div class="quick-item"><span class="icon">🎮</span><span>游戏优化</span></div>
-                </div>
+                <span class="about-entry-arrow" aria-hidden="true">→</span>
+            </a>
+        </section>
+
+        <!-- 旧版关于我内容保留兼容，不再显示 -->
+        <section class="section about-v4" id="contact-legacy" aria-labelledby="contact-legacy-title" hidden>
+            <div class="about-v4-hero">
+                <article class="about-v4-main">
+                    <div class="about-v4-eyebrow">BANTAN SUPPORT / FREE REMOTE SESSION</div>
+                    <h2 id="contact-legacy-title">免费远程电脑优化</h2>
+                    <p>专注系统卡顿、软件配置、驱动安装、网络速度、安全排查与游戏环境优化。先说明问题，再通过远程方式逐步诊断和处理。</p>
+                    <div class="about-v4-actions">
+                        <button type="button" class="about-v4-btn primary" onclick="scrollToContact()">联系我，获取支持</button>
+                        <button type="button" class="about-v4-btn secondary" onclick="navigate('tools')">先看看工具</button>
+                    </div>
+                </article>
+                <aside class="about-v4-profile">
+                    <img src="xiaobantan-v2.svg" alt="小绊谈">
+                    <div class="about-v4-profile-name">绊谈</div>
+                    <div class="about-v4-status">在线可接单</div>
+                    <div class="about-v4-motto">“用技术让世界更简单”<br>所有服务完全免费</div>
+                </aside>
             </div>
 
-            <div class="contact-btn-wrap">
-                <button type="button" class="big-contact-btn" onclick="scrollToContact()">📞 联系我，获取支持</button>
+            <div class="about-v4-grid">
+                <article class="about-v4-panel">
+                    <div class="about-v4-panel-title"><span>服务范围</span><span>8 项常见电脑问题</span></div>
+                    <div class="about-v4-service-grid">
+                        <div class="about-v4-service"><b>⚡</b>系统加速</div>
+                        <div class="about-v4-service"><b>🔧</b>软件配置</div>
+                        <div class="about-v4-service"><b>🖥️</b>驱动安装</div>
+                        <div class="about-v4-service"><b>🌐</b>网络优化</div>
+                        <div class="about-v4-service"><b>🛡️</b>病毒查杀</div>
+                        <div class="about-v4-service"><b>📦</b>环境搭建</div>
+                        <div class="about-v4-service"><b>💾</b>数据恢复</div>
+                        <div class="about-v4-service"><b>🎮</b>游戏优化</div>
+                    </div>
+                </article>
+                <article class="about-v4-panel">
+                    <div class="about-v4-panel-title"><span>处理流程</span><span>尽量一次解决</span></div>
+                    <div class="about-v4-process">
+                        <div class="about-v4-step"><span class="about-v4-step-num">01</span><div><strong>描述问题</strong><small>说明设备、现象和已经尝试过的方法。</small></div></div>
+                        <div class="about-v4-step"><span class="about-v4-step-num">02</span><div><strong>远程连接</strong><small>使用常用远程工具建立连接。</small></div></div>
+                        <div class="about-v4-step"><span class="about-v4-step-num">03</span><div><strong>诊断优化</strong><small>按原因处理，不做无关操作。</small></div></div>
+                        <div class="about-v4-step"><span class="about-v4-step-num">04</span><div><strong>验证结果</strong><small>确认问题改善后结束服务。</small></div></div>
+                    </div>
+                </article>
             </div>
-            <div id="contact-section">
-                <h2 class="cat-title">📡 联系方式</h2>
-                <div class="contact-grid">
-                    <div class="contact-item"><div>💬 微信</div><div class="value">HQUGH16FHJ</div><button type="button" class="copy-btn" onclick="copyText('HQUGH16FHJ','微信')">复制</button></div>
-                    <div class="contact-item"><div>🐧 QQ</div><div class="value">1429616034</div><button type="button" class="copy-btn" onclick="copyText('1429616034','QQ')">复制</button></div>
-                    <div class="contact-item" onclick="window.open('https://www.douyin.com/user/self?from_tab_name=main','_blank')" role="button" tabindex="0"><div>🎵 抖音</div><div class="value">点击直达</div><button type="button" class="copy-btn">前往</button></div>
-                    <div class="contact-item" onclick="window.open('https://github.com/','_blank')" role="button" tabindex="0"><div>🐙 GitHub</div><div class="value">点击直达</div><button type="button" class="copy-btn">前往</button></div>
-                    <div class="contact-item" onclick="window.open('https://space.bilibili.com/','_blank')" role="button" tabindex="0"><div>📺 B站</div><div class="value">点击直达</div><button type="button" class="copy-btn">前往</button></div>
-                    <div class="contact-item" onclick="window.open('mailto:g125668039@163.com','_blank')" role="button" tabindex="0"><div>📧 邮箱</div><div class="value">g125668039@163.com</div><button type="button" class="copy-btn" onclick="event.stopPropagation();copyText('g125668039@163.com','邮箱')">复制</button></div>
+
+            <article class="about-v4-contact" id="contact-section">
+                <div class="about-v4-panel-title"><span>联系方式</span><span>点击卡片可直接前往</span></div>
+                <div class="about-v4-contact-grid">
+                    <div class="about-v4-contact-item">
+                        <span class="about-v4-contact-icon">💬</span>
+                        <div><div class="about-v4-contact-name">微信</div><div class="about-v4-contact-value">HQUGH16FHJ</div></div>
+                        <button type="button" class="about-v4-copy" onclick="copyText('HQUGH16FHJ','微信')">复制</button>
+                    </div>
+                    <div class="about-v4-contact-item">
+                        <span class="about-v4-contact-icon">🐧</span>
+                        <div><div class="about-v4-contact-name">QQ</div><div class="about-v4-contact-value">1429616034</div></div>
+                        <button type="button" class="about-v4-copy" onclick="copyText('1429616034','QQ')">复制</button>
+                    </div>
+                    <div class="about-v4-contact-item" onclick="window.open('https://www.douyin.com/user/self?from_tab_name=main','_blank')" role="button" tabindex="0">
+                        <span class="about-v4-contact-icon">🎵</span>
+                        <div><div class="about-v4-contact-name">抖音</div><div class="about-v4-contact-value">点击直达</div></div>
+                        <button type="button" class="about-v4-copy">前往</button>
+                    </div>
+                    <div class="about-v4-contact-item" onclick="window.open('https://github.com/','_blank')" role="button" tabindex="0">
+                        <span class="about-v4-contact-icon">🐙</span>
+                        <div><div class="about-v4-contact-name">GitHub</div><div class="about-v4-contact-value">点击直达</div></div>
+                        <button type="button" class="about-v4-copy">前往</button>
+                    </div>
+                    <div class="about-v4-contact-item" onclick="window.open('https://space.bilibili.com/','_blank')" role="button" tabindex="0">
+                        <span class="about-v4-contact-icon">📺</span>
+                        <div><div class="about-v4-contact-name">B站</div><div class="about-v4-contact-value">点击直达</div></div>
+                        <button type="button" class="about-v4-copy">前往</button>
+                    </div>
+                    <div class="about-v4-contact-item" onclick="window.open('mailto:g125668039@163.com','_blank')" role="button" tabindex="0">
+                        <span class="about-v4-contact-icon">📧</span>
+                        <div><div class="about-v4-contact-name">邮箱</div><div class="about-v4-contact-value">g125668039@163.com</div></div>
+                        <button type="button" class="about-v4-copy" onclick="event.stopPropagation();copyText('g125668039@163.com','邮箱')">复制</button>
+                    </div>
                 </div>
-            </div>
-            <!-- 免责声明 -->
-            <div class="glass-card" style="margin-top:10px;padding:clamp(14px,2vw,20px);border-color:rgba(251,191,36,0.15);">
-                <div style="font-weight:900;color:var(--accent-gold);margin-bottom:8px;font-size:clamp(13px,1.3vw,16px);">⚠️ 免责声明</div>
-                <div style="font-size:clamp(11px,1.1vw,13px);color:var(--sub);line-height:1.8;">
-                    本站属于个人制作的工具聚合站点，所有外部链接均跳转至第三方网站。本站仅做链接整理展示，不对第三方站点的内容、安全与可用性承担责任。全部内容仅限个人学习娱乐，禁止用于任何商业用途。
+            </article>
+
+            <details class="about-v4-disclaimer">
+                <summary>免责声明与使用提示</summary>
+                <div class="about-v4-disclaimer-body">
+                    <p>本站属于个人制作的工具聚合站点，所有外部链接均跳转至第三方网站。本站仅做链接整理展示，不对第三方站点的内容、安全与可用性承担责任。全部内容仅限个人学习娱乐，禁止用于任何商业用途。</p>
+                    <p>本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。</p>
                 </div>
-                <div style="font-weight:900;color:var(--accent-2);margin:10px 0 6px;font-size:clamp(13px,1.3vw,16px);">📢 使用提示</div>
-                <div style="font-size:clamp(11px,1.1vw,13px);color:var(--sub);line-height:1.8;">
-                    本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。
-                </div>
-            </div>
+            </details>
         </section>
 
         <!-- ===== 软件下载区 ===== -->
@@ -9431,7 +9479,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     <!-- ===== AI 助手悬浮按钮 ===== -->
     <div class="ai-fab-wrap">
         <button id="ai-fab" onclick="toggleAIPanel()" aria-label="AI助手" title="小绊谈 AI 智能对话">
-            <img class="ai-fab-logo" src="xiaobantan.svg" alt="">
+            <img class="ai-fab-logo" src="xiaobantan-v2.svg" alt="">
             <span class="ai-badge" id="ai-badge">✨</span>
         </button>
     </div>
@@ -9439,7 +9487,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     <!-- ===== AI 聊天面板 ===== -->
     <div id="ai-panel">
         <div class="ai-panel-header">
-            <div class="ai-avatar"><img src="xiaobantan.svg" alt="小绊谈"></div>
+            <div class="ai-avatar"><img src="xiaobantan-v2.svg" alt="小绊谈"></div>
             <div class="ai-header-info">
                 <div class="ai-title">小绊谈 AI <span class="pro-badge">PRO</span></div>
                 <div class="ai-subtitle"><span class="dot"></span>在线 · 智能对话 · 剩余 <b id="ai-remaining-count">--</b> 次</div>
@@ -18113,4 +18161,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 <script src="./experience-v4.js"></script>
 <script src="./reactbits-v4.js"></script>
 <script src="./uiverse-v4.js"></script>
+<script src="./advanced-motion-v4.js"></script>
+<script src="./mascot-state.js"></script>
+<script src="./ui-interactions-v4.js"></script>
 </body></html>

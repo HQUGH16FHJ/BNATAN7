@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">思考中的小绊谈</title><desc id="desc">小绊谈思考状态</desc>
+  <defs><linearGradient id="body" x1="34" y1="28" x2="210" y2="216"><stop stop-color="#fde68a"/><stop offset=".45" stop-color="#f59e0b"/><stop offset=".8" stop-color="#fb7185"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><linearGradient id="visor" x1="60" y1="73" x2="180" y2="155"><stop stop-color="#111827"/><stop offset="1" stop-color="#07131c"/></linearGradient></defs>
+  <circle cx="120" cy="18" r="11" fill="#38bdf8"/><path d="M120 28v18" stroke="#fbbf24" stroke-width="8" stroke-linecap="round"/>
+  <rect x="32" y="40" width="176" height="168" rx="58" fill="url(#body)"/><rect x="57" y="73" width="126" height="84" rx="39" fill="url(#visor)"/>
+  <circle cx="96" cy="109" r="15" fill="#38bdf8"/><circle cx="144" cy="109" r="15" fill="#38bdf8"/><circle cx="101" cy="103" r="5" fill="#fff"/><circle cx="149" cy="103" r="5" fill="#fff"/>
+  <path d="M108 138h24" stroke="#fb7185" stroke-width="7" stroke-linecap="round"/><circle cx="47" cy="116" r="11" fill="#fb7185"/><circle cx="193" cy="116" r="11" fill="#38bdf8"/>
+  <circle cx="188" cy="60" r="9" fill="rgba(255,255,255,.25)"/><circle cx="205" cy="43" r="13" fill="rgba(255,255,255,.35)"/>
+  <circle cx="120" cy="180" r="13" fill="#0a0805"/><text x="120" y="185" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="15" font-weight="800" fill="#fbbf24">绊</text>
+</svg>

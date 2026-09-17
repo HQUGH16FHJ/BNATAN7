@@ -8,6 +8,8 @@
       ? 'changelog'
       : PATH.endsWith('/404.html')
         ? '404'
+        : PATH.endsWith('/about.html')
+          ? 'about'
         : PATH.endsWith('/index.html')
           ? 'index'
           : 'landing';
@@ -569,6 +571,48 @@
     const header = document.querySelector('.page-header');
     const versions = Array.from(document.querySelectorAll('.featured-version, .version-card, .compact-version'));
     if (!page || !header || !versions.length) return;
+    const changeCount = document.querySelectorAll('.change-item, .highlight-item, .compact-items li').length;
+    const latestDate = document.querySelector('.version-date')?.textContent.trim() || '--';
+    const meta = document.createElement('div');
+    meta.className = 'bnt-archive-meta';
+    meta.innerHTML = [
+      '<div class="bnt-archive-stat"><div class="bnt-archive-stat-value">' + versions.length + '</div><div class="bnt-archive-stat-label">已记录版本</div></div>',
+      '<div class="bnt-archive-stat"><div class="bnt-archive-stat-value">' + changeCount + '</div><div class="bnt-archive-stat-label">更新条目</div></div>',
+      '<div class="bnt-archive-stat"><div class="bnt-archive-stat-value">' + latestDate + '</div><div class="bnt-archive-stat-label">最近发布</div></div>'
+    ].join('');
+    header.insertAdjacentElement('afterend', meta);
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'bnt-release-toolbar';
+    toolbar.innerHTML = [
+      '<input class="bnt-release-search" type="search" placeholder="搜索版本号、功能或修复内容" aria-label="搜索更新日志">',
+      '<button class="bnt-filter-chip active" type="button" data-filter="all">全部</button>',
+      '<button class="bnt-filter-chip" type="button" data-filter="add">新增</button>',
+      '<button class="bnt-filter-chip" type="button" data-filter="improve">优化</button>',
+      '<button class="bnt-filter-chip" type="button" data-filter="fix">修复</button>'
+    ].join('');
+    meta.insertAdjacentElement('afterend', toolbar);
+    const search = toolbar.querySelector('.bnt-release-search');
+    let activeFilter = 'all';
+    const applyFilter = () => {
+      const query = search.value.trim().toLowerCase();
+      versions.forEach(version => {
+        const text = version.textContent.toLowerCase();
+        const queryMatch = !query || text.includes(query);
+        const filterMatch = activeFilter === 'all'
+          || text.includes({ add: '新增', improve: '优化', fix: '修复' }[activeFilter]);
+        version.classList.toggle('bnt-archive-hidden', !(queryMatch && filterMatch));
+      });
+    };
+    search.addEventListener('input', applyFilter);
+    toolbar.querySelectorAll('.bnt-filter-chip').forEach(button => {
+      button.addEventListener('click', () => {
+        activeFilter = button.dataset.filter;
+        toolbar.querySelectorAll('.bnt-filter-chip').forEach(item => item.classList.toggle('active', item === button));
+        applyFilter();
+      });
+    });
+
     const tools = document.createElement('nav');
     tools.className = 'bnt-changelog-tools';
     tools.setAttribute('aria-label', '版本快速导航');
@@ -581,7 +625,7 @@
       if (index === 0) link.classList.add('active');
       tools.appendChild(link);
     });
-    header.insertAdjacentElement('afterend', tools);
+    toolbar.insertAdjacentElement('afterend', tools);
     const links = Array.from(tools.querySelectorAll('a'));
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -616,6 +660,54 @@
       index.appendChild(link);
     });
     hero.insertAdjacentElement('afterend', index);
+    const toolbar = document.createElement('div');
+    toolbar.className = 'bnt-license-toolbar';
+    toolbar.innerHTML = [
+      '<span style="font-size:10px;color:#7f8b9d;font-weight:800;letter-spacing:.08em;">用途模式</span>',
+      '<button class="bnt-license-mode active" type="button" data-mode="personal">个人使用</button>',
+      '<button class="bnt-license-mode" type="button" data-mode="study">学习教学</button>',
+      '<button class="bnt-license-mode" type="button" data-mode="team">小圈子</button>',
+      '<button class="bnt-license-mode" type="button" data-mode="commercial">商业用途</button>',
+      '<button class="bnt-archive-action" type="button" data-action="print">打印 / PDF</button>',
+      '<button class="bnt-archive-action" type="button" data-action="copy">复制链接</button>'
+    ].join('');
+    index.insertAdjacentElement('afterend', toolbar);
+    const note = document.createElement('div');
+    note.className = 'bnt-archive-note';
+    note.textContent = '用途模式只用于高亮相关条款，不替代完整许可正文。';
+    toolbar.insertAdjacentElement('afterend', note);
+
+    const tableRows = Array.from(document.querySelectorAll('.lic-table tbody tr'));
+    const highlightRows = mode => {
+      const keywords = {
+        personal: ['个人', '学习', '朋友', '分享'],
+        study: ['学习', '教学', '教育', '个人'],
+        team: ['个人', '熟人', '小圈子', '内部'],
+        commercial: ['商业', '盈利', '售卖', '公开发布', '复制本站']
+      }[mode] || [];
+      tableRows.forEach(row => {
+        const text = row.textContent;
+        const active = keywords.some(keyword => text.includes(keyword));
+        const denied = mode === 'commercial' && active && /不允许|禁止|不可/.test(text);
+        row.classList.toggle('bnt-license-table-row-active', active && !denied);
+        row.classList.toggle('bnt-license-table-row-deny', denied);
+      });
+    };
+    toolbar.querySelectorAll('.bnt-license-mode').forEach(button => {
+      button.addEventListener('click', () => {
+        toolbar.querySelectorAll('.bnt-license-mode').forEach(item => item.classList.toggle('active', item === button));
+        highlightRows(button.dataset.mode);
+      });
+    });
+    toolbar.querySelector('[data-action="print"]').addEventListener('click', () => window.print());
+    toolbar.querySelector('[data-action="copy"]').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(location.href);
+        if (window.showToast) window.showToast('许可链接已复制');
+      } catch (error) {}
+    });
+    highlightRows('personal');
+
     const links = Array.from(index.querySelectorAll('a'));
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -634,7 +726,7 @@
     if (!main || !code) return;
     const mascot = document.createElement('img');
     mascot.className = 'bnt-404-mascot';
-    mascot.src = 'xiaobantan.svg';
+    mascot.src = 'xiaobantan-v2.svg';
     mascot.alt = '迷航的小绊谈';
     code.insertAdjacentElement('beforebegin', mascot);
     if (actions) {
