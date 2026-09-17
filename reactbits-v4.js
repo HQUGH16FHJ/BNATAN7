@@ -105,7 +105,6 @@
   function addCountUp() {
     if (REDUCED_MOTION) return;
     const candidates = [
-      document.getElementById('hero-tools-count'),
       ...document.querySelectorAll('.stat-value')
     ].filter(Boolean);
     candidates.forEach((element, index) => {

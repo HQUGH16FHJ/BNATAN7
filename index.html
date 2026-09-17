@@ -6813,7 +6813,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                         <span style="opacity:.3;">|</span>
                         <span id="hero-uptime">运行 0秒</span>
                         <span style="opacity:.3;">|</span>
-                        <span id="hero-tools-count">73 个工具</span>
+                        <span id="hero-tools-count">786 个工具</span>
                     </div>
                     <h1 id="hero-title"><span class="accent">绊谈</span></h1>
                     <div class="hero-subtitle">个人工具中枢 · 聚合一切效率</div>
@@ -6884,7 +6884,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <button type="button" class="bento-item bento-featured" onclick="navigate('tools')">
                     <div class="bento-icon bento-icon--lg">🧠</div>
                     <div class="bento-title">工具箱</div>
-                    <div class="bento-desc">AI · 游戏 · 系统 · 73 个工具</div>
+                    <div class="bento-desc" id="bento-tools-count">AI · 游戏 · 系统 · 786 个工具</div>
                 </button>
                 <button type="button" class="bento-item bento-purple" onclick="window.location.href='about.html'">
                     <div class="bento-icon">◎</div>
@@ -15921,6 +15921,8 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             const toolCount = document.querySelectorAll('.tool-card, .mini-card').length;
             const tcEl = document.getElementById('hero-tools-count');
             if (tcEl && toolCount > 0) tcEl.textContent = toolCount + ' 个工具';
+            const bentoToolsCount = document.getElementById('bento-tools-count');
+            if (bentoToolsCount && toolCount > 0) bentoToolsCount.textContent = 'AI · 游戏 · 系统 · ' + toolCount + ' 个工具';
 
             updateWorldClock();
             setInterval(() => {
