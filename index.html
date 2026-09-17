@@ -150,6 +150,16 @@
         .unicorn-bg {
             position: fixed; inset: 0; z-index: -12; pointer-events: none;
             width: 100vw; height: 100vh; overflow: hidden;
+            background:
+                radial-gradient(ellipse at 18% 18%, rgba(56, 189, 248, 0.12), transparent 38%),
+                radial-gradient(ellipse at 82% 24%, rgba(245, 158, 11, 0.11), transparent 36%),
+                linear-gradient(145deg, #05070b, #100c08 58%, #09131b);
+            background-size: 125% 125%, 135% 135%, 100% 100%;
+            animation: indexAuroraDrift 24s ease-in-out infinite alternate;
+        }
+        @keyframes indexAuroraDrift {
+            from { background-position: 0% 10%, 100% 12%, 0 0; }
+            to { background-position: 100% 80%, 0% 72%, 0 0; }
         }
         .unicorn-bg canvas { width: 100% !important; height: 100% !important; }
         .bg-warm-overlay {
