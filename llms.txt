@@ -52,6 +52,10 @@
 - https://rights.bantan.online/register：版权登记单和打印信息生成入口
 - https://rights.bantan.online/status：申请人使用登记编号和邮箱查询审核进度及审核意见
 - https://rights.bantan.online/site：公开验证官网编号、域名、版权所有者、制作方和许可证
+- https://rights.bantan.online/certificate：根据官网编号和域名生成带 SHA-256 指纹的版权验证证书
+- https://bantan.online/license.json：机器可读的许可证、版权归属和官方域名数据
+- https://bantan.online/changelog.json：机器可读的版本记录和发布日期
+- https://bantan.online/feed.xml：更新日志 RSS 订阅
 
 ## 官方入口说明
 

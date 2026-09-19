@@ -1,0 +1,32 @@
+{
+  "site": "绊谈 · 万能枢纽",
+  "currentVersion": "4.0.7",
+  "updated": "2026-09-19",
+  "url": "https://bantan.online/changelog.html",
+  "feed": "https://bantan.online/feed.xml",
+  "versions": [
+    {
+      "version": "4.0.7",
+      "date": "2026-09-19",
+      "title": "域名所有权验证 · 官方认证徽章 · 版权验证证书",
+      "changes": [
+        "新增 DNS TXT 域名所有权验证",
+        "新增动态官方认证徽章",
+        "新增带 SHA-256 指纹的版权验证证书",
+        "公开查网站页移除嵌入代码",
+        "新增 license.json、changelog.json 与 RSS",
+        "补强键盘焦点、减少动态效果模式与移动端适配"
+      ]
+    },
+    {
+      "version": "4.0.6",
+      "date": "2026-09-19",
+      "title": "官方域名网络 · 许可证升级",
+      "changes": [
+        "集中展示四个官方入口",
+        "统一许可证与更新日志的域名信息",
+        "新增域名入口一键复制"
+      ]
+    }
+  ]
+}

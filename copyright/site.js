@@ -27,12 +27,16 @@
           <div><span>制作方</span><strong>${escapeHtml(item.producer || '--')}</strong></div>
           <div><span>许可证</span><strong>${escapeHtml(item.license || '--')}</strong></div>
           <div><span>登记状态</span><strong>${escapeHtml(item.status)}</strong></div>
+          <div><span>域名所有权</span><strong>${item.dns_verified_at ? 'DNS 已验证' : '仅编号验证'}</strong></div>
           <div><span>登记时间</span><strong>${escapeHtml(new Date(item.registered_at).toLocaleString('zh-CN', { hour12: false }))}</strong></div>
           <div><span>版权档案</span><strong>${escapeHtml(item.rights_registration_code || '--')}</strong></div>
         </div>
         <section class="tracking-review" style="border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.045);">
           <span>VERIFICATION NOTE</span><h3>编号是公开标识，不是保密密钥</h3>
           <p>官网编号用于公开核对，不能单独证明某个网站的身份。验证时必须同时核对上方登记的官方域名；域名不一致时，不要仅凭编号判断网站为官方站点。</p>
+          <div class="tracking-site-code__actions">
+            <a href="./certificate.html?code=${encodeURIComponent(item.site_code)}&domain=${encodeURIComponent(item.domain || '')}">查看版权证书</a>
+          </div>
         </section>
       </article>
     `;

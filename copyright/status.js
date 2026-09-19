@@ -44,10 +44,87 @@
         <div class="tracking-site-code__actions">
           <button type="button" data-copy-value="${escapeHtml(item.site_code)}">复制官网编号</button>
           <button type="button" data-copy-value="${escapeHtml(embed)}">复制嵌入代码</button>
-          <a href="./site.html?code=${encodeURIComponent(item.site_code)}">打开查网站页面</a>
+          <a href="./site.html?code=${encodeURIComponent(item.site_code)}${item.site_domain ? `&domain=${encodeURIComponent(item.site_domain)}` : ''}">打开查网站页面</a>
+          <a href="./certificate.html?code=${encodeURIComponent(item.site_code)}${item.site_domain ? `&domain=${encodeURIComponent(item.site_domain)}` : ''}">查看版权证书</a>
         </div>
       </section>
     `;
+  }
+
+  function domainVerificationPanel(item) {
+    if (!item.site_code || !item.site_domain) return '';
+    return `
+      <section class="tracking-domain-verify" id="domainVerificationPanel"
+        data-code="${escapeHtml(item.site_code)}" data-domain="${escapeHtml(item.site_domain)}">
+        <div class="tracking-domain-verify__loading">
+          <span>DOMAIN OWNERSHIP</span>
+          <h3>正在读取域名验证状态</h3>
+        </div>
+      </section>
+    `;
+  }
+
+  function domainVerificationMarkup(data) {
+    const verified = Boolean(data.verified);
+    return `
+      <div class="tracking-domain-verify__head">
+        <div>
+          <span>DOMAIN OWNERSHIP</span>
+          <h3>${verified ? '域名所有权已验证' : '验证域名所有权'}</h3>
+          <p>${verified
+            ? `系统已在 ${escapeHtml(data.recordName.replace(/^_bantan-verify\./, ''))} 检测到匹配的 DNS TXT 记录。`
+            : '在域名 DNS 中添加下面的 TXT 记录后点击检测。只有真正控制该域名的人才能完成这一步。'}</p>
+        </div>
+        <i class="${verified ? 'is-verified' : 'is-pending'}">${verified ? 'VERIFIED' : 'PENDING'}</i>
+      </div>
+      <dl class="tracking-domain-verify__record">
+        <div><dt>记录类型</dt><dd>${escapeHtml(data.recordType || 'TXT')}</dd></div>
+        <div><dt>记录名称</dt><dd>${escapeHtml(data.recordName)}</dd></div>
+        <div class="is-wide"><dt>记录值</dt><dd>${escapeHtml(data.recordValue)}</dd></div>
+      </dl>
+      <div class="tracking-domain-verify__actions">
+        <button type="button" data-copy-value="${escapeHtml(data.recordName)}">复制记录名称</button>
+        <button type="button" data-copy-value="${escapeHtml(data.recordValue)}">复制记录值</button>
+        <button type="button" data-check-dns>检测 DNS 记录</button>
+      </div>
+    `;
+  }
+
+  async function loadDomainVerification(code, domain) {
+    const panel = document.getElementById('domainVerificationPanel');
+    if (!panel) return;
+    try {
+      const url = new URL('/api/rights/site-verify', location.origin);
+      url.searchParams.set('code', code);
+      url.searchParams.set('domain', domain);
+      const response = await fetch(url);
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || '读取失败');
+      panel.innerHTML = domainVerificationMarkup(data);
+    } catch (errorValue) {
+      panel.innerHTML = `<div class="tracking-domain-verify__head"><div><span>DOMAIN OWNERSHIP</span><h3>暂时无法读取验证信息</h3><p>${escapeHtml(errorValue.message)}</p></div></div>`;
+    }
+  }
+
+  async function checkDomainVerification(button) {
+    const panel = document.getElementById('domainVerificationPanel');
+    if (!panel) return;
+    const code = panel.dataset.code;
+    const domain = panel.dataset.domain;
+    button.disabled = true;
+    button.textContent = '正在检测…';
+    try {
+      const url = new URL('/api/rights/site-verify', location.origin);
+      url.searchParams.set('code', code);
+      url.searchParams.set('domain', domain);
+      const response = await fetch(url, { method: 'POST' });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || '检测失败');
+      panel.innerHTML = domainVerificationMarkup(data);
+    } catch (errorValue) {
+      button.disabled = false;
+      button.textContent = errorValue.message;
+    }
   }
 
   function render(item) {
@@ -81,6 +158,7 @@
           <div><span>档案指纹</span><strong>${escapeHtml(fingerprint(item))}</strong></div>
         </div>
         ${siteCodePanel(item)}
+        ${domainVerificationPanel(item)}
         ${item.review_note ? `<section class="tracking-review"><span>REVIEW NOTE</span><h3>审核意见</h3><p>${escapeHtml(item.review_note)}</p></section>` : ''}
         <footer class="tracking-case__foot">
           <span>查询结果仅用于确认当前登记状态。</span>
@@ -88,6 +166,7 @@
         </footer>
       </article>
     `;
+    if (item.site_code && item.site_domain) loadDomainVerification(item.site_code, item.site_domain);
   }
 
   function loading() {
@@ -119,6 +198,11 @@
   });
 
   result?.addEventListener('click', async event => {
+    const checkButton = event.target.closest('[data-check-dns]');
+    if (checkButton) {
+      await checkDomainVerification(checkButton);
+      return;
+    }
     const button = event.target.closest('[data-copy-value]');
     if (!button) return;
     try {

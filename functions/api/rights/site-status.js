@@ -22,7 +22,7 @@ export async function onRequestGet(context) {
   if (code && domain) {
     statement = db.prepare(`
       SELECT site_code, domain, project_name, owner, producer, license,
-             rights_registration_code, status, registered_at, updated_at
+             rights_registration_code, status, registered_at, updated_at, dns_verified_at
       FROM site_registry
       WHERE site_code = ? AND lower(domain) = ?
       LIMIT 1
@@ -31,7 +31,7 @@ export async function onRequestGet(context) {
   } else if (code) {
     statement = db.prepare(`
       SELECT site_code, domain, project_name, owner, producer, license,
-             rights_registration_code, status, registered_at, updated_at
+             rights_registration_code, status, registered_at, updated_at, dns_verified_at
       FROM site_registry
       WHERE site_code = ?
       LIMIT 1
@@ -40,7 +40,7 @@ export async function onRequestGet(context) {
   } else {
     statement = db.prepare(`
       SELECT site_code, domain, project_name, owner, producer, license,
-             rights_registration_code, status, registered_at, updated_at
+             rights_registration_code, status, registered_at, updated_at, dns_verified_at
       FROM site_registry
       WHERE lower(domain) = ?
       LIMIT 1

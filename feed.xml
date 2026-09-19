@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>绊谈 · 万能枢纽更新日志</title>
+    <link>https://bantan.online/changelog.html</link>
+    <description>绊谈万能枢纽版本记录、功能升级与版权说明。</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 19 Sep 2026 12:00:00 +0800</lastBuildDate>
+    <item>
+      <title>v4.0.7 · 域名所有权验证、官方认证徽章与版权验证证书</title>
+      <link>https://bantan.online/changelog.html#v4-0-7</link>
+      <guid>https://bantan.online/changelog.html#v4-0-7</guid>
+      <pubDate>Sat, 19 Sep 2026 12:00:00 +0800</pubDate>
+      <description>新增 DNS 域名验证、动态认证徽章、版权证书、许可证 JSON、更新日志 JSON 与 RSS。</description>
+    </item>
+    <item>
+      <title>v4.0.6 · 官方域名网络与许可证升级</title>
+      <link>https://bantan.online/changelog.html#v4-0-6</link>
+      <guid>https://bantan.online/changelog.html#v4-0-6</guid>
+      <pubDate>Sat, 19 Sep 2026 10:00:00 +0800</pubDate>
+      <description>集中展示官方入口，统一许可证、更新日志和跨域名部署说明。</description>
+    </item>
+  </channel>
+</rss>

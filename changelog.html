@@ -2,17 +2,18 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>更新日志 - 绊谈万能枢纽 v4.0.6 | bantan.online</title>
-<meta name="description" content="绊谈万能枢纽完整更新日志，最新 v4.0.6 新增官方域名网络并升级许可证、更新日志和跨域名部署说明。">
+<title>更新日志 - 绊谈万能枢纽 v4.0.7 | bantan.online</title>
+<meta name="description" content="绊谈万能枢纽完整更新日志，最新 v4.0.7 新增域名所有权验证、官方认证徽章、版权验证证书和性能无障碍升级。">
 <meta name="keywords" content="绊谈更新日志,bantan更新,万能枢纽版本,bantan.eu.cc,Cloudflare Pages,官方域名">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bantan.online/changelog.html">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="绊谈万能枢纽更新日志" href="https://bantan.online/feed.xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="更新日志 - 绊谈万能枢纽">
-<meta property="og:description" content="最新 v4.0.6：官方域名网络、许可证升级、更新日志视觉升级与跨域名部署说明。">
+<meta property="og:description" content="最新 v4.0.7：域名所有权验证、官方认证徽章、版权验证证书、性能与无障碍升级。">
 <meta property="og:url" content="https://bantan.online/changelog.html">
 <meta property="og:image" content="https://bantan.online/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +26,7 @@
   "@type": "WebPage",
   "name": "更新日志 - 绊谈万能枢纽",
   "url": "https://bantan.online/changelog.html",
-  "description": "绊谈万能枢纽版本更新记录，最新版本 v4.0.6。",
+  "description": "绊谈万能枢纽版本更新记录，最新版本 v4.0.7。",
   "inLanguage": "zh-CN",
   "isPartOf": {
     "@type": "WebSite",
@@ -689,48 +690,61 @@ code, pre {
     </section>
 
     <!-- Featured: Latest Version -->
-    <section class="featured-version" aria-label="最新版本">
+    <section class="featured-version" id="v4-0-7" aria-label="最新版本">
       <div class="version-meta">
-        <h2 class="version-number">v4.0.6</h2>
+        <h2 class="version-number">v4.0.7</h2>
         <span class="version-label">最新版本</span>
       </div>
-      <h3 class="version-title">官方域名网络 · 许可证升级 · 版本档案馆视觉更新</h3>
+      <h3 class="version-title">域名所有权验证 · 官方认证徽章 · 版权验证证书</h3>
       <div class="version-date">2026.09.19</div>
 
       <div class="highlights">
         <div class="highlight-item">
-          <h3>官方域名网络</h3>
-          <p>集中展示 bantan.online、www.bantan.online、bantan.eu.cc 与 Cloudflare Pages 部署节点，支持一键复制</p>
+          <h3>域名所有权验证</h3>
+          <p>通过 DNS TXT 记录验证网站是否真正控制登记域名，编号和错误域名组合会被拒绝</p>
         </div>
         <div class="highlight-item">
-          <h3>许可证升级</h3>
-          <p>版权声明与项目信息同步新增正式域名和 Pages 节点，并明确官方入口范围</p>
+          <h3>官方认证徽章</h3>
+          <p>动态生成可嵌入的官方认证 SVG，徽章会区分编号验证和域名已验证状态</p>
         </div>
         <div class="highlight-item">
-          <h3>版本档案馆</h3>
-          <p>更新日志顶部加入入口网络，四张域名卡适配桌面、平板、手机和微信内置浏览器</p>
+          <h3>版权验证证书</h3>
+          <p>根据官网编号、域名、版权所有者、制作方和许可证生成带 SHA-256 指纹的可打印证书</p>
         </div>
         <div class="highlight-item">
-          <h3>GitHub 同步</h3>
-          <p>README、根目录 LICENSE、CHANGELOG 与 llms.txt 同步登记四个官方地址</p>
+          <h3>公开代码保护</h3>
+          <p>公开查网站页不再展示网站页脚嵌入代码，嵌入代码只在申请人进度页和后台审核页可见</p>
         </div>
         <div class="highlight-item">
-          <h3>万能枢纽全网搜索</h3>
-          <p>继续支持百度、Bing、Google、知乎、B站、GitHub、淘宝、Steam 等网站搜索</p>
+          <h3>许可证数据接口</h3>
+          <p>新增 license.json，便于 Other 系统和 AI 读取许可证、官方域名与使用边界</p>
         </div>
         <div class="highlight-item">
-          <h3>全网站点滑动轨道</h3>
-          <p>保留可拖拽、可横滑、可按钮推进的网站入口轨道，快速直达常用平台</p>
+          <h3>更新日志订阅</h3>
+          <p>新增 changelog.json 与 feed.xml，支持版本数据读取和 RSS 订阅</p>
         </div>
         <div class="highlight-item">
-          <h3>滚动与滑动动效</h3>
-          <p>保留滚动揭示、卡片倾斜、页面过渡、动态进度条和内容滑入效果</p>
+          <h3>性能与无障碍</h3>
+          <p>补齐键盘焦点、减少动态效果模式、图片懒加载及版权中心交互状态</p>
         </div>
         <div class="highlight-item">
-          <h3>移动端优化</h3>
-          <p>取消旧底部快捷栏影响，域名卡在窄屏改为单列并保持清晰的可点击区域</p>
+          <h3>移动端证书</h3>
+          <p>版权证书、域名验证台和联系弹窗均适配手机、平板和桌面打印</p>
         </div>
       </div>
+    </section>
+
+    <section class="version-card" id="v4-0-6" aria-label="v4.0.6 更新">
+      <div class="card-header">
+        <h2 class="card-version">v4.0.6</h2>
+        <span class="card-title">官方域名网络 · 许可证升级 · 版本档案馆视觉更新</span>
+        <span class="card-date">2026.09.19</span>
+      </div>
+      <ul class="change-items">
+        <li class="change-item"><span class="change-type add">新增</span><span class="change-text">集中展示四个官方入口，并支持一键复制域名</span></li>
+        <li class="change-item"><span class="change-type add">升级</span><span class="change-text">许可证与更新日志统一官方域名、Pages 节点和版权范围</span></li>
+        <li class="change-item"><span class="change-type add">优化</span><span class="change-text">更新日志顶部域名网络适配桌面、平板、手机与微信浏览器</span></li>
+      </ul>
     </section>
 
     <!-- v4.0 -->
@@ -1053,7 +1067,7 @@ code, pre {
 
     <!-- Footer -->
     <footer class="page-footer">
-      绊谈万能枢纽 · 更新日志 · <a href="explore.html" style="color:inherit;text-decoration:none;">探索绊谈</a> · <a href="https://rights.bantan.online/site?code=BNT-SITE-2026-001&domain=bantan.online" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">官网编号 BNT-SITE-2026-001</a>
+      绊谈万能枢纽 · 更新日志 · <a href="explore.html" style="color:inherit;text-decoration:none;">探索绊谈</a> · <a href="https://rights.bantan.online/site?code=BNT-SITE-2026-001&domain=bantan.online" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">官网编号 BNT-SITE-2026-001</a> · <a href="feed.xml" style="color:inherit;text-decoration:none;">RSS</a> · <a href="changelog.json" style="color:inherit;text-decoration:none;">JSON</a>
     </footer>
 
   </div>

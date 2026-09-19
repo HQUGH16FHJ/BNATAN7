@@ -395,6 +395,22 @@ main { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; padding: 76px 
 .contact-modal__foot button:hover { color: var(--text); background: rgba(255,255,255,.07); }
 body.has-contact-modal { overflow: hidden; }
 
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+:where(section, article, div)[id] { scroll-margin-top: 96px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .rights-hero.compact { min-height: 390px; }
 
 .site-directory-controls {

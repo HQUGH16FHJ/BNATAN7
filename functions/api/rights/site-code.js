@@ -51,8 +51,8 @@ export async function ensureSiteCode(db, id) {
   await db.prepare(`
     INSERT INTO site_registry (
       site_code, domain, project_name, owner, producer, license,
-      rights_registration_code, status, registered_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVE', ?, ?)
+      rights_registration_code, dns_token, status, registered_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'ACTIVE', ?, ?)
     ON CONFLICT(site_code) DO UPDATE SET
       domain = excluded.domain,
       project_name = excluded.project_name,
@@ -70,6 +70,7 @@ export async function ensureSiteCode(db, id) {
     record.producer || null,
     record.license || null,
     record.registration_code,
+    crypto.randomUUID().replace(/-/g, ''),
     now,
     now
   ).run();

@@ -1,0 +1,21 @@
+{
+  "name": "Bantan Proprietary License",
+  "nameZh": "绊谈专有许可证",
+  "version": "4.0.7",
+  "updated": "2026-09-19",
+  "copyright": "Copyright (c) 2026 Bantan. All Rights Reserved.",
+  "copyrightOwner": "绊谈 Bantan",
+  "officialDomains": [
+    "https://bantan.online",
+    "https://www.bantan.online",
+    "https://bantan.eu.cc",
+    "https://bnatan7.pages.dev"
+  ],
+  "licensePage": "https://bantan.online/license.html",
+  "rightsRegistry": "https://rights.bantan.online",
+  "permissions": {
+    "allowed": ["个人浏览", "个人学习参考", "向熟人和朋友进行小范围分享"],
+    "requiresAuthorization": ["商业使用", "盈利项目", "付费服务", "商业分发"],
+    "prohibited": ["二次分发", "公开发布源码", "移除版权或品牌标识"]
+  }
+}

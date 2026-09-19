@@ -1,10 +1,13 @@
-const CACHE_NAME = 'bantan-static-v4.0.6-premium-11';
+const CACHE_NAME = 'bantan-static-v4.0.7-premium-12';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
   '/index.html',
   '/changelog.html',
+  '/changelog.json',
+  '/feed.xml',
   '/license.html',
+  '/license.json',
   '/manifest.json',
   '/llms.txt',
   '/favicon.svg',
@@ -51,6 +54,9 @@ const CORE_ASSETS = [
   '/copyright/status.js',
   '/copyright/site.html',
   '/copyright/site.js',
+  '/copyright/certificate.html',
+  '/copyright/certificate.css',
+  '/copyright/certificate.js',
   '/explore.html',
   '/trust.html',
   '/domain.html',
