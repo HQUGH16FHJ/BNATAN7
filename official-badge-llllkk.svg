@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="320" height="72" viewBox="0 0 320 72" role="img" aria-labelledby="title desc">
   <title id="title">绊谈官方认证 BNT-SITE-2026-002</title>
   <desc id="desc">刘骐硕个人博客，llllkk.online，DOMAIN VERIFIED</desc>
-  <rect x="1" y="1" width="318" height="70" rx="16" fill="#0c0a08" stroke="#34d399" stroke-opacity=".42"/>
-  <rect x="14" y="14" width="44" height="44" rx="12" fill="#34d399" fill-opacity=".13" stroke="#34d399" stroke-opacity=".3"/>
-  <path d="M36 22l13 7v14l-13 7-13-7V29l13-7Z" fill="none" stroke="#34d399" stroke-width="2"/>
-  <path d="m29 36 5 5 10-11" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="72" y="28" fill="#fff7ed" font-family="Arial, sans-serif" font-size="13" font-weight="700">绊谈官方认证</text>
-  <text x="72" y="46" fill="#d6c7b8" font-family="Consolas, monospace" font-size="10">BNT-SITE-2026-002</text>
-  <text x="72" y="60" fill="#34d399" font-family="Arial, sans-serif" font-size="8" font-weight="700" letter-spacing=".6">DOMAIN VERIFIED · llllkk.online</text>
+  <rect x="1" y="1" width="318" height="70" rx="16" fill="#f7f0e3" stroke="#24734e" stroke-opacity=".48"/>
+  <rect x="14" y="14" width="44" height="44" rx="12" fill="#24734e" fill-opacity=".13" stroke="#24734e" stroke-opacity=".3"/>
+  <path d="M36 22l13 7v14l-13 7-13-7V29l13-7Z" fill="none" stroke="#24734e" stroke-width="2"/>
+  <path d="m29 36 5 5 10-11" fill="none" stroke="#24734e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="28" fill="#1b1712" font-family="Arial, sans-serif" font-size="13" font-weight="700">绊谈官方认证</text>
+  <text x="72" y="46" fill="#675b4e" font-family="Consolas, monospace" font-size="10">BNT-SITE-2026-002</text>
+  <text x="72" y="60" fill="#24734e" font-family="Arial, sans-serif" font-size="8" font-weight="700" letter-spacing=".6">DOMAIN VERIFIED · llllkk.online</text>
 </svg>

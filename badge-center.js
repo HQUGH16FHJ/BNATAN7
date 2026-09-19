@@ -30,6 +30,8 @@
     document.querySelectorAll('#siteChoices button').forEach(item => item.classList.toggle('is-active', item === button));
     selected.code = button.dataset.code;
     selected.domain = button.dataset.domain;
+    selected.theme = button.dataset.code === 'BNT-SITE-2026-002' ? 'light' : 'dark';
+    document.querySelectorAll('#themeChoices button').forEach(item => item.classList.toggle('is-active', item.dataset.theme === selected.theme));
     update();
   });
 
