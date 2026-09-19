@@ -12,7 +12,9 @@ export async function onRequest(context) {
   } else if (url.pathname === '/' || url.pathname === '') {
     assetUrl.pathname = '/copyright/';
   } else {
-    assetUrl.pathname = '/copyright' + url.pathname;
+    const cleanPath = url.pathname.replace(/\/+$/, '');
+    const mappedPath = '/copyright' + cleanPath;
+    assetUrl.pathname = /\.[a-z0-9]+$/i.test(cleanPath) ? mappedPath : mappedPath + '.html';
   }
 
   const assetRequest = new Request(assetUrl.toString(), request);
