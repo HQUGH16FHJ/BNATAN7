@@ -23,7 +23,14 @@ export async function onRequest(context) {
 
   const assetRequest = new Request(assetUrl.toString(), request);
   if (context.env.ASSETS?.fetch) {
-    return context.env.ASSETS.fetch(assetRequest);
+    const response = await context.env.ASSETS.fetch(assetRequest);
+    if ([301, 302, 307, 308].includes(response.status)) {
+      const location = response.headers.get('Location');
+      if (location) {
+        return context.env.ASSETS.fetch(new Request(new URL(location, request.url).toString(), request));
+      }
+    }
+    return response;
   }
   return context.next(assetRequest);
 }
