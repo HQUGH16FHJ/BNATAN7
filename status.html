@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="绊谈系统状态控制台：检测官方入口、Cloudflare Pages、网络状态和当前版本。">
+<meta name="theme-color" content="#090704">
+<link rel="canonical" href="https://bantan.online/status.html">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./site-pages-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./premium-tools-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./premium-finish-v1.css?v=1.0.0">
+<title>系统状态控制台 - 绊谈 Bantan</title>
+</head>
+<body class="site-page" data-premium-tool="status">
+<nav class="site-topbar" aria-label="状态控制台导航"><div class="site-topbar__inner"><a class="site-brand" href="./landing.html"><span class="site-brand__mark">绊</span><span>系统状态</span></a><div class="site-nav"><a href="./landing.html">首页</a><a href="./explore.html">探索</a><a href="./trust.html">信任</a><a href="./domain.html">域名</a><a href="./guides/">指南</a><a href="./changelog.html">更新</a><a href="./license.html">许可</a></div></div></nav>
+<main class="site-shell">
+  <header class="site-hero">
+    <div class="site-kicker">Bantan Status Console</div>
+    <h1 class="site-title">官方入口，<em>实时核对</em></h1>
+    <p class="site-lead">浏览器会从当前网络环境直接探测四个官方入口，并显示可达状态与响应时间。结果代表本次探测，不代表长期可用性承诺。</p>
+  </header>
+  <section class="premium-console">
+    <div class="premium-console__head"><h2 class="premium-console__title">Endpoint Telemetry</h2><span class="premium-live">LIVE CHECK</span></div>
+    <div class="premium-console__body">
+      <div class="premium-console__copy"><p>官方入口可用性 · 最近检查 <span data-status-updated>--</span></p></div>
+      <div class="premium-console__metric" data-status-summary>--</div>
+    </div>
+  </section>
+  <section class="site-section">
+    <div class="endpoint-list">
+      <div class="endpoint-item" data-url="https://bantan.online/"><span class="endpoint-dot"></span><div class="endpoint-main"><strong>bantan.online</strong><span>主站 · 规范入口</span></div><span class="endpoint-status">WAITING</span><span class="endpoint-latency">--</span></div>
+      <div class="endpoint-item" data-url="https://www.bantan.online/"><span class="endpoint-dot"></span><div class="endpoint-main"><strong>www.bantan.online</strong><span>WWW 别名入口</span></div><span class="endpoint-status">WAITING</span><span class="endpoint-latency">--</span></div>
+      <div class="endpoint-item" data-url="https://bantan.eu.cc/"><span class="endpoint-dot"></span><div class="endpoint-main"><strong>bantan.eu.cc</strong><span>官方独立域名</span></div><span class="endpoint-status">WAITING</span><span class="endpoint-latency">--</span></div>
+      <div class="endpoint-item" data-url="https://bnatan7.pages.dev/"><span class="endpoint-dot"></span><div class="endpoint-main"><strong>bnatan7.pages.dev</strong><span>Cloudflare Pages 稳定入口</span></div><span class="endpoint-status">WAITING</span><span class="endpoint-latency">--</span></div>
+    </div>
+  </section>
+  <section class="site-section">
+    <div class="site-stats">
+      <div class="site-stat"><strong>v4.0.6</strong><span>公开版本</span></div>
+      <div class="site-stat"><strong>main</strong><span>生产分支</span></div>
+      <div class="site-stat"><strong>24/7</strong><span>静态入口设计</span></div>
+      <div class="site-stat"><strong>HTTPS</strong><span>官方入口协议</span></div>
+    </div>
+    <p class="site-note">如果入口显示 UNREACHABLE，可能是当前网络、地区网络或浏览器拦截导致。请换网络重试，并通过 bantan.online 与域名认证页交叉验证。</p>
+  </section>
+</main>
+<footer class="site-footer"><div class="site-footer__inner"><span>© 2026 绊谈 Bantan</span><span><a href="./domain.html">官方域名</a> · <a href="./verify.html">链接验证</a> · <a href="./explore.html">探索</a></span></div></footer>
+<script src="./premium-tools-v1.js?v=1.0.0"></script>
+<script src="./site-pages-v1.js?v=1.0.0"></script>
+</body>
+</html>

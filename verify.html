@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="绊谈官方链接验证器：输入网址并检查是否属于官方域名列表。">
+<meta name="theme-color" content="#090704">
+<link rel="canonical" href="https://bantan.online/verify.html">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./site-pages-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./premium-tools-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./premium-finish-v1.css?v=1.0.0">
+<title>官方链接验证器 - 绊谈 Bantan</title>
+</head>
+<body class="site-page" data-premium-tool="verify">
+<nav class="site-topbar" aria-label="链接验证导航"><div class="site-topbar__inner"><a class="site-brand" href="./landing.html"><span class="site-brand__mark">绊</span><span>链接验证</span></a><div class="site-nav"><a href="./landing.html">首页</a><a href="./explore.html">探索</a><a href="./trust.html">信任</a><a href="./domain.html">域名</a><a href="./guides/">指南</a><a href="./changelog.html">更新</a><a href="./license.html">许可</a></div></div></nav>
+<main class="site-shell">
+  <header class="site-hero">
+    <div class="site-kicker">Official Link Verifier</div>
+    <h1 class="site-title">输入链接，<em>立即验证</em></h1>
+    <p class="site-lead">验证器只在浏览器本地比对官方域名列表，不会把输入的网址发送到服务器。</p>
+  </header>
+  <section class="premium-console">
+    <div class="premium-console__head"><h2 class="premium-console__title">Domain Verification Console</h2><span class="premium-live">LOCAL CHECK</span></div>
+    <div style="padding:20px;">
+      <form class="verify-form" id="verifyForm">
+        <input class="verify-input" id="verifyInput" type="text" inputmode="url" autocomplete="off" placeholder="https://example.com/ 或 example.com" aria-label="输入要验证的网址">
+        <button class="verify-submit" type="submit">开始验证</button>
+      </form>
+      <div class="verify-result" id="verifyResult" data-result="unknown" role="status"></div>
+    </div>
+  </section>
+  <section class="site-section">
+    <div class="site-section__head"><div><div class="site-section__eyebrow">Official Allowlist</div><h2>当前官方域名列表</h2></div></div>
+    <div class="site-list">
+      <div class="site-row"><span class="site-row__index">01</span><div><h3>bantan.online</h3><p>主站、规范地址与搜索引擎首选入口。</p></div><span class="site-tag">OFFICIAL</span></div>
+      <div class="site-row"><span class="site-row__index">02</span><div><h3>www.bantan.online</h3><p>与主站同步的官方 WWW 别名。</p></div><span class="site-tag">OFFICIAL</span></div>
+      <div class="site-row"><span class="site-row__index">03</span><div><h3>bantan.eu.cc</h3><p>版权所有者登记的独立域名。</p></div><span class="site-tag">OFFICIAL</span></div>
+      <div class="site-row"><span class="site-row__index">04</span><div><h3>bnatan7.pages.dev</h3><p>Cloudflare Pages 当前稳定项目入口。</p></div><span class="site-tag">OFFICIAL</span></div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer"><div class="site-footer__inner"><span>© 2026 绊谈 Bantan</span><span><a href="./status.html">状态控制台</a> · <a href="./domain.html">域名认证</a> · <a href="./security.html">安全说明</a></span></div></footer>
+<script src="./premium-tools-v1.js?v=1.0.0"></script>
+<script src="./site-pages-v1.js?v=1.0.0"></script>
+</body>
+</html>

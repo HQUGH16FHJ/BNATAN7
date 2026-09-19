@@ -43,6 +43,10 @@
 - /developers.html：技术栈、本地运行和部署说明
 - /privacy.html：本地存储、用户状态和第三方链接隐私说明
 - /security.html：账号安全、外链风险和敏感数据处理建议
+- /status.html：官方入口状态、响应时间和版本控制台
+- /verify.html：在本地验证网址是否属于官方域名
+- /offline.html：断网时的缓存入口和重新连接页面
+- /brand.html：品牌名称、标准色、小绊谈形象和官方地址
 
 ## 官方入口说明
 

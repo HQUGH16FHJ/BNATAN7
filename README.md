@@ -90,6 +90,10 @@
 | 开发者文档 | `developers.html` | 技术栈、本地运行和部署说明 |
 | 隐私说明 | `privacy.html` | 本地数据、用户状态和第三方链接说明 |
 | 安全说明 | `security.html` | 账号安全、外链风险和敏感数据建议 |
+| 状态控制台 | `status.html` | 官方入口实时探测、响应时间和版本状态 |
+| 链接验证器 | `verify.html` | 本地验证网址是否属于官方域名列表 |
+| 离线模式 | `offline.html` | 断网缓存入口和重新连接体验 |
+| 品牌资产中心 | `brand.html` | 品牌名称、标准色、形象和官方地址 |
 
 ## 项目结构
 
@@ -146,7 +150,7 @@ http://localhost:8000/landing.html
 
 - Service Worker：`sw.js`
 - Manifest：`manifest.json`
-- 当前缓存版本：`bantan-static-v4.0.6-premium-2`
+- 当前缓存版本：`bantan-static-v4.0.6-premium-3`
 
 发布新版本后，应同时更新静态资源版本号，避免浏览器继续使用旧版 JavaScript 或 CSS。
 

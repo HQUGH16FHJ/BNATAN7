@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.6-premium-2';
+const CACHE_NAME = 'bantan-static-v4.0.6-premium-3';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -37,6 +37,8 @@ const CORE_ASSETS = [
   '/premium-finish-v1.css',
   '/site-pages-v1.css',
   '/site-pages-v1.js',
+  '/premium-tools-v1.css',
+  '/premium-tools-v1.js',
   '/explore.html',
   '/trust.html',
   '/domain.html',
@@ -48,6 +50,10 @@ const CORE_ASSETS = [
   '/developers.html',
   '/privacy.html',
   '/security.html',
+  '/status.html',
+  '/verify.html',
+  '/offline.html',
+  '/brand.html',
   '/about.html',
   '/about-v4.css',
   '/about-podcast.css',
@@ -88,7 +94,11 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
           return response;
         })
-        .catch(() => caches.match(request).then(cached => cached || caches.match('/landing.html')))
+        .catch(async () => {
+          const cached = await caches.match(request);
+          if (cached) return cached;
+          return (await caches.match('/offline.html')) || caches.match('/landing.html');
+        })
     );
     return;
   }
