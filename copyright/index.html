@@ -131,7 +131,7 @@
       <h2>需要商业或定制授权？</h2>
       <p>申请时请提供项目名称、使用场景、授权期限、使用地区和预计分发范围。未经书面许可，默认不授予商业权利。</p>
     </div>
-    <a class="rights-button is-primary" href="mailto:g125668039@163.com?subject=Bantan%20Rights%20授权申请&body=项目名称：%0A使用场景：%0A授权期限：%0A使用地区：%0A分发范围：">发送授权申请</a>
+    <button class="rights-button is-primary" type="button" data-contact-open data-contact-intent="authorize">发送授权申请</button>
   </section>
 
   <section class="rights-section rights-notice">
@@ -142,9 +142,74 @@
 
 <footer class="rights-footer">
   <span>© 2026 Bantan Rights · 绊谈版权中心</span>
-  <div><a href="https://bantan.online/">主站</a><a href="./register.html">登记单</a><a href="./admin.html">管理入口</a><a href="mailto:g125668039@163.com">联系</a></div>
+  <div><a href="https://bantan.online/">主站</a><a href="./register.html">登记单</a><a href="./admin.html">管理入口</a><button type="button" data-contact-open>联系</button></div>
 </footer>
 
-<script src="./copyright.js?v=1.0.0"></script>
+<div class="contact-modal" id="contactModal" hidden>
+  <button class="contact-modal__backdrop" type="button" data-contact-close aria-label="关闭联系弹窗"></button>
+  <section class="contact-modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <header class="contact-modal__head">
+      <div>
+        <span>DIRECT CONTACT</span>
+        <h2 id="contactModalTitle">联系绊谈</h2>
+        <p id="contactModalCopy">授权、合作、版权核对和技术支持都可以通过以下渠道联系。</p>
+      </div>
+      <button type="button" data-contact-close aria-label="关闭">×</button>
+    </header>
+
+    <div class="contact-modal__grid">
+      <article class="contact-channel">
+        <span>WECHAT</span>
+        <h3>微信</h3>
+        <strong>HQUGH16FHJ</strong>
+        <p>添加时请备注来意，例如“版权授权”或“合作”。</p>
+        <button type="button" data-copy="HQUGH16FHJ">复制微信号</button>
+      </article>
+
+      <article class="contact-channel">
+        <span>QQ</span>
+        <h3>QQ</h3>
+        <strong>1429616034</strong>
+        <p>可直接发起 QQ 临时会话，也可以复制号码添加好友。</p>
+        <div class="contact-channel__actions">
+          <a href="https://wpa.qq.com/msgrd?v=3&uin=1429616034&site=qq&menu=yes" target="_blank" rel="noopener">打开 QQ</a>
+          <button type="button" data-copy="1429616034">复制 QQ</button>
+        </div>
+      </article>
+
+      <article class="contact-channel">
+        <span>EMAIL / 163</span>
+        <h3>网易邮箱</h3>
+        <strong>125668039@163.com</strong>
+        <p>适合发送正式授权申请、合同材料和项目说明。</p>
+        <div class="contact-channel__actions">
+          <a href="mailto:125668039@163.com">打开邮箱</a>
+          <button type="button" data-copy="125668039@163.com">复制邮箱</button>
+        </div>
+      </article>
+
+      <article class="contact-channel is-accent">
+        <span>EMAIL / QQ</span>
+        <h3>QQ 邮箱</h3>
+        <strong>1429616034@qq.com</strong>
+        <p>适合快速联系、补充材料或跟进授权申请。</p>
+        <div class="contact-channel__actions">
+          <a href="mailto:1429616034@qq.com">打开邮箱</a>
+          <button type="button" data-copy="1429616034@qq.com">复制邮箱</button>
+        </div>
+      </article>
+    </div>
+
+    <footer class="contact-modal__foot">
+      <p>发送授权申请时，请写明项目名称、使用场景、授权期限、使用地区和分发范围。</p>
+      <div>
+        <a class="contact-modal__primary" href="mailto:125668039@163.com?subject=Bantan%20Rights%20授权申请&body=项目名称：%0A使用场景：%0A授权期限：%0A使用地区：%0A分发范围：%0A联系方式：">打开邮箱发送授权申请</a>
+        <button type="button" data-contact-close>关闭</button>
+      </div>
+    </footer>
+  </section>
+</div>
+
+<script src="./copyright.js?v=1.1.0"></script>
 </body>
 </html>

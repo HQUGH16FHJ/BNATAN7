@@ -128,7 +128,7 @@ main { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; padding: 76px 
 .rights-hero h1 em { color: var(--amber); font-style: normal; }
 .rights-hero__copy > p { max-width: 64ch; margin: 0; color: var(--sub); font-size: 15px; }
 .rights-hero__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 25px; }
-.rights-button { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; padding: 0 16px; border: 1px solid rgba(255,255,255,.085); border-radius: 12px; color: var(--text); background: rgba(255,255,255,.035); font-size: 11px; font-weight: 900; }
+.rights-button { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; padding: 0 16px; border: 1px solid rgba(255,255,255,.085); border-radius: 12px; color: var(--text); background: rgba(255,255,255,.035); font-size: 11px; font-weight: 900; cursor: pointer; }
 .rights-button.is-primary { color: #071019; border-color: rgba(245,158,11,.24); background: linear-gradient(135deg, var(--blue), var(--amber)); }
 .rights-verification-card { position: relative; z-index: 2; display: grid; gap: 10px; padding: 22px; border: 1px solid rgba(56,189,248,.18); border-radius: 18px; background: rgba(6,15,20,.58); }
 .rights-verification-card > span { color: var(--blue); font-family: ui-monospace, monospace; font-size: 9px; font-weight: 900; letter-spacing: .13em; }
@@ -195,6 +195,205 @@ main { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; padding: 76px 
 .rights-footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; width: min(calc(100% - 32px), var(--max)); margin: 0 auto; padding: 28px 0 calc(42px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
 .rights-footer div { display: flex; gap: 13px; flex-wrap: wrap; }
 .rights-footer a:hover { color: var(--amber); }
+.rights-footer button {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.rights-footer button:hover { color: var(--amber); }
+
+.contact-modal[hidden] { display: none; }
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.contact-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(2, 2, 2, 0.78);
+  backdrop-filter: blur(12px);
+  cursor: default;
+}
+.contact-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  max-height: min(860px, calc(100dvh - 40px));
+  overflow: auto;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.1), transparent 32%),
+    radial-gradient(circle at 0 100%, rgba(245, 158, 11, 0.08), transparent 28%),
+    #0c0a08;
+  box-shadow: 0 38px 120px rgba(0, 0, 0, 0.72);
+  animation: contact-modal-in 0.36s var(--ease) both;
+}
+@keyframes contact-modal-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.contact-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.contact-modal__head > div > span {
+  color: var(--blue);
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+.contact-modal__head h2 {
+  margin: 6px 0 7px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.contact-modal__head p {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.contact-modal__head > button {
+  display: grid;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 12px;
+  color: var(--sub);
+  background: rgba(255,255,255,.035);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.contact-modal__head > button:hover { color: var(--text); background: rgba(255,255,255,.07); }
+.contact-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 20px 28px;
+}
+.contact-channel {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 18px;
+  background: rgba(255,255,255,.027);
+}
+.contact-channel::before {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 56px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+  content: "";
+}
+.contact-channel.is-accent::before { background: linear-gradient(90deg, var(--amber), transparent); }
+.contact-channel > span {
+  color: var(--blue);
+  font-family: ui-monospace, monospace;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+.contact-channel.is-accent > span { color: var(--amber); }
+.contact-channel h3 { margin: 0; color: var(--sub); font-size: 12px; }
+.contact-channel > strong {
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+  font-size: clamp(14px, 2.2vw, 19px);
+}
+.contact-channel p {
+  min-height: 34px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+.contact-channel > button,
+.contact-channel__actions a,
+.contact-channel__actions button,
+.contact-modal__foot button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 10px;
+  color: var(--blue);
+  background: rgba(56, 189, 248, 0.055);
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.contact-channel > button { justify-self: start; }
+.contact-channel__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.contact-channel.is-accent .contact-channel__actions a,
+.contact-channel.is-accent .contact-channel__actions button {
+  border-color: rgba(245, 158, 11, 0.2);
+  color: var(--amber);
+  background: rgba(245, 158, 11, 0.055);
+}
+.contact-modal__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 28px 28px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.contact-modal__foot p {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+.contact-modal__foot > div { display: flex; flex: 0 0 auto; gap: 8px; flex-wrap: wrap; }
+.contact-modal__foot .contact-modal__primary {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  border-radius: 11px;
+  color: #071019;
+  background: linear-gradient(135deg, var(--blue), var(--amber));
+  font-size: 10px;
+  font-weight: 900;
+}
+.contact-modal__foot button {
+  min-height: 40px;
+  border-color: rgba(255,255,255,.08);
+  color: var(--sub);
+  background: rgba(255,255,255,.035);
+}
+.contact-modal__foot button:hover { color: var(--text); background: rgba(255,255,255,.07); }
+body.has-contact-modal { overflow: hidden; }
 
 .rights-hero.compact { min-height: 390px; }
 
@@ -515,6 +714,22 @@ main { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; padding: 76px 
   .admin-login > div,
   .admin-toolbar,
   .admin-record dl { grid-template-columns: 1fr; }
+  .contact-modal { align-items: end; padding: 0; }
+  .contact-modal__panel {
+    width: 100%;
+    max-height: 92dvh;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 24px 24px 0 0;
+  }
+  .contact-modal__head,
+  .contact-modal__grid,
+  .contact-modal__foot { padding-right: 18px; padding-left: 18px; }
+  .contact-modal__grid { grid-template-columns: 1fr; }
+  .contact-modal__foot { align-items: stretch; flex-direction: column; }
+  .contact-modal__foot > div { display: grid; grid-template-columns: 1fr; }
+  .contact-modal__foot .contact-modal__primary { width: 100%; }
 }
 
 @media print {

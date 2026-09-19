@@ -34,6 +34,9 @@
   const form = document.getElementById('rightsVerifyForm');
   const input = document.getElementById('rightsVerifyInput');
   const result = document.getElementById('rightsVerifyResult');
+  const contactModal = document.getElementById('contactModal');
+  const contactCopy = document.getElementById('contactModalCopy');
+  let contactReturnFocus = null;
 
   function normalize(value) {
     return value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
@@ -74,6 +77,43 @@
       }
       setTimeout(() => { button.textContent = original; }, 1400);
     });
+  });
+
+  function openContactModal(intent) {
+    if (!contactModal) return;
+    contactReturnFocus = document.activeElement;
+    contactModal.hidden = false;
+    document.body.classList.add('has-contact-modal');
+    if (contactCopy) {
+      contactCopy.textContent = intent === 'authorize'
+        ? '请选择任一渠道发送授权申请。正式申请建议使用邮箱，并写明项目名称、使用场景、授权期限、使用地区和分发范围。'
+        : '授权、合作、版权核对和技术支持都可以通过以下渠道联系。';
+    }
+    requestAnimationFrame(() => {
+      const target = intent === 'authorize'
+        ? contactModal.querySelector('.contact-modal__primary')
+        : contactModal.querySelector('.contact-modal__head [data-contact-close]');
+      target?.focus();
+    });
+  }
+
+  function closeContactModal() {
+    if (!contactModal || contactModal.hidden) return;
+    contactModal.hidden = true;
+    document.body.classList.remove('has-contact-modal');
+    contactReturnFocus?.focus?.();
+  }
+
+  document.querySelectorAll('[data-contact-open]').forEach(button => {
+    button.addEventListener('click', () => openContactModal(button.dataset.contactIntent || ''));
+  });
+
+  contactModal?.querySelectorAll('[data-contact-close]').forEach(button => {
+    button.addEventListener('click', closeContactModal);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeContactModal();
   });
 
   document.getElementById('printCertificate')?.addEventListener('click', () => window.print());
