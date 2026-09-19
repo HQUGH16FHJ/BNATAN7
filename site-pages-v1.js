@@ -1,6 +1,17 @@
 (function () {
   'use strict';
 
+  const nav = document.querySelector('.site-nav');
+  if (nav && !nav.querySelector('a[href="/releases.html"]')) {
+    const releaseLink = document.createElement('a');
+    releaseLink.href = '/releases.html';
+    releaseLink.textContent = '发布';
+    const badgeLink = document.createElement('a');
+    badgeLink.href = '/badge.html';
+    badgeLink.textContent = '徽章';
+    nav.append(releaseLink, badgeLink);
+  }
+
   const current = location.pathname.replace(/\/+$/, '') || '/';
   document.querySelectorAll('.site-nav a').forEach(link => {
     const url = new URL(link.href, location.href);
