@@ -1,0 +1,34 @@
+name: Generate release OG images
+
+on:
+  push:
+    paths:
+      - changelog.json
+      - scripts/generate-release-og.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate OG SVG files
+        run: node scripts/generate-release-og.mjs
+
+      - name: Commit generated OG files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/og
+          git diff --cached --quiet || git commit -m "chore: generate release OG images"
+          git push

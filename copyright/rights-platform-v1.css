@@ -152,8 +152,98 @@
 .ops-check small { color: var(--muted); font-size: 9px; }
 .ops-check time { color: var(--muted); font-family: ui-monospace, monospace; font-size: 10px; }
 
+.ops-panel {
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.022);
+}
+
+.ops-panel__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.ops-panel__head span {
+  color: var(--blue);
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.ops-panel__head h2 { margin: 4px 0 0; }
+.ops-panel__head p { max-width: 52ch; margin: 0; color: var(--muted); font-size: 10px; }
+
+.world-map {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(56,189,248,.1);
+  border-radius: 16px;
+  background: #090704;
+}
+
+.world-map img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.world-node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  transform: translate(-50%,-50%);
+}
+
+.world-node i {
+  width: 10px;
+  height: 10px;
+  border: 2px solid #090704;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 1px rgba(52,211,153,.6), 0 0 14px rgba(52,211,153,.5);
+}
+
+.world-node small {
+  padding: 3px 6px;
+  border: 1px solid rgba(56,189,248,.14);
+  border-radius: 6px;
+  color: var(--sub);
+  background: rgba(9,7,4,.82);
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.tls-monitor {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tls-card {
+  padding: 15px;
+  border: 1px solid rgba(255,255,255,.065);
+  border-radius: 13px;
+  background: rgba(0,0,0,.12);
+}
+
+.tls-card span { color: var(--muted); font-size: 9px; }
+.tls-card strong { display: block; margin-top: 5px; font-size: 13px; }
+.tls-card p { margin: 8px 0 0; color: var(--muted); font-size: 9px; }
+.tls-card a { color: var(--blue); font-size: 9px; }
+
 @media (max-width: 760px) {
   .platform-hero { grid-template-columns: 1fr; }
   .api-endpoints,
-  .ops-metrics { grid-template-columns: 1fr; }
+  .ops-metrics,
+  .tls-monitor { grid-template-columns: 1fr; }
+  .ops-panel__head { align-items: flex-start; flex-direction: column; }
 }

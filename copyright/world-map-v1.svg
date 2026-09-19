@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">全球服务节点地图</title>
+  <desc id="desc">用于展示 Cloudflare 和官方域名的全球节点状态</desc>
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#38bdf8" stroke-opacity=".045"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="560" fill="#090704"/>
+  <rect width="1200" height="560" fill="url(#grid)"/>
+  <g fill="#d6c7b8" fill-opacity=".13" stroke="#38bdf8" stroke-opacity=".18" stroke-width="2">
+    <path d="M90 112 145 82l79 18 54 58-28 60-58 30-36-25-30-54-51-24Z"/>
+    <path d="m238 282 47 9 34 62-19 92-39 31-36-67-8-84Z"/>
+    <path d="m432 96 80-24 102 12 37 45-35 34-105-7-58-25Z"/>
+    <path d="m535 181 86-12 76 63-28 99-58 44-64-45-31-91Z"/>
+    <path d="m635 61 154 2 109 58 76 8 54 56-78 55-95-20-40 27-91-43-62-78-62-27Z"/>
+    <path d="m853 324 83-17 96 39 32 69-55 38-103-30-56-59Z"/>
+    <path d="m943 480 50-12 43 29-22 35-58-7-25-25Z"/>
+  </g>
+  <g stroke="#38bdf8" stroke-opacity=".16" stroke-width="1.5" fill="none">
+    <path d="M200 162C365 93 515 126 633 223S870 330 1042 243"/>
+    <path d="M239 318C420 267 600 306 784 399S980 425 1100 352"/>
+    <path d="M338 131C464 221 608 336 774 480"/>
+  </g>
+</svg>

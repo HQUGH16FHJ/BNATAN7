@@ -100,6 +100,43 @@
         <time>${item.duration} ms</time>
       </article>
     `).join('');
+
+    const nodes = [
+      ['Hong Kong', 82, 55, 'ok'],
+      ['Tokyo', 86, 46, 'ok'],
+      ['Singapore', 75, 66, 'ok'],
+      ['Sydney', 88, 80, 'ok'],
+      ['Los Angeles', 17, 48, 'ok'],
+      ['New York', 29, 42, 'ok'],
+      ['London', 48, 36, 'ok'],
+      ['Frankfurt', 53, 39, 'ok'],
+      ['São Paulo', 37, 76, 'ok']
+    ];
+    const map = document.getElementById('worldMap');
+    if (map) {
+      map.innerHTML = '<img src="./world-map-v1.svg" alt="全球服务节点地图">' + nodes.map(([name, x, y, status]) => `
+        <span class="world-node" style="--x:${x}%;--y:${y}%"><i data-status="${status}"></i><small>${escapeHtml(name)}</small></span>
+      `).join('');
+    }
+
+    const tls = document.getElementById('tlsMonitor');
+    if (tls) {
+      tls.innerHTML = '<article class="tls-card"><span>正在读取证书</span><strong>...</strong></article>';
+      try {
+        const response = await fetch('/api/rights/tls', { cache: 'no-store' });
+        const data = await response.json();
+        tls.innerHTML = (data.items || []).map(item => `
+          <article class="tls-card">
+            <span>${escapeHtml(item.domain)}</span>
+            <strong>${item.latest ? escapeHtml(new Date(item.latest.notAfter).toLocaleDateString('zh-CN')) : '等待检测'}</strong>
+            <p>${item.latest ? `到期时间 · ${escapeHtml(item.latest.issuer)}` : escapeHtml(item.error || '证书数据暂不可用')}</p>
+            <a href="${escapeHtml(item.monitorUrl)}" target="_blank" rel="noopener">查看证书记录</a>
+          </article>
+        `).join('');
+      } catch (error) {
+        tls.innerHTML = `<article class="tls-card"><span>证书监控</span><strong>暂时不可用</strong><p>${escapeHtml(error.message)}</p></article>`;
+      }
+    }
   }
 
   if (page === 'api') initApi();

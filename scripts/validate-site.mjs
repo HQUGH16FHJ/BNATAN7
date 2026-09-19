@@ -26,7 +26,11 @@ const requiredFiles = [
   'changelog.json',
   'feed.xml',
   'functions/api/rights/site-badge.js',
-  'functions/api/rights/site-verify.js'
+  'functions/api/rights/site-verify.js',
+  'functions/api/rights/health.js',
+  'functions/api/rights/openapi.js',
+  'functions/api/rights/tls.js',
+  'scripts/verify-site-codes.mjs'
 ];
 
 async function exists(file) {
