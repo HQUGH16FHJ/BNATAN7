@@ -22,4 +22,6 @@ jobs:
           node-version: 22
 
       - name: Verify official registry codes
-        run: node scripts/verify-site-codes.mjs
+        run: |
+          sleep 15
+          node scripts/verify-site-codes.mjs
