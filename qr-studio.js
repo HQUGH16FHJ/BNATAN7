@@ -33,7 +33,7 @@
     const shape = document.getElementById('qrShape').value;
     const light = document.getElementById('qrTheme').value === 'light';
     const verifyUrl = `https://rights.bantan.online/site?code=${site.code}&domain=${site.domain}`;
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=12&data=${encodeURIComponent(verifyUrl)}&color=${light ? '1b1712' : 'fff7ed'}&bgcolor=${light ? 'f7f0e3' : '0c0a08'}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=12&ecc=H&data=${encodeURIComponent(verifyUrl)}&color=${light ? '1b1712' : 'fff7ed'}&bgcolor=${light ? 'f7f0e3' : '0c0a08'}`;
     const image = await loadImage(qrUrl);
     context.clearRect(0, 0, canvas.width, canvas.height);
     const background = light ? '#f7f0e3' : '#0c0a08';
@@ -49,10 +49,28 @@
       roundRect(12, 12, 696, 696, shape === 'certificate' ? 32 : 54);
       context.fill();
     }
-    context.strokeStyle = accent;
-    context.lineWidth = 5;
+    const borderGradient = context.createLinearGradient(0, 0, 720, 720);
+    borderGradient.addColorStop(0, accent);
+    borderGradient.addColorStop(0.55, light ? '#f59e0b' : '#38bdf8');
+    borderGradient.addColorStop(1, light ? '#24734e' : '#fb7185');
+    context.strokeStyle = borderGradient;
+    context.lineWidth = 7;
     context.stroke();
     context.drawImage(image, 120, 126, 480, 480);
+    context.fillStyle = background;
+    roundRect(310, 310, 100, 100, 26);
+    context.fill();
+    context.strokeStyle = accent;
+    context.lineWidth = 4;
+    context.stroke();
+    context.fillStyle = accent;
+    context.font = document.getElementById('qrSite').value === 'llllkk'
+      ? '900 38px Georgia, serif'
+      : '900 48px "Microsoft YaHei", sans-serif';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(document.getElementById('qrSite').value === 'llllkk' ? 'LQ' : '绊', 360, 362);
+    context.textBaseline = 'alphabetic';
     context.fillStyle = foreground;
     context.font = '900 34px "Microsoft YaHei", sans-serif';
     context.textAlign = 'center';
