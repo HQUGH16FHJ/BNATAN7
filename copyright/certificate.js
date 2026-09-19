@@ -44,7 +44,7 @@
           <i class="certificate-status ${verified ? '' : 'is-code-only'}">${verified ? 'DOMAIN VERIFIED' : 'CODE VERIFIED'}</i>
         </header>
         <h1 class="certificate-title">版权验证证书</h1>
-        <p class="certificate-subtitle">本证书由绊谈运营的 Bantan Rights 私有认证系统生成。该系统不隶属于任何国家或政府机构，也不宣称获得任何国家、政府或官方机构的认证、授权或背书。证书用于公开说明该官网编号对应的权利主体、官方域名、制作关系、许可证与验证状态。</p>
+        <p class="certificate-subtitle">Bantan Rights 是绊谈维护的私有网站权属声明与版权登记系统；不属于国家行政机关、政府认证机构或国家版权登记平台。本证书仅用于核对绊谈自主登记的信息，所有资料由提交人自行申报、本站不做实质核验；不构成国家认证、行政认定或司法证明。</p>
         <dl class="certificate-grid">
           <div><dt>官网编号</dt><dd class="is-code">${escapeHtml(item.site_code)}</dd></div>
           <div><dt>官方域名</dt><dd>${escapeHtml(item.domain || '--')}</dd></div>
