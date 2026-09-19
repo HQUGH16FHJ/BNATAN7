@@ -7,7 +7,7 @@ The frontend can be deployed to any static host, including GitHub Pages, Cloudfl
 The complete frontend is currently delivered as:
 
 ```text
-BNATAN7-v4.0.4-frontend-only.zip
+BNATAN7-v4.0.5-frontend-only.zip
 ```
 
 No build command is required for the static files.

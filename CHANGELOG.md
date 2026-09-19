@@ -2,6 +2,20 @@
 
 All notable project changes are documented here.
 
+## v4.0.5 - 2026-09-19
+
+### Added
+
+- Added real production screenshots for the landing page, main application, archive pages, and mobile view
+- Added governance, maintainer, release, design system, and FAQ documentation
+- Added repository topics, social preview metadata, and a showcase-focused README
+- Added a formal GitHub Release with downloadable project packages
+
+### Changed
+
+- Upgraded the service worker cache to `bantan-static-v4.0.5`
+- Reorganized README navigation around documentation, screenshots, deployment, and license
+
 ## v4.0.4 - 2026-09-19
 
 ### Added

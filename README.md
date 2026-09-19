@@ -1,6 +1,6 @@
 # 绊谈 · 万能枢纽
 
-![Version](https://img.shields.io/badge/version-v4.0.4-f59e0b?style=flat-square)
+![Version](https://img.shields.io/badge/version-v4.0.5-f59e0b?style=flat-square)
 ![License](https://img.shields.io/badge/license-Bantan%20Proprietary-fb7185?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Web%20%7C%20PWA-38bdf8?style=flat-square)
 ![Status](https://img.shields.io/badge/status-active-34d399?style=flat-square)
@@ -106,7 +106,7 @@ http://localhost:8000/landing.html
 
 - Service Worker：`sw.js`
 - Manifest：`manifest.json`
-- 当前缓存版本：`bantan-static-v4.0.4`
+- 当前缓存版本：`bantan-static-v4.0.5`
 
 发布新版本后，应同时更新静态资源版本号，避免浏览器继续使用旧版 JavaScript 或 CSS。
 

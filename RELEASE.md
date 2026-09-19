@@ -27,14 +27,14 @@ MAJOR.MINOR.PATCH
 ## Current Release
 
 ```text
-v4.0.4
+v4.0.5
 ```
 
 ## Release Assets
 
-- `BNATAN7-v4.0.4-frontend-only.zip`
-- `BNATAN7-v4.0.4-motion-sites.zip`
-- `BNATAN7-v4.0.4-motion-sites.patch`
+- `BNATAN7-v4.0.5-frontend-only.zip`
+- `BNATAN7-v4.0.5-motion-sites.zip`
+- `BNATAN7-v4.0.5-motion-sites.patch`
 
 ## Rollback
 

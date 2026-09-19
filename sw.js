@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.2';
+const CACHE_NAME = 'bantan-static-v4.0.5';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -6,6 +6,7 @@ const CORE_ASSETS = [
   '/changelog.html',
   '/license.html',
   '/manifest.json',
+  '/llms.txt',
   '/favicon.svg',
   '/xiaobantan.svg',
   '/xiaobantan-v2.svg',
