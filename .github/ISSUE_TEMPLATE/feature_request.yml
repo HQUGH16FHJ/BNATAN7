@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a focused improvement for the repository or frontend.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: What problem should this feature solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the expected behavior and interaction.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Tool navigation
+        - AI assistant
+        - User interface
+        - PWA and offline
+        - Accessibility
+        - Documentation
+        - GitHub workflow
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundary check
+      options:
+        - label: This request does not require changing VIP, registration, API, KV, or user data without explicit approval.
+          required: true

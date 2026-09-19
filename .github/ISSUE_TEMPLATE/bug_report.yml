@@ -1,0 +1,48 @@
+name: Bug report
+description: Report a reproducible frontend or repository problem.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include passwords, API keys, private user data, or security vulnerabilities in this form.
+  - type: input
+    id: page
+    attributes:
+      label: Affected page
+      placeholder: index.html, landing.html, license.html...
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open...
+        2. Click...
+        3. Observe...
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      placeholder: iPhone 15, Safari, WeChat / Android Edge / Windows Chrome
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or console output
+      description: Remove personal or sensitive information before uploading.
+    validations:
+      required: false
