@@ -61,11 +61,12 @@ export async function onRequestPatch(context) {
 
   const id = String(body.id || '').trim();
   const status = String(body.status || '').trim();
+  const reviewNote = String(body.reviewNote || '').trim().slice(0, 2000);
   const allowed = new Set(['待审核', '审核中', '已通过', '已驳回', '已归档']);
   if (!id || !allowed.has(status)) return json({ ok: false, error: '参数错误。' }, 400);
 
-  await db.prepare('UPDATE rights_registrations SET status = ?, updated_at = ? WHERE id = ?')
-    .bind(status, new Date().toISOString(), id)
+  await db.prepare('UPDATE rights_registrations SET status = ?, review_note = ?, updated_at = ? WHERE id = ?')
+    .bind(status, reviewNote || null, new Date().toISOString(), id)
     .run();
   return json({ ok: true });
 }
