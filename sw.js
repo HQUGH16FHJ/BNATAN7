@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.7-premium-15';
+const CACHE_NAME = 'bantan-static-v4.0.7-premium-16';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
