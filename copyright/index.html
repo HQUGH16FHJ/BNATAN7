@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bantan Rights 版权与授权中心：登记项目版权、许可证、官方域名、授权范围和验证编号。">
+<meta name="theme-color" content="#080706">
+<link rel="canonical" href="https://rights.bantan.online/">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="./copyright.css?v=1.0.0">
+<title>Bantan Rights · 版权与授权中心</title>
+</head>
+<body>
+<header class="rights-header">
+  <a class="rights-brand" href="https://bantan.online/">
+    <span class="rights-brand__mark">权</span>
+    <span><strong>Bantan Rights</strong><small>版权与授权中心</small></span>
+  </a>
+  <nav aria-label="版权中心导航">
+    <a href="#registry">项目登记</a>
+    <a href="#verify">编号验证</a>
+    <a href="#permissions">许可范围</a>
+    <a href="#authorize">授权申请</a>
+    <a href="https://bantan.online/explore.html">探索绊谈</a>
+  </nav>
+  <button class="rights-print" id="printCertificate" type="button">打印登记单</button>
+</header>
+
+<main>
+  <section class="rights-hero">
+    <div class="rights-hero__index" aria-hidden="true">
+      <span>RIGHTS / REGISTRY</span>
+      <strong>2026</strong>
+    </div>
+    <div class="rights-hero__copy">
+      <div class="rights-kicker"><i></i>OFFICIAL RIGHTS REGISTRY</div>
+      <h1>版权与授权，<br><em>用编号验证</em></h1>
+      <p>集中登记绊谈、刘骐硕个人博客及后续项目的版权所有者、制作方、许可证、官方域名与授权状态。</p>
+      <div class="rights-hero__actions">
+        <a class="rights-button is-primary" href="#verify">开始验证</a>
+        <a class="rights-button" href="#registry">查看项目登记</a>
+      </div>
+    </div>
+    <aside class="rights-verification-card" aria-label="验证编号示例">
+      <span>VERIFICATION CODE</span>
+      <strong>BNT-RIGHTS-2026-001</strong>
+      <small>项目登记编号 · 可在本页验证</small>
+      <button type="button" data-copy="BNT-RIGHTS-2026-001">复制编号</button>
+    </aside>
+  </section>
+
+  <section class="rights-stats" aria-label="版权中心统计">
+    <article><strong>03</strong><span>登记项目</span></article>
+    <article><strong>02</strong><span>版权所有者</span></article>
+    <article><strong>02</strong><span>许可证类型</span></article>
+    <article><strong>06</strong><span>官方域名</span></article>
+  </section>
+
+  <section class="rights-section" id="registry">
+    <div class="rights-section__head">
+      <div><span>RIGHTS REGISTRY</span><h2>项目版权登记</h2></div>
+      <p>登记信息用于公开说明版权归属、制作关系和许可证状态，不替代国家版权登记或司法证明。</p>
+    </div>
+    <div class="rights-registry">
+      <article class="registry-card">
+        <div class="registry-card__top"><span>BNT-RIGHTS-2026-001</span><i class="is-active">ACTIVE</i></div>
+        <h3>绊谈 · 万能枢纽</h3>
+        <p>在线工具聚合、AI 助手、用户中心、原创前端设计和自研工具。</p>
+        <dl><div><dt>版权所有者</dt><dd>绊谈 Bantan</dd></div><div><dt>许可证</dt><dd>Bantan Proprietary License</dd></div><div><dt>官方域名</dt><dd>bantan.online</dd></div></dl>
+        <a href="https://bantan.online/license.html">查看许可证 →</a>
+      </article>
+      <article class="registry-card">
+        <div class="registry-card__top"><span>BNT-RIGHTS-2026-002</span><i class="is-active">ACTIVE</i></div>
+        <h3>刘骐硕个人博客</h3>
+        <p>个人文章、照片、影像、生活记录，以及为该项目制作的网站代码与视觉设计。</p>
+        <dl><div><dt>版权所有者</dt><dd>刘骐硕</dd></div><div><dt>制作署名</dt><dd>绊谈 Bantan</dd></div><div><dt>官方域名</dt><dd>llllkk.online</dd></div></dl>
+        <a href="https://llllkk.online/license.html">查看许可证 →</a>
+      </article>
+      <article class="registry-card is-building">
+        <div class="registry-card__top"><span>BNT-RIGHTS-2026-003</span><i>BUILDING</i></div>
+        <h3>Bantan Rights</h3>
+        <p>版权登记、许可证验证、授权台账和公开版权证书系统。</p>
+        <dl><div><dt>版权所有者</dt><dd>绊谈 Bantan</dd></div><div><dt>许可证</dt><dd>Bantan Proprietary License</dd></div><div><dt>目标域名</dt><dd>rights.bantan.online</dd></div></dl>
+        <a href="https://bantan.online/license.html">查看主站许可证 →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="rights-section" id="verify">
+    <div class="rights-section__head">
+      <div><span>VERIFICATION</span><h2>编号与域名验证</h2></div>
+      <p>输入登记编号或官方域名，在本页核对版权所有者、许可证和当前状态。</p>
+    </div>
+    <div class="verify-console">
+      <form id="rightsVerifyForm">
+        <label for="rightsVerifyInput">登记编号或官方域名</label>
+        <div><input id="rightsVerifyInput" type="text" autocomplete="off" placeholder="BNT-RIGHTS-2026-001 或 bantan.online"><button type="submit">验证</button></div>
+      </form>
+      <div class="verify-console__result" id="rightsVerifyResult" data-state="idle">
+        <span class="verify-console__icon">⌁</span>
+        <div><strong>等待验证</strong><p>输入编号或域名后显示登记结果。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rights-section" id="permissions">
+    <div class="rights-section__head">
+      <div><span>PERMISSIONS</span><h2>通用许可边界</h2></div>
+      <p>每个项目的最终权利范围以其独立许可证和单独授权文件为准。</p>
+    </div>
+    <div class="permission-table" role="table" aria-label="许可范围">
+      <div class="permission-row is-head" role="row"><span>使用行为</span><span>说明</span><span>状态</span></div>
+      <div class="permission-row" role="row"><strong>个人浏览</strong><span>访问公开页面和使用公开功能</span><i class="is-yes">允许</i></div>
+      <div class="permission-row" role="row"><strong>学习参考</strong><span>个人研究代码与交互实现</span><i class="is-yes">允许</i></div>
+      <div class="permission-row" role="row"><strong>小范围分享</strong><span>向熟人和朋友分享公开链接</span><i class="is-yes">允许</i></div>
+      <div class="permission-row" role="row"><strong>商业使用</strong><span>盈利项目、付费服务和商业分发</span><i class="is-no">需授权</i></div>
+      <div class="permission-row" role="row"><strong>公开发布</strong><span>重新发布源码、设计和原创内容</span><i class="is-no">禁止</i></div>
+      <div class="permission-row" role="row"><strong>移除署名</strong><span>删除版权、作者或制作方标识</span><i class="is-no">禁止</i></div>
+    </div>
+  </section>
+
+  <section class="rights-section rights-authorize" id="authorize">
+    <div>
+      <span>LICENSE REQUEST</span>
+      <h2>需要商业或定制授权？</h2>
+      <p>申请时请提供项目名称、使用场景、授权期限、使用地区和预计分发范围。未经书面许可，默认不授予商业权利。</p>
+    </div>
+    <a class="rights-button is-primary" href="mailto:g125668039@163.com?subject=Bantan%20Rights%20授权申请&body=项目名称：%0A使用场景：%0A授权期限：%0A使用地区：%0A分发范围：">发送授权申请</a>
+  </section>
+
+  <section class="rights-section rights-notice">
+    <div><span>LEGAL NOTICE</span><h2>登记与存证说明</h2></div>
+    <p>版权中心提供的是公开权利信息登记、许可证说明和授权入口，不等同于国家版权登记、律师意见、司法鉴定或诉讼证据。发生权利争议时，应以原始作品、创作记录、授权合同和适用法律为准。</p>
+  </section>
+</main>
+
+<footer class="rights-footer">
+  <span>© 2026 Bantan Rights · 绊谈版权中心</span>
+  <div><a href="https://bantan.online/">主站</a><a href="https://bantan.online/license.html">绊谈许可证</a><a href="https://llllkk.online/license.html">刘骐硕许可证</a><a href="mailto:g125668039@163.com">联系</a></div>
+</footer>
+
+<script src="./copyright.js?v=1.0.0"></script>
+</body>
+</html>
