@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.7-ultimate-24';
+const CACHE_NAME = 'bantan-static-v4.0.7-ultimate-25';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -82,6 +82,12 @@ const CORE_ASSETS = [
   '/badge.html',
   '/badge-center.css',
   '/badge-center.js',
+  '/share.html',
+  '/share-studio.css',
+  '/share-studio.js',
+  '/qr.html',
+  '/qr-studio.css',
+  '/qr-studio.js',
   '/favicon.ico',
   '/apple-touch-icon.png',
   '/android-chrome-192x192.png',

@@ -58,6 +58,9 @@
 - https://bantan.online/feed.xml：更新日志 RSS 订阅
 - https://bantan.online/releases.html：版本发布、历史变更、源码下载和 GitHub Release 入口
 - https://bantan.online/badge.html：生成深色、金色、浅色和黑白认证徽章
+- https://bantan.online/share.html：生成微信、QQ、GitHub 和 Twitter 使用的 1200×630 分享图
+- https://bantan.online/qr.html：生成网站首页和权属验证二维码、方形贴纸、圆形贴纸和证书二维码
+- https://bantan.online/downloads/bantan-brand-kit-v1.zip：下载 Logo、小绊谈、认证徽章、品牌色和二维码资产包
 
 ## 官方入口说明
 
