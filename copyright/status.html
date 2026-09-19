@@ -12,47 +12,51 @@
 <link rel="stylesheet" href="./rights-console-v1.css?v=1.0.0">
 <title>申请进度查询 · Bantan Rights</title>
 </head>
-<body class="rights-console-page">
+<body class="rights-console-page status-tracking-page">
 <header class="rights-header">
   <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>申请进度查询</small></span></a>
-  <nav aria-label="进度查询导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./status.html">进度查询</a><a href="./admin.html">管理后台</a></nav>
+  <nav aria-label="进度查询导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./status.html">进度查询</a><a href="./site.html">查网站</a><a href="./admin.html">管理后台</a></nav>
 </header>
 <main>
-  <section class="console-hero">
-    <div class="console-hero__main">
-      <div class="rights-kicker"><i></i>APPLICATION TRACKING</div>
-      <h1>申请进度，<em>凭编号查询</em></h1>
-      <p>输入登记编号和提交时填写的邮箱，查询当前状态、最近更新时间和审核意见。为保护隐私，两项信息必须同时匹配。</p>
+  <section class="tracking-hero">
+    <div class="tracking-hero__copy">
+      <div class="rights-kicker"><i></i>APPLICATION TRACKING CONSOLE</div>
+      <h1>追踪你的<br><em>版权档案</em></h1>
+      <p>输入登记编号和提交邮箱，实时查看申请处于哪一个审核阶段、最近更新时间和审核意见。</p>
+      <div class="tracking-code-preview">
+        <span>Example Code</span>
+        <code>BNT-REG-260919-XXXXXX</code>
+      </div>
     </div>
-    <aside class="workflow-card">
-      <div class="workflow-card__head"><span>Status Guide</span><i>PRIVATE LOOKUP</i></div>
-      <ol class="workflow-steps">
-        <li class="workflow-step is-active"><b>01</b><div><strong>待审核</strong><small>登记单已进入数据库</small></div></li>
-        <li class="workflow-step"><b>02</b><div><strong>审核中 / 已通过</strong><small>审核人正在处理或已经通过</small></div></li>
-        <li class="workflow-step"><b>03</b><div><strong>已驳回</strong><small>可查看具体驳回原因</small></div></li>
-      </ol>
+    <aside class="tracking-guide">
+      <span>STATUS GUIDE</span>
+      <div><i class="is-blue"></i><strong>待审核 / 审核中</strong><small>资料已经进入审核流程</small></div>
+      <div><i class="is-green"></i><strong>已通过</strong><small>登记申请完成并生效</small></div>
+      <div><i class="is-red"></i><strong>已驳回</strong><small>查看原因并补充材料</small></div>
     </aside>
   </section>
 
-  <section class="status-lookup">
-    <form id="statusLookupForm">
+  <section class="tracking-console">
+    <form id="statusLookupForm" class="tracking-search">
       <label><span>登记编号</span><input id="statusCode" type="text" autocomplete="off" placeholder="BNT-REG-260919-XXXXXX" required></label>
-      <label><span>提交时填写的邮箱</span><input id="statusEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label>
-      <button type="submit">查询申请进度</button>
+      <label><span>提交邮箱</span><input id="statusEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+      <button type="submit"><span>查询申请</span><b>→</b></button>
     </form>
   </section>
 
-  <section class="status-result" id="statusResult" data-state="idle">
-    <div class="status-result__icon">⌁</div>
-    <div class="status-result__copy"><span>APPLICATION STATUS</span><h2>等待查询</h2><p>请输入登记编号和邮箱。</p></div>
+  <section class="status-result" id="statusResult" data-state="idle" aria-live="polite">
+    <div class="status-result__placeholder">
+      <div class="status-result__radar"><i></i></div>
+      <div><span>TRACKING READY</span><h2>等待输入登记编号</h2><p>编号和邮箱必须同时匹配，才能读取审核档案。</p></div>
+    </div>
   </section>
 
-  <section class="rights-notice status-privacy">
-    <div><span>PRIVACY</span><h2>隐私说明</h2></div>
-    <p>查询接口只返回项目名称、审核状态、审核意见和更新时间，不返回版权所有者电话、完整域名列表或其他登记单数据。请妥善保管登记编号。</p>
+  <section class="tracking-privacy">
+    <div><span>PRIVACY BY DESIGN</span><h2>查询只返回必要信息</h2></div>
+    <p>公开查询只显示项目名称、审核状态、审核意见和更新时间，不返回电话、完整域名列表或申请人的其他隐私内容。</p>
   </section>
 </main>
 <footer class="rights-footer"><span>© 2026 Bantan Rights · 申请进度查询</span><div><a href="./index.html">版权总览</a><a href="./register.html">登记单</a><a href="./admin.html">管理后台</a></div></footer>
-<script src="./status.js?v=1.0.0"></script>
+<script src="./status.js?v=1.1.0"></script>
 </body>
 </html>

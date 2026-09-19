@@ -135,6 +135,14 @@
           <div class="case-card__domains">${domainList.map(domain => `<span>${escapeHtml(domain)}</span>`).join('') || '<span>未填写域名</span>'}</div>
         </section>
         <section class="admin-detail__section">
+          <h3>官网编号</h3>
+          <div class="admin-site-code">${item.site_code ? `
+            <strong>${escapeHtml(item.site_code)}</strong>
+            <code>&lt;a href="https://rights.bantan.online/site?code=${escapeHtml(item.site_code)}"&gt;官网编号 ${escapeHtml(item.site_code)}&lt;/a&gt;</code>
+            <button type="button" data-copy-site="${escapeHtml(item.site_code)}">复制嵌入代码</button>
+          ` : '<p>申请审核通过后自动生成官网编号和嵌入代码。</p>'}</div>
+        </section>
+        <section class="admin-detail__section">
           <h3>作品说明</h3>
           <div class="admin-detail__description">${escapeHtml(item.description || '无补充说明')}</div>
         </section>
@@ -272,6 +280,17 @@
   detail?.addEventListener('click', async event => {
     if (event.target.closest('[data-close-detail]')) {
       closeDetail();
+      return;
+    }
+    const copyButton = event.target.closest('[data-copy-site]');
+    if (copyButton) {
+      const code = copyButton.dataset.copySite;
+      try {
+        await navigator.clipboard.writeText(`<a href="https://rights.bantan.online/site?code=${code}">官网编号 ${code}</a>`);
+        copyButton.textContent = '已复制';
+      } catch (error) {
+        copyButton.textContent = '复制失败';
+      }
       return;
     }
     const button = event.target.closest('button[data-status]');

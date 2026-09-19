@@ -1,3 +1,5 @@
+import { ensureSiteCode } from './site-code.js';
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -18,12 +20,16 @@ export async function onRequestGet(context) {
   if (!code || !email) return json({ ok: false, error: '请输入登记编号和联系邮箱。' }, 400);
 
   const result = await db.prepare(`
-    SELECT registration_code, project_name, status, review_note, created_at, updated_at
+    SELECT id, registration_code, site_code, project_name, status, review_note, created_at, updated_at
     FROM rights_registrations
     WHERE registration_code = ? AND lower(contact) = ?
     LIMIT 1
   `).bind(code, email).first();
 
   if (!result) return json({ ok: false, error: '没有找到匹配的登记申请，请核对编号和邮箱。' }, 404);
+  if (result.status === '已通过' && !result.site_code) {
+    result.site_code = await ensureSiteCode(db, result.id);
+  }
+  delete result.id;
   return json({ ok: true, item: result });
 }

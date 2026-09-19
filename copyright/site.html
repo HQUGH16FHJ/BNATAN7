@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bantan Rights 官网编号查询：输入官网编号或域名，验证网站、版权所有者、许可证和登记状态。">
+<meta name="theme-color" content="#080706">
+<link rel="canonical" href="https://rights.bantan.online/site">
+<link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="https://bantan.online/favicon.svg">
+<link rel="stylesheet" href="./copyright.css?v=1.0.0">
+<link rel="stylesheet" href="./rights-console-v1.css?v=1.1.0">
+<title>官网编号查询 · Bantan Rights</title>
+</head>
+<body class="rights-console-page">
+<header class="rights-header">
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>官网编号查询</small></span></a>
+  <nav aria-label="官网编号查询导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./status.html">申请进度</a><a href="./site.html">查网站</a><a href="./admin.html">管理后台</a></nav>
+</header>
+<main>
+  <section class="tracking-hero">
+    <div class="tracking-hero__copy">
+      <div class="rights-kicker"><i></i>OFFICIAL SITE VERIFICATION</div>
+      <h1>验证官网，<br><em>认准官方编号</em></h1>
+      <p>输入官网编号或域名，验证网站是否已登记，并查看版权所有者、制作方、许可证和当前状态。</p>
+      <div class="tracking-code-preview"><span>Format</span><code>BNT-SITE-2026-XXX</code></div>
+    </div>
+    <aside class="tracking-guide">
+      <span>WHAT TO CHECK</span>
+      <div><i class="is-green"></i><strong>官网编号</strong><small>确认网站是否在官方登记表中</small></div>
+      <div><i class="is-blue"></i><strong>版权所有者</strong><small>核对网站权利主体</small></div>
+      <div><i class="is-blue"></i><strong>许可证</strong><small>确认允许使用范围</small></div>
+    </aside>
+  </section>
+
+  <section class="tracking-console">
+    <form id="siteLookupForm" class="tracking-search">
+      <label><span>官网编号</span><input id="siteCodeInput" type="text" autocomplete="off" placeholder="BNT-SITE-2026-001"></label>
+      <label><span>或输入域名</span><input id="siteDomainInput" type="text" autocomplete="off" placeholder="example.com"></label>
+      <button type="submit"><span>验证官网</span><b>→</b></button>
+    </form>
+  </section>
+
+  <section class="status-result" id="siteLookupResult" data-state="idle" aria-live="polite">
+    <div class="status-result__placeholder">
+      <div class="status-result__radar"><i></i></div>
+      <div><span>VERIFICATION READY</span><h2>输入编号或域名</h2><p>系统会在官网登记表中查找匹配记录。</p></div>
+    </div>
+  </section>
+</main>
+<footer class="rights-footer"><span>© 2026 Bantan Rights · 官网编号查询</span><div><a href="./index.html">版权总览</a><a href="./status.html">申请进度</a><a href="./admin.html">管理后台</a></div></footer>
+<script src="./site.js?v=1.0.0"></script>
+</body>
+</html>

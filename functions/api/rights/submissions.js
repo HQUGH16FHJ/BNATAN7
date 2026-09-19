@@ -1,3 +1,5 @@
+import { ensureSiteCode } from './site-code.js';
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -36,9 +38,9 @@ export async function onRequestGet(context) {
     values.push(status);
   }
   if (search) {
-    conditions.push('(project_name LIKE ? OR owner LIKE ? OR registration_code LIKE ? OR domains LIKE ?)');
+    conditions.push('(project_name LIKE ? OR owner LIKE ? OR registration_code LIKE ? OR site_code LIKE ? OR domains LIKE ?)');
     const like = '%' + search + '%';
-    values.push(like, like, like, like);
+    values.push(like, like, like, like, like);
   }
 
   const where = conditions.length ? ' WHERE ' + conditions.join(' AND ') : '';
@@ -68,5 +70,6 @@ export async function onRequestPatch(context) {
   await db.prepare('UPDATE rights_registrations SET status = ?, review_note = ?, updated_at = ? WHERE id = ?')
     .bind(status, reviewNote || null, new Date().toISOString(), id)
     .run();
-  return json({ ok: true });
+  const siteCode = status === '已通过' ? await ensureSiteCode(db, id) : null;
+  return json({ ok: true, siteCode });
 }
