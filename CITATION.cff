@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you reference this project in research, documentation, or another publication, cite it as follows."
+title: "绊谈 · 万能枢纽"
+abstract: "A Chinese online tool hub providing AI, search, developer, education, lifestyle, gaming, and productivity utilities."
+type: software
+authors:
+  - family-names: Bantan
+    given-names: 绊谈
+    alias: HQUGH16FHJ
+    website: "https://bantan.online/"
+repository-code: "https://github.com/HQUGH16FHJ/BNATAN7"
+url: "https://bantan.online/"
+license: "LicenseRef-Bantan-Proprietary"
+license-url: "https://github.com/HQUGH16FHJ/BNATAN7/blob/main/LICENSE"
+version: "4.0.4"
+date-released: "2026-09-19"
+keywords:
+  - online-tools
+  - ai
+  - pwa
+  - productivity
+  - developer-tools
+  - chinese

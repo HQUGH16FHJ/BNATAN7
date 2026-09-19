@@ -9,7 +9,21 @@
 
 项目采用原生 HTML、CSS 和 JavaScript 构建，包含完整前台、PWA 支持、用户中心、AI 小绊谈、动态背景、交互式工具导航、更新日志、许可证和独立“关于我”播客页面。
 
-[项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
+[项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
+
+## 项目预览
+
+| 入口页 | 万能枢纽 |
+|---|---|
+| <img src="./docs/screenshots/landing-desktop.jpg" alt="绊谈入口页" width="100%"> | <img src="./docs/screenshots/index-desktop.jpg" alt="绊谈万能枢纽" width="100%"> |
+
+| 关于我 | 数字档案馆 |
+|---|---|
+| <img src="./docs/screenshots/about-desktop.jpg" alt="关于我个人播客" width="100%"> | <img src="./docs/screenshots/changelog-desktop.jpg" alt="更新日志档案馆" width="100%"> |
+
+| 使用许可 | 移动端 |
+|---|---|
+| <img src="./docs/screenshots/license-desktop.jpg" alt="使用许可页面" width="100%"> | <img src="./docs/screenshots/index-mobile.jpg" alt="移动端万能枢纽" width="30%"> |
 
 ## 主要功能
 
