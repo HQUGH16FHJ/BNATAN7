@@ -1,9 +1,22 @@
-# 绊谈 · 万能枢纽
+<div align="center">
+  <img src="./xiaobantan-v2.svg" width="92" alt="小绊谈">
+  <h1>绊谈 · 万能枢纽</h1>
+  <p><strong>中文在线工具聚合与导航平台 · 786+ 可用工具</strong></p>
 
-![Version](https://img.shields.io/badge/version-v4.0.6-f59e0b?style=flat-square)
-![License](https://img.shields.io/badge/license-Bantan%20Proprietary-fb7185?style=flat-square)
-![Platform](https://img.shields.io/badge/platform-Web%20%7C%20PWA-38bdf8?style=flat-square)
-![Status](https://img.shields.io/badge/status-active-34d399?style=flat-square)
+  <p>
+    <img src="https://img.shields.io/badge/version-v4.0.6-f59e0b?style=flat-square" alt="Version">
+    <img src="https://img.shields.io/badge/license-Bantan%20Proprietary-fb7185?style=flat-square" alt="License">
+    <img src="https://img.shields.io/badge/platform-Web%20%7C%20PWA-38bdf8?style=flat-square" alt="Platform">
+    <img src="https://img.shields.io/badge/status-active-34d399?style=flat-square" alt="Status">
+  </p>
+
+  <p>
+    <a href="https://bantan.online/"><img src="https://img.shields.io/badge/官网-bantan.online-f59e0b?style=for-the-badge" alt="官网"></a>
+    <a href="https://www.bantan.online/"><img src="https://img.shields.io/badge/WWW-www.bantan.online-38bdf8?style=for-the-badge" alt="WWW"></a>
+    <a href="https://bantan.eu.cc/"><img src="https://img.shields.io/badge/备用域名-bantan.eu.cc-fb7185?style=for-the-badge" alt="备用域名"></a>
+    <a href="https://bnatan7.pages.dev/"><img src="https://img.shields.io/badge/Pages-bnatan7.pages.dev-34d399?style=for-the-badge" alt="Pages"></a>
+  </p>
+</div>
 
 绊谈（Bantan）是一个中文在线工具聚合与导航平台，提供 **786 个可用工具**，覆盖 AI 对话、全网搜索、在线翻译、开发者工具、教育学习、影音娱乐、电竞优化、生活工具和实用计算等场景。
 
@@ -117,7 +130,7 @@ http://localhost:8000/landing.html
 
 - Service Worker：`sw.js`
 - Manifest：`manifest.json`
-- 当前缓存版本：`bantan-static-v4.0.6`
+- 当前缓存版本：`bantan-static-v4.0.6-premium-1`
 
 发布新版本后，应同时更新静态资源版本号，避免浏览器继续使用旧版 JavaScript 或 CSS。
 

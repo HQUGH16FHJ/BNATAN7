@@ -1,0 +1,214 @@
+/*
+ * Bantan premium finish
+ * Optical polish only: no layout, content, or behavior changes.
+ */
+
+:root {
+  --premium-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --premium-focus: rgba(56, 189, 248, 0.78);
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  scrollbar-color: rgba(245, 158, 11, 0.34) rgba(255, 255, 255, 0.035);
+}
+
+body {
+  font-kerning: normal;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  color: #fff7ed;
+  background: rgba(56, 189, 248, 0.28);
+}
+
+:where(h1, h2, h3, h4) {
+  text-wrap: balance;
+}
+
+:where(p, li, figcaption) {
+  text-wrap: pretty;
+}
+
+:where(a, button, input, select, textarea, summary, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a[href], button, summary, [role="button"]) {
+  touch-action: manipulation;
+}
+
+:where(a, button, input, select, textarea, summary, [role="button"]):focus-visible {
+  outline: 2px solid var(--premium-focus);
+  outline-offset: 3px;
+}
+
+:where(button:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+  filter: saturate(0.72);
+}
+
+:where(input, textarea, select) {
+  caret-color: #38bdf8;
+}
+
+:where(input::placeholder, textarea::placeholder) {
+  color: rgba(214, 199, 184, 0.56);
+  opacity: 1;
+}
+
+:where(table) {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(
+  [class*="stat"],
+  [class*="metric"],
+  [class*="counter"],
+  [class*="clock"],
+  [class*="date"],
+  [class*="version"],
+  [class*="fps"],
+  [class*="latency"],
+  time
+) {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(kbd) {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+:where(code, pre) {
+  font-variant-ligatures: none;
+}
+
+:where(hr) {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.28), transparent);
+}
+
+:where(p a, li a, .lic-section a, .podcast-hero-copy a) {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+}
+
+/*
+ * A one-pixel inner edge separates translucent surfaces from the background
+ * without changing sizing, spacing, or the existing palette.
+ */
+:where(
+  [class*="card"],
+  [class*="panel"],
+  [class*="modal"],
+  [class*="dialog"],
+  [class*="drawer"],
+  [class*="toolbox"]
+) {
+  background-clip: padding-box;
+  outline: 1px solid rgba(255, 255, 255, 0.018);
+  outline-offset: -1px;
+}
+
+@media (hover: hover) {
+  :where(
+    [class*="card"],
+    [class*="panel"],
+    [class*="toolbox"],
+    .official-domain
+  ) {
+    transition:
+      border-color 0.28s var(--premium-ease),
+      box-shadow 0.28s var(--premium-ease),
+      background-color 0.28s var(--premium-ease);
+  }
+
+  :where(
+    [class*="card"]:hover,
+    [class*="panel"]:hover,
+    [class*="toolbox"]:hover,
+    .official-domain:hover
+  ) {
+    border-color: rgba(245, 158, 11, 0.16);
+  }
+
+  :where(
+    button:not(:disabled),
+    [role="button"],
+    a[class*="button"],
+    a[class*="btn"]
+  ) {
+    transition:
+      filter 0.22s ease,
+      opacity 0.22s ease,
+      border-color 0.22s ease;
+  }
+
+  :where(
+    button:not(:disabled):hover,
+    [role="button"]:hover,
+    a[class*="button"]:hover,
+    a[class*="btn"]:hover
+  ) {
+    filter: brightness(1.035);
+  }
+}
+
+:where(
+  button:not(:disabled):active,
+  [role="button"]:active,
+  a[class*="button"]:active,
+  a[class*="btn"]:active
+) {
+  filter: brightness(0.965);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid #0a0805;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.38), rgba(245, 158, 11, 0.42));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.56), rgba(245, 158, 11, 0.6));
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :where(
+    [class*="card"],
+    [class*="panel"],
+    [class*="modal"],
+    [class*="dialog"],
+    [class*="drawer"]
+  ) {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where([class*="card"], [class*="panel"], [class*="modal"], [class*="dialog"]) {
+    outline-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(a, button, input, select, textarea, summary, [role="button"]) {
+    scroll-behavior: auto !important;
+  }
+}
