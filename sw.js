@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.6-premium-5';
+const CACHE_NAME = 'bantan-static-v4.0.6-premium-6';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -42,6 +42,7 @@ const CORE_ASSETS = [
   '/copyright/',
   '/copyright/copyright.css',
   '/copyright/copyright.js',
+  '/copyright/rights-console-v1.css',
   '/copyright/sites.html',
   '/copyright/sites.js',
   '/copyright/register.html',

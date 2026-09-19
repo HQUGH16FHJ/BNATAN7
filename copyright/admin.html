@@ -7,41 +7,58 @@
 <meta name="theme-color" content="#080706">
 <link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
 <link rel="stylesheet" href="./copyright.css?v=1.0.0">
-<title>登记管理后台 · Bantan Rights</title>
+<link rel="stylesheet" href="./rights-console-v1.css?v=1.0.0">
+<title>版权审核指挥台 · Bantan Rights</title>
 </head>
-<body>
+<body class="rights-console-page">
 <header class="rights-header">
-  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>登记管理后台</small></span></a>
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>审核指挥台</small></span></a>
   <nav aria-label="管理后台导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./admin.html">管理后台</a></nav>
+  <button class="rights-print" id="adminExport" type="button">导出 CSV</button>
 </header>
 <main>
-  <section class="rights-hero compact">
-    <div class="rights-hero__index"><span>ADMIN CONSOLE</span><strong>LOCKED</strong></div>
-    <div class="rights-hero__copy">
-      <div class="rights-kicker"><i></i>PRIVATE REVIEW CONSOLE</div>
-      <h1>查看用户提交的<br><em>版权登记单</em></h1>
-      <p>管理后台只读取版权中心数据库。需要管理密钥才能查看、筛选和更新登记状态。</p>
+  <section class="admin-dashboard-hero">
+    <div>
+      <div class="rights-kicker"><i></i>RIGHTS REVIEW COMMAND</div>
+      <h1>版权审核<br><em>指挥台</em></h1>
+      <p>统一处理用户提交的网站、代码、设计、文章、照片和品牌登记申请。所有记录来自版权中心 D1 数据库。</p>
     </div>
+    <span class="admin-live">DATABASE CONNECTED</span>
+  </section>
+
+  <section class="admin-metrics" aria-label="登记统计">
+    <article class="admin-metric"><span>全部记录</span><strong id="adminTotal">--</strong></article>
+    <article class="admin-metric is-pending"><span>待审核</span><strong id="adminPending">--</strong></article>
+    <article class="admin-metric is-approved"><span>已通过</span><strong id="adminApproved">--</strong></article>
+    <article class="admin-metric is-rejected"><span>已驳回</span><strong id="adminRejected">--</strong></article>
   </section>
 
   <section class="admin-login" id="adminLogin">
+    <div class="admin-section-label">Protected Access</div>
+    <h2>输入管理密钥</h2>
+    <p>密钥只保存在当前浏览器会话，不会写入页面、仓库或公开地址。</p>
     <label for="adminToken">管理密钥</label>
-    <div><input id="adminToken" type="password" autocomplete="current-password" placeholder="输入 RIGHTS_ADMIN_TOKEN"><button id="adminLoginButton" type="button">进入后台</button></div>
-    <p id="adminLoginStatus">密钥只保存在当前浏览器会话，不会写入页面或仓库。</p>
+    <div><input id="adminToken" type="password" autocomplete="current-password" placeholder="请输入密码"><button id="adminLoginButton" type="button">进入审核台</button></div>
+    <p id="adminLoginStatus">默认密钥不会显示在公开页面。</p>
   </section>
 
   <section class="admin-console" id="adminConsole" hidden>
     <div class="admin-toolbar">
       <label><span>搜索登记单</span><input id="adminSearch" type="search" placeholder="项目名称、版权所有者、编号或域名"></label>
-      <label><span>状态</span><select id="adminStatus"><option value="all">全部</option><option>待审核</option><option>审核中</option><option>已通过</option><option>已驳回</option><option>已归档</option></select></label>
-      <button id="adminRefresh" type="button">刷新</button>
-      <button id="adminLogout" type="button">退出</button>
+      <label><span>审核状态</span><select id="adminStatus"><option value="all">全部状态</option><option>待审核</option><option>审核中</option><option>已通过</option><option>已驳回</option><option>已归档</option></select></label>
+      <button id="adminRefresh" type="button">刷新数据</button>
+      <button id="adminLogout" type="button">退出后台</button>
     </div>
     <div class="admin-summary" id="adminSummary">尚未加载登记记录。</div>
-    <div class="admin-list" id="adminList"></div>
+    <div class="admin-workspace">
+      <div class="admin-list" id="adminList"></div>
+      <aside class="admin-detail" id="adminDetail">
+        <div class="admin-detail__empty"><div><strong>选择一条登记单</strong><p>点击左侧记录后，在这里查看完整信息和审核操作。</p></div></div>
+      </aside>
+    </div>
   </section>
 </main>
-<footer class="rights-footer"><span>© 2026 Bantan Rights · 管理后台</span><div><a href="./index.html">版权总览</a><a href="./register.html">公开登记单</a></div></footer>
-<script src="./admin.js?v=1.0.0"></script>
+<footer class="rights-footer"><span>© 2026 Bantan Rights · 审核指挥台</span><div><a href="./index.html">版权总览</a><a href="./register.html">公开登记单</a></div></footer>
+<script src="./admin.js?v=1.1.0"></script>
 </body>
 </html>

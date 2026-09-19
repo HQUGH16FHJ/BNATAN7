@@ -65,18 +65,43 @@
     ].join('\n');
   }
 
+  function updateCompleteness() {
+    const checks = [
+      Boolean(value('projectName')),
+      Boolean(value('owner')),
+      Boolean(value('recordType')),
+      Boolean(value('license')),
+      works().length > 0,
+      Boolean(value('domains')),
+      Boolean(value('description')),
+      document.getElementById('declareRights').checked
+    ];
+    const percent = Math.round(checks.filter(Boolean).length / checks.length * 100);
+    const ring = document.getElementById('submissionRing');
+    const meterText = document.getElementById('submissionMeterText');
+    if (ring) {
+      ring.style.setProperty('--progress', percent + '%');
+      ring.dataset.progress = percent + '%';
+    }
+    if (meterText) {
+      meterText.textContent = percent === 100
+        ? '资料已完整，可以正式提交。'
+        : percent >= 60
+          ? '主体和作品信息已基本完整。'
+          : '继续填写必填项和作品范围。';
+    }
+  }
+
   function paint(data, status, message) {
     currentData = data;
     currentSummary = summary(data, status);
     preview.querySelector('h2').textContent = data.projectName + ' · 登记申请';
     preview.querySelector('p').textContent = message;
-    preview.querySelector('dl').innerHTML = [
-      '<div><dt>登记编号</dt><dd>' + data.registrationCode + '</dd></div>',
-      '<div><dt>版权所有者</dt><dd>' + data.owner + '</dd></div>',
-      '<div><dt>许可证</dt><dd>' + data.license + '</dd></div>',
-      '<div><dt>登记状态</dt><dd>' + status + '</dd></div>',
-      '<div><dt>作品范围</dt><dd>' + data.works.join('、') + '</dd></div>'
-    ].join('');
+    document.getElementById('previewCode').textContent = data.registrationCode;
+    document.getElementById('previewOwner').textContent = data.owner;
+    document.getElementById('previewLicense').textContent = data.license;
+    document.getElementById('previewStatus').textContent = status;
+    document.getElementById('previewWorks').textContent = data.works.join('、') || '--';
     copyButton.disabled = false;
     sendLink.hidden = false;
     sendLink.textContent = '发送 QQ 邮件通知';
@@ -125,8 +150,16 @@
     sendLink.hidden = true;
     preview.querySelector('h2').textContent = '登记单尚未生成';
     preview.querySelector('p').textContent = '填写左侧表单并点击“生成登记单”，这里会显示登记编号、权利摘要和打印信息。';
-    preview.querySelector('dl').innerHTML = '<div><dt>登记编号</dt><dd>--</dd></div><div><dt>版权所有者</dt><dd>--</dd></div><div><dt>许可证</dt><dd>--</dd></div><div><dt>登记状态</dt><dd>草稿</dd></div>';
+    ['previewCode', 'previewOwner', 'previewLicense', 'previewWorks'].forEach(id => {
+      document.getElementById(id).textContent = '--';
+    });
+    document.getElementById('previewStatus').textContent = '草稿';
+    updateCompleteness();
   });
+
+  form?.addEventListener('input', updateCompleteness);
+  form?.addEventListener('change', updateCompleteness);
+  updateCompleteness();
 
   copyButton?.addEventListener('click', async () => {
     if (!currentSummary) return;
