@@ -1,8 +1,15 @@
 # 绊谈 · 万能枢纽
 
+![Version](https://img.shields.io/badge/version-v4.0.4-f59e0b?style=flat-square)
+![License](https://img.shields.io/badge/license-Bantan%20Proprietary-fb7185?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Web%20%7C%20PWA-38bdf8?style=flat-square)
+![Status](https://img.shields.io/badge/status-active-34d399?style=flat-square)
+
 绊谈（Bantan）是一个中文在线工具聚合与导航平台，提供 **786 个可用工具**，覆盖 AI 对话、全网搜索、在线翻译、开发者工具、教育学习、影音娱乐、电竞优化、生活工具和实用计算等场景。
 
 项目采用原生 HTML、CSS 和 JavaScript 构建，包含完整前台、PWA 支持、用户中心、AI 小绊谈、动态背景、交互式工具导航、更新日志、许可证和独立“关于我”播客页面。
+
+[项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
 
 ## 主要功能
 
