@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="绊谈官方认证徽章生成器：生成深色、金色、浅色和黑白风格的动态 SVG 徽章。">
+<meta name="theme-color" content="#090704">
+<link rel="canonical" href="https://bantan.online/badge.html">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./site-pages-v1.css?v=1.1.0">
+<link rel="stylesheet" href="./badge-center.css?v=1.0.0">
+<title>认证徽章生成器 · 绊谈</title>
+</head>
+<body class="site-page badge-center-page">
+<nav class="site-topbar" aria-label="徽章生成器导航">
+  <div class="site-topbar__inner">
+    <a class="site-brand" href="./landing.html"><span class="site-brand__mark">绊</span><span>认证徽章</span></a>
+    <div class="site-nav">
+      <a href="./landing.html">首页</a>
+      <a href="./explore.html">探索</a>
+      <a href="./releases.html">发布</a>
+      <a href="./brand.html">品牌</a>
+      <a href="./changelog.html">更新</a>
+      <a href="./license.html">许可</a>
+    </div>
+  </div>
+</nav>
+
+<main class="site-shell badge-center">
+  <header class="site-hero">
+    <div class="site-kicker">Badge Studio</div>
+    <h1 class="site-title">生成你的<em>认证徽章</em></h1>
+    <p class="site-lead">选择网站和主题，实时预览动态 SVG 徽章，并复制 HTML、Markdown 或图片地址。徽章只表示 Bantan Rights 私有登记状态，不是国家或政府认证。</p>
+  </header>
+
+  <section class="badge-workbench" aria-label="认证徽章生成器">
+    <aside class="badge-controls">
+      <div class="badge-control-group">
+        <span>选择网站</span>
+        <div class="badge-segment" id="siteChoices">
+          <button type="button" class="is-active" data-site="bantan" data-code="BNT-SITE-2026-001" data-domain="bantan.online">绊谈</button>
+          <button type="button" data-site="llllkk" data-code="BNT-SITE-2026-002" data-domain="llllkk.online">刘骐硕</button>
+        </div>
+      </div>
+
+      <div class="badge-control-group">
+        <span>徽章风格</span>
+        <div class="badge-segment" id="themeChoices">
+          <button type="button" class="is-active" data-theme="dark">深色</button>
+          <button type="button" data-theme="amber">金色</button>
+          <button type="button" data-theme="light">浅色</button>
+          <button type="button" data-theme="mono">黑白</button>
+        </div>
+      </div>
+
+      <div class="badge-private-note">
+        <strong>私有登记标识</strong>
+        <p>徽章由 Bantan Rights 动态生成，不构成国家认证、行政认定或司法证明。</p>
+      </div>
+    </aside>
+
+    <section class="badge-preview-panel">
+      <div class="badge-preview-stage">
+        <img id="badgePreview" src="" width="320" height="72" alt="绊谈官方认证徽章预览">
+      </div>
+      <div class="badge-preview-meta">
+        <span id="previewSite">bantan.online</span>
+        <strong id="previewCode">BNT-SITE-2026-001</strong>
+      </div>
+    </section>
+  </section>
+
+  <section class="badge-outputs">
+    <article>
+      <header><span>DIRECT IMAGE</span><h2>图片地址</h2></header>
+      <code id="badgeUrl"></code>
+      <button type="button" data-copy-target="badgeUrl">复制图片地址</button>
+    </article>
+    <article>
+      <header><span>HTML</span><h2>网页嵌入代码</h2></header>
+      <code id="badgeHtml"></code>
+      <button type="button" data-copy-target="badgeHtml">复制 HTML</button>
+    </article>
+    <article>
+      <header><span>MARKDOWN</span><h2>Markdown 引用</h2></header>
+      <code id="badgeMarkdown"></code>
+      <button type="button" data-copy-target="badgeMarkdown">复制 Markdown</button>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="site-footer__inner"><span>© 2026 绊谈 Bantan</span><span><a href="./brand.html">品牌中心</a> · <a href="./releases.html">版本发布</a> · <a href="https://rights.bantan.online/site">权属查询</a></span></div></footer>
+<script src="./site-pages-v1.js?v=1.1.0"></script>
+<script src="./badge-center.js?v=1.0.0"></script>
+</body>
+</html>

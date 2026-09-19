@@ -4,7 +4,7 @@
   <p><strong>中文在线工具聚合与导航平台 · 786+ 可用工具</strong></p>
 
   <p>
-    <img src="https://img.shields.io/badge/version-v4.0.6-f59e0b?style=flat-square" alt="Version">
+    <img src="https://img.shields.io/badge/version-v4.0.7-f59e0b?style=flat-square" alt="Version">
     <img src="https://img.shields.io/badge/license-Bantan%20Proprietary-fb7185?style=flat-square" alt="License">
     <img src="https://img.shields.io/badge/platform-Web%20%7C%20PWA-38bdf8?style=flat-square" alt="Platform">
     <img src="https://img.shields.io/badge/status-active-34d399?style=flat-square" alt="Status">
@@ -23,6 +23,8 @@
 项目采用原生 HTML、CSS 和 JavaScript 构建，包含完整前台、PWA 支持、用户中心、AI 小绊谈、动态背景、交互式工具导航、更新日志、许可证和独立“关于我”播客页面。
 
 [在线访问](#在线访问) · [探索绊谈](./explore.html) · [项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
+
+[版本发布中心](https://bantan.online/releases.html) · [认证徽章生成器](https://bantan.online/badge.html) · [版权与授权中心](https://rights.bantan.online/)
 
 ## 在线访问
 

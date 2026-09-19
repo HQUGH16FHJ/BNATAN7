@@ -1,0 +1,67 @@
+name: Rights dispute or removal request
+description: Report a rights dispute, inaccurate registry entry, impersonation, or removal request.
+title: "[Rights]: "
+labels:
+  - rights
+  - review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bantan Rights is a private registry maintained by Bantan. It is not a government agency, government certification body, or national copyright registration platform. Submitted records are self-declared and are not substantively verified by the registry.
+
+        Do not include passwords, identity documents, private phone numbers, or other sensitive personal data.
+
+  - type: input
+    id: site_code
+    attributes:
+      label: Registry code or domain
+      description: For example, BNT-SITE-2026-001 or bantan.online.
+      placeholder: BNT-SITE-2026-001 / example.com
+    validations:
+      required: true
+
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Request type
+      options:
+        - Remove an inaccurate registry record
+        - Correct ownership or production credit
+        - Report impersonation or misuse
+        - Submit an ownership or copyright dispute
+        - Other registry issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason and requested action
+      description: Explain the issue and what action you are requesting.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Provide public links, timestamps, repository history, DNS records, or other evidence. Do not upload private identity documents.
+    validations:
+      required: false
+
+  - type: input
+    id: contact
+    attributes:
+      label: Contact email
+      description: Used only to follow up on this dispute.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: Declaration
+      options:
+        - label: I understand that Bantan Rights is a private registry and does not provide government or judicial certification.
+          required: true

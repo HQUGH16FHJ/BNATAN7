@@ -56,6 +56,8 @@
 - https://bantan.online/license.json：机器可读的许可证、版权归属和官方域名数据
 - https://bantan.online/changelog.json：机器可读的版本记录和发布日期
 - https://bantan.online/feed.xml：更新日志 RSS 订阅
+- https://bantan.online/releases.html：版本发布、历史变更、源码下载和 GitHub Release 入口
+- https://bantan.online/badge.html：生成深色、金色、浅色和黑白认证徽章
 
 ## 官方入口说明
 

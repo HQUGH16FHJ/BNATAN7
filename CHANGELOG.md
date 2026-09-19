@@ -2,6 +2,26 @@
 
 All notable project changes are documented here.
 
+## v4.0.7 - 2026-09-19
+
+### Added
+
+- Added the private Bantan Rights registry disclaimer across registration, lookup, status, and certificate surfaces
+- Added DNS TXT domain ownership verification for `bantan.online` and `llllkk.online`
+- Added dynamic SVG verification badges with dark, amber, light, and monochrome themes
+- Added the badge generator at `badge.html`
+- Added the GitHub-style release center at `releases.html`
+- Added machine-readable `license.json`, `changelog.json`, and `feed.xml`
+- Added rights dispute and removal issue template
+- Added automated site quality checks for JSON, JavaScript syntax, required files, and responsive metadata
+
+### Changed
+
+- Renamed public wording from website verification to private website ownership declaration registration
+- Removed public embed-code exposure from the lookup result page
+- Bound official footer links to both registry code and domain
+- Added the verified badge to all site pages through the shared footer script
+
 ## v4.0.6 - 2026-09-19
 
 ### Added

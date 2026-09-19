@@ -6,3 +6,9 @@ contact_links:
   - name: Project documentation
     url: https://github.com/HQUGH16FHJ/BNATAN7#readme
     about: Read setup, deployment, architecture, and usage documentation.
+  - name: Rights registry and verification
+    url: https://rights.bantan.online/site
+    about: Check the private Bantan Rights registry disclaimer and lookup an official code.
+  - name: Rights dispute or removal
+    url: https://github.com/HQUGH16FHJ/BNATAN7/issues/new?template=rights_dispute.yml
+    about: Report an inaccurate entry, impersonation, ownership dispute, or removal request.

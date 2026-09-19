@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="绊谈 · 万能枢纽版本发布中心：查看最新版、历史版本、功能变更、下载入口和官方认证状态。">
+<meta name="theme-color" content="#090704">
+<link rel="canonical" href="https://bantan.online/releases.html">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="绊谈更新日志" href="https://bantan.online/feed.xml">
+<link rel="stylesheet" href="./site-pages-v1.css?v=1.1.0">
+<link rel="stylesheet" href="./releases-v1.css?v=1.0.0">
+<title>版本发布中心 · 绊谈</title>
+</head>
+<body class="site-page releases-page">
+<nav class="site-topbar" aria-label="版本发布导航">
+  <div class="site-topbar__inner">
+    <a class="site-brand" href="./landing.html"><span class="site-brand__mark">绊</span><span>版本发布</span></a>
+    <div class="site-nav">
+      <a href="./landing.html">首页</a>
+      <a href="./explore.html">探索</a>
+      <a href="./releases.html">发布</a>
+      <a href="./badge.html">徽章</a>
+      <a href="./changelog.html">更新</a>
+      <a href="./license.html">许可</a>
+    </div>
+  </div>
+</nav>
+
+<main class="site-shell releases-shell">
+  <header class="release-hero">
+    <div class="release-hero__copy">
+      <div class="site-kicker">Release Center</div>
+      <h1 class="site-title">每一次发布，<em>都有记录</em></h1>
+      <p class="site-lead">集中查看绊谈的正式版本、功能变更、官方入口、认证状态和下载地址。</p>
+      <div class="release-hero__actions">
+        <a class="site-button is-primary" href="https://github.com/HQUGH16FHJ/BNATAN7/releases" target="_blank" rel="noopener">打开 GitHub Releases</a>
+        <a class="site-button" href="feed.xml">订阅 RSS</a>
+      </div>
+    </div>
+    <aside class="release-latest" aria-label="最新版本">
+      <span>LATEST RELEASE</span>
+      <strong id="latestVersion">v4.0.7</strong>
+      <h2 id="latestTitle">域名所有权验证 · 官方认证徽章 · 版权验证证书</h2>
+      <time id="latestDate">2026-09-19</time>
+      <div class="release-latest__status">
+        <i></i>
+        <span>已部署到 bantan.online</span>
+      </div>
+    </aside>
+  </header>
+
+  <section class="release-metrics" aria-label="发布统计">
+    <article><span>当前版本</span><strong id="metricVersion">4.0.7</strong></article>
+    <article><span>正式域名</span><strong>4</strong></article>
+    <article><span>DNS 认证</span><strong>2</strong></article>
+    <article><span>发布订阅</span><strong>RSS</strong></article>
+  </section>
+
+  <section class="release-section">
+    <div class="release-section__head">
+      <div><span>VERSION ARCHIVE</span><h2>版本时间线</h2></div>
+      <p>从最新版本向下查看。数据来自 changelog.json，并同步 GitHub 与站点更新日志。</p>
+    </div>
+    <div class="release-timeline" id="releaseTimeline">
+      <article class="release-card is-loading">
+        <span>LOADING</span>
+        <h3>正在读取版本数据</h3>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="site-footer__inner"><span>© 2026 绊谈 Bantan</span><span><a href="./changelog.html">更新日志</a> · <a href="./badge.html">认证徽章</a> · <a href="./license.html">使用许可</a></span></div></footer>
+<script src="./site-pages-v1.js?v=1.1.0"></script>
+<script src="./releases-v1.js?v=1.0.0"></script>
+</body>
+</html>

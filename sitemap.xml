@@ -53,4 +53,6 @@
   <url><loc>https://bantan.online/feed.xml</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>
   <url><loc>https://bantan.online/license.json</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://bantan.online/changelog.json</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://bantan.online/releases.html</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bantan.online/badge.html</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
