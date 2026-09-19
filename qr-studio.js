@@ -7,6 +7,34 @@
     bantan: { name: '绊谈 · 万能枢纽', code: 'BNT-SITE-2026-001', domain: 'bantan.online' },
     llllkk: { name: '刘骐硕个人博客', code: 'BNT-SITE-2026-002', domain: 'llllkk.online' }
   };
+  const styles = {
+    bantan: {
+      background: '#090704',
+      panel: '#17110b',
+      foreground: '#fff7ed',
+      muted: '#d6c7b8',
+      accent: '#f59e0b',
+      accent2: '#38bdf8',
+      logo: '绊',
+      label: 'BANTAN · PRIVATE REGISTRY',
+      logoFont: '900 52px "Microsoft YaHei", sans-serif'
+    },
+    llllkk: {
+      background: '#e9e0cf',
+      panel: '#f7f1e7',
+      foreground: '#322920',
+      muted: '#78685a',
+      accent: '#ad5834',
+      accent2: '#c99a5b',
+      logo: 'LQ',
+      label: 'LIU QISHUO · PRIVATE REGISTRY',
+      logoFont: '900 44px Georgia, serif'
+    }
+  };
+
+  function siteKey() {
+    return document.getElementById('qrSite').value;
+  }
 
   function roundRect(x, y, width, height, radius) {
     context.beginPath();
@@ -29,17 +57,25 @@
   }
 
   async function draw() {
-    const site = sites[document.getElementById('qrSite').value] || sites.bantan;
+    const key = siteKey();
+    const site = sites[key] || sites.bantan;
+    const style = styles[key] || styles.bantan;
     const shape = document.getElementById('qrShape').value;
-    const light = document.getElementById('qrTheme').value === 'light';
+    const themeOverride = document.getElementById('qrTheme').value;
+    const light = themeOverride === 'light';
     const verifyUrl = `https://rights.bantan.online/site?code=${site.code}&domain=${site.domain}`;
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=12&ecc=H&data=${encodeURIComponent(verifyUrl)}&color=${light ? '1b1712' : 'fff7ed'}&bgcolor=${light ? 'f7f0e3' : '0c0a08'}`;
+    const qrForeground = light ? '322920' : 'fff7ed';
+    const qrBackground = light ? 'e9e0cf' : '090704';
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=10&ecc=H&data=${encodeURIComponent(verifyUrl)}&color=${qrForeground}&bgcolor=${qrBackground}`;
     const image = await loadImage(qrUrl);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    const background = light ? '#f7f0e3' : '#0c0a08';
-    const foreground = light ? '#1b1712' : '#fff7ed';
-    const muted = light ? '#675b4e' : '#d6c7b8';
-    const accent = light ? '#24734e' : '#34d399';
+    const background = light ? styles.llllkk.background : styles.bantan.background;
+    const foreground = light ? styles.llllkk.foreground : styles.bantan.foreground;
+    const muted = light ? styles.llllkk.muted : styles.bantan.muted;
+    const accent = light ? styles.llllkk.accent : styles.bantan.accent;
+    const accent2 = light ? styles.llllkk.accent2 : styles.bantan.accent2;
+    const logo = light ? styles.llllkk.logo : styles.bantan.logo;
+    const label = light ? styles.llllkk.label : styles.bantan.label;
     context.fillStyle = background;
     if (shape === 'round') {
       context.beginPath();
@@ -51,36 +87,46 @@
     }
     const borderGradient = context.createLinearGradient(0, 0, 720, 720);
     borderGradient.addColorStop(0, accent);
-    borderGradient.addColorStop(0.55, light ? '#f59e0b' : '#38bdf8');
-    borderGradient.addColorStop(1, light ? '#24734e' : '#fb7185');
+    borderGradient.addColorStop(0.52, accent2);
+    borderGradient.addColorStop(1, accent);
     context.strokeStyle = borderGradient;
-    context.lineWidth = 7;
+    context.lineWidth = 8;
     context.stroke();
-    context.drawImage(image, 120, 126, 480, 480);
-    context.fillStyle = background;
-    roundRect(310, 310, 100, 100, 26);
+    context.fillStyle = light ? styles.llllkk.panel : styles.bantan.panel;
+    roundRect(92, 108, 536, 536, shape === 'certificate' ? 24 : 38);
+    context.fill();
+    context.drawImage(image, 104, 120, 512, 512);
+    context.fillStyle = light ? '#f7f1e7' : '#0c0a08';
+    roundRect(300, 300, 120, 120, light ? 60 : 28);
     context.fill();
     context.strokeStyle = accent;
-    context.lineWidth = 4;
+    context.lineWidth = 5;
     context.stroke();
     context.fillStyle = accent;
-    context.font = document.getElementById('qrSite').value === 'llllkk'
-      ? '900 38px Georgia, serif'
-      : '900 48px "Microsoft YaHei", sans-serif';
+    context.font = light ? styles.llllkk.logoFont : styles.bantan.logoFont;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText(document.getElementById('qrSite').value === 'llllkk' ? 'LQ' : '绊', 360, 362);
+    context.fillText(logo, 360, 362);
     context.textBaseline = 'alphabetic';
     context.fillStyle = foreground;
-    context.font = '900 34px "Microsoft YaHei", sans-serif';
+    context.font = light ? '700 36px Georgia, serif' : '900 34px "Microsoft YaHei", sans-serif';
     context.textAlign = 'center';
-    context.fillText(site.name, 360, 72);
+    context.fillText(site.name, 360, 66);
     context.fillStyle = muted;
-    context.font = '700 20px Consolas, monospace';
+    context.font = light ? '700 18px Georgia, serif' : '700 19px Consolas, monospace';
     context.fillText(site.code, 360, 660);
     context.fillStyle = accent;
-    context.font = '800 17px "Microsoft YaHei", sans-serif';
-    context.fillText(`私有权属登记 · ${site.domain}`, 360, 692);
+    context.font = light ? '800 16px Georgia, serif' : '800 16px "Microsoft YaHei", sans-serif';
+    context.fillText(`${label} · ${site.domain}`, 360, 692);
+
+    context.strokeStyle = accent2;
+    context.lineWidth = 4;
+    context.beginPath();
+    context.moveTo(50, 50); context.lineTo(104, 50); context.lineTo(104, 72);
+    context.moveTo(670, 50); context.lineTo(616, 50); context.lineTo(616, 72);
+    context.moveTo(50, 670); context.lineTo(104, 670); context.lineTo(104, 648);
+    context.moveTo(670, 670); context.lineTo(616, 670); context.lineTo(616, 648);
+    context.stroke();
   }
 
   async function download() {
@@ -104,5 +150,9 @@
   });
   document.getElementById('qrControls')?.addEventListener('change', draw);
   document.getElementById('downloadQrSticker')?.addEventListener('click', download);
+  document.getElementById('qrSite')?.addEventListener('change', () => {
+    document.getElementById('qrTheme').value = siteKey() === 'llllkk' ? 'light' : 'dark';
+    draw();
+  });
   draw();
 })();
