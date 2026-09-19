@@ -13,7 +13,7 @@ All notable project changes are documented here.
 ### Changed
 
 - Added the official domain list to `README.md`, root `LICENSE`, and `llms.txt`
-- Added the production and ownership note for the Liu Qishuo personal blog project
+- Added the production credit and single-owner copyright note for the Liu Qishuo personal blog project
 - Updated the license page, changelog archive, release documentation, and served asset cache to `v4.0.6`
 - Kept `bantan.online` as the canonical SEO and social-preview address
 
