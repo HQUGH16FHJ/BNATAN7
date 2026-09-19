@@ -25,6 +25,8 @@
   async function render(item) {
     const verified = Boolean(item.dns_verified_at);
     const generatedAt = new Date().toLocaleString('zh-CN', { hour12: false });
+    const certificateUrl = `https://rights.bantan.online/certificate?code=${encodeURIComponent(item.site_code)}&domain=${encodeURIComponent(item.domain || '')}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&ecc=H&data=${encodeURIComponent(certificateUrl)}&color=1b1712&bgcolor=f7f0e3`;
     const fingerprint = await sha256([
       item.site_code,
       item.domain,
@@ -63,7 +65,10 @@
         </div>
         <footer class="certificate-foot">
           <p>证书信息来自 Bantan Rights 私有登记数据库。发生权利争议时，应以原始作品、创作记录、授权合同和适用法律为准。如有权属异议或需要移除登记，请联系 125668039@163.com 或 1429616034@qq.com。</p>
-          <div class="certificate-seal">绊谈版权中心<br>2026</div>
+          <div class="certificate-foot__marks">
+            <figure class="certificate-qr"><img src="${qrUrl}" alt="扫码打开版权证书"><figcaption>扫码打开证书</figcaption></figure>
+            <div class="certificate-seal">绊谈版权中心<br>2026</div>
+          </div>
         </footer>
       </div>
     `;

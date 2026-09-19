@@ -50,6 +50,12 @@
   <url><loc>https://rights.bantan.online/status</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://rights.bantan.online/site</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://rights.bantan.online/certificate</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://rights.bantan.online/api</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rights.bantan.online/ops</loc><lastmod>2026-09-19</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://rights.bantan.online/api/rights/openapi</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://bantan.online/.well-known/security.txt</loc><lastmod>2026-09-19</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://bantan.online/sbom.json</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://bantan.online/checksums.json</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://bantan.online/feed.xml</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>
   <url><loc>https://bantan.online/license.json</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://bantan.online/changelog.json</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>

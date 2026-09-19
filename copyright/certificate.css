@@ -235,6 +235,33 @@
   text-align: center;
   transform: rotate(-7deg);
 }
+
+.certificate-foot__marks {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.certificate-qr {
+  display: grid;
+  gap: 7px;
+  justify-items: center;
+  margin: 0;
+}
+
+.certificate-qr img {
+  display: block;
+  width: 104px;
+  height: 104px;
+  border: 1px solid rgba(55,43,29,.22);
+  border-radius: 10px;
+  background: #f7f0e3;
+}
+
+.certificate-qr figcaption {
+  color: #75695c;
+  font-size: 9px;
+}
 .certificate-error {
   padding: 48px;
 }
@@ -254,6 +281,7 @@
   .certificate-inner { padding: 42px 28px 54px; }
   .certificate-head,
   .certificate-foot { align-items: flex-start; flex-direction: column; }
+  .certificate-foot__marks { align-self: stretch; justify-content: space-between; }
   .certificate-title { font-size: clamp(3rem, 18vw, 5.4rem); }
   .certificate-grid { grid-template-columns: 1fr; margin-top: 34px; }
   .certificate-seal { align-self: flex-end; }

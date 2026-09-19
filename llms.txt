@@ -61,6 +61,12 @@
 - https://bantan.online/share.html：生成微信、QQ、GitHub 和 Twitter 使用的 1200×630 分享图
 - https://bantan.online/qr.html：生成网站首页和权属验证二维码、方形贴纸、圆形贴纸和证书二维码
 - https://bantan.online/downloads/bantan-brand-kit-v1.zip：下载 Logo、小绊谈、认证徽章、品牌色和二维码资产包
+- https://rights.bantan.online/api：Bantan Rights 私有登记 API 文档与在线调试平台
+- https://rights.bantan.online/ops：Bantan Rights 数据库、接口和官方入口运维状态
+- https://rights.bantan.online/api/rights/openapi：机器可读的 OpenAPI 接口定义
+- https://bantan.online/.well-known/security.txt：安全漏洞报告入口
+- https://bantan.online/sbom.json：项目组件清单
+- https://bantan.online/checksums.json：品牌包、二维码和品牌资源的 SHA-256 校验值
 
 ## 官方入口说明
 

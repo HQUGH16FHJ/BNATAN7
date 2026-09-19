@@ -1,0 +1,7 @@
+Contact: mailto:125668039@163.com
+Contact: https://github.com/HQUGH16FHJ/BNATAN7/security/policy
+Expires: 2027-09-19T00:00:00+08:00
+Language: zh-CN
+Canonical: https://bantan.online/.well-known/security.txt
+Policy: https://bantan.online/security.html
+Preferred-Languages: zh-CN, en

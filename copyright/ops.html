@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bantan Rights 运维中心：查看数据库、官网入口、API 和 Cloudflare Pages 状态。">
+<meta name="theme-color" content="#080706">
+<link rel="canonical" href="https://rights.bantan.online/ops">
+<link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
+<link rel="stylesheet" href="./copyright.css?v=1.2.0">
+<link rel="stylesheet" href="./rights-console-v1.css?v=1.3.0">
+<link rel="stylesheet" href="./rights-platform-v1.css?v=1.0.0">
+<title>运维中心 · Bantan Rights</title>
+</head>
+<body class="rights-console-page">
+<header class="rights-header">
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>运维中心</small></span></a>
+  <nav aria-label="运维中心导航"><a href="./index.html">版权总览</a><a href="./api.html">API</a><a href="./site.html">权属查询</a><a href="./ops.html">运维</a></nav>
+</header>
+<main>
+  <section class="platform-hero">
+    <div><span>OPERATIONS CONSOLE</span><h1>服务与部署状态</h1><p>检查 Rights 数据库、登记数量、DNS 验证数量、API 和官方入口响应。</p></div>
+    <aside><strong id="opsStatus">--</strong><span>整体状态</span><button type="button" id="refreshOps">重新检测</button></aside>
+  </section>
+  <section class="ops-metrics" id="opsMetrics"></section>
+  <section class="ops-checks" id="opsChecks"></section>
+</main>
+<footer class="rights-footer"><span>© 2026 Bantan Rights · 运维中心</span><div><a href="./index.html">版权总览</a><a href="./api.html">API</a><a href="https://dash.cloudflare.com/">Cloudflare</a></div></footer>
+<script src="./rights-platform.js?v=1.0.0" data-page="ops"></script>
+</body>
+</html>

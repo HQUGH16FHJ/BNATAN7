@@ -14,6 +14,11 @@ const requiredFiles = [
   'badge.html',
   'share.html',
   'qr.html',
+  'copyright/api.html',
+  'copyright/ops.html',
+  '.well-known/security.txt',
+  'sbom.json',
+  'checksums.json',
   'manifest.json',
   'sitemap.xml',
   'llms.txt',
@@ -72,7 +77,14 @@ for (const file of files.filter(name => name.endsWith('.html') && !name.includes
 }
 
 const sitemap = await readFile(path.join(root, 'sitemap.xml'), 'utf8');
-for (const url of ['https://bantan.online/releases.html', 'https://bantan.online/badge.html', 'https://bantan.online/share.html', 'https://bantan.online/qr.html']) {
+for (const url of [
+  'https://bantan.online/releases.html',
+  'https://bantan.online/badge.html',
+  'https://bantan.online/share.html',
+  'https://bantan.online/qr.html',
+  'https://rights.bantan.online/api',
+  'https://rights.bantan.online/ops'
+]) {
   if (!sitemap.includes(url)) failures.push(`Sitemap missing: ${url}`);
 }
 

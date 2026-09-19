@@ -1,0 +1,45 @@
+{
+  "generated": "2026-09-19",
+  "files": [
+    {
+      "file": "downloads/bantan-brand-kit-v1.zip",
+      "algorithm": "SHA-256",
+      "hash": "8be49449c6cf7393cf0c7dc725d71db8d57e634f2234f8f2fb78276d5770725c"
+    },
+    {
+      "file": "qr/bantan-online-home.png",
+      "algorithm": "SHA-256",
+      "hash": "0435ec1c33f1c4c856c1ac51c832e4bd76de965b2c6fb5d5d8aafa79501e729a"
+    },
+    {
+      "file": "qr/bantan-online-verify.png",
+      "algorithm": "SHA-256",
+      "hash": "0435ec1c33f1c4c856c1ac51c832e4bd76de965b2c6fb5d5d8aafa79501e729a"
+    },
+    {
+      "file": "qr/llllkk-online-home.png",
+      "algorithm": "SHA-256",
+      "hash": "c360f4c6a03a2b676351895d6de4b50bb196dfccac9c509c93d541318550eedc"
+    },
+    {
+      "file": "qr/llllkk-online-verify.png",
+      "algorithm": "SHA-256",
+      "hash": "c360f4c6a03a2b676351895d6de4b50bb196dfccac9c509c93d541318550eedc"
+    },
+    {
+      "file": "bantan-logo.svg",
+      "algorithm": "SHA-256",
+      "hash": "e3489589e5b5922d3ae5b7a3504bf55017aac4ca81c7df525d28da76bcabaa11"
+    },
+    {
+      "file": "official-badge-bantan.svg",
+      "algorithm": "SHA-256",
+      "hash": "8502e6b2fbc3e7d99838f9c569ec7152b07a143c1f2fbca1c5d18d923cfcaf22"
+    },
+    {
+      "file": "official-badge-llllkk.svg",
+      "algorithm": "SHA-256",
+      "hash": "f486d315a7c259c844455b477b76e7fbc777bc40c6b0ff176f261b7419946a39"
+    }
+  ]
+}
