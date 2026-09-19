@@ -4,8 +4,8 @@
   const canvas = document.getElementById('qrCanvas');
   const context = canvas.getContext('2d');
   const sites = {
-    bantan: { name: '绊谈 · 万能枢纽', code: 'BNT-SITE-2026-001', domain: 'bantan.online' },
-    llllkk: { name: '刘骐硕个人博客', code: 'BNT-SITE-2026-002', domain: 'llllkk.online' }
+    bantan: { name: '绊谈 · 万能枢纽', code: 'BNT-SITE-2026-001', domain: 'bantan.online', home: 'https://bantan.online/' },
+    llllkk: { name: '刘骐硕个人博客', code: 'BNT-SITE-2026-002', domain: 'llllkk.online', home: 'https://llllkk.online/' }
   };
   const styles = {
     bantan: {
@@ -63,10 +63,10 @@
     const shape = document.getElementById('qrShape').value;
     const themeOverride = document.getElementById('qrTheme').value;
     const light = themeOverride === 'light';
-    const verifyUrl = `https://rights.bantan.online/site?code=${site.code}&domain=${site.domain}`;
+    const targetUrl = site.home;
     const qrForeground = light ? '322920' : 'fff7ed';
     const qrBackground = light ? 'e9e0cf' : '090704';
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=10&ecc=H&data=${encodeURIComponent(verifyUrl)}&color=${qrForeground}&bgcolor=${qrBackground}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=10&ecc=H&data=${encodeURIComponent(targetUrl)}&color=${qrForeground}&bgcolor=${qrBackground}`;
     const image = await loadImage(qrUrl);
     context.clearRect(0, 0, canvas.width, canvas.height);
     const background = light ? styles.llllkk.background : styles.bantan.background;
@@ -117,7 +117,7 @@
     context.fillText(site.code, 360, 660);
     context.fillStyle = accent;
     context.font = light ? '800 16px Georgia, serif' : '800 16px "Microsoft YaHei", sans-serif';
-    context.fillText(`${label} · ${site.domain}`, 360, 692);
+    context.fillText(`官方网站 · ${site.domain}`, 360, 692);
 
     context.strokeStyle = accent2;
     context.lineWidth = 4;
@@ -140,7 +140,7 @@
       URL.revokeObjectURL(link.href);
     } catch (error) {
       const site = sites[document.getElementById('qrSite').value] || sites.bantan;
-      window.open(`https://rights.bantan.online/site?code=${site.code}&domain=${site.domain}`, '_blank', 'noopener');
+      window.open(site.home, '_blank', 'noopener');
     }
   }
 
