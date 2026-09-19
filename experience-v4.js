@@ -207,7 +207,35 @@
   }
 
   function addPageTransitions() {
-    if (REDUCED_MOTION) return;
+    let navigationTimer = 0;
+    let navigating = false;
+
+    const clearExitState = () => {
+      window.clearTimeout(navigationTimer);
+      navigationTimer = 0;
+      navigating = false;
+      document.body?.classList.remove('bnt-page-exit');
+      document.documentElement.classList.remove('bnt-page-exit');
+      if (
+        document.body?.style.overflow === 'hidden' &&
+        !document.querySelector('.bnt-search-overlay.show')
+      ) {
+        document.body.style.overflow = '';
+      }
+    };
+
+    window.addEventListener('pageshow', clearExitState);
+    window.addEventListener('pagehide', clearExitState);
+    window.addEventListener('popstate', clearExitState);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) clearExitState();
+    });
+
+    if (REDUCED_MOTION) {
+      clearExitState();
+      return;
+    }
+
     document.addEventListener('click', event => {
       const link = event.target.closest('a[href]');
       if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
@@ -215,9 +243,14 @@
       if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      if (navigating) return;
       event.preventDefault();
+      navigating = true;
       document.body.classList.add('bnt-page-exit');
-      setTimeout(() => { location.href = url.href; }, 220);
+      window.clearTimeout(navigationTimer);
+      navigationTimer = window.setTimeout(() => {
+        location.assign(url.href);
+      }, 220);
     });
   }
 
