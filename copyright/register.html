@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bantan Rights 版权登记单：填写网站或作品信息并生成可打印的登记申请单。">
+<meta name="theme-color" content="#080706">
+<link rel="canonical" href="https://rights.bantan.online/register">
+<link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="https://bantan.online/favicon.svg">
+<link rel="stylesheet" href="./copyright.css?v=1.0.0">
+<title>版权登记单 · Bantan Rights</title>
+</head>
+<body>
+<header class="rights-header">
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>版权登记单</small></span></a>
+  <nav aria-label="登记单导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./index.html#verify">编号验证</a><a href="https://bantan.online/explore.html">探索绊谈</a></nav>
+  <button class="rights-print" id="registerPrint" type="button">打印登记单</button>
+</header>
+<main>
+  <section class="rights-hero compact">
+    <div class="rights-hero__index"><span>REGISTRATION FORM</span><strong>01</strong></div>
+    <div class="rights-hero__copy">
+      <div class="rights-kicker"><i></i>RIGHTS REGISTRATION</div>
+      <h1>版权登记单，<br><em>先形成正式档案</em></h1>
+      <p>填写网站或作品信息后生成内部登记编号、打印版登记单和授权申请摘要。当前版本用于公开信息登记，不替代国家版权登记。</p>
+    </div>
+  </section>
+
+  <div class="registration-layout">
+    <section class="registration-form-wrap">
+      <form id="registrationForm">
+        <div class="form-grid">
+          <label class="form-field is-wide"><span>项目或作品名称 *</span><input name="projectName" required placeholder="例如：绊谈 · 万能枢纽"></label>
+          <label class="form-field"><span>登记类型</span><select name="recordType"><option>网站</option><option>源代码</option><option>页面设计</option><option>文章</option><option>照片</option><option>视频</option><option>品牌资产</option></select></label>
+          <label class="form-field"><span>当前状态</span><select name="projectStatus"><option>已上线</option><option>建设中</option><option>已归档</option></select></label>
+          <label class="form-field"><span>版权所有者 *</span><input name="owner" required placeholder="自然人、团队或公司名称"></label>
+          <label class="form-field"><span>制作方 / 合作方</span><input name="producer" placeholder="没有可不填"></label>
+          <label class="form-field is-wide"><span>官方域名</span><input name="domains" placeholder="多个域名用逗号分隔"></label>
+          <label class="form-field is-wide"><span>代码仓库</span><input name="repository" inputmode="url" placeholder="https://github.com/..."></label>
+          <label class="form-field"><span>许可证类型</span><select name="license"><option>专有许可证</option><option>保留所有权利</option><option>仅个人使用</option><option>需要单独授权</option></select></label>
+          <label class="form-field"><span>首次发布日期</span><input name="releaseDate" type="date"></label>
+          <label class="form-field"><span>联系邮箱</span><input name="contact" type="email" placeholder="用于审核联系"></label>
+          <label class="form-field"><span>验证电话</span><input name="phone" inputmode="tel" placeholder="可选"></label>
+          <fieldset class="form-field is-wide form-checkboxes"><legend>作品范围</legend><label><input type="checkbox" name="works" value="网站代码" checked>网站代码</label><label><input type="checkbox" name="works" value="页面设计" checked>页面设计</label><label><input type="checkbox" name="works" value="品牌标识">品牌标识</label><label><input type="checkbox" name="works" value="原创文章">原创文章</label><label><input type="checkbox" name="works" value="照片影像">照片影像</label><label><input type="checkbox" name="works" value="音视频">音视频</label></label></fieldset>
+          <label class="form-field is-wide"><span>作品说明</span><textarea name="description" rows="5" placeholder="说明作品内容、创作过程、权利来源和其他需要登记的信息"></textarea></label>
+          <label class="form-declaration is-wide"><input id="declareRights" type="checkbox" required><span>我确认提交内容真实，并理解本登记单不等同于国家版权登记或司法证明。</span></label>
+        </div>
+        <div class="registration-actions"><button class="rights-button is-primary" type="submit">生成登记单</button><button class="rights-button" type="reset">清空内容</button></div>
+      </form>
+    </section>
+
+    <aside class="registration-preview" id="registrationPreview">
+      <div class="preview-seal">RIGHTS</div>
+      <span>REGISTRATION PREVIEW</span>
+      <h2>登记单尚未生成</h2>
+      <p>填写左侧表单并点击“生成登记单”，这里会显示登记编号、权利摘要和打印信息。</p>
+      <dl><div><dt>临时编号</dt><dd>--</dd></div><div><dt>版权所有者</dt><dd>--</dd></div><div><dt>许可证</dt><dd>--</dd></div><div><dt>登记状态</dt><dd>草稿</dd></div></dl>
+      <div class="preview-actions"><button id="copyRegistration" type="button" disabled>复制摘要</button><a id="sendRegistration" href="mailto:1429616034@qq.com?subject=版权登记申请" hidden>发送申请</a></div>
+    </aside>
+  </div>
+
+  <section class="rights-notice registration-notice">
+    <div><span>IMPORTANT</span><h2>登记前须知</h2></div>
+    <p>请保留原始工程、设计源文件、照片原片、创作记录和发布时间证据。平台生成的是登记申请草稿和公开信息记录；正式授权、版权转让或争议处理应签署书面文件，并视情况咨询专业法律人士。</p>
+  </section>
+</main>
+<footer class="rights-footer"><span>© 2026 Bantan Rights · 版权登记单</span><div><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./admin.html">管理入口</a><a href="mailto:1429616034@qq.com">联系审核</a></div></footer>
+<script src="./register.js?v=1.0.0"></script>
+</body>
+</html>

@@ -2,6 +2,10 @@ export async function onRequest(context) {
   const request = context.request;
   const url = new URL(request.url);
 
+  if (url.pathname.startsWith('/api/')) {
+    return context.next();
+  }
+
   if (url.hostname !== 'rights.bantan.online') {
     return context.next();
   }

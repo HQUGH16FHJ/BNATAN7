@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080706">
+<link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
+<link rel="stylesheet" href="./copyright.css?v=1.0.0">
+<title>登记管理后台 · Bantan Rights</title>
+</head>
+<body>
+<header class="rights-header">
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>登记管理后台</small></span></a>
+  <nav aria-label="管理后台导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./admin.html">管理后台</a></nav>
+</header>
+<main>
+  <section class="rights-hero compact">
+    <div class="rights-hero__index"><span>ADMIN CONSOLE</span><strong>LOCKED</strong></div>
+    <div class="rights-hero__copy">
+      <div class="rights-kicker"><i></i>PRIVATE REVIEW CONSOLE</div>
+      <h1>查看用户提交的<br><em>版权登记单</em></h1>
+      <p>管理后台只读取版权中心数据库。需要管理密钥才能查看、筛选和更新登记状态。</p>
+    </div>
+  </section>
+
+  <section class="admin-login" id="adminLogin">
+    <label for="adminToken">管理密钥</label>
+    <div><input id="adminToken" type="password" autocomplete="current-password" placeholder="输入 RIGHTS_ADMIN_TOKEN"><button id="adminLoginButton" type="button">进入后台</button></div>
+    <p id="adminLoginStatus">密钥只保存在当前浏览器会话，不会写入页面或仓库。</p>
+  </section>
+
+  <section class="admin-console" id="adminConsole" hidden>
+    <div class="admin-toolbar">
+      <label><span>搜索登记单</span><input id="adminSearch" type="search" placeholder="项目名称、版权所有者、编号或域名"></label>
+      <label><span>状态</span><select id="adminStatus"><option value="all">全部</option><option>待审核</option><option>审核中</option><option>已通过</option><option>已驳回</option><option>已归档</option></select></label>
+      <button id="adminRefresh" type="button">刷新</button>
+      <button id="adminLogout" type="button">退出</button>
+    </div>
+    <div class="admin-summary" id="adminSummary">尚未加载登记记录。</div>
+    <div class="admin-list" id="adminList"></div>
+  </section>
+</main>
+<footer class="rights-footer"><span>© 2026 Bantan Rights · 管理后台</span><div><a href="./index.html">版权总览</a><a href="./register.html">公开登记单</a></div></footer>
+<script src="./admin.js?v=1.0.0"></script>
+</body>
+</html>

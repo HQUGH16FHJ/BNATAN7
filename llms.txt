@@ -48,6 +48,8 @@
 - /offline.html：断网时的缓存入口和重新连接页面
 - /brand.html：品牌名称、标准色、小绊谈形象和官方地址
 - https://rights.bantan.online/：版权登记、许可证验证、授权申请和项目权利信息
+- https://rights.bantan.online/sites：全部官方网站的状态、版权归属和许可证目录
+- https://rights.bantan.online/register：版权登记单和打印信息生成入口
 
 ## 官方入口说明
 

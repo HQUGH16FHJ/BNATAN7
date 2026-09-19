@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bantan 网站汇集中心：统一查看绊谈、刘骐硕个人博客和版权中心的网站状态、版权归属与官方域名。">
+<meta name="theme-color" content="#080706">
+<link rel="canonical" href="https://rights.bantan.online/sites">
+<link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="https://bantan.online/favicon.svg">
+<link rel="stylesheet" href="./copyright.css?v=1.0.0">
+<title>网站汇集中心 · Bantan Rights</title>
+</head>
+<body>
+<header class="rights-header">
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>网站汇集中心</small></span></a>
+  <nav aria-label="网站汇集导航"><a href="./index.html">版权总览</a><a href="./sites.html">网站汇集</a><a href="./register.html">登记单</a><a href="./index.html#verify">编号验证</a><a href="https://bantan.online/explore.html">探索绊谈</a></nav>
+  <a class="rights-print" href="./register.html">登记新网站</a>
+</header>
+<main>
+  <section class="rights-hero compact">
+    <div class="rights-hero__index"><span>SITE DIRECTORY</span><strong>03</strong></div>
+    <div class="rights-hero__copy">
+      <div class="rights-kicker"><i></i>SITE COLLECTION CENTER</div>
+      <h1>网站汇集，<br><em>统一查看状态</em></h1>
+      <p>所有官方项目集中在一个目录中，显示网站用途、版权所有者、制作方、许可证、登记编号和当前状态。</p>
+      <div class="rights-hero__actions"><a class="rights-button is-primary" href="#siteList">浏览网站</a><a class="rights-button" href="./register.html">登记新网站</a></div>
+    </div>
+  </section>
+
+  <section class="site-directory-controls" aria-label="网站筛选">
+    <label><span>搜索网站</span><input id="siteSearch" type="search" placeholder="网站名称、域名或版权所有者"></label>
+    <div class="site-filter" id="siteFilters">
+      <button type="button" class="is-active" data-filter="all">全部</button>
+      <button type="button" data-filter="active">已上线</button>
+      <button type="button" data-filter="building">建设中</button>
+      <button type="button" data-filter="bantan">绊谈 Bantan</button>
+      <button type="button" data-filter="liu">刘骐硕</button>
+    </div>
+  </section>
+
+  <section class="site-directory" id="siteList" aria-live="polite">
+    <article class="directory-card" data-status="active" data-owner="bantan" data-search="绊谈 万能枢纽 bantan.online 绊谈 bantan">
+      <div class="directory-card__head"><span>BNT-RIGHTS-2026-001</span><i class="is-active">ONLINE</i></div>
+      <h2>绊谈 · 万能枢纽</h2>
+      <p>在线工具聚合、AI 助手、用户中心、搜索导航和自研工具。</p>
+      <dl><div><dt>版权所有者</dt><dd>绊谈 Bantan</dd></div><div><dt>许可证</dt><dd>Bantan Proprietary License</dd></div><div><dt>官方域名</dt><dd>bantan.online</dd></div></dl>
+      <div class="directory-card__actions"><a href="https://bantan.online/">打开网站</a><a href="https://bantan.online/license.html">查看许可证</a></div>
+    </article>
+    <article class="directory-card" data-status="active" data-owner="liu" data-search="刘骐硕 个人博客 llllkk.online 刘骐硕 bantan">
+      <div class="directory-card__head"><span>BNT-RIGHTS-2026-002</span><i class="is-active">ONLINE</i></div>
+      <h2>刘骐硕个人博客</h2>
+      <p>文章、照片、影像和生活记录，以及配套的网站设计与制作。</p>
+      <dl><div><dt>版权所有者</dt><dd>刘骐硕</dd></div><div><dt>制作署名</dt><dd>绊谈 Bantan</dd></div><div><dt>官方域名</dt><dd>llllkk.online</dd></div></dl>
+      <div class="directory-card__actions"><a href="https://llllkk.online/">打开网站</a><a href="https://llllkk.online/license.html">查看许可证</a></div>
+    </article>
+    <article class="directory-card" data-status="building" data-owner="bantan" data-search="Bantan Rights 版权中心 rights.bantan.online 绊谈 bantan">
+      <div class="directory-card__head"><span>BNT-RIGHTS-2026-003</span><i>BUILDING</i></div>
+      <h2>Bantan Rights</h2>
+      <p>版权登记、许可证验证、授权台账、网站目录和公开验证系统。</p>
+      <dl><div><dt>版权所有者</dt><dd>绊谈 Bantan</dd></div><div><dt>许可证</dt><dd>Bantan Proprietary License</dd></div><div><dt>目标域名</dt><dd>rights.bantan.online</dd></div></dl>
+      <div class="directory-card__actions"><a href="./index.html">打开首页</a><a href="./register.html">登记网站</a></div>
+    </article>
+  </section>
+  <p class="site-directory-empty" id="siteEmpty" hidden>没有符合条件的网站。</p>
+</main>
+<footer class="rights-footer"><span>© 2026 Bantan Rights · 网站汇集中心</span><div><a href="./index.html">版权总览</a><a href="./register.html">登记单</a><a href="./admin.html">管理入口</a><a href="https://bantan.online/">主站</a></div></footer>
+<script src="./sites.js?v=1.0.0"></script>
+</body>
+</html>

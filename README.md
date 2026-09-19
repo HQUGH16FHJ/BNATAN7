@@ -150,7 +150,7 @@ http://localhost:8000/landing.html
 
 - Service Worker：`sw.js`
 - Manifest：`manifest.json`
-- 当前缓存版本：`bantan-static-v4.0.6-premium-4`
+- 当前缓存版本：`bantan-static-v4.0.6-premium-5`
 
 发布新版本后，应同时更新静态资源版本号，避免浏览器继续使用旧版 JavaScript 或 CSS。
 
