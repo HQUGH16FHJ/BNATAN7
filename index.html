@@ -6529,13 +6529,14 @@ input, select, textarea, button {
 </style>
 <link rel="stylesheet" href="./confirm-dialog.css">
 <link rel="stylesheet" href="./profile-center.css">
-<link rel="stylesheet" href="./experience-v4.css">
-<link rel="stylesheet" href="./reactbits-v4.css">
-<link rel="stylesheet" href="./uiverse-v4.css">
+<link rel="stylesheet" href="./experience-v4.css?v=4.0.2">
+<link rel="stylesheet" href="./reactbits-v4.css?v=4.0.2">
+<link rel="stylesheet" href="./uiverse-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./advanced-motion-v4.css">
 <link rel="stylesheet" href="./mascot-state.css">
-<link rel="stylesheet" href="./ui-interactions-v4.css">
+<link rel="stylesheet" href="./ui-interactions-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./about-v4.css">
+<style id="mobile-dock-kill-switch">.bnt-mobile-dock{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}</style>
 </head>
 <body>
 <style>
@@ -17963,7 +17964,9 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         // PWA Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js').catch(function() {});
+                navigator.serviceWorker.register('./sw.js?v=4.0.2').then(function(registration) {
+                    return registration.update();
+                }).catch(function() {});
             });
         }
 
@@ -18170,10 +18173,17 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 <script src="./profile-center.js"></script>
 <script src="./confirm-dialog.js"></script>
 <script src="./legacy-tools.js"></script>
-<script src="./experience-v4.js"></script>
-<script src="./reactbits-v4.js"></script>
-<script src="./uiverse-v4.js"></script>
+<script src="./experience-v4.js?v=4.0.2"></script>
+<script src="./reactbits-v4.js?v=4.0.2"></script>
+<script src="./uiverse-v4.js?v=4.0.2"></script>
 <script src="./advanced-motion-v4.js"></script>
 <script src="./mascot-state.js"></script>
-<script src="./ui-interactions-v4.js"></script>
+<script src="./ui-interactions-v4.js?v=4.0.2"></script>
+<script>
+(() => {
+    const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());
+    removeMobileDock();
+    new MutationObserver(removeMobileDock).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body></html>

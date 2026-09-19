@@ -303,10 +303,11 @@ a, button {
   .orb { animation: none; }
 }
 </style>
-<link rel="stylesheet" href="./experience-v4.css">
-<link rel="stylesheet" href="./reactbits-v4.css">
-<link rel="stylesheet" href="./uiverse-v4.css">
-<link rel="stylesheet" href="./ui-interactions-v4.css">
+<link rel="stylesheet" href="./experience-v4.css?v=4.0.2">
+<link rel="stylesheet" href="./reactbits-v4.css?v=4.0.2">
+<link rel="stylesheet" href="./uiverse-v4.css?v=4.0.2">
+<link rel="stylesheet" href="./ui-interactions-v4.css?v=4.0.2">
+<style id="mobile-dock-kill-switch">.bnt-mobile-dock{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}</style>
 </head>
 <body>
 
@@ -349,9 +350,16 @@ document.getElementById('path').textContent =
   window.location.pathname + window.location.search;
 </script>
 
-<script src="./experience-v4.js"></script>
-<script src="./reactbits-v4.js"></script>
-<script src="./uiverse-v4.js"></script>
-<script src="./ui-interactions-v4.js"></script>
+<script src="./experience-v4.js?v=4.0.2"></script>
+<script src="./reactbits-v4.js?v=4.0.2"></script>
+<script src="./uiverse-v4.js?v=4.0.2"></script>
+<script src="./ui-interactions-v4.js?v=4.0.2"></script>
+<script>
+(() => {
+    const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());
+    removeMobileDock();
+    new MutationObserver(removeMobileDock).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body>
 </html>
