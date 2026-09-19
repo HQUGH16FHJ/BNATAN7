@@ -9,6 +9,14 @@
     if (isCurrent) link.setAttribute('aria-current', 'page');
   });
 
+  const footer = document.querySelector('.site-footer__inner');
+  if (footer && !footer.querySelector('.site-verified-badge')) {
+    const badge = document.createElement('span');
+    badge.className = 'site-verified-badge';
+    badge.innerHTML = '<a href="https://rights.bantan.online/site?code=BNT-SITE-2026-001&domain=bantan.online" target="_blank" rel="noopener"><img src="https://rights.bantan.online/api/rights/site-badge?code=BNT-SITE-2026-001&domain=bantan.online&v=20260919-1" width="150" height="34" loading="lazy" decoding="async" alt="绊谈官方认证">官网认证 BNT-SITE-2026-001</a>';
+    footer.appendChild(badge);
+  }
+
   const items = document.querySelectorAll('.site-card, .site-row, .site-stat, .site-timeline__item');
   if (!items.length || !('IntersectionObserver' in window)) {
     items.forEach(item => item.classList.add('is-visible'));

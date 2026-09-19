@@ -483,6 +483,24 @@ a.site-card {
 
 .site-footer a:hover { color: var(--site-amber); }
 
+.site-verified-badge {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-verified-badge a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--site-sub);
+}
+
+.site-verified-badge img {
+  display: block;
+  width: 132px;
+  height: auto;
+}
+
 .site-note {
   padding: 15px 16px;
   border: 1px solid rgba(56, 189, 248, 0.15);
