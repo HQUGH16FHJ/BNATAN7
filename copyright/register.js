@@ -79,7 +79,7 @@
     ].join('');
     copyButton.disabled = false;
     sendLink.hidden = false;
-    sendLink.textContent = '发送邮件通知';
+    sendLink.textContent = '发送 QQ 邮件通知';
     sendLink.href = 'mailto:1429616034@qq.com?subject=' + encodeURIComponent('版权登记申请 · ' + data.projectName) + '&body=' + encodeURIComponent(currentSummary);
   }
 
