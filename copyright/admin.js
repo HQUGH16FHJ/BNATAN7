@@ -139,6 +139,10 @@
           <div class="admin-detail__description">${escapeHtml(item.description || '无补充说明')}</div>
         </section>
         <section class="admin-detail__section">
+          <h3>审核意见</h3>
+          <textarea class="admin-review-note" id="adminReviewNote" rows="4" placeholder="通过、驳回或其他审核说明。申请人在进度查询中可以看到这里的内容。">${escapeHtml(item.review_note || '')}</textarea>
+        </section>
+        <section class="admin-detail__section">
           <h3>记录指纹</h3>
           <div class="admin-detail__fingerprint">${escapeHtml(fingerprint(item))}</div>
         </section>
@@ -206,7 +210,14 @@
   }
 
   async function updateStatus(id, nextStatus) {
-    await request('PATCH', { id, status: nextStatus });
+    const noteField = document.getElementById('adminReviewNote');
+    const reviewNote = noteField?.value.trim() || '';
+    if (nextStatus === '已驳回' && !reviewNote) {
+      noteField?.focus();
+      noteField?.classList.add('is-required');
+      return;
+    }
+    await request('PATCH', { id, status: nextStatus, reviewNote });
     await load();
   }
 
@@ -268,6 +279,7 @@
     button.disabled = true;
     try {
       await updateStatus(selectedId, button.dataset.status);
+      if (selectedId) button.disabled = false;
     } catch (error) {
       button.textContent = error.message;
     }
