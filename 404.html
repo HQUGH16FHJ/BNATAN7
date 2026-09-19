@@ -234,6 +234,28 @@ h1 .accent {
   border-radius: 8px;
 }
 
+.recovery-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -8px 0 18px;
+  color: var(--sub-2);
+  font-size: 11px;
+}
+.recovery-status span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.recovery-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.75);
+}
+
 /* 按钮 */
 .actions {
   display: flex;
@@ -277,6 +299,41 @@ a, button {
   transform: translateY(-2px);
 }
 
+.recovery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+.recovery-link {
+  display: flex;
+  min-height: 68px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 12px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.025);
+}
+.recovery-link strong {
+  font-size: 13px;
+  font-weight: 700;
+}
+.recovery-link span {
+  color: var(--sub-2);
+  font-size: 11px;
+}
+.recovery-link:hover {
+  border-color: rgba(var(--glow-color), 0.24);
+  background: rgba(var(--glow-color), 0.075);
+}
+
 /* 提示 */
 .hint {
   margin-top: 28px;
@@ -297,6 +354,7 @@ a, button {
 @media (max-width: 600px) {
   .actions { flex-direction: column; }
   a, button { width: 100%; }
+  .recovery-grid { grid-template-columns: 1fr; }
   .panel { padding: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -334,10 +392,33 @@ a, button {
 
   <section class="panel">
     <span class="path" id="path">正在读取页面地址…</span>
+    <div class="recovery-status">
+      <span><i></i>HTTP 404</span>
+      <span id="networkStatus">官方入口正常</span>
+    </div>
     <div class="actions">
       <a class="primary" href="./landing.html">返回绊谈首页</a>
+      <button class="secondary" type="button" id="openSearch">搜索工具</button>
       <button class="secondary" type="button" onclick="history.back()">返回上一页</button>
     </div>
+    <nav class="recovery-grid" aria-label="快速恢复入口">
+      <a class="recovery-link" href="./index.html">
+        <strong>工具箱</strong>
+        <span>进入 786+ 在线工具</span>
+      </a>
+      <a class="recovery-link" href="./changelog.html">
+        <strong>更新日志</strong>
+        <span>查看最新版本与功能</span>
+      </a>
+      <a class="recovery-link" href="./license.html">
+        <strong>使用许可</strong>
+        <span>版权、范围与免责声明</span>
+      </a>
+      <a class="recovery-link" href="./about.html">
+        <strong>关于我</strong>
+        <span>绊谈、小绊谈与服务说明</span>
+      </a>
+    </nav>
   </section>
 
   <p class="hint">如果你认为这是一个错误，可以从首页重新进入对应工具。</p>
@@ -349,6 +430,21 @@ a, button {
 <script>
 document.getElementById('path').textContent =
   window.location.pathname + window.location.search;
+
+const networkStatus = document.getElementById('networkStatus');
+const updateNetworkStatus = () => {
+  networkStatus.textContent = navigator.onLine ? '官方入口正常' : '网络连接已断开';
+  networkStatus.previousElementSibling.querySelector('i').style.background =
+    navigator.onLine ? '#34d399' : '#fb7185';
+};
+window.addEventListener('online', updateNetworkStatus);
+window.addEventListener('offline', updateNetworkStatus);
+updateNetworkStatus();
+
+document.getElementById('openSearch').addEventListener('click', () => {
+  if (window.BantanSearch?.open) window.BantanSearch.open({ query: '' });
+  else window.location.href = './landing.html';
+});
 </script>
 
 <script src="./experience-v4.js?v=4.0.2"></script>
