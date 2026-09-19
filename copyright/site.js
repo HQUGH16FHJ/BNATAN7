@@ -33,7 +33,7 @@
         </div>
         <section class="tracking-review" style="border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.045);">
           <span>VERIFICATION NOTE</span><h3>编号是公开标识，不是保密密钥</h3>
-          <p>官网编号用于公开核对，不能单独证明某个网站的身份。验证时必须同时核对上方登记的官方域名；域名不一致时，不要仅凭编号判断网站为官方站点。</p>
+          <p>Bantan Rights 是绊谈维护的私有认证系统，不是国家官方认证。官网编号用于公开核对，不能单独证明某个网站的身份。验证时必须同时核对上方登记的官方域名；域名不一致时，不要仅凭编号判断网站为官方站点。</p>
           <div class="tracking-site-code__actions">
             <a href="./certificate.html?code=${encodeURIComponent(item.site_code)}&domain=${encodeURIComponent(item.domain || '')}">查看版权证书</a>
           </div>
