@@ -221,55 +221,6 @@
     });
   }
 
-  function addMobileDock() {
-    if (document.querySelector('.bnt-mobile-dock')) return;
-    if (PAGE !== 'landing' && PAGE !== 'index') return;
-    const dock = document.createElement('nav');
-    dock.className = 'bnt-mobile-dock';
-    dock.setAttribute('aria-label', '移动端快捷导航');
-    if (PAGE === 'landing') {
-      dock.innerHTML = [
-        '<button type="button" data-action="home" class="active"><span class="icon">⌂</span>首页</button>',
-        '<button type="button" data-action="search"><span class="icon">⌕</span>搜索</button>',
-        '<button type="button" data-action="tools"><span class="icon">▦</span>工具</button>',
-        '<button type="button" data-action="ai"><span class="icon">✦</span>AI</button>',
-        '<button type="button" data-action="login"><span class="icon">○</span>我的</button>'
-      ].join('');
-    } else {
-      dock.innerHTML = [
-        '<button type="button" data-action="home" class="active"><span class="icon">⌂</span>首页</button>',
-        '<button type="button" data-action="search"><span class="icon">⌕</span>搜索</button>',
-        '<button type="button" data-action="tools"><span class="icon">▦</span>工具</button>',
-        '<button type="button" data-action="ai"><span class="icon">✦</span>AI</button>',
-        '<button type="button" data-action="profile"><span class="icon">○</span>我的</button>'
-      ].join('');
-    }
-    dock.addEventListener('click', event => {
-      const button = event.target.closest('button[data-action]');
-      if (!button) return;
-      dock.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button));
-      const action = button.dataset.action;
-      if (action === 'search') {
-        window.BantanSearch.open();
-      } else if (action === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (PAGE === 'index' && typeof window.navigate === 'function') window.navigate('home');
-      } else if (action === 'tools') {
-        if (PAGE === 'index' && typeof window.navigate === 'function') window.navigate('tools');
-        else document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' });
-      } else if (action === 'ai') {
-        if (PAGE === 'index' && typeof window.toggleAIPanel === 'function') window.toggleAIPanel();
-        else if (typeof window.openAuthModal === 'function') window.openAuthModal();
-      } else if (action === 'profile') {
-        if (typeof window.openUserProfile === 'function') window.openUserProfile();
-        else if (typeof window.openAuthModal === 'function') window.openAuthModal();
-      } else if (action === 'login' && typeof window.openAuthModal === 'function') {
-        window.openAuthModal();
-      }
-    });
-    document.body.appendChild(dock);
-  }
-
   function getRecent() {
     try {
       return JSON.parse(localStorage.getItem('bantan_universal_recent') || '[]').slice(0, 8);
@@ -830,7 +781,6 @@
     addMagneticButtons();
     addClickSpark();
     addPageTransitions();
-    addMobileDock();
     installSearch();
     addSiteSlider();
     enhanceChangelog();

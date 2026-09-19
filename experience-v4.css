@@ -483,7 +483,7 @@ body.bnt-page-index .bnt-ambient {
   right: max(10px, env(safe-area-inset-right));
   bottom: max(10px, env(safe-area-inset-bottom));
   z-index: 9100;
-  display: none;
+  display: none !important;
   grid-template-columns: repeat(5, 1fr);
   gap: 3px;
   padding: 6px;
@@ -880,18 +880,12 @@ body.bnt-page-404 .code {
   .bnt-search-trigger {
     display: none;
   }
-  .bnt-mobile-dock {
-    display: grid;
-  }
-  body {
-    padding-bottom: 82px !important;
-  }
   #back-to-top,
   .back-to-top {
-    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .ai-fab-wrap {
-    bottom: calc(148px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .bnt-search-overlay {
     align-items: end;
