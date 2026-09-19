@@ -32,6 +32,17 @@
 - /changelog.html：版本更新日志
 - /about.html：关于绊谈与小绊谈的个人播客主页
 - /license.html：使用许可、版权声明与免责声明
+- /explore.html：信任、工具合集、指南、故事和开发文档总入口
+- /trust.html：许可证、隐私、安全、域名和版本信息的信任中心
+- /domain.html：官方域名认证与仿冒站识别说明
+- /collections.html：按使用场景整理的精选工具合集
+- /new.html：近期新增和重点升级的工具入口
+- /guides/：万能枢纽搜索、AI、开发和学习工具使用指南
+- /story.html：绊谈名称、品牌故事和设计原则
+- /timeline.html：绊谈主要版本发展时间线
+- /developers.html：技术栈、本地运行和部署说明
+- /privacy.html：本地存储、用户状态和第三方链接隐私说明
+- /security.html：账号安全、外链风险和敏感数据处理建议
 
 ## 官方入口说明
 

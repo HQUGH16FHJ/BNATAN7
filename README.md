@@ -22,7 +22,7 @@
 
 项目采用原生 HTML、CSS 和 JavaScript 构建，包含完整前台、PWA 支持、用户中心、AI 小绊谈、动态背景、交互式工具导航、更新日志、许可证和独立“关于我”播客页面。
 
-[在线访问](#在线访问) · [项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
+[在线访问](#在线访问) · [探索绊谈](./explore.html) · [项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
 
 ## 在线访问
 
@@ -74,6 +74,22 @@
 | 更新日志 | `changelog.html` | 版本记录、发布控制和版本筛选 |
 | 使用许可 | `license.html` | 版权声明、使用范围和免责声明 |
 | 404 页面 | `404.html` | 迷航提示和站内搜索入口 |
+
+## 探索页面
+
+| 页面 | 文件 | 用途 |
+|---|---|---|
+| 探索总入口 | `explore.html` | 汇总信任、域名、合集、指南、故事和开发文档 |
+| 信任中心 | `trust.html` | 许可证、隐私、安全、域名、版本和联系信息 |
+| 官方域名 | `domain.html` | 官方入口验证与仿冒站识别 |
+| 精选合集 | `collections.html` | 按学习、AI、开发、影音、电竞和隐私整理工具 |
+| 最新收录 | `new.html` | 近期新增和重点升级工具 |
+| 使用指南 | `guides/index.html` | 搜索、AI、开发、学习和隐私工具教程 |
+| 品牌故事 | `story.html` | 绊谈名称、理念和设计原则 |
+| 发展时间线 | `timeline.html` | 主要版本节点和演进过程 |
+| 开发者文档 | `developers.html` | 技术栈、本地运行和部署说明 |
+| 隐私说明 | `privacy.html` | 本地数据、用户状态和第三方链接说明 |
+| 安全说明 | `security.html` | 账号安全、外链风险和敏感数据建议 |
 
 ## 项目结构
 
@@ -130,7 +146,7 @@ http://localhost:8000/landing.html
 
 - Service Worker：`sw.js`
 - Manifest：`manifest.json`
-- 当前缓存版本：`bantan-static-v4.0.6-premium-1`
+- 当前缓存版本：`bantan-static-v4.0.6-premium-2`
 
 发布新版本后，应同时更新静态资源版本号，避免浏览器继续使用旧版 JavaScript 或 CSS。
 
