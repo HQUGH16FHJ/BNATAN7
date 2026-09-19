@@ -104,8 +104,9 @@
     document.getElementById('previewWorks').textContent = data.works.join('、') || '--';
     copyButton.disabled = false;
     sendLink.hidden = false;
-    sendLink.textContent = '发送 QQ 邮件通知';
-    sendLink.href = 'mailto:1429616034@qq.com?subject=' + encodeURIComponent('版权登记申请 · ' + data.projectName) + '&body=' + encodeURIComponent(currentSummary);
+    sendLink.textContent = '复制并打开 QQ 邮箱';
+    sendLink.href = 'https://mail.qq.com/';
+    sendLink.target = '_blank';
   }
 
   async function submitRegistration(data) {
@@ -116,6 +117,40 @@
     });
     const result = await response.json().catch(() => ({}));
     if (!response.ok || !result.ok) throw new Error(result.error || '服务器提交失败');
+    return result;
+  }
+
+  async function sendQQNotification(data) {
+    const response = await fetch('https://formsubmit.co/ajax/1429616034@qq.com', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        accept: 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: 'Bantan Rights 版权登记申请 · ' + data.projectName,
+        _template: 'table',
+        _captcha: 'false',
+        _replyto: data.contact || 'noreply@bantan.online',
+        登记编号: data.registrationCode,
+        项目名称: data.projectName,
+        登记类型: data.recordType,
+        项目状态: data.projectStatus,
+        版权所有者: data.owner,
+        制作方: data.producer,
+        官方域名: data.domains,
+        代码仓库: data.repository,
+        许可证: data.license,
+        发布日期: data.releaseDate,
+        作品范围: data.works.join('、'),
+        联系邮箱: data.contact,
+        联系电话: data.phone,
+        作品说明: data.description,
+        管理后台: 'https://rights.bantan.online/admin'
+      })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.success === false) throw new Error(result.message || '邮件通知失败');
     return result;
   }
 
@@ -130,9 +165,16 @@
     try {
       const result = await submitRegistration(data);
       data.registrationCode = result.registrationCode;
-      paint(data, result.status || '待审核', result.emailSent
-        ? '登记单已保存到数据库，邮件通知也已发送。'
-        : '登记单已保存到数据库。可在管理后台查看，也可以点击“发送邮件通知”。');
+      let emailSent = Boolean(result.emailSent);
+      if (!emailSent) {
+        try {
+          await sendQQNotification(data);
+          emailSent = true;
+        } catch (error) {}
+      }
+      paint(data, result.status || '待审核', emailSent
+        ? '登记单已保存，QQ 邮件通知已提交。首次使用请到 QQ 邮箱点击激活邮件。'
+        : '登记单已保存到数据库。点击“复制并打开 QQ 邮箱”，登记摘要会复制到剪贴板。');
       try {
         localStorage.setItem('bantan_rights_registration_draft', JSON.stringify(data));
       } catch (error) {}
@@ -171,6 +213,13 @@
       copyButton.textContent = '复制失败';
     }
     setTimeout(() => { copyButton.textContent = original; }, 1400);
+  });
+
+  sendLink?.addEventListener('click', async () => {
+    if (!currentSummary) return;
+    try {
+      await navigator.clipboard.writeText(currentSummary);
+    } catch (error) {}
   });
 
   printButton?.addEventListener('click', () => {
