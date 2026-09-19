@@ -31,9 +31,8 @@
           <div><span>版权档案</span><strong>${escapeHtml(item.rights_registration_code || '--')}</strong></div>
         </div>
         <section class="tracking-review" style="border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.045);">
-          <span>EMBED CODE</span><h3>网站页脚嵌入代码</h3>
-          <p>&lt;a href="https://rights.bantan.online/site?code=${escapeHtml(item.site_code)}"&gt;官网编号 ${escapeHtml(item.site_code)}&lt;/a&gt;</p>
-          <button class="tracking-copy-button" type="button" data-copy-site="${escapeHtml(item.site_code)}">复制嵌入代码</button>
+          <span>VERIFICATION NOTE</span><h3>编号是公开标识，不是保密密钥</h3>
+          <p>官网编号用于公开核对，不能单独证明某个网站的身份。验证时必须同时核对上方登记的官方域名；域名不一致时，不要仅凭编号判断网站为官方站点。</p>
         </section>
       </article>
     `;
@@ -71,22 +70,11 @@
     }
   });
 
-  result?.addEventListener('click', async event => {
-    const button = event.target.closest('[data-copy-site]');
-    if (!button) return;
-    const code = button.dataset.copySite;
-    try {
-      await navigator.clipboard.writeText(`<a href="https://rights.bantan.online/site?code=${code}">官网编号 ${code}</a>`);
-      button.textContent = '已复制';
-      setTimeout(() => { button.textContent = '复制嵌入代码'; }, 1600);
-    } catch (errorValue) {
-      button.textContent = '复制失败，请手动选择';
-    }
-  });
-
   const initialCode = new URLSearchParams(location.search).get('code');
-  if (initialCode) {
-    document.getElementById('siteCodeInput').value = initialCode.trim();
+  const initialDomain = new URLSearchParams(location.search).get('domain');
+  if (initialCode || initialDomain) {
+    if (initialCode) document.getElementById('siteCodeInput').value = initialCode.trim();
+    if (initialDomain) document.getElementById('siteDomainInput').value = initialDomain.trim();
     form?.requestSubmit();
   }
 })();

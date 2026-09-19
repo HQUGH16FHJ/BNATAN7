@@ -30,7 +30,8 @@
 
   function siteCodePanel(item) {
     if (!item.site_code) return '';
-    const embed = `<a href="https://rights.bantan.online/site?code=${item.site_code}">官网编号 ${item.site_code}</a>`;
+    const domainQuery = item.site_domain ? `&domain=${item.site_domain}` : '';
+    const embed = `<a href="https://rights.bantan.online/site?code=${item.site_code}${domainQuery}">官网编号 ${item.site_code}</a>`;
     return `
       <section class="tracking-site-code">
         <div>

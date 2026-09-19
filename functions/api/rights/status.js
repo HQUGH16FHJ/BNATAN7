@@ -1,4 +1,4 @@
-import { ensureSiteCode } from './site-code.js';
+import { ensureSiteCode, normalizeDomain } from './site-code.js';
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -20,9 +20,12 @@ export async function onRequestGet(context) {
   if (!code || !email) return json({ ok: false, error: '请输入登记编号和联系邮箱。' }, 400);
 
   const result = await db.prepare(`
-    SELECT id, registration_code, site_code, project_name, status, review_note, created_at, updated_at
-    FROM rights_registrations
-    WHERE registration_code = ? AND lower(contact) = ?
+    SELECT rr.id, rr.registration_code, rr.site_code, rr.project_name, rr.status,
+           rr.review_note, rr.created_at, rr.updated_at, rr.domains,
+           sr.domain AS site_domain
+    FROM rights_registrations rr
+    LEFT JOIN site_registry sr ON sr.site_code = rr.site_code
+    WHERE rr.registration_code = ? AND lower(rr.contact) = ?
     LIMIT 1
   `).bind(code, email).first();
 
@@ -30,6 +33,8 @@ export async function onRequestGet(context) {
   if (result.status === '已通过' && !result.site_code) {
     result.site_code = await ensureSiteCode(db, result.id);
   }
+  if (!result.site_domain) result.site_domain = normalizeDomain(result.domains) || null;
   delete result.id;
+  delete result.domains;
   return json({ ok: true, item: result });
 }

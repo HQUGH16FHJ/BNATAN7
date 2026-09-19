@@ -96,6 +96,8 @@
       return '<div class="admin-detail__empty"><div><strong>选择一条登记单</strong><p>点击左侧案例卡后，在这里查看完整信息和审核操作。</p></div></div>';
     }
     const domainList = domains(item);
+    const embedDomain = domainList[0] || '';
+    const embedUrl = `https://rights.bantan.online/site?code=${encodeURIComponent(item.site_code || '')}${embedDomain ? `&domain=${encodeURIComponent(embedDomain)}` : ''}`;
     return `
       <div class="admin-detail__inner">
         <div class="admin-detail__topbar">
@@ -138,8 +140,8 @@
           <h3>官网编号</h3>
           <div class="admin-site-code">${item.site_code ? `
             <strong>${escapeHtml(item.site_code)}</strong>
-            <code>&lt;a href="https://rights.bantan.online/site?code=${escapeHtml(item.site_code)}"&gt;官网编号 ${escapeHtml(item.site_code)}&lt;/a&gt;</code>
-            <button type="button" data-copy-site="${escapeHtml(item.site_code)}">复制嵌入代码</button>
+            <code>&lt;a href="${escapeHtml(embedUrl)}"&gt;官网编号 ${escapeHtml(item.site_code)}&lt;/a&gt;</code>
+            <button type="button" data-copy-site="${escapeHtml(item.site_code)}" data-copy-domain="${escapeHtml(embedDomain)}">复制嵌入代码</button>
           ` : '<p>申请审核通过后自动生成官网编号和嵌入代码。</p>'}</div>
         </section>
         <section class="admin-detail__section">
@@ -285,8 +287,10 @@
     const copyButton = event.target.closest('[data-copy-site]');
     if (copyButton) {
       const code = copyButton.dataset.copySite;
+      const domain = copyButton.dataset.copyDomain;
+      const url = `https://rights.bantan.online/site?code=${encodeURIComponent(code)}${domain ? `&domain=${encodeURIComponent(domain)}` : ''}`;
       try {
-        await navigator.clipboard.writeText(`<a href="https://rights.bantan.online/site?code=${code}">官网编号 ${code}</a>`);
+        await navigator.clipboard.writeText(`<a href="${url}">官网编号 ${code}</a>`);
         copyButton.textContent = '已复制';
       } catch (error) {
         copyButton.textContent = '复制失败';

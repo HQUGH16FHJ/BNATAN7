@@ -1,4 +1,4 @@
-function normalizeDomain(value) {
+export function normalizeDomain(value) {
   return String(value || '')
     .split(',')[0]
     .trim()
