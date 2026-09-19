@@ -1,10 +1,11 @@
-const CACHE_NAME = 'bantan-static-v4.0.7-ultimate-22';
+const CACHE_NAME = 'bantan-static-v4.0.7-ultimate-23';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
   '/index.html',
   '/changelog.html',
   '/changelog.json',
+  '/activity.json',
   '/feed.xml',
   '/license.html',
   '/license.json',

@@ -2,12 +2,62 @@
   "name": "绊谈 · 万能枢纽",
   "short_name": "绊谈",
   "description": "600+ 免费在线工具一站直达",
+  "id": "/",
+  "scope": "/",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#0a0805",
   "theme_color": "#f59e0b",
   "orientation": "any",
   "lang": "zh-CN",
+  "categories": ["productivity", "utilities", "developer"],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "版本发布",
+      "short_name": "发布",
+      "description": "查看最新版本与历史更新",
+      "url": "/releases.html",
+      "icons": [{ "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "认证徽章",
+      "short_name": "徽章",
+      "description": "生成官方认证徽章",
+      "url": "/badge.html",
+      "icons": [{ "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "工具入口",
+      "short_name": "工具",
+      "description": "进入万能枢纽工具页",
+      "url": "/landing.html#tools",
+      "icons": [{ "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "权属查询",
+      "short_name": "权属",
+      "description": "打开 Bantan Rights 私有登记查询",
+      "url": "https://rights.bantan.online/site",
+      "icons": [{ "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "docs/screenshots/landing-desktop.jpg",
+      "sizes": "1600x900",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "绊谈入口页"
+    },
+    {
+      "src": "docs/screenshots/index-mobile.jpg",
+      "sizes": "390x844",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "绊谈移动端"
+    }
+  ],
   "icons": [
     {
       "src": "android-chrome-192x192.png",

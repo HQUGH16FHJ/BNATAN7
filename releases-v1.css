@@ -127,6 +127,11 @@
 
 .release-section { margin-top: 64px; }
 
+.release-compare-section,
+.release-heatmap-section {
+  margin-top: 64px;
+}
+
 .release-section__head {
   display: flex;
   align-items: end;
@@ -160,6 +165,166 @@
   position: relative;
   display: grid;
   gap: 14px;
+}
+
+.release-compare {
+  display: grid;
+  gap: 14px;
+}
+
+.release-compare__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+  padding: 18px;
+  border: 1px solid var(--site-border);
+  border-radius: 17px;
+  background: rgba(255,255,255,.022);
+}
+
+.release-compare__controls label {
+  display: grid;
+  gap: 6px;
+}
+
+.release-compare__controls label > span {
+  color: var(--site-muted);
+  font-size: 9px;
+}
+
+.release-compare__controls select,
+.release-compare__controls button {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  color: var(--site-text);
+  background: rgba(255,255,255,.035);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.release-compare__controls button {
+  border-color: rgba(245,158,11,.22);
+  color: var(--site-amber);
+  background: rgba(245,158,11,.055);
+  cursor: pointer;
+}
+
+.release-compare__arrow {
+  align-self: center;
+  color: var(--site-muted);
+}
+
+.release-compare__result {
+  padding: 20px;
+  border: 1px solid var(--site-border);
+  border-radius: 17px;
+  background: rgba(255,255,255,.018);
+}
+
+.release-compare__result p {
+  margin: 0;
+  color: var(--site-muted);
+  font-size: 11px;
+}
+
+.compare-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.compare-columns article {
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.065);
+  border-radius: 13px;
+  background: rgba(0,0,0,.12);
+}
+
+.compare-columns h3 {
+  margin: 0 0 10px;
+  color: var(--site-sub);
+  font-size: 13px;
+}
+
+.compare-columns ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-columns li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--site-sub);
+  font-size: 10px;
+}
+
+.compare-columns li::before {
+  position: absolute;
+  left: 0;
+  color: var(--site-green);
+  content: "+";
+}
+
+.compare-columns .is-removed li::before {
+  color: var(--site-coral);
+  content: "−";
+}
+
+.release-heatmap-card {
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: 17px;
+  background: rgba(255,255,255,.018);
+}
+
+.release-heatmap-scroll {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.release-heatmap {
+  display: grid;
+  grid-template-rows: repeat(7, 11px);
+  grid-auto-flow: column;
+  grid-auto-columns: 11px;
+  gap: 4px;
+  min-width: max-content;
+}
+
+.release-heatmap i,
+.release-heatmap__legend i {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.055);
+}
+
+.release-heatmap i[data-level="1"],
+.release-heatmap__legend i[data-level="1"] { background: rgba(52,211,153,.24); }
+.release-heatmap i[data-level="2"],
+.release-heatmap__legend i[data-level="2"] { background: rgba(52,211,153,.45); }
+.release-heatmap i[data-level="3"],
+.release-heatmap__legend i[data-level="3"] { background: rgba(52,211,153,.7); }
+.release-heatmap i[data-level="4"],
+.release-heatmap__legend i[data-level="4"] { background: #34d399; box-shadow: 0 0 10px rgba(52,211,153,.35); }
+
+.release-heatmap__legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: 10px;
+  color: var(--site-muted);
+  font-size: 9px;
 }
 
 .release-timeline::before {
@@ -275,6 +440,8 @@
   .release-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .release-section__head { align-items: flex-start; flex-direction: column; }
   .release-section__head p { text-align: left; }
+  .release-compare__controls { grid-template-columns: 1fr; }
+  .release-compare__arrow { display: none; }
 }
 
 @media (max-width: 640px) {
@@ -283,4 +450,5 @@
     padding-left: 56px;
   }
   .release-card__actions { grid-template-columns: 1fr 1fr; }
+  .compare-columns { grid-template-columns: 1fr; }
 }
