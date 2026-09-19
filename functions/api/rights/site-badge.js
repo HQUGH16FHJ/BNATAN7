@@ -15,7 +15,7 @@ function svgResponse(svg, status = 200) {
     status,
     headers: {
       'content-type': 'image/svg+xml; charset=utf-8',
-      'cache-control': 'public, max-age=300, s-maxage=3600',
+      'cache-control': 'public, max-age=60, s-maxage=60',
       'x-content-type-options': 'nosniff'
     }
   });
