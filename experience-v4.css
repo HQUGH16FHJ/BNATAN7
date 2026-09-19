@@ -759,10 +759,12 @@ body.bnt-page-404 .code {
 .bnt-archive-meta {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
   gap: 10px;
   margin: 0 0 18px;
 }
 .bnt-archive-stat {
+  min-width: 0;
   padding: 14px;
   border: 1px solid rgba(56, 189, 248, 0.1);
   border-radius: 16px;
@@ -786,6 +788,8 @@ body.bnt-page-404 .code {
 .bnt-release-toolbar,
 .bnt-license-toolbar {
   display: flex;
+  min-width: 0;
+  max-width: 100%;
   align-items: center;
   gap: 10px;
   margin: 0 0 18px;
@@ -799,6 +803,8 @@ body.bnt-page-404 .code {
 .bnt-release-search,
 .bnt-license-mode-select {
   flex: 1 0 210px;
+  min-width: 0;
+  max-width: 100%;
   min-height: 38px;
   padding: 0 12px;
   border: 1px solid rgba(56, 189, 248, 0.13);
@@ -872,7 +878,8 @@ body.bnt-page-404 .code {
     flex-wrap: wrap;
   }
   .bnt-release-search {
-    flex-basis: 100%;
+    flex: 1 1 100%;
+    width: 100%;
   }
 }
 

@@ -2,9 +2,9 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>更新日志 - 绊谈万能枢纽 v4.0 | bantan.online</title>
-<meta name="description" content="绊谈万能枢纽完整更新日志，最新 v4.0 星轨体验版新增全网搜索、滚动动效、滑动入口和高级档案馆界面。">
-<meta name="keywords" content="绊谈更新日志,bantan更新,万能枢纽版本,全网搜索,星轨动画,滑动界面">
+<title>更新日志 - 绊谈万能枢纽 v4.0.6 | bantan.online</title>
+<meta name="description" content="绊谈万能枢纽完整更新日志，最新 v4.0.6 新增官方域名网络并升级许可证、更新日志和跨域名部署说明。">
+<meta name="keywords" content="绊谈更新日志,bantan更新,万能枢纽版本,bantan.eu.cc,Cloudflare Pages,官方域名">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bantan.online/changelog.html">
 <link rel="icon" href="./favicon.ico" sizes="any">
@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <meta property="og:type" content="article">
 <meta property="og:title" content="更新日志 - 绊谈万能枢纽">
-<meta property="og:description" content="最新 v4.0：全网搜索、星轨动画、滑动入口与高级档案馆界面。">
+<meta property="og:description" content="最新 v4.0.6：官方域名网络、许可证升级、更新日志视觉升级与跨域名部署说明。">
 <meta property="og:url" content="https://bantan.online/changelog.html">
 <meta property="og:image" content="https://bantan.online/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
   "@type": "WebPage",
   "name": "更新日志 - 绊谈万能枢纽",
   "url": "https://bantan.online/changelog.html",
-  "description": "绊谈万能枢纽版本更新记录，最新版本 v4.0。",
+  "description": "绊谈万能枢纽版本更新记录，最新版本 v4.0.6。",
   "inLanguage": "zh-CN",
   "isPartOf": {
     "@type": "WebSite",
@@ -590,6 +590,7 @@ code, pre {
 <link rel="stylesheet" href="./uiverse-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./ui-interactions-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./archive-v5.css">
+<link rel="stylesheet" href="./official-domains-v1.css?v=1.0.0">
 <style id="mobile-dock-kill-switch">.bnt-mobile-dock{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}</style>
 </head>
 <body>
@@ -616,49 +617,146 @@ code, pre {
       <p class="lead">记录绊谈万能枢纽的每一次进化。从基础功能到视觉体验，见证产品的成长轨迹。</p>
     </header>
 
+    <section class="official-domains" aria-labelledby="official-domains-title">
+      <div class="official-domains__header">
+        <div>
+          <div class="official-domains__eyebrow">Official Domain Network</div>
+          <h2 class="official-domains__title" id="official-domains-title">官方入口网络</h2>
+          <p class="official-domains__note">四个官方入口现在集中展示在版本档案馆顶部，方便确认当前部署、切换线路并复制地址。</p>
+        </div>
+        <span class="official-domains__status">4 ENDPOINTS ONLINE</span>
+      </div>
+      <div class="official-domains__grid">
+        <article class="official-domain is-primary">
+          <a class="official-domain__link" href="https://bantan.online/" target="_blank" rel="noopener">
+            <div class="official-domain__topline">
+              <span class="official-domain__kind">Primary</span>
+              <span class="official-domain__index">01</span>
+            </div>
+            <span class="official-domain__url">bantan.online</span>
+            <span class="official-domain__meta">主站域名 · 全站首选入口</span>
+          </a>
+          <div class="official-domain__footer">
+            <a class="official-domain__open" href="https://bantan.online/" target="_blank" rel="noopener">打开主站</a>
+            <button class="official-domain__copy" type="button" data-copy-domain="https://bantan.online/" aria-label="复制 bantan.online">复制</button>
+          </div>
+        </article>
+        <article class="official-domain is-www">
+          <a class="official-domain__link" href="https://www.bantan.online/" target="_blank" rel="noopener">
+            <div class="official-domain__topline">
+              <span class="official-domain__kind">WWW</span>
+              <span class="official-domain__index">02</span>
+            </div>
+            <span class="official-domain__url">www.bantan.online</span>
+            <span class="official-domain__meta">主站别名 · 与 bantan.online 同步</span>
+          </a>
+          <div class="official-domain__footer">
+            <a class="official-domain__open" href="https://www.bantan.online/" target="_blank" rel="noopener">打开 WWW 入口</a>
+            <button class="official-domain__copy" type="button" data-copy-domain="https://www.bantan.online/" aria-label="复制 www.bantan.online">复制</button>
+          </div>
+        </article>
+        <article class="official-domain is-community">
+          <a class="official-domain__link" href="https://bantan.eu.cc/" target="_blank" rel="noopener">
+            <div class="official-domain__topline">
+              <span class="official-domain__kind">Custom</span>
+              <span class="official-domain__index">03</span>
+            </div>
+            <span class="official-domain__url">bantan.eu.cc</span>
+            <span class="official-domain__meta">独立域名 · 与主站同步发布</span>
+          </a>
+          <div class="official-domain__footer">
+            <a class="official-domain__open" href="https://bantan.eu.cc/" target="_blank" rel="noopener">打开备用入口</a>
+            <button class="official-domain__copy" type="button" data-copy-domain="https://bantan.eu.cc/" aria-label="复制 bantan.eu.cc">复制</button>
+          </div>
+        </article>
+        <article class="official-domain is-pages">
+          <a class="official-domain__link" href="https://5aea0b40.bnatan7.pages.dev/" target="_blank" rel="noopener">
+            <div class="official-domain__topline">
+              <span class="official-domain__kind">Cloudflare Pages</span>
+              <span class="official-domain__index">04</span>
+            </div>
+            <span class="official-domain__url">5aea0b40.bnatan7.pages.dev</span>
+            <span class="official-domain__meta">Pages 部署节点 · 用于版本预览</span>
+          </a>
+          <div class="official-domain__footer">
+            <a class="official-domain__open" href="https://5aea0b40.bnatan7.pages.dev/" target="_blank" rel="noopener">打开预览节点</a>
+            <button class="official-domain__copy" type="button" data-copy-domain="https://5aea0b40.bnatan7.pages.dev/" aria-label="复制 Cloudflare Pages 地址">复制</button>
+          </div>
+        </article>
+      </div>
+      <p class="official-domains__footnote">bantan.online 继续作为搜索引擎收录与分享预览的首选规范地址，其余入口用于独立域名访问和 Cloudflare Pages 部署验证。</p>
+    </section>
+
     <!-- Featured: Latest Version -->
     <section class="featured-version" aria-label="最新版本">
       <div class="version-meta">
-        <h2 class="version-number">v4.0</h2>
+        <h2 class="version-number">v4.0.6</h2>
         <span class="version-label">最新版本</span>
       </div>
-      <h3 class="version-title">星轨体验版 · 全网搜索 · 滑动动效 · 高级档案馆</h3>
-      <div class="version-date">2026.09.17</div>
+      <h3 class="version-title">官方域名网络 · 许可证升级 · 版本档案馆视觉更新</h3>
+      <div class="version-date">2026.09.19</div>
 
       <div class="highlights">
         <div class="highlight-item">
+          <h3>官方域名网络</h3>
+          <p>集中展示 bantan.online、www.bantan.online、bantan.eu.cc 与 Cloudflare Pages 部署节点，支持一键复制</p>
+        </div>
+        <div class="highlight-item">
+          <h3>许可证升级</h3>
+          <p>版权声明与项目信息同步新增正式域名和 Pages 节点，并明确官方入口范围</p>
+        </div>
+        <div class="highlight-item">
+          <h3>版本档案馆</h3>
+          <p>更新日志顶部加入入口网络，四张域名卡适配桌面、平板、手机和微信内置浏览器</p>
+        </div>
+        <div class="highlight-item">
+          <h3>GitHub 同步</h3>
+          <p>README、根目录 LICENSE、CHANGELOG 与 llms.txt 同步登记四个官方地址</p>
+        </div>
+        <div class="highlight-item">
           <h3>万能枢纽全网搜索</h3>
-          <p>支持百度、Bing、Google、知乎、B站、GitHub、淘宝、Steam 等网站搜索与多站选择</p>
+          <p>继续支持百度、Bing、Google、知乎、B站、GitHub、淘宝、Steam 等网站搜索</p>
         </div>
         <div class="highlight-item">
           <h3>全网站点滑动轨道</h3>
-          <p>新增可拖拽、可横滑、可按钮推进的网站入口轨道，快速直达常用平台</p>
+          <p>保留可拖拽、可横滑、可按钮推进的网站入口轨道，快速直达常用平台</p>
         </div>
         <div class="highlight-item">
           <h3>滚动与滑动动效</h3>
-          <p>加入滚动揭示、卡片倾斜、页面过渡、动态进度条和内容滑入效果</p>
+          <p>保留滚动揭示、卡片倾斜、页面过渡、动态进度条和内容滑入效果</p>
         </div>
         <div class="highlight-item">
-          <h3>版本观测站</h3>
-          <p>更新日志新增粘性版本导航、动态时间轴、扫光卡片和版本节点高亮</p>
-        </div>
-        <div class="highlight-item">
-          <h3>数字档案馆</h3>
-          <p>许可证新增官方印章、章节目录、阅读高亮、档案纹理和打印友好布局</p>
-        </div>
-        <div class="highlight-item">
-          <h3>移动端底部快捷栏</h3>
-          <p>手机端新增首页、搜索、工具、AI、我的底部导航，并自动避让小绊谈按钮</p>
-        </div>
-        <div class="highlight-item">
-          <h3>404 迷航页</h3>
-          <p>404 页面新增小绊谈迷航形象、信号故障动画和全网搜索入口</p>
-        </div>
-        <div class="highlight-item">
-          <h3>前台体验统一</h3>
-          <p>结合 React Bits、Aceternity、Uiverse 与 MotionSites，加入文本、背景和交互动效体系</p>
+          <h3>移动端优化</h3>
+          <p>取消旧底部快捷栏影响，域名卡在窄屏改为单列并保持清晰的可点击区域</p>
         </div>
       </div>
+    </section>
+
+    <!-- v4.0 -->
+    <section class="version-card" aria-label="v4.0 更新">
+      <div class="card-header">
+        <h2 class="card-version">v4.0</h2>
+        <span class="card-title">星轨体验版 · 全网搜索 · 滑动动效 · 高级档案馆</span>
+        <span class="card-date">2026.09.17</span>
+      </div>
+      <ul class="change-items">
+        <li class="change-item">
+          <span class="change-type add">新增</span>
+          <span class="change-text">万能枢纽全网搜索与可拖拽、可横滑、可按钮推进的网站入口轨道</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type add">新增</span>
+          <span class="change-text">滚动揭示、卡片倾斜、页面过渡、动态进度条和内容滑入效果</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type add">新增</span>
+          <span class="change-text">版本观测站和数字档案馆，升级更新日志与许可证阅读体验</span>
+        </li>
+        <li class="change-item">
+          <span class="change-type add">新增</span>
+          <span class="change-text">404 迷航页、前台体验统一与 React Bits、Aceternity、Uiverse 动效体系</span>
+        </li>
+      </ul>
     </section>
 
     <!-- v3.9 -->
@@ -964,6 +1062,7 @@ code, pre {
 <script src="./uiverse-v4.js?v=4.0.2"></script>
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
 <script src="./archive-v5.js"></script>
+<script src="./official-domains-v1.js?v=1.0.0"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());

@@ -2,6 +2,20 @@
 
 All notable project changes are documented here.
 
+## v4.0.6 - 2026-09-19
+
+### Added
+
+- Added a shared official domain network to `license.html` and `changelog.html`
+- Registered the official `www.bantan.online` alias, custom domain `bantan.eu.cc`, and Cloudflare Pages endpoint `5aea0b40.bnatan7.pages.dev`
+- Added one-click domain copying with keyboard-accessible controls on both archive pages
+
+### Changed
+
+- Added the official domain list to `README.md`, root `LICENSE`, and `llms.txt`
+- Updated the license page, changelog archive, release documentation, and served asset cache to `v4.0.6`
+- Kept `bantan.online` as the canonical SEO and social-preview address
+
 ## v4.0.5 - 2026-09-19
 
 ### Added

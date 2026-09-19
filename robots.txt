@@ -1,6 +1,7 @@
 # 绊谈 · 万能枢纽 | bantan.online
 # robots.txt - 爬虫抓取规则
-# 最后更新：2026-09-17
+# 官方入口：bantan.online、www.bantan.online、bantan.eu.cc、5aea0b40.bnatan7.pages.dev
+# 最后更新：2026-09-19
 
 User-agent: *
 Allow: /

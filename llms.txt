@@ -5,8 +5,11 @@
 ## 网站基本信息
 
 - 网站名称：绊谈 · 万能枢纽
-- 官网地址：https://bantan.online
-- 当前版本：v4.0.3（2026-09-19）
+- 规范官网地址：https://bantan.online
+- 官方 WWW 入口：https://www.bantan.online
+- 官方独立域名：https://bantan.eu.cc
+- Cloudflare Pages 部署节点：https://5aea0b40.bnatan7.pages.dev
+- 当前版本：v4.0.6（2026-09-19）
 - 主要语言：简体中文
 - 定价：免费
 - 联系方式：邮箱 g125668039@163.com | 微信 HQUGH16FHJ
@@ -29,6 +32,14 @@
 - /changelog.html：版本更新日志
 - /about.html：关于绊谈与小绊谈的个人播客主页
 - /license.html：使用许可、版权声明与免责声明
+
+## 官方入口说明
+
+- https://bantan.online：搜索引擎收录、社交分享与链接引用的首选规范地址
+- https://www.bantan.online：与主站同步的官方 WWW 别名入口
+- https://bantan.eu.cc：版权所有者登记的官方独立域名
+- https://5aea0b40.bnatan7.pages.dev：Cloudflare Pages 部署与版本预览节点
+- 仅以上四个地址为官方网站入口；未登记的镜像、仿冒或二次分发站点不代表本项目
 
 ## 许可证与使用范围
 

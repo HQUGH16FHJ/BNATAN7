@@ -1,6 +1,6 @@
 # 绊谈 · 万能枢纽
 
-![Version](https://img.shields.io/badge/version-v4.0.5-f59e0b?style=flat-square)
+![Version](https://img.shields.io/badge/version-v4.0.6-f59e0b?style=flat-square)
 ![License](https://img.shields.io/badge/license-Bantan%20Proprietary-fb7185?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Web%20%7C%20PWA-38bdf8?style=flat-square)
 ![Status](https://img.shields.io/badge/status-active-34d399?style=flat-square)
@@ -9,7 +9,18 @@
 
 项目采用原生 HTML、CSS 和 JavaScript 构建，包含完整前台、PWA 支持、用户中心、AI 小绊谈、动态背景、交互式工具导航、更新日志、许可证和独立“关于我”播客页面。
 
-[项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
+[在线访问](#在线访问) · [项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
+
+## 在线访问
+
+| 官方入口 | 地址 | 用途 |
+|---|---|---|
+| 主站 | [bantan.online](https://bantan.online/) | 搜索引擎收录与分享预览的首选规范地址 |
+| WWW 主站 | [www.bantan.online](https://www.bantan.online/) | 与主站同步的官方别名入口 |
+| 独立域名 | [bantan.eu.cc](https://bantan.eu.cc/) | 与主站同步发布的正式入口 |
+| Cloudflare Pages | [5aea0b40.bnatan7.pages.dev](https://5aea0b40.bnatan7.pages.dev/) | Cloudflare Pages 部署与版本预览节点 |
+
+> 仅以上地址为绊谈官方入口。许可证页面、更新日志、根目录 `LICENSE` 和 `llms.txt` 均同步登记该域名网络。
 
 ## 项目预览
 
@@ -106,7 +117,7 @@ http://localhost:8000/landing.html
 
 - Service Worker：`sw.js`
 - Manifest：`manifest.json`
-- 当前缓存版本：`bantan-static-v4.0.5`
+- 当前缓存版本：`bantan-static-v4.0.6`
 
 发布新版本后，应同时更新静态资源版本号，避免浏览器继续使用旧版 JavaScript 或 CSS。
 
@@ -154,5 +165,8 @@ Copyright (c) 2026 绊谈 Bantan. All Rights Reserved.
 ## 联系方式
 
 - 官方网站：https://bantan.online/
+- 官方 WWW 入口：https://www.bantan.online/
+- 官方备用域名：https://bantan.eu.cc/
+- Cloudflare Pages：https://5aea0b40.bnatan7.pages.dev/
 - 邮箱：g125668039@163.com
 - 微信：HQUGH16FHJ

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.5';
+const CACHE_NAME = 'bantan-static-v4.0.6';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -32,6 +32,8 @@ const CORE_ASSETS = [
   '/ui-interactions-v4.js',
   '/archive-v5.css',
   '/archive-v5.js',
+  '/official-domains-v1.css',
+  '/official-domains-v1.js',
   '/about.html',
   '/about-v4.css',
   '/about-podcast.css',

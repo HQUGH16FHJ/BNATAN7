@@ -91,6 +91,7 @@ body.bnt-page-license .lic-hero::after {
 }
 .archive-console-main,
 .archive-console-side {
+  min-width: 0;
   padding: 22px;
   border: 1px solid rgba(255, 255, 255, 0.075);
   border-radius: 22px;
@@ -118,6 +119,7 @@ body.bnt-page-license .lic-hero::after {
   color: #d6c7b8;
   font-size: 15px;
   font-weight: 800;
+  overflow-wrap: anywhere;
 }
 .archive-console-date {
   margin-top: 7px;
@@ -270,6 +272,10 @@ body.bnt-page-changelog .featured-version.archive-current {
   .archive-release-console {
     grid-template-columns: 1fr;
   }
+  .archive-console-main,
+  .archive-console-side {
+    width: 100%;
+  }
   .archive-version-actions {
     width: 100%;
     margin-left: 0;
@@ -285,6 +291,18 @@ body.bnt-page-changelog .featured-version.archive-current {
   body.bnt-page-changelog .page,
   body.bnt-page-license .lic-container {
     padding-top: 82px !important;
+  }
+}
+@media (max-width: 420px) {
+  .archive-topbar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    transform: none;
+  }
+  .archive-brand > span:last-child {
+    display: none;
   }
 }
 @media print {
