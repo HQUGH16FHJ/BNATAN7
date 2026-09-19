@@ -52,13 +52,14 @@
     <div class="admin-summary" id="adminSummary">尚未加载登记记录。</div>
     <div class="admin-workspace">
       <div class="admin-list" id="adminList"></div>
-      <aside class="admin-detail" id="adminDetail">
+      <aside class="admin-detail" id="adminDetail" aria-hidden="true">
         <div class="admin-detail__empty"><div><strong>选择一条登记单</strong><p>点击左侧记录后，在这里查看完整信息和审核操作。</p></div></div>
       </aside>
     </div>
   </section>
 </main>
+<div class="admin-detail-backdrop" id="adminDetailBackdrop" hidden></div>
 <footer class="rights-footer"><span>© 2026 Bantan Rights · 审核指挥台</span><div><a href="./index.html">版权总览</a><a href="./register.html">公开登记单</a></div></footer>
-<script src="./admin.js?v=1.1.0"></script>
+<script src="./admin.js?v=1.2.0"></script>
 </body>
 </html>
