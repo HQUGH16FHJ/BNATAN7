@@ -18,7 +18,7 @@
 | 主站 | [bantan.online](https://bantan.online/) | 搜索引擎收录与分享预览的首选规范地址 |
 | WWW 主站 | [www.bantan.online](https://www.bantan.online/) | 与主站同步的官方别名入口 |
 | 独立域名 | [bantan.eu.cc](https://bantan.eu.cc/) | 与主站同步发布的正式入口 |
-| Cloudflare Pages | [5aea0b40.bnatan7.pages.dev](https://5aea0b40.bnatan7.pages.dev/) | Cloudflare Pages 部署与版本预览节点 |
+| Cloudflare Pages | [5aea0b40.bnatan7.pages.dev](https://5aea0b40.bnatan7.pages.dev/) | 固定历史部署节点；最新项目入口为 `bnatan7.pages.dev` |
 
 > 仅以上地址为绊谈官方入口。许可证页面、更新日志、根目录 `LICENSE` 和 `llms.txt` 均同步登记该域名网络。
 
