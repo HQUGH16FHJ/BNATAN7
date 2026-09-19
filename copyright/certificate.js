@@ -44,7 +44,7 @@
           <i class="certificate-status ${verified ? '' : 'is-code-only'}">${verified ? 'DOMAIN VERIFIED' : 'CODE VERIFIED'}</i>
         </header>
         <h1 class="certificate-title">版权验证证书</h1>
-        <p class="certificate-subtitle">Bantan Rights 是绊谈维护的私有网站权属声明与版权登记系统；不属于国家行政机关、政府认证机构或国家版权登记平台。本证书仅用于核对绊谈自主登记的信息，所有资料由提交人自行申报、本站不做实质核验；不构成国家认证、行政认定或司法证明。</p>
+        <p class="certificate-subtitle">Bantan Rights 是绊谈维护的私有网站权属声明登记与版权登记系统；不属于国家行政机关、政府认证机构或国家版权登记平台。本证书仅用于核对绊谈自主登记信息；所有资料由提交人自行申报，本站不做实质真实性核验；不构成国家认证、行政认定或司法证明。</p>
         <dl class="certificate-grid">
           <div><dt>官网编号</dt><dd class="is-code">${escapeHtml(item.site_code)}</dd></div>
           <div><dt>官方域名</dt><dd>${escapeHtml(item.domain || '--')}</dd></div>
@@ -62,7 +62,7 @@
           <strong>${fingerprint}</strong>
         </div>
         <footer class="certificate-foot">
-          <p>证书信息来自 Bantan Rights 公开登记数据库。发生权利争议时，应以原始作品、创作记录、授权合同和适用法律为准。证书可通过官网编号与域名重新验证。</p>
+          <p>证书信息来自 Bantan Rights 私有登记数据库。发生权利争议时，应以原始作品、创作记录、授权合同和适用法律为准。如有权属异议或需要移除登记，请联系 125668039@163.com 或 1429616034@qq.com。</p>
           <div class="certificate-seal">绊谈版权中心<br>2026</div>
         </footer>
       </div>

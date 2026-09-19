@@ -13,12 +13,12 @@
     result.innerHTML = `
       <article class="tracking-case">
         <header class="tracking-case__head">
-          <div><span>OFFICIAL SITE · ${escapeHtml(item.site_code)}</span><h2>${escapeHtml(item.project_name)}</h2></div>
-          <i class="tracking-status" data-status="${item.status === 'ACTIVE' ? '已通过' : '审核中'}">${item.status === 'ACTIVE' ? 'OFFICIAL' : item.status}</i>
+          <div><span>REGISTERED SITE · ${escapeHtml(item.site_code)}</span><h2>${escapeHtml(item.project_name)}</h2></div>
+          <i class="tracking-status" data-status="${item.status === 'ACTIVE' ? '已通过' : '审核中'}">${item.status === 'ACTIVE' ? 'REGISTERED' : item.status}</i>
         </header>
         <div class="tracking-case__summary">
           <div class="tracking-case__stamp">✓</div>
-          <div><span>已通过官网编号验证</span><p>该网站已登记在 Bantan Rights 官网数据库，可核对以下权利信息。</p></div>
+          <div><span>已匹配私有登记记录</span><p>该网站由提交人自主申报并登记在 Bantan Rights 私有数据库，可核对以下声明信息。</p></div>
         </div>
         <div class="tracking-facts">
           <div><span>官网编号</span><strong>${escapeHtml(item.site_code)}</strong></div>
@@ -33,7 +33,7 @@
         </div>
         <section class="tracking-review" style="border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.045);">
           <span>VERIFICATION NOTE</span><h3>编号是公开标识，不是保密密钥</h3>
-          <p>Bantan Rights 是绊谈维护的私有网站权属声明与版权登记系统；不属于国家行政机关、政府认证机构或国家版权登记平台。本页结果仅用于核对绊谈自主登记的信息，所有资料由提交人自行申报、本站不做实质核验；不构成国家认证、行政认定或司法证明。</p>
+          <p>Bantan Rights 是绊谈维护的私有网站权属声明登记与版权登记系统；不属于国家行政机关、政府认证机构或国家版权登记平台。本页结果仅用于核对绊谈自主登记信息；所有资料由提交人自行申报，本站不做实质真实性核验；不构成国家认证、行政认定或司法证明。</p>
           <div class="tracking-site-code__actions">
             <a href="./certificate.html?code=${encodeURIComponent(item.site_code)}&domain=${encodeURIComponent(item.domain || '')}">查看版权证书</a>
           </div>
