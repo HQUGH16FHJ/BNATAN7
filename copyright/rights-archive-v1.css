@@ -162,18 +162,28 @@ body::after {
   animation: archive-panel-in 0.82s var(--archive-ease) 120ms both;
 }
 
+.rights-archive-ready .archive-observe {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+}
+
 .rights-archive-ready :where(
-  .rights-stats article,
-  .registry-card,
-  .directory-card,
-  .admin-metric,
-  .case-card,
-  .api-endpoint,
-  .ops-metric,
-  .ops-check
+  .rights-stats article.archive-visible,
+  .registry-card.archive-visible,
+  .directory-card.archive-visible,
+  .admin-metric.archive-visible,
+  .case-card.archive-visible,
+  .api-endpoint.archive-visible,
+  .ops-metric.archive-visible,
+  .ops-check.archive-visible
 ) {
   animation: archive-card-in 0.66s var(--archive-ease) both;
   animation-delay: var(--archive-delay, 0ms);
+}
+
+.rights-archive-ready .archive-observe.archive-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 @keyframes archive-rise {
@@ -213,6 +223,84 @@ body::after {
 
 .archive-count {
   font-variant-numeric: tabular-nums;
+}
+
+.archive-section-head {
+  position: relative;
+}
+
+.archive-section-head::after {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.5), transparent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.archive-section-head.archive-visible::after {
+  animation: archive-line-in 0.72s var(--archive-ease) 180ms both;
+}
+
+.verify-console {
+  position: relative;
+  overflow: hidden;
+}
+
+.verify-console::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 36%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.055), transparent);
+  content: "";
+  transform: translate3d(-180%, 0, 0);
+}
+
+.verify-console.archive-visible::after {
+  animation: archive-scan 1.35s var(--archive-ease) 260ms both;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(
+    .registry-card,
+    .directory-card,
+    .case-card,
+    .api-endpoint,
+    .ops-metric,
+    .ops-check
+  ) {
+    transition:
+      transform 0.35s var(--archive-ease),
+      border-color 0.35s ease,
+      background 0.35s ease;
+  }
+
+  :where(
+    .registry-card,
+    .directory-card,
+    .case-card,
+    .api-endpoint,
+    .ops-metric,
+    .ops-check
+  ):hover {
+    transform: translate3d(0, -4px, 0);
+    border-color: rgba(245, 158, 11, 0.19) !important;
+  }
+}
+
+@keyframes archive-line-in {
+  to { transform: scaleX(1); }
+}
+
+@keyframes archive-scan {
+  0% { transform: translate3d(-180%, 0, 0); }
+  100% { transform: translate3d(390%, 0, 0); }
 }
 
 @media (max-width: 720px) {
@@ -259,5 +347,16 @@ body::after {
     animation: none !important;
     filter: none !important;
     transform: none !important;
+  }
+
+  .rights-archive-ready .archive-observe,
+  .rights-archive-ready .archive-observe.archive-visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .archive-section-head::after,
+  .verify-console::after {
+    display: none !important;
   }
 }

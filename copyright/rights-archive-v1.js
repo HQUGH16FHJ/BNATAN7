@@ -11,6 +11,35 @@
     });
   }
 
+  function initReveal() {
+    const items = [
+      ...document.querySelectorAll(
+        '.rights-stats article, .registry-card, .directory-card, .admin-metric, .case-card, .api-endpoint, .ops-metric, .ops-check, .rights-section__head, .site-section__head, .verify-console'
+      )
+    ];
+    items.forEach((item, index) => {
+      item.classList.add('archive-observe');
+      if (item.matches('.rights-section__head, .site-section__head')) item.classList.add('archive-section-head');
+      item.style.setProperty('--archive-delay', `${Math.min(index * 34, 240)}ms`);
+      const rect = item.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.94) item.classList.add('archive-visible');
+    });
+
+    if (!('IntersectionObserver' in window) || reducedMotion || saveData) {
+      items.forEach(item => item.classList.add('archive-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('archive-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    items.filter(item => !item.classList.contains('archive-visible')).forEach(item => observer.observe(item));
+  }
+
   function animateCounts() {
     if (reducedMotion || saveData) return;
     document.querySelectorAll('.rights-stats strong').forEach(element => {
@@ -35,7 +64,7 @@
   function init() {
     document.body.classList.add('rights-archive-page');
     markDelays([...document.querySelectorAll('.rights-hero__copy > *, .console-hero__main > *, .tracking-hero__copy > *, .platform-hero > div > *, .admin-dashboard-hero > div > *')]);
-    markDelays([...document.querySelectorAll('.rights-stats article, .registry-card, .directory-card, .admin-metric, .case-card, .api-endpoint, .ops-metric, .ops-check')], 36, 260);
+    initReveal();
     requestAnimationFrame(() => root.classList.add('rights-archive-ready'));
     animateCounts();
   }
