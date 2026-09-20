@@ -4,6 +4,32 @@ html.bnt-v4-ready {
 body {
   isolation: isolate;
 }
+.brand-canvas-text {
+  position: relative;
+  display: inline-block;
+}
+.brand-background__title.brand-canvas-text {
+  opacity: 0.34;
+}
+.brand-canvas-text__fallback {
+  display: inline-block;
+  color: #d6c7b8;
+  -webkit-text-fill-color: currentColor;
+}
+.brand-canvas-text__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.brand-canvas-text.is-ready .brand-canvas-text__fallback {
+  opacity: 0;
+}
+.brand-canvas-text.is-ready .brand-canvas-text__canvas {
+  opacity: 1;
+}
 .bnt-ambient {
   position: fixed;
   inset: 0;

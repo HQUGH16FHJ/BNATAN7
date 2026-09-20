@@ -2012,7 +2012,7 @@ nav#navbar {
 }
 </style>
 <link rel="stylesheet" href="./confirm-dialog.css">
-<link rel="stylesheet" href="./experience-v4.css?v=4.0.2">
+<link rel="stylesheet" href="./experience-v4.css?v=4.0.3">
 <link rel="stylesheet" href="./reactbits-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./uiverse-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./advanced-motion-v4.css">
@@ -2032,7 +2032,10 @@ nav#navbar {
 <!-- 品牌动态背景 -->
 <div class="brand-background" aria-hidden="true">
   <div class="brand-background__copy">
-    <span class="brand-background__title">BANTAN</span>
+    <span class="brand-background__title brand-canvas-text" data-canvas-text="BANTAN" data-canvas-text-duration="18" data-canvas-text-line-gap="5" data-canvas-text-line-width="1.2" data-canvas-text-curve="24" data-canvas-text-background="#070a0f" aria-label="BANTAN">
+      <span class="brand-canvas-text__fallback" data-canvas-text-fallback aria-hidden="true">BANTAN</span>
+      <canvas class="brand-canvas-text__canvas" data-canvas-text-canvas aria-hidden="true"></canvas>
+    </span>
     <span class="brand-background__subtitle">绊谈 · 连接需求，点亮可能</span>
   </div>
 </div>
@@ -4268,6 +4271,7 @@ function showContact(type) {
 <script src="./advanced-motion-v4.js"></script>
 <script src="./mascot-state.js"></script>
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
+<script src="./canvas-text-v1.js"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());
