@@ -4,31 +4,8 @@ html.bnt-v4-ready {
 body {
   isolation: isolate;
 }
-.brand-canvas-text {
-  position: relative;
-  display: inline-block;
-}
-.brand-background__title.brand-canvas-text {
-  opacity: 0.34;
-}
-.brand-canvas-text__fallback {
-  display: inline-block;
-  color: #d6c7b8;
-  -webkit-text-fill-color: currentColor;
-}
-.brand-canvas-text__canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-.brand-canvas-text.is-ready .brand-canvas-text__fallback {
-  opacity: 0;
-}
-.brand-canvas-text.is-ready .brand-canvas-text__canvas {
-  opacity: 1;
+.unicorn-bg {
+  z-index: -1 !important;
 }
 .bnt-ambient {
   position: fixed;
@@ -52,6 +29,12 @@ body.bnt-page-index .bnt-ambient {
     radial-gradient(ellipse at 20% 0%, rgba(56, 189, 248, 0.1), transparent 38%),
     radial-gradient(ellipse at 78% 12%, rgba(245, 158, 11, 0.08), transparent 34%),
     linear-gradient(155deg, #05080d 0%, #0b0c12 48%, #0b0906 100%);
+}
+.unicorn-bg.fallback {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.18), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.16), transparent 34%),
+    linear-gradient(145deg, #05070b, #100c08 58%, #09131b);
 }
 .bnt-ambient-grid {
   position: absolute;

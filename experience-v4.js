@@ -69,6 +69,20 @@
     document.body.insertBefore(ambient, document.body.firstChild);
   }
 
+  function ensureUnicornFallback() {
+    const background = document.querySelector('.unicorn-bg');
+    if (!background) return;
+    const activateFallback = () => {
+      if (!background.querySelector('canvas')) background.classList.add('fallback');
+    };
+    setTimeout(activateFallback, 4200);
+    window.addEventListener('online', () => {
+      setTimeout(() => {
+        if (background.querySelector('canvas')) background.classList.remove('fallback');
+      }, 900);
+    }, { passive: true });
+  }
+
   function addProgress() {
     if (document.querySelector('.bnt-page-progress')) return;
     const progress = document.createElement('div');
@@ -793,6 +807,7 @@
     document.documentElement.classList.add('bnt-v4-ready');
     document.body.classList.add('bnt-page-' + PAGE);
     addAmbient();
+    ensureUnicornFallback();
     addProgress();
     addReveal();
     addTilt();
