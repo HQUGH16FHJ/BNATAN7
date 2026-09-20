@@ -1,0 +1,263 @@
+:root {
+  --archive-ink: #fff7ed;
+  --archive-paper: #f7f0e3;
+  --archive-amber: #f59e0b;
+  --archive-green: #34d399;
+  --archive-blue: #38bdf8;
+  --archive-coral: #fb7185;
+  --archive-line: rgba(255, 247, 237, 0.08);
+  --archive-panel: rgba(16, 13, 10, 0.78);
+  --archive-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html,
+body {
+  background-color: #080706 !important;
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  opacity: 1;
+  background:
+    linear-gradient(rgba(245, 158, 11, 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.032) 1px, transparent 1px),
+    radial-gradient(circle at 14% 4%, rgba(245, 158, 11, 0.11), transparent 34rem),
+    radial-gradient(circle at 88% 14%, rgba(56, 189, 248, 0.075), transparent 31rem),
+    linear-gradient(180deg, #090806 0%, #050403 100%);
+  background-size: 42px 42px, 42px 42px, auto, auto, auto;
+  mask: none;
+  -webkit-mask: none;
+}
+
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.18;
+  background-image: radial-gradient(rgba(255, 247, 237, 0.2) 0.55px, transparent 0.55px);
+  background-size: 5px 5px;
+  mask-image: linear-gradient(180deg, #000, transparent 76%);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 76%);
+}
+
+.rights-header,
+.certificate-toolbar {
+  border-color: rgba(255, 247, 237, 0.085);
+  background: rgba(8, 7, 6, 0.89);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+:where(.rights-hero, .console-hero, .tracking-hero, .platform-hero, .admin-dashboard-hero) {
+  position: relative;
+  overflow: hidden;
+}
+
+:where(.rights-hero, .console-hero, .tracking-hero, .platform-hero, .admin-dashboard-hero)::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.58), rgba(56, 189, 248, 0.38), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+:where(
+  .rights-stats article,
+  .registry-card,
+  .directory-card,
+  .permission-table,
+  .rights-authorize,
+  .rights-notice,
+  .admin-login,
+  .admin-console,
+  .admin-metric,
+  .case-card,
+  .tracking-case,
+  .tracking-console,
+  .tracking-privacy,
+  .api-endpoint,
+  .api-playground,
+  .ops-metric,
+  .ops-check,
+  .ops-panel
+) {
+  border-color: var(--archive-line);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.015));
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+:where(.rights-button, button, .site-button) {
+  letter-spacing: 0.01em;
+}
+
+:where(.rights-button, button, a) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(.rights-button, button):active {
+  transform: translateY(1px) scale(0.985);
+}
+
+:where(input, select, textarea) {
+  border-color: rgba(255, 247, 237, 0.09);
+  background: rgba(3, 3, 3, 0.28);
+}
+
+:where(input, select, textarea):focus {
+  border-color: rgba(56, 189, 248, 0.38);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.08);
+}
+
+::selection {
+  color: #071019;
+  background: var(--archive-amber);
+}
+
+* {
+  scrollbar-color: rgba(245, 158, 11, 0.34) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.28);
+  background-clip: padding-box;
+}
+
+.rights-archive-ready :where(
+  .rights-hero__copy > *,
+  .console-hero__main > *,
+  .tracking-hero__copy > *,
+  .platform-hero > div > *,
+  .admin-dashboard-hero > div > *
+) {
+  animation: archive-rise 0.72s var(--archive-ease) both;
+  animation-delay: var(--archive-delay, 0ms);
+}
+
+.rights-archive-ready :where(
+  .rights-verification-card,
+  .workflow-card,
+  .tracking-guide,
+  .platform-hero aside
+) {
+  animation: archive-panel-in 0.82s var(--archive-ease) 120ms both;
+}
+
+.rights-archive-ready :where(
+  .rights-stats article,
+  .registry-card,
+  .directory-card,
+  .admin-metric,
+  .case-card,
+  .api-endpoint,
+  .ops-metric,
+  .ops-check
+) {
+  animation: archive-card-in 0.66s var(--archive-ease) both;
+  animation-delay: var(--archive-delay, 0ms);
+}
+
+@keyframes archive-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes archive-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(22px, 0, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes archive-card-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.archive-count {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .rights-header,
+  .certificate-toolbar {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  :where(
+    .rights-stats article,
+    .registry-card,
+    .directory-card,
+    .case-card,
+    .api-endpoint,
+    .ops-metric,
+    .ops-check,
+    .ops-panel
+  ) {
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rights-archive-ready :where(
+    .rights-hero__copy > *,
+    .console-hero__main > *,
+    .tracking-hero__copy > *,
+    .platform-hero > div > *,
+    .admin-dashboard-hero > div > *,
+    .rights-verification-card,
+    .workflow-card,
+    .tracking-guide,
+    .platform-hero aside,
+    .rights-stats article,
+    .registry-card,
+    .directory-card,
+    .admin-metric,
+    .case-card,
+    .api-endpoint,
+    .ops-metric,
+    .ops-check
+  ) {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
