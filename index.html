@@ -150,7 +150,7 @@
 
         /* ===== 品牌动态背景 ===== */
         .brand-background {
-            position: fixed; inset: 0; z-index: -14; pointer-events: none;
+            position: fixed; inset: 0; z-index: -12; pointer-events: none;
             overflow: hidden;
             background:
                 radial-gradient(ellipse at 18% 18%, rgba(56, 189, 248, 0.12), transparent 38%),
@@ -213,22 +213,8 @@
         @keyframes brandBackgroundGrid {
             to { background-position: 56px 56px, 56px 56px; }
         }
-        .brand-background-copy {
-            position: fixed; inset: 0; z-index: -12; pointer-events: none;
-        }
-        .unicorn-bg {
-            position: fixed; inset: 0; z-index: -13; pointer-events: none;
-            width: 100vw; height: 100vh; overflow: hidden;
-        }
-        .unicorn-bg canvas {
-            width: 100% !important;
-            height: 100% !important;
-        }
-        .unicorn-bg a {
-            pointer-events: auto;
-        }
         .bg-warm-overlay {
-            position: fixed; inset: 0; z-index: -15; pointer-events: none;
+            position: fixed; inset: 0; z-index: -11; pointer-events: none;
             background: radial-gradient(ellipse at 20% 30%, rgba(245,158,11,0.08) 0%, transparent 50%),
                         radial-gradient(ellipse at 80% 70%, rgba(251,113,133,0.06) 0%, transparent 50%),
                         linear-gradient(180deg, rgba(10,8,5,0.35) 0%, rgba(10,8,5,0.6) 100%);
@@ -6762,9 +6748,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     </div>
 
     <!-- 品牌动态背景 -->
-    <div class="brand-background" aria-hidden="true"></div>
-    <div class="unicorn-bg" data-us-project="eA2DHofTxTfZSw1kbO7K" data-us-scale="0.75" data-us-dpi="1" data-us-lazyload="true" data-us-production="true" data-us-fps="30" style="width:100vw;height:100vh;"></div>
-    <div class="brand-background-copy" aria-hidden="true">
+    <div class="brand-background" aria-hidden="true">
         <div class="brand-background__copy">
             <span class="brand-background__title brand-canvas-text" data-canvas-text="BANTAN" data-canvas-text-duration="18" data-canvas-text-line-gap="5" data-canvas-text-line-width="1.2" data-canvas-text-curve="24" data-canvas-text-background="#070a0f" aria-label="BANTAN">
                 <span class="brand-canvas-text__fallback" data-canvas-text-fallback aria-hidden="true">BANTAN</span>
@@ -18254,8 +18238,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 <script src="./advanced-motion-v4.js"></script>
 <script src="./mascot-state.js"></script>
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
-<script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.14/dist/unicornStudio.umd.js"></script>
-<script>UnicornStudio.init();</script>
 <script src="./canvas-text-v1.js"></script>
 <script>
 (() => {
