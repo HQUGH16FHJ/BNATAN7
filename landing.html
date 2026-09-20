@@ -205,6 +205,8 @@ html {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   font-family: var(--font-body);
   background: var(--bg);
   background-image:
@@ -221,12 +223,71 @@ body {
   transition: background 1s ease, color 0.6s ease, background-image 2s ease;
 }
 
-/* ========== UnicornStudio 背景 ========== */
-.unicorn-bg {
+/* ========== 品牌动态背景 ========== */
+.brand-background {
   position: fixed; inset: 0; z-index: -3; pointer-events: none;
-  width: 100vw; height: 100vh; overflow: hidden;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 18% 18%, rgba(56, 189, 248, 0.12), transparent 38%),
+    radial-gradient(ellipse at 82% 24%, rgba(245, 158, 11, 0.11), transparent 36%),
+    linear-gradient(145deg, #05070b, #100c08 58%, #09131b);
+  background-size: 125% 125%, 135% 135%, 100% 100%;
+  animation: brandAuroraDrift 24s ease-in-out infinite alternate;
 }
-.unicorn-bg canvas { width: 100% !important; height: 100% !important; }
+.brand-background::before {
+  content: '';
+  position: absolute; inset: -30%;
+  background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(245,158,11,0.09) 72deg, transparent 150deg, rgba(56,189,248,0.07) 250deg, transparent 360deg);
+  filter: blur(70px);
+  animation: brandBackgroundSweep 30s linear infinite;
+}
+.brand-background::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 20%, #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 20%, #000 0%, transparent 72%);
+  opacity: 0.5;
+  animation: brandBackgroundGrid 18s linear infinite;
+}
+.brand-background__copy {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  padding: clamp(84px, 12vh, 150px) 5vw 0;
+  text-align: center;
+}
+.brand-background__title {
+  font-family: 'Bricolage Grotesque', 'Outfit', system-ui, sans-serif;
+  max-width: 100%;
+  font-size: clamp(38px, 12vw, 170px);
+  font-weight: 800; line-height: 0.88; letter-spacing: 0.04em;
+  white-space: nowrap;
+  background: linear-gradient(135deg, rgba(245,158,11,0.72), rgba(214,199,184,0.42) 48%, rgba(56,189,248,0.5));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  opacity: 0.2;
+}
+.brand-background__subtitle {
+  max-width: min(90vw, 900px);
+  margin-top: 16px;
+  font-size: clamp(11px, 1.55vw, 19px);
+  line-height: 1.5; letter-spacing: 0.16em;
+  color: rgba(255, 247, 237, 0.4);
+  text-shadow: 0 0 28px rgba(245,158,11,0.12);
+}
+@keyframes brandAuroraDrift {
+  from { background-position: 0% 10%, 100% 12%, 0 0; }
+  to { background-position: 100% 80%, 0% 72%, 0 0; }
+}
+@keyframes brandBackgroundSweep {
+  to { transform: rotate(360deg); }
+}
+@keyframes brandBackgroundGrid {
+  to { background-position: 56px 56px, 56px 56px; }
+}
 .bg-warm-overlay {
   position: fixed; inset: 0; z-index: -2; pointer-events: none;
   background: radial-gradient(ellipse at 20% 30%, rgba(245,158,11,0.08) 0%, transparent 50%),
@@ -1968,8 +2029,13 @@ nav#navbar {
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
 </div>
 
-<!-- UnicornStudio 交互背景 (未登录) -->
-<div class="unicorn-bg" data-us-project-src="./unicorn-landing.json" data-us-scale="1" data-us-dpi="1" data-us-lazyload="true" data-us-production="true" data-us-fps="30" style="width:100vw;height:100vh;"></div>
+<!-- 品牌动态背景 -->
+<div class="brand-background" aria-hidden="true">
+  <div class="brand-background__copy">
+    <span class="brand-background__title">BANTAN</span>
+    <span class="brand-background__subtitle">绊谈 · 连接需求，点亮可能</span>
+  </div>
+</div>
 <div class="bg-warm-overlay"></div>
 
 <!-- Blob Cursor -->
@@ -3919,8 +3985,6 @@ function showContact(type) {
   }, 5000);
 })();
 </script>
-<!-- UnicornStudio 官方自初始化嵌入 -->
-<script type="text/javascript">!function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();</script>
 <!-- 工具卡片悬停说明 -->
 <div class="tool-hover-tip" id="toolHoverTip">
   <div class="tip-title" id="tipTitle"></div>
