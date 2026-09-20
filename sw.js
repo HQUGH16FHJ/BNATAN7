@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.9-rights-archive-3';
+const CACHE_NAME = 'bantan-static-v4.0.9-rights-archive-4';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -64,6 +64,7 @@ const CORE_ASSETS = [
   '/copyright/rights-platform.js',
   '/copyright/rights-archive-v1.css',
   '/copyright/rights-archive-v1.js',
+  '/copyright/rights-archive-background.svg',
   '/copyright/world-map-v1.svg',
   '/sbom.json',
   '/checksums.json',

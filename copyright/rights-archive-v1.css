@@ -25,13 +25,11 @@ body::before {
   inset: 0;
   z-index: -2;
   opacity: 1;
-  background:
-    linear-gradient(rgba(245, 158, 11, 0.032) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.032) 1px, transparent 1px),
-    radial-gradient(circle at 14% 4%, rgba(245, 158, 11, 0.11), transparent 34rem),
-    radial-gradient(circle at 88% 14%, rgba(56, 189, 248, 0.075), transparent 31rem),
-    linear-gradient(180deg, #090806 0%, #050403 100%);
-  background-size: 42px 42px, 42px 42px, auto, auto, auto;
+  background-image: url("./rights-archive-background.svg");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   mask: none;
   -webkit-mask: none;
 }
@@ -304,6 +302,12 @@ body::after {
 }
 
 @media (max-width: 720px) {
+  body::before {
+    background-attachment: scroll;
+    background-position: 58% top;
+    background-size: auto 100%;
+  }
+
   .rights-header,
   .certificate-toolbar {
     backdrop-filter: blur(12px);
