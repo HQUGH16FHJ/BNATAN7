@@ -1,0 +1,91 @@
+.objection-page .tracking-hero__copy::after {
+  content: "DISPUTE";
+  position: absolute;
+  right: -0.03em;
+  bottom: -0.23em;
+  z-index: -1;
+  color: transparent;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: clamp(6rem, 17vw, 15rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  opacity: 0.045;
+  -webkit-text-stroke: 1px #fff7ed;
+  pointer-events: none;
+}
+
+.objection-workspace {
+  margin-top: 18px;
+  align-items: start;
+}
+
+.objection-actions {
+  gap: 10px;
+}
+
+.objection-preview {
+  position: sticky;
+}
+
+.objection-preview .preview-seal {
+  right: -28px;
+  width: 154px;
+  height: 154px;
+  font-size: 14px;
+}
+
+.objection-preview-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.objection-preview-actions > * {
+  min-height: 38px;
+  padding: 0 11px;
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  border-radius: 10px;
+  color: #c7b9a9;
+  background: rgba(56, 189, 248, 0.04);
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.objection-preview-actions > *:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.objection-preview-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #071019;
+  background: linear-gradient(135deg, #38bdf8, #f59e0b);
+}
+
+.objection-page textarea {
+  min-height: 110px;
+  padding-top: 12px;
+  resize: vertical;
+}
+
+.objection-page .form-declaration {
+  align-items: flex-start;
+}
+
+.objection-page .form-declaration span {
+  line-height: 1.65;
+}
+
+@media (max-width: 760px) {
+  .objection-page .tracking-hero__copy::after {
+    display: none;
+  }
+
+  .objection-preview-actions {
+    grid-template-columns: 1fr;
+  }
+}

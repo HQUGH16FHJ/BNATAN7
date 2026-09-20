@@ -16,6 +16,7 @@ const requiredFiles = [
   'qr.html',
   'copyright/api.html',
   'copyright/ops.html',
+  'copyright/objection.html',
   '.well-known/security.txt',
   'sbom.json',
   'checksums.json',

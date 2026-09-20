@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bantan Rights 权属异议与移除申请：提交登记编号、异议主体、权利依据、证据线索和请求处理方式。">
+<meta name="theme-color" content="#080706">
+<link rel="canonical" href="https://rights.bantan.online/objection">
+<link rel="icon" href="https://bantan.online/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="https://bantan.online/favicon.svg">
+<link rel="stylesheet" href="./copyright.css?v=1.0.0">
+<link rel="stylesheet" href="./rights-console-v1.css?v=1.3.0">
+<link rel="stylesheet" href="./rights-archive-v1.css?v=1.3.0">
+<link rel="stylesheet" href="./rights-objection-v1.css?v=1.0.0">
+<title>权属异议 / 移除申请 · Bantan Rights</title>
+</head>
+<body class="rights-console-page objection-page">
+<header class="rights-header">
+  <a class="rights-brand" href="./index.html"><span class="rights-brand__mark">权</span><span><strong>Bantan Rights</strong><small>权属异议 / 移除申请</small></span></a>
+  <nav aria-label="权属异议导航">
+    <a href="./index.html">版权总览</a>
+    <a href="./sites.html">网站汇集</a>
+    <a href="./register.html">登记单</a>
+    <a href="./status.html">进度查询</a>
+    <a href="./site.html">权属查询</a>
+    <a href="./objection.html">异议 / 移除</a>
+    <a href="./admin.html">管理后台</a>
+  </nav>
+</header>
+
+<main>
+  <section class="tracking-hero">
+    <div class="tracking-hero__copy">
+      <div class="rights-kicker"><i></i>DISPUTE / TAKEDOWN INTAKE</div>
+      <h1>提出异议，<br><em>让记录进入复核</em></h1>
+      <p>如果你认为某条登记信息侵害了你的权利、冒用了你的身份，或者希望删除、更正一条登记记录，可以在这里整理一份完整的异议材料。</p>
+      <div class="tracking-code-preview"><span>Case Format</span><code>BNT-DISPUTE-YYMMDD-XXXXXX</code></div>
+    </div>
+    <aside class="tracking-guide">
+      <span>REVIEW FLOW</span>
+      <div><i class="is-blue"></i><strong>提交材料</strong><small>说明目标登记、权利依据和证据线索</small></div>
+      <div><i class="is-green"></i><strong>人工核对</strong><small>站长检查登记记录和双方信息</small></div>
+      <div><i class="is-red"></i><strong>处理结果</strong><small>更正、保留、撤回或移除登记</small></div>
+    </aside>
+  </section>
+
+  <section class="private-verification-notice" role="note">
+    <strong>私有登记声明</strong>
+    <p>Bantan Rights 是绊谈维护的私有网站权属声明登记与版权登记系统；不属于国家行政机关、政府认证机构或国家版权登记平台。本页只生成异议材料和联系入口，不构成法律裁定、行政认定或司法证明。涉及正式权属争议时，请同时保留原始证据并咨询专业人士。</p>
+  </section>
+
+  <div class="workspace-grid objection-workspace">
+    <section class="registration-form-wrap">
+      <form id="objectionForm">
+        <section class="form-section">
+          <div class="form-section__head"><div><span class="form-section__index">STEP 01</span><h2>目标登记</h2></div><p>指定要异议、更正或移除的登记记录。</p></div>
+          <div class="field-grid">
+            <label class="form-field"><span>登记编号 *</span><input name="recordCode" required autocomplete="off" placeholder="BNT-SITE-2026-001"></label>
+            <label class="form-field"><span>目标域名</span><input name="targetDomain" autocomplete="off" placeholder="example.com"></label>
+            <label class="form-field is-wide"><span>项目 / 网站名称 *</span><input name="projectName" required placeholder="要处理的登记网站或作品名称"></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="form-section__head"><div><span class="form-section__index">STEP 02</span><h2>异议主体</h2></div><p>说明你是谁，以及你与该登记或作品的关系。</p></div>
+          <div class="field-grid">
+            <label class="form-field"><span>申请人 / 机构名称 *</span><input name="claimantName" required autocomplete="name" placeholder="姓名、团队或机构名称"></label>
+            <label class="form-field"><span>联系邮箱 *</span><input name="contactEmail" required type="email" autocomplete="email" placeholder="用于接收处理进展"></label>
+            <label class="form-field"><span>主体类型</span><select name="claimantType"><option>版权所有者</option><option>作品创作者</option><option>商标 / 品牌权利人</option><option>授权代理人</option><option>被冒用身份者</option><option>其他利害关系人</option></select></label>
+            <label class="form-field"><span>与登记的关系</span><input name="relationship" placeholder="例如：原创作者、公司权利人、代理律师"></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="form-section__head"><div><span class="form-section__index">STEP 03</span><h2>异议内容与请求</h2></div><p>越具体的事实、时间和证据线索，越方便进入复核。</p></div>
+          <div class="field-grid">
+            <label class="form-field"><span>异议类型 *</span><select name="disputeType" required><option value="">请选择</option><option>冒用身份或品牌</option><option>权属归属错误</option><option>未经授权登记</option><option>许可证或授权范围错误</option><option>内容侵权</option><option>隐私或个人信息问题</option><option>要求更正其他信息</option></select></label>
+            <label class="form-field"><span>请求处理方式 *</span><select name="requestedAction" required><option value="">请选择</option><option>更正登记信息</option><option>暂停公开显示</option><option>撤回登记申请</option><option>删除 / 移除登记</option><option>先联系我核对</option></select></label>
+            <label class="form-field is-wide"><span>事实与权利依据 *</span><textarea name="claimSummary" rows="6" required placeholder="说明你主张的权利、争议点、首次发布时间、创作或授权关系等"></textarea></label>
+            <label class="form-field is-wide"><span>证据线索</span><textarea name="evidenceSummary" rows="4" placeholder="列出可核对的证据类型，不要在公开表单中粘贴身份证号、密码或完整合同隐私内容"></textarea></label>
+            <label class="form-field is-wide"><span>相关链接</span><textarea name="supportingLinks" rows="3" placeholder="原始作品、发布时间、授权文件、公开页面或其他可访问链接"></textarea></label>
+            <label class="form-declaration is-wide"><input name="declaration" type="checkbox" required><span>我确认以上信息由本人或授权主体提交，并理解本站会进行人工核对，不保证异议必然导致移除。</span></label>
+          </div>
+        </section>
+
+        <div class="registration-actions objection-actions">
+          <button class="rights-button is-primary" type="submit">生成异议材料</button>
+          <button class="rights-button" type="reset">清空内容</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="registration-preview objection-preview" id="objectionPreview">
+      <div class="preview-seal">DISPUTE</div>
+      <span>OBJECTION DOSSIER</span>
+      <h2>等待生成异议档案</h2>
+      <p>填写信息后，这里会生成异议编号、材料摘要、邮件正文和可下载的 JSON 备份。</p>
+      <div class="submission-meter">
+        <div class="submission-meter__ring" id="objectionRing" data-progress="0%" style="--progress:0%"></div>
+        <div><strong id="objectionMeterTitle">材料完整度</strong><p id="objectionMeterText">填写必填信息后开始计算。</p></div>
+      </div>
+      <dl class="dossier-list">
+        <div><dt>异议编号</dt><dd id="objectionCode">--</dd></div>
+        <div><dt>目标登记</dt><dd id="objectionTarget">--</dd></div>
+        <div><dt>异议类型</dt><dd id="objectionType">--</dd></div>
+        <div><dt>请求处理</dt><dd id="objectionAction">--</dd></div>
+        <div><dt>材料状态</dt><dd id="objectionStatus">草稿</dd></div>
+      </dl>
+      <div class="preview-actions objection-preview-actions">
+        <button id="copyObjection" type="button" disabled>复制邮件材料</button>
+        <button id="downloadObjection" type="button" disabled>下载 JSON</button>
+        <a id="openObjectionMail" href="mailto:125668039@163.com" hidden>打开邮箱发送</a>
+      </div>
+      <p class="site-note" style="margin-top:12px;">材料只保存在你的浏览器和下载文件中，点击“打开邮箱发送”后才会进入邮件客户端。正式提交前请检查敏感信息。</p>
+    </aside>
+  </div>
+
+  <section class="tracking-privacy">
+    <div><span>DISPUTE PRIVACY</span><h2>先整理，再发送</h2></div>
+    <p>公开页面不会直接上传你的异议材料。请勿在页面中填写身份证号、银行卡、密码、验证码或完整合同隐私内容。涉及严重侵权、冒充、诈骗或人身安全问题，请同时向对应平台、域名注册商或当地专业机构求助。</p>
+  </section>
+</main>
+
+<footer class="rights-footer">
+  <span>© 2026 Bantan Rights · 权属异议 / 移除申请</span>
+  <div><a href="./index.html">版权总览</a><a href="./status.html">申请进度</a><a href="./site.html">权属查询</a><a href="./objection.html">异议 / 移除</a><a href="mailto:125668039@163.com">联系邮箱</a><a href="./admin.html">管理后台</a></div>
+</footer>
+
+<script src="./objection.js?v=1.0.0"></script>
+<script src="./rights-archive-v1.js?v=1.2.0"></script>
+</body>
+</html>
