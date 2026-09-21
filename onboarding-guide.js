@@ -6,19 +6,28 @@
   const forceStart = new URLSearchParams(location.search).get('guide') === '1';
 
   const steps = isIndex ? [
-    { kicker: 'BANTAN GUIDE', title: '欢迎回到万能枢纽', text: '用 30 秒了解搜索、AI、用户中心和常用入口。' },
+    { kicker: 'BANTAN GUIDE', title: '欢迎回到万能枢纽', text: '用一分钟了解搜索、工具、收藏、AI、用户中心和官方认证。' },
     { target: '#search_input', kicker: 'STEP 01', title: '从这里开始搜索', text: '输入关键词即可搜索站内资源；按 F 可以快速聚焦搜索框。' },
     { target: '#search_engine', kicker: 'STEP 02', title: '切换搜索引擎', text: '百度、Bing、Google 和豆包可以在这里切换，搜索结果会跳到对应网站。' },
-    { target: '#ai-fab', kicker: 'STEP 03', title: '需要帮助就找小绊谈', text: '点击右下角的 AI 助手，可以提问、推荐工具和排查常见问题。' },
-    { target: '#nav-user-btn', kicker: 'STEP 04', title: '这里是你的用户中心', text: '登录后可以查看头像、VIP、余额、收藏和账号设置。' },
+    { target: '#hero-tools-count', kicker: 'STEP 03', title: '查看工具数量', text: '这里会显示当前可用的工具数量，方便判断工具库规模。' },
+    { target: '#fav-section', kicker: 'STEP 04', title: '收藏常用工具', text: '点击工具卡片上的星标后，常用工具会集中显示在收藏区。' },
+    { target: '.nav-links', kicker: 'STEP 05', title: '使用顶部功能导航', text: '首页、工具箱、影音、开发、教育、电竞、更多和导航可以快速切换模块。' },
+    { target: '#ai-fab', kicker: 'STEP 06', title: '需要帮助就找小绊谈', text: '点击右下角的 AI 助手，可以提问、推荐工具和排查常见问题。' },
+    { target: '#nav-user-btn', kicker: 'STEP 07', title: '这里是你的用户中心', text: '登录后可以查看头像、VIP、余额、收藏和账号设置。' },
+    { target: '#footer-personal-links', kicker: 'STEP 08', title: '认识绊谈与个人资料', text: '关于绊谈、现在、工具栈、作品集和使用许可证都可以从这里进入。' },
+    { target: '#site-certification', kicker: 'STEP 09', title: '核对官方认证与编号', text: '页面底部会显示绊谈官网编号，点击后可查询私有权属登记。' },
     { kicker: 'READY', title: '可以开始使用了', text: '之后想重新查看，点击左下角的“新手指导”即可。' }
   ] : [
-    { kicker: 'BANTAN GUIDE', title: '欢迎来到绊谈', text: '用 30 秒了解搜索、工具分类、投资人和登录入口。' },
+    { kicker: 'BANTAN GUIDE', title: '欢迎来到绊谈', text: '用一分钟了解搜索、快捷词、工具、分类、投资人、登录和官方认证。' },
     { target: '#heroSearch', kicker: 'STEP 01', title: '先试试搜索', text: '输入关键词后按回车，可以直接搜索全网或查找工具。' },
-    { target: '#tools', kicker: 'STEP 02', title: '浏览精选工具', text: '这里整理了高频工具和常用入口，点击卡片即可访问。' },
-    { target: '#categories', kicker: 'STEP 03', title: '按分类寻找', text: 'AI、开发、教育、影音、电竞等分类都在这里。' },
-    { target: '#investors', kicker: 'STEP 04', title: '查看投资人记录', text: '页面底部记录了项目投资人和投资金额。' },
-    { target: '.nav-cta', kicker: 'STEP 05', title: '登录后解锁全部功能', text: '注册登录即可进入万能枢纽，使用完整工具集合。' },
+    { target: '.hero-tags', kicker: 'STEP 02', title: '使用快捷搜索词', text: '点击 AI 对话、翻译、塔罗、密码或网速等标签可以直接发起搜索。' },
+    { target: '#previewPanel', kicker: 'STEP 03', title: '查看实时预览', text: '右侧面板展示工具入口示例，帮助快速了解万能枢纽的结构。' },
+    { target: '#tools', kicker: 'STEP 04', title: '浏览精选工具', text: '这里整理了高频工具和常用入口，点击卡片即可访问。' },
+    { target: '#categories', kicker: 'STEP 05', title: '按分类寻找', text: 'AI、开发、教育、影音、电竞等分类都在这里。' },
+    { target: '#investors', kicker: 'STEP 06', title: '查看投资人记录', text: '页面底部记录了项目投资人和投资金额。' },
+    { target: '#faq', kicker: 'STEP 07', title: '查看常见问题', text: '登录、付费、AI 模型、数据安全和设备支持等问题集中在这里。' },
+    { target: '.nav-cta', kicker: 'STEP 08', title: '登录后解锁全部功能', text: '注册登录即可进入万能枢纽，使用完整工具集合。' },
+    { target: '#site-certification', kicker: 'STEP 09', title: '核对官方认证与编号', text: '页面底部会显示绊谈官网编号，点击后可查询私有权属登记。' },
     { kicker: 'READY', title: '介绍完成', text: '之后想重新查看，点击左下角的“新手指导”即可。' }
   ];
 
@@ -82,7 +91,17 @@
   }
 
   function targetElement(step) {
-    return step.target ? document.querySelector(step.target) : null;
+    if (!step.target) return null;
+    const element = document.querySelector(step.target);
+    if (!element) return null;
+    const rect = element.getBoundingClientRect();
+    const style = window.getComputedStyle(element);
+    return style.display !== 'none'
+      && style.visibility !== 'hidden'
+      && rect.width > 2
+      && rect.height > 2
+      ? element
+      : null;
   }
 
   function position() {
