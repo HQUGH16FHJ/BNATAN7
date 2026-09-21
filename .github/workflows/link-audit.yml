@@ -1,6 +1,11 @@
 name: Link audit
 
 on:
+  push:
+    paths:
+      - "**/*.md"
+  schedule:
+    - cron: "23 2 1 * *"
   workflow_dispatch:
 
 permissions:

@@ -1,0 +1,53 @@
+name: Build release assets
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build checksums
+        run: |
+          mkdir -p release
+          find . -type f \
+            -not -path "./.git/*" \
+            -not -path "./.github/*" \
+            -not -path "./release/*" \
+            -print0 | sort -z | xargs -0 sha256sum > release/SHA256SUMS.txt
+
+      - name: Build archive
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          if [ -z "$VERSION" ]; then VERSION="manual-${GITHUB_SHA:0:7}"; fi
+          tar \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude="release" \
+            -czf "release/bantan-online-${VERSION}.tar.gz" .
+          zip -qr "release/bantan-online-${VERSION}.zip" . \
+            -x ".git/*" ".github/*" "release/*"
+
+      - name: Upload to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/*.tar.gz
+            release/*.zip
+            release/SHA256SUMS.txt
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bantan-release-assets
+          path: release/

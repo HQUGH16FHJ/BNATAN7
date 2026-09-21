@@ -11,6 +11,12 @@
   </p>
 
   <p>
+    <a href="https://github.com/HQUGH16FHJ/BNATAN7/actions/workflows/site-quality.yml"><img src="https://github.com/HQUGH16FHJ/BNATAN7/actions/workflows/site-quality.yml/badge.svg" alt="Site quality"></a>
+    <a href="https://github.com/HQUGH16FHJ/BNATAN7/actions/workflows/verify-site-codes.yml"><img src="https://github.com/HQUGH16FHJ/BNATAN7/actions/workflows/verify-site-codes.yml/badge.svg" alt="Verify site codes"></a>
+    <a href="https://github.com/HQUGH16FHJ/BNATAN7/actions/workflows/codeql.yml"><img src="https://github.com/HQUGH16FHJ/BNATAN7/actions/workflows/codeql.yml/badge.svg" alt="CodeQL"></a>
+  </p>
+
+  <p>
     <a href="https://bantan.online/"><img src="https://img.shields.io/badge/官网-bantan.online-f59e0b?style=for-the-badge" alt="官网"></a>
     <a href="https://www.bantan.online/"><img src="https://img.shields.io/badge/WWW-www.bantan.online-38bdf8?style=for-the-badge" alt="WWW"></a>
     <a href="https://bantan.eu.cc/"><img src="https://img.shields.io/badge/备用域名-bantan.eu.cc-fb7185?style=for-the-badge" alt="备用域名"></a>
@@ -25,6 +31,8 @@
 [在线访问](#在线访问) · [探索绊谈](./explore.html) · [项目说明](#项目结构) · [贡献规范](./CONTRIBUTING.md) · [安全政策](./SECURITY.md) · [隐私说明](./PRIVACY.md) · [架构文档](./ARCHITECTURE.md) · [部署文档](./DEPLOYMENT.md) · [设计规范](./docs/DESIGN-SYSTEM.md) · [常见问题](./docs/FAQ.md) · [治理说明](./GOVERNANCE.md) · [版本发布](./RELEASE.md) · [更新日志](./CHANGELOG.md) · [使用许可](./LICENSE)
 
 [版本发布中心](https://bantan.online/releases.html) · [认证徽章生成器](https://bantan.online/badge.html) · [版权与授权中心](https://rights.bantan.online/)
+
+[GitHub 运维与仓库检查清单](./docs/GITHUB-OPERATIONS.md)
 
 ## 在线访问
 
