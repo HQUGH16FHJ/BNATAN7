@@ -5,15 +5,12 @@
 
   const numericAmounts = list.filter((item) => Number.isFinite(item.amount));
   const totalAmount = numericAmounts.reduce((sum, item) => sum + item.amount, 0);
-  const intentionCount = list.length - numericAmounts.length;
 
   const total = document.getElementById('investorTotal');
   const count = document.getElementById('investorCount');
-  const intention = document.getElementById('investorIntention');
 
   if (total) total.textContent = `${totalAmount} 元`;
   if (count) count.textContent = `${list.length} 位`;
-  if (intention) intention.textContent = `${intentionCount} 位`;
 
   grid.innerHTML = list.map((item, index) => {
     const initial = item.name.slice(0, 1);

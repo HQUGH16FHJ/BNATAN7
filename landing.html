@@ -1970,7 +1970,7 @@ nav#navbar {
 }
 .investor-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   max-width: 1100px;
   margin: 0 auto 16px;
@@ -2258,24 +2258,6 @@ nav#navbar {
         </div>
       </div>
     </div>
-</section>
-
-<!-- Investor Registry -->
-<section class="section sr-hidden investor-section" id="investors" aria-labelledby="investors-title">
-  <div class="container">
-    <div class="section-head reveal visible">
-      <div class="eyebrow"><span class="eyebrow-dot"></span> 项目投资记录</div>
-      <h2 id="investors-title">感谢每一位<span class="accent">支持绊谈的人</span></h2>
-      <p>以下为当前记录的投资人与投资意愿信息，姓名和金额按原始数据完整保留。</p>
-    </div>
-    <div class="investor-summary reveal visible" aria-label="投资记录汇总">
-      <article><span>已记录投资金额</span><strong id="investorTotal">0 元</strong></article>
-      <article><span>投资人 / 意愿记录</span><strong id="investorCount">0 位</strong></article>
-      <article><span>投资意愿</span><strong id="investorIntention">0 位</strong></article>
-    </div>
-    <div class="investor-grid reveal-stagger visible" id="investorGrid" aria-live="polite"></div>
-    <p class="investor-note">本模块仅用于记录支持与项目投入信息，不构成股权、收益承诺或任何形式的投资担保。</p>
-  </div>
 </section>
 
 <!-- Featured Tools Bento -->
@@ -2592,6 +2574,23 @@ nav#navbar {
         <div class="hot-tool-views">📈 5,891 次使用</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Investor Registry: public data rendered at the bottom of the page -->
+<section class="section sr-hidden investor-section" id="investors" aria-labelledby="investors-title">
+  <div class="container">
+    <div class="section-head reveal visible">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> 项目投资记录</div>
+      <h2 id="investors-title">感谢每一位<span class="accent">支持绊谈的人</span></h2>
+      <p>以下为网站底部展示的投资人信息，姓名与投资金额按提供的数据完整保留。</p>
+    </div>
+    <div class="investor-summary reveal visible" aria-label="投资记录汇总">
+      <article><span>已记录投资金额</span><strong id="investorTotal">0 元</strong></article>
+      <article><span>投资人记录</span><strong id="investorCount">0 位</strong></article>
+    </div>
+    <div class="investor-grid reveal-stagger visible" id="investorGrid" aria-live="polite"></div>
+    <p class="investor-note">本模块仅用于记录支持与项目投入信息，不构成股权、收益承诺或任何形式的投资担保。</p>
   </div>
 </section>
 
@@ -3121,16 +3120,16 @@ function smoothRedirect(url) {
   }
   var overlay = document.createElement('div');
   overlay.id = 'page-transition';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity 0.5s ease;';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;contain:paint;transform:translateZ(0);backface-visibility:hidden;transition:opacity 0.32s ease;';
   overlay.innerHTML = '<div style="position:absolute;inset:0;background:linear-gradient(135deg,#0a0805 0%,#0a0a1e 50%,#0a0805 100%);"></div>'
     + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;">'
-    + '<div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#fb7185);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#ffffff;font-family:Bricolage Grotesque,sans-serif;box-shadow:0 0 40px rgba(245,158,11,0.4),0 0 80px rgba(251,113,133,0.2);animation:transitionPulse 1.2s ease-in-out infinite;">绊</div>'
+    + '<div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#fb7185);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#ffffff;font-family:Bricolage Grotesque,sans-serif;transform:translateZ(0);backface-visibility:hidden;animation:transitionPulse 1.2s ease-in-out infinite;">绊</div>'
     + '<div style="color:#fff7ed;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.7;font-family:Outfit,sans-serif;">正在进入万能枢纽</div>'
     + '<div style="width:120px;height:2px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;"><div style="height:100%;width:30%;background:linear-gradient(90deg,#f59e0b,#fb7185);border-radius:2px;animation:transitionBar 1.2s ease-in-out infinite;"></div></div>'
     + '</div>';
   // 注入动画
   var style = document.createElement('style');
-  style.textContent = '@keyframes transitionPulse{0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(245,158,11,0.4),0 0 80px rgba(251,113,133,0.2)}50%{transform:scale(1.08);box-shadow:0 0 60px rgba(245,158,11,0.6),0 0 120px rgba(251,113,133,0.3)}}@keyframes transitionBar{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}';
+  style.textContent = '@keyframes transitionPulse{0%,100%{transform:translateZ(0) scale(1);opacity:.84}50%{transform:translateZ(0) scale(1.06);opacity:1}}@keyframes transitionBar{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}';
   document.head.appendChild(style);
   document.body.appendChild(overlay);
   // 触发淡入
@@ -3140,10 +3139,9 @@ function smoothRedirect(url) {
     // 同时让页面内容缩小模糊淡出
     var main = document.querySelectorAll('nav,section,footer,.modal-overlay');
     main.forEach(function(el) {
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease';
+      el.style.transition = 'opacity 0.32s ease, transform 0.32s ease';
       el.style.opacity = '0';
-      el.style.transform = 'scale(0.96)';
-      el.style.filter = 'blur(8px)';
+      el.style.transform = 'scale(0.99)';
     });
   });
   // 延迟跳转
