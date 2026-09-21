@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.9-rights-archive-4';
+const CACHE_NAME = 'bantan-static-v4.0.10-onboarding-v2';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -34,6 +34,15 @@ const CORE_ASSETS = [
   '/mascot-state.js',
   '/ui-interactions-v4.css',
   '/ui-interactions-v4.js',
+  '/onboarding-guide.css',
+  '/onboarding-guide.js',
+  '/site-certification.js',
+  '/investors.css',
+  '/investors-data.js',
+  '/investors.js',
+  '/profile-pages.css',
+  '/profile-pages.js',
+  '/profile.json',
   '/archive-v5.css',
   '/archive-v5.js',
   '/official-domains-v1.css',
@@ -140,6 +149,21 @@ self.addEventListener('fetch', event => {
           if (cached) return cached;
           return (await caches.match('/offline.html')) || caches.match('/landing.html');
         })
+    );
+    return;
+  }
+
+  if (request.destination === 'script' || request.destination === 'style') {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          if (response.ok && response.type === 'basic') {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request))
     );
     return;
   }

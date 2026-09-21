@@ -18005,7 +18005,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         // PWA Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js?v=4.0.2').then(function(registration) {
+                navigator.serviceWorker.register('./sw.js?v=4.0.3').then(function(registration) {
                     return registration.update();
                 }).catch(function() {});
             });
