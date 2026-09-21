@@ -52,6 +52,10 @@
           align-items: flex-start;
           flex-direction: column;
           width: min(calc(100% - 24px), 1140px);
+          padding: 10px 0 calc(12px + env(safe-area-inset-bottom));
+          border: 0;
+          border-radius: 0;
+          background: transparent;
         }
         #site-certification img { width: 140px; height: 32px; }
       }

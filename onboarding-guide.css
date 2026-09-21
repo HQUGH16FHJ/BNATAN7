@@ -152,6 +152,10 @@
     bottom: calc(12px + env(safe-area-inset-bottom));
   }
 
+  .onboarding-highlight {
+    display: none;
+  }
+
   .onboarding-card {
     right: 12px;
     bottom: calc(12px + env(safe-area-inset-bottom));

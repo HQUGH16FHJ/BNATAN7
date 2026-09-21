@@ -30,13 +30,13 @@ for (const file of files) {
 
   const depth = file.split("/").length - 1;
   const src = file.startsWith("copyright/")
-    ? "https://bantan.online/site-certification.js?v=1.0.0"
-    : `${"../".repeat(depth)}site-certification.js?v=1.0.0`;
+    ? "https://bantan.online/site-certification.js?v=1.0.1"
+    : `${"../".repeat(depth)}site-certification.js?v=1.0.1`;
   const tag = `<script src="${src}" defer></script>`;
 
   if (html.includes("site-certification.js")) {
     const normalized = html.replace(
-      /<script src="(?:\.\.\/)*site-certification\.js\?v=1\.0\.0" defer><\/script>/,
+      /<script src="(?:https:\/\/bantan\.online\/|(?:\.\.\/)*)site-certification\.js\?v=1\.0\.[01]" defer><\/script>/,
       tag
     );
     if (normalized !== html) {
