@@ -39,6 +39,11 @@ body {
   overflow-wrap: break-word;
 }
 
+html.device-compat-ready,
+html.device-compat-ready body:not(.has-contact-modal) {
+  overflow-y: auto;
+}
+
 body > main,
 body > section,
 body > footer,
@@ -216,6 +221,12 @@ html.device-ios :where(input:not([type="checkbox"]):not([type="radio"]), select,
 
 html.device-touch :where(.bnt-magnetic, .bnt-tilt) {
   transform: none !important;
+}
+
+html.bnt-scroll-recovered,
+html.bnt-scroll-recovered body {
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto !important;
 }
 
 html.device-touch :where(

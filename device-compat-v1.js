@@ -59,4 +59,90 @@
   } else {
     makeTablesScrollable();
   }
+
+  function installScrollRecovery() {
+    if (window.__bntScrollRecoveryInstalled) return;
+    window.__bntScrollRecoveryInstalled = true;
+
+    var blockers = [
+      '.bnt-search-overlay.show',
+      '.ai-settings-overlay.show',
+      '.modal-overlay.active',
+      '.legal-overlay.active',
+      '#onboardingRoot:not([hidden])',
+      '.article-reader.is-open',
+      '.photo-lightbox.is-open',
+      '.contact-modal:not([hidden])'
+    ];
+
+    function isVisible(element) {
+      if (!element) return false;
+      var rect = element.getBoundingClientRect();
+      var style = getComputedStyle(element);
+      return rect.width > 0 && rect.height > 0 &&
+        style.display !== 'none' && style.visibility !== 'hidden' &&
+        style.pointerEvents !== 'none';
+    }
+
+    function hasVisibleBlocker() {
+      return blockers.some(function (selector) {
+        return Array.prototype.some.call(document.querySelectorAll(selector), isVisible);
+      });
+    }
+
+    function isPageLocked() {
+      return getComputedStyle(document.documentElement).overflowY === 'hidden' ||
+        getComputedStyle(document.body).overflowY === 'hidden';
+    }
+
+    function isScrollableTarget(node) {
+      for (var element = node; element && element !== document.body; element = element.parentElement) {
+        var style = getComputedStyle(element);
+        if (/(auto|scroll|overlay)/.test(style.overflowY) &&
+            element.scrollHeight > element.clientHeight + 1) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function syncScrollRecovery() {
+      if (hasVisibleBlocker()) {
+        root.classList.remove('bnt-scroll-recovered');
+        return;
+      }
+      if (isPageLocked()) {
+        root.classList.add('bnt-scroll-recovered');
+      } else {
+        root.classList.remove('bnt-scroll-recovered');
+      }
+    }
+
+    document.addEventListener('wheel', function (event) {
+      syncScrollRecovery();
+      if (hasVisibleBlocker() || !isPageLocked() || isScrollableTarget(event.target)) return;
+      event.preventDefault();
+      root.classList.add('bnt-scroll-recovered');
+      window.scrollBy(0, event.deltaY);
+    }, { capture: true, passive: false });
+
+    function scheduleSync() {
+      syncScrollRecovery();
+      setTimeout(syncScrollRecovery, 300);
+      setTimeout(syncScrollRecovery, 1200);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scheduleSync, { once: true });
+    } else {
+      scheduleSync();
+    }
+    window.addEventListener('pageshow', scheduleSync);
+    window.addEventListener('focus', scheduleSync);
+    document.addEventListener('visibilitychange', scheduleSync);
+    document.addEventListener('pointerdown', scheduleSync, { passive: true });
+    document.addEventListener('keydown', scheduleSync);
+  }
+
+  installScrollRecovery();
 })();
