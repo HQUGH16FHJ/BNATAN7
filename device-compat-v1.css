@@ -42,6 +42,7 @@ body {
 html.device-compat-ready,
 html.device-compat-ready body:not(.has-contact-modal) {
   overflow-y: auto;
+  overscroll-behavior-y: auto !important;
 }
 
 body > main,

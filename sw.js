@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.15-passive-onboarding';
+const CACHE_NAME = 'bantan-static-v4.0.16-wheel-chain-fix';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
