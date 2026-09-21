@@ -17,6 +17,8 @@ const requiredFiles = [
   'profile-pages.css',
   'profile-pages.js',
   'site-certification.js',
+  'onboarding-guide.css',
+  'onboarding-guide.js',
   'unicorn-index.json',
   'investors-data.js',
   'investors.js',
