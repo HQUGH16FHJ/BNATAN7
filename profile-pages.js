@@ -79,7 +79,7 @@
     }
   }
 
-  fetch('./profile.json', { headers: { accept: 'application/json' }, cache: 'no-cache' })
+  fetch('./profile.json?v=1.0.1', { headers: { accept: 'application/json' }, cache: 'no-cache' })
     .then((response) => response.json())
     .then(init)
     .catch(() => {});
