@@ -1339,7 +1339,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
   contain: paint;
   transform: translateZ(0);
   backface-visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
 }
 .page-loader.hidden { opacity: 0; visibility: hidden; }
 .loader-logo {
@@ -3709,27 +3709,32 @@ document.addEventListener('keydown', function(e) {
     var loader = document.getElementById('pageLoader');
     if (!loader) return;
     hidden = true;
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        loader.classList.add('hidden');
-        setTimeout(function() {
-          var hints = document.getElementById('kbdHints');
-          if (hints) hints.classList.add('visible');
-          setTimeout(function() { if (hints) hints.classList.remove('visible'); }, 5000);
-        }, 800);
-      });
-    });
+    setTimeout(function() {
+      loader.classList.add('hidden');
+      setTimeout(function() {
+        var hints = document.getElementById('kbdHints');
+        if (hints) hints.classList.add('visible');
+        setTimeout(function() { if (hints) hints.classList.remove('visible'); }, 5000);
+      }, 800);
+    }, 50);
   }
-  window.addEventListener('load', function() {
+  function scheduleLoaderHide() {
     var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([
       fontsReady.catch(function() {}),
-      new Promise(function(resolve) { setTimeout(resolve, 1200); })
+      new Promise(function(resolve) { setTimeout(resolve, 700); })
     ]).then(function() {
-      setTimeout(hideLoader, 120);
+      setTimeout(hideLoader, 60);
     });
-    setTimeout(hideLoader, 2600);
-  }, { once: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scheduleLoaderHide, { once: true });
+  } else {
+    scheduleLoaderHide();
+  }
+  window.addEventListener('load', scheduleLoaderHide, { once: true });
+  setTimeout(hideLoader, 1800);
 })();
 
 // --- Real-time Clock ---
@@ -4274,7 +4279,7 @@ function showContact(type) {
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
 <script src="./investors-data.js?v=1.0.1"></script>
 <script src="./investors.js?v=1.0.1"></script>
-<script src="./onboarding-guide.js?v=1.0.2"></script>
+<script src="./onboarding-guide.js?v=1.0.3"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());

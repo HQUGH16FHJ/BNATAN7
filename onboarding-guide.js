@@ -73,6 +73,7 @@
 
   let current = -1;
   let raf = 0;
+  let lastWheelStep = 0;
 
   function isCompleted() {
     try {
@@ -172,14 +173,12 @@
     prev.disabled = current === 0;
     next.textContent = current === steps.length - 1 ? '完成' : '下一步';
     root.hidden = false;
-    document.body.style.overflow = 'hidden';
   }
 
   function close(mark = true) {
     if (mark) markCompleted();
     root.hidden = true;
     current = -1;
-    document.body.style.overflow = '';
   }
 
   function start() {
@@ -205,6 +204,15 @@
     if (event.key === 'ArrowRight') next.click();
     if (event.key === 'ArrowLeft') prev.click();
   });
+  document.addEventListener('wheel', (event) => {
+    if (root.hidden || Math.abs(event.deltaY) < 8) return;
+    event.preventDefault();
+    const now = Date.now();
+    if (now - lastWheelStep < 420) return;
+    lastWheelStep = now;
+    if (event.deltaY > 0) next.click();
+    else prev.click();
+  }, { passive: false });
   window.addEventListener('resize', schedulePosition, { passive: true });
   window.addEventListener('scroll', schedulePosition, { passive: true });
 
