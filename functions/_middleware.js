@@ -10,7 +10,11 @@ export async function onRequest(context) {
     return context.next();
   }
 
-  if (url.pathname === '/device-compat-v1.css' || url.pathname === '/device-compat-v1.js') {
+  if (
+    url.pathname === '/device-compat-v1.css' ||
+    url.pathname === '/device-compat-v1.js' ||
+    url.pathname === '/archive-interface-v1.css'
+  ) {
     return context.next();
   }
 

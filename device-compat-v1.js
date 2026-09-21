@@ -17,6 +17,28 @@
   root.classList.toggle('device-mac', mac);
   root.classList.add('device-compat-ready');
 
+  var pagePath = location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
+  var pageFile = pagePath.split('/').pop() || '';
+  var isRightsSurface = location.hostname === 'rights.bantan.online' || pagePath.indexOf('/copyright/') === 0;
+  var isRightsAdmin = /\/copyright\/admin(?:\.html)?$/.test(pagePath);
+  var isRootIndex = pagePath === '/' || pagePath === '/index' || pagePath === '/index.html';
+  var excludedFromArchive = isRootIndex ||
+    pageFile === 'landing' ||
+    pageFile === 'landing.html' ||
+    pageFile === 'admin' ||
+    pageFile === 'admin.html' ||
+    pageFile === 'create-vip' ||
+    pageFile === 'create-vip.html' ||
+    pageFile === 'og-image.html' ||
+    isRightsAdmin;
+
+  if (!excludedFromArchive) {
+    root.classList.add('archive-page');
+  }
+  if (isRightsSurface && !isRightsAdmin) {
+    root.classList.add('archive-page', 'archive-center');
+  }
+
   function updateViewport() {
     var viewport = window.visualViewport;
     var height = viewport ? viewport.height : window.innerHeight;

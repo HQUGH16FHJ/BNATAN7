@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.16-wheel-chain-fix';
+const CACHE_NAME = 'bantan-static-v4.0.19-archive-redesign-v2';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -38,6 +38,7 @@ const CORE_ASSETS = [
   '/onboarding-guide.js',
   '/device-compat-v1.css',
   '/device-compat-v1.js',
+  '/archive-interface-v1.css',
   '/site-certification.js',
   '/investors.css',
   '/investors-data.js',

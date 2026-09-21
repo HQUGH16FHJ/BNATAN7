@@ -1,0 +1,448 @@
+:root {
+  --arc-bg: #0a0d12;
+  --arc-bg-deep: #06080b;
+  --arc-panel: #111720;
+  --arc-panel-strong: #151b25;
+  --arc-text: #f6f3ea;
+  --arc-sub: #b8c0ce;
+  --arc-muted: #828d9f;
+  --arc-line: rgba(196, 208, 226, 0.15);
+  --arc-line-strong: rgba(196, 208, 226, 0.26);
+  --arc-accent: #5b7cff;
+  --arc-signal: #35d39a;
+  --arc-radius: 12px;
+}
+
+html.archive-page {
+  color-scheme: dark;
+  background: var(--arc-bg);
+}
+
+html.archive-page body {
+  --site-bg: var(--arc-bg);
+  --site-panel: var(--arc-panel);
+  --site-panel-strong: var(--arc-panel-strong);
+  --site-text: var(--arc-text);
+  --site-sub: var(--arc-sub);
+  --site-muted: var(--arc-muted);
+  --site-border: var(--arc-line);
+  --site-amber: var(--arc-accent);
+  --site-coral: var(--arc-accent);
+  --site-blue: var(--arc-accent);
+  --profile-bg: var(--arc-bg);
+  --profile-text: var(--arc-text);
+  --profile-sub: var(--arc-sub);
+  --profile-muted: var(--arc-muted);
+  --profile-line: var(--arc-line);
+  --profile-card: var(--arc-panel);
+  --profile-amber: var(--arc-accent);
+  --profile-blue: var(--arc-accent);
+  --profile-coral: var(--arc-accent);
+  --bg: var(--arc-bg);
+  --panel: var(--arc-panel);
+  --panel-strong: var(--arc-panel-strong);
+  --text: var(--arc-text);
+  --sub: var(--arc-sub);
+  --muted: var(--arc-muted);
+  --line: var(--arc-line);
+  --amber: var(--arc-accent);
+  --coral: var(--arc-accent);
+  --blue: var(--arc-accent);
+  position: relative;
+  min-width: 0;
+  color: var(--arc-text);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px) 0 0 / 96px 100%,
+    linear-gradient(180deg, var(--arc-bg), var(--arc-bg-deep));
+  font-family: "Bahnschrift", "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+  line-height: 1.72;
+}
+
+html.archive-page body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 88% 8%, rgba(91, 124, 255, 0.1), transparent 28rem),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.018), transparent 44%);
+}
+
+html.archive-page body ::selection {
+  color: #071019;
+  background: var(--arc-accent);
+}
+
+html.archive-page body :focus-visible {
+  outline: 2px solid var(--arc-accent);
+  outline-offset: 4px;
+}
+
+html.archive-page body :where(
+  .site-topbar,
+  .profile-nav,
+  .rights-header,
+  .certificate-toolbar
+) {
+  top: max(0px, env(safe-area-inset-top));
+  min-height: 66px;
+  border: 0;
+  border-bottom: 1px solid var(--arc-line);
+  border-radius: 0;
+  background: rgba(7, 9, 13, 0.94);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+html.archive-page body :where(
+  .site-topbar,
+  .profile-nav,
+  .rights-header
+) {
+  width: min(calc(100% - 28px), 1320px);
+}
+
+html.archive-page body :where(.site-brand__mark, .profile-brand i, .rights-brand__mark) {
+  border-radius: 4px;
+  color: #06101e;
+  background: var(--arc-accent);
+  box-shadow: none;
+}
+
+html.archive-page body :where(.site-nav a, .profile-nav nav a, .rights-header nav a) {
+  border-radius: 3px;
+  color: var(--arc-muted);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+html.archive-page body :where(.site-nav a:hover, .profile-nav nav a:hover, .rights-header nav a:hover) {
+  color: var(--arc-text);
+  background: rgba(91, 124, 255, 0.1);
+}
+
+html.archive-page body :where(.site-nav a[aria-current="page"], .profile-nav nav a.is-active) {
+  color: #fff;
+  background: var(--arc-accent);
+}
+
+html.archive-page body :where(.site-shell, .profile-shell) {
+  width: min(calc(100% - 36px), 1320px);
+  padding-top: clamp(52px, 8vw, 112px);
+  padding-bottom: clamp(72px, 10vw, 136px);
+}
+
+html.archive-page body :where(.site-hero, .profile-hero) {
+  position: relative;
+  max-width: none;
+  min-height: 0;
+  margin: 0 0 clamp(44px, 7vw, 88px);
+  padding: 0 0 clamp(36px, 5vw, 68px);
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid var(--arc-line-strong);
+  border-radius: 0;
+  background: transparent;
+}
+
+html.archive-page body :where(.site-hero, .profile-hero)::after {
+  display: none;
+}
+
+html.archive-page body :where(.profile-hero) {
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: end;
+}
+
+html.archive-page body :where(.site-title, .profile-hero h1, .rights-hero h1, .tracking-hero h1) {
+  max-width: 12ch;
+  margin-top: 0;
+  font-family: "Bahnschrift", "Microsoft YaHei UI", sans-serif;
+  font-size: clamp(2.8rem, 7.5vw, 6rem);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+html.archive-page body :where(.site-title em, .profile-hero h1 em, .rights-hero h1 em, .tracking-hero h1 em) {
+  color: var(--arc-accent);
+  font-style: normal;
+}
+
+html.archive-page body :where(.site-lead, .profile-hero p) {
+  max-width: 68ch;
+  color: var(--arc-sub);
+  font-size: clamp(14px, 1.5vw, 17px);
+  line-height: 1.85;
+}
+
+html.archive-page body :where(.site-kicker, .profile-kicker) {
+  display: none;
+}
+
+html.archive-page body :where(
+  .site-card,
+  .profile-card,
+  .profile-status-card,
+  .release-card,
+  .compact-version,
+  .featured-version,
+  .version-card,
+  .official-domain,
+  .api-endpoint,
+  .ops-panel,
+  .ops-metric,
+  .ops-check,
+  .badge-preview-panel,
+  .share-card,
+  .qr-panel,
+  .premium-tool-card,
+  .lic-card,
+  .investor-card,
+  .registry-card,
+  .directory-card,
+  .rights-notice,
+  .rights-authorize
+) {
+  border: 0;
+  border-top: 1px solid var(--arc-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+html.archive-page body :where(
+  .site-card,
+  .profile-card,
+  .release-card,
+  .official-domain,
+  .api-endpoint,
+  .ops-panel,
+  .registry-card,
+  .directory-card
+) {
+  padding-top: clamp(18px, 2vw, 28px);
+}
+
+html.archive-page body :where(
+  .site-card h3,
+  .profile-card h3,
+  .release-card h3,
+  .official-domain h3,
+  .api-endpoint h3
+) {
+  font-family: "Bahnschrift", "Microsoft YaHei UI", sans-serif;
+  letter-spacing: -0.015em;
+}
+
+html.archive-page body :where(.site-grid, .profile-grid, .release-grid, .official-domains__grid, .api-endpoints) {
+  gap: clamp(14px, 2vw, 24px);
+}
+
+html.archive-page body :where(
+  .site-actions a,
+  .profile-actions a,
+  .profile-actions button,
+  .official-domain__open,
+  .official-domain__copy,
+  .api-endpoint button,
+  .contact-modal__primary,
+  .rights-button,
+  button,
+  input,
+  select,
+  textarea
+) {
+  border-radius: 3px;
+}
+
+html.archive-page body :where(
+  .site-actions a,
+  .profile-actions a,
+  .profile-actions button,
+  .official-domain__open,
+  .official-domain__copy,
+  .api-endpoint button,
+  .rights-button
+) {
+  border-color: var(--arc-line-strong);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+html.archive-page body :where(
+  .site-actions a:first-child,
+  .profile-actions a:first-child,
+  .official-domain__open,
+  .rights-button.is-primary
+) {
+  color: #06101e;
+  border-color: var(--arc-accent);
+  background: var(--arc-accent);
+}
+
+html.archive-page body :where(.site-footer, .profile-footer) {
+  border-top: 1px solid var(--arc-line-strong);
+  color: var(--arc-muted);
+}
+
+html.archive-page body :where(.site-card, .profile-card, .release-card, .official-domain, .api-endpoint) :is(a, button) {
+  text-underline-offset: 4px;
+}
+
+html.archive-page body :where(pre, code, kbd, samp) {
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+}
+
+html.archive-page body :where(table) {
+  border-collapse: collapse;
+}
+
+html.archive-page body :where(th, td) {
+  border-bottom: 1px solid var(--arc-line);
+}
+
+html.archive-page body :where(.ai-settings-card, .logout-confirm-card, .modal, .legal-modal, .contact-modal__panel) {
+  border-radius: 12px;
+  background: var(--arc-panel-strong);
+}
+
+/* The rights center becomes a light registry desk inside the same system. */
+html.archive-center body {
+  --bg: #ebe7de;
+  --panel: #f7f4ed;
+  --panel-strong: #fffdf8;
+  --text: #10151c;
+  --sub: #44505f;
+  --muted: #687382;
+  --line: rgba(16, 21, 28, 0.15);
+  --amber: #2457d6;
+  --coral: #2457d6;
+  --blue: #2457d6;
+  --green: #0f7a57;
+  --archive-ink: #10151c;
+  --archive-paper: #ebe7de;
+  --archive-amber: #2457d6;
+  --archive-green: #0f7a57;
+  --archive-blue: #2457d6;
+  --archive-coral: #2457d6;
+  --archive-line: rgba(16, 21, 28, 0.14);
+  --archive-panel: #fffdf8;
+  color: #10151c;
+  background:
+    linear-gradient(90deg, rgba(16, 21, 28, 0.055) 1px, transparent 1px) 0 0 / 96px 100%,
+    #ebe7de !important;
+}
+
+html.archive-center body::before,
+html.archive-center body::after {
+  display: none !important;
+}
+
+html.archive-center body :where(.rights-header, .certificate-toolbar) {
+  color: #10151c;
+  border-bottom-color: rgba(16, 21, 28, 0.18);
+  background: rgba(247, 244, 237, 0.94);
+  box-shadow: 0 16px 42px rgba(40, 47, 58, 0.12);
+}
+
+html.archive-center body :where(.rights-brand, .rights-header nav a, .certificate-toolbar a) {
+  color: #10151c;
+}
+
+html.archive-center body :where(.rights-header nav a:hover) {
+  color: #10151c;
+  background: rgba(36, 87, 214, 0.1);
+}
+
+html.archive-center body :where(
+  .rights-hero,
+  .console-hero__main,
+  .tracking-hero,
+  .platform-hero,
+  .workflow-card,
+  .registration-form-wrap,
+  .registration-preview,
+  .rights-stats article,
+  .registry-card,
+  .directory-card,
+  .permission-table,
+  .rights-authorize,
+  .rights-notice,
+  .admin-login,
+  .admin-console,
+  .admin-metric,
+  .admin-record,
+  .admin-detail,
+  .api-playground,
+  .ops-panel,
+  .ops-metric,
+  .ops-check
+) {
+  color: #10151c;
+  border-color: rgba(16, 21, 28, 0.15) !important;
+  background: rgba(255, 253, 248, 0.84) !important;
+  box-shadow: 0 18px 50px rgba(40, 47, 58, 0.08);
+}
+
+html.archive-center body :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  span,
+  strong,
+  small,
+  label,
+  dt,
+  dd,
+  li
+) {
+  color: inherit;
+}
+
+html.archive-center body :where(.rights-hero__copy > p, .rights-notice p, .registry-card p, .directory-card p) {
+  color: #4d5967;
+}
+
+html.archive-center body :where(input, select, textarea) {
+  color: #10151c;
+  border-color: rgba(16, 21, 28, 0.2);
+  background: #fffdf9;
+}
+
+html.archive-center body :where(input::placeholder, textarea::placeholder) {
+  color: #78828e;
+}
+
+html.archive-center body :where(.contact-modal__panel) {
+  color: #10151c;
+  background: #fffdf8;
+}
+
+@media (max-width: 760px) {
+  html.archive-page body :where(.site-shell, .profile-shell) {
+    width: min(calc(100% - 24px), 1320px);
+  }
+
+  html.archive-page body :where(.profile-hero) {
+    grid-template-columns: 1fr;
+  }
+
+  html.archive-page body :where(.site-title, .profile-hero h1, .rights-hero h1, .tracking-hero h1) {
+    font-size: clamp(2.45rem, 13vw, 4.4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.archive-page body *,
+  html.archive-page body *::before,
+  html.archive-page body *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
