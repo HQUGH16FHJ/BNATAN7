@@ -27,11 +27,25 @@ for (const file of files) {
   if (ignored.has(path.basename(file))) continue;
   const absolute = path.join(root, file);
   const html = await readFile(absolute, "utf8");
-  if (html.includes("site-certification.js")) continue;
 
   const depth = file.split("/").length - 1;
-  const src = `${"../".repeat(depth)}site-certification.js?v=1.0.0`;
+  const src = file.startsWith("copyright/")
+    ? "https://bantan.online/site-certification.js?v=1.0.0"
+    : `${"../".repeat(depth)}site-certification.js?v=1.0.0`;
   const tag = `<script src="${src}" defer></script>`;
+
+  if (html.includes("site-certification.js")) {
+    const normalized = html.replace(
+      /<script src="(?:\.\.\/)*site-certification\.js\?v=1\.0\.0" defer><\/script>/,
+      tag
+    );
+    if (normalized !== html) {
+      await writeFile(absolute, normalized, "utf8");
+      updated += 1;
+    }
+    continue;
+  }
+
   const bodyIndex = html.toLowerCase().lastIndexOf("</body>");
   if (bodyIndex < 0) continue;
   const next = `${html.slice(0, bodyIndex)}${tag}\n${html.slice(bodyIndex)}`;
