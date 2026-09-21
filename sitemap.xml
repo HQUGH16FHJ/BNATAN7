@@ -36,6 +36,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url><loc>https://bantan.online/now.html</loc><lastmod>2026-09-21</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bantan.online/uses.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://bantan.online/links.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bantan.online/services.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bantan.online/portfolio.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bantan.online/explore.html</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bantan.online/trust.html</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://bantan.online/domain.html</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>

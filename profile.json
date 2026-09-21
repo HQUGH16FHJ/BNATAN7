@@ -1,0 +1,53 @@
+{
+  "name": "绊谈 Bantan",
+  "owner": "刘骐硕",
+  "role": "网站开发者 / 工具平台维护者",
+  "tagline": "连接需求，点亮可能",
+  "timezone": "Asia/Shanghai",
+  "status": "持续开发中",
+  "contact": {
+    "wechat": "HQUGH16FHJ",
+    "qq": "1429616034",
+    "email": "g125668039@163.com"
+  },
+  "links": [
+    { "label": "官方网站", "value": "bantan.online", "href": "https://bantan.online/" },
+    { "label": "GitHub", "value": "HQUGH16FHJ", "href": "https://github.com/HQUGH16FHJ" },
+    { "label": "版权中心", "value": "rights.bantan.online", "href": "https://rights.bantan.online/" },
+    { "label": "微信", "value": "HQUGH16FHJ", "copy": true },
+    { "label": "QQ", "value": "1429616034", "copy": true },
+    { "label": "邮箱", "value": "g125668039@163.com", "href": "mailto:g125668039@163.com" }
+  ],
+  "stack": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Cloudflare Pages",
+    "GitHub Actions",
+    "PWA",
+    "Canvas",
+    "WebGL"
+  ],
+  "devices": [
+    { "title": "编辑与调试", "desc": "VS Code、Chrome DevTools、移动端浏览器调试" },
+    { "title": "部署与自动化", "desc": "Cloudflare Pages、GitHub Actions、Workers、Pages Functions" },
+    { "title": "视觉与素材", "desc": "SVG、CSS 动效、Canvas、二维码与分享图生成" }
+  ],
+  "now": [
+    { "title": "维护万能枢纽", "desc": "持续检查 600+ 工具入口、搜索、收藏和移动端体验。" },
+    { "title": "完善版权中心", "desc": "补充登记、异议、证书、API 和网站目录能力。" },
+    { "title": "整理个人归档", "desc": "把项目、服务、链接、工具栈和重要节点集中整理。" }
+  ],
+  "services": [
+    { "title": "免费远程电脑优化", "desc": "排查卡顿、启动项、驱动、温度和常见系统问题。" },
+    { "title": "网站设计与开发", "desc": "个人主页、工具网站、导航站和品牌展示页面。" },
+    { "title": "移动端兼容修复", "desc": "微信、Android、iPhone、Edge 和桌面浏览器的显示与交互修复。" },
+    { "title": "长期维护支持", "desc": "内容更新、资源检查、发布流程和 Cloudflare 部署维护。" }
+  ],
+  "portfolio": [
+    { "title": "绊谈 · 万能枢纽", "type": "工具平台", "desc": "600+ 在线工具、AI 助手、搜索导航、用户中心和 PWA。", "href": "https://bantan.online/" },
+    { "title": "刘骐硕个人博客", "type": "个人网站", "desc": "个人文章、照片、影像和生活记录。", "href": "https://llllkk.online/" },
+    { "title": "Bantan Rights", "type": "版权中心", "desc": "网站权属登记、公开查询、证书、异议和授权入口。", "href": "https://rights.bantan.online/" },
+    { "title": "投资人记录", "type": "数据页面", "desc": "集中展示项目投资人与投资金额的结构化页面。", "href": "https://bantan.online/investors.html" }
+  ]
+}
