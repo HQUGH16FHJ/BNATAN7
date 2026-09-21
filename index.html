@@ -18006,7 +18006,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         // PWA Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js?v=4.0.7').then(function(registration) {
+                navigator.serviceWorker.register('./sw.js?v=4.0.8').then(function(registration) {
                     return registration.update();
                 }).catch(function() {});
             });
@@ -18223,7 +18223,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
 <script src="./investors-data.js?v=1.0.1"></script>
 <script src="./investors.js?v=1.0.1"></script>
-<script src="./onboarding-guide.js?v=1.0.3"></script>
+<script src="./onboarding-guide.js?v=1.0.4"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());

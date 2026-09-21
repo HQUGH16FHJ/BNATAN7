@@ -216,7 +216,7 @@
   window.addEventListener('resize', schedulePosition, { passive: true });
   window.addEventListener('scroll', schedulePosition, { passive: true });
 
-  if (forceStart || !isCompleted()) {
-    window.setTimeout(start, isIndex ? 2300 : 1500);
+  if (forceStart) {
+    window.setTimeout(start, isIndex ? 500 : 350);
   }
 })();

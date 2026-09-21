@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.14-global-scroll-fix';
+const CACHE_NAME = 'bantan-static-v4.0.15-passive-onboarding';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
