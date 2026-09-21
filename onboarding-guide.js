@@ -91,7 +91,7 @@
   }
 
   function targetElement(step) {
-    if (!step.target) return null;
+    if (!step || !step.target) return null;
     const element = document.querySelector(step.target);
     if (!element) return null;
     const rect = element.getBoundingClientRect();
@@ -106,6 +106,7 @@
 
   function position() {
     const step = steps[current];
+    if (!step) return;
     const target = targetElement(step);
     if (!target) {
       highlight.style.opacity = '0';

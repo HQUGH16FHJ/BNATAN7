@@ -5,6 +5,7 @@
   const page = path.endsWith('/index.html') ? 'index' : path.endsWith('/landing.html') || path.endsWith('/') ? 'landing' : '';
   if (!page) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   const features = [
     ['AI 对话', 'DeepSeek · 豆包 · Kimi', '✦'],
@@ -57,7 +58,7 @@
   }
 
   function addHeroParallax() {
-    if (page !== 'landing' || reduced) return;
+    if (page !== 'landing' || reduced || coarse) return;
     const hero = document.querySelector('.hero');
     const left = document.querySelector('.hero-left');
     const right = document.querySelector('.hero-right');

@@ -14,6 +14,7 @@
           ? 'index'
           : 'landing';
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COARSE_POINTER = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   const PROVIDERS = [
     { id: 'baidu', name: '百度', desc: '中文综合搜索', icon: '百', mode: 'web', color: 'linear-gradient(135deg,#2563eb,#38bdf8)', url: 'https://www.baidu.com/s?wd={q}' },
@@ -124,7 +125,7 @@
   }
 
   function addTilt() {
-    if (REDUCED_MOTION || !window.matchMedia('(hover: hover)').matches) return;
+    if (REDUCED_MOTION || COARSE_POINTER || !window.matchMedia('(hover: hover)').matches) return;
     document.querySelectorAll('.bento-cell, .category-card, .version-card, .featured-version, .lic-card').forEach(card => {
       card.classList.add('bnt-tilt');
       card.classList.add('bnt-spotlight');
@@ -143,7 +144,7 @@
   }
 
   function addMagneticButtons() {
-    if (REDUCED_MOTION || !window.matchMedia('(hover: hover)').matches) return;
+    if (REDUCED_MOTION || COARSE_POINTER || !window.matchMedia('(hover: hover)').matches) return;
     document.querySelectorAll('.nav-cta, .search-btn, .btn-primary, .bnt-search-submit, .profile-v2-action').forEach(button => {
       button.classList.add('bnt-magnetic');
       button.addEventListener('pointermove', event => {
@@ -162,6 +163,7 @@
     if (REDUCED_MOTION) return;
     const colors = ['#38bdf8', '#f59e0b', '#fb7185', '#34d399'];
     document.addEventListener('pointerdown', event => {
+      if (COARSE_POINTER || event.pointerType === 'touch') return;
       const target = event.target.closest('button, a, .bento-cell, .tool-card, .version-card, .lic-card');
       if (!target) return;
       for (let i = 0; i < 6; i++) {

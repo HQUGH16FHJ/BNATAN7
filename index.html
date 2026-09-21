@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="dark" style="background:#0a0805"><head>
 <meta charset="UTF-8">
 <style id="critical-first-paint">html,body{background:#0a0805;color:#fff7ed}html{color-scheme:dark}#boot-screen{background:#0a0805}</style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="baidu-site-verification" content="codeva-B7zYgqNLsM" />
 <title>绊谈 · 万能枢纽 - 600+ 免费在线工具一站直达 | bantan.online</title>
 <meta name="description" content="绊谈（bantan.online）是中文在线工具聚合平台，提供 600+ 免费工具：AI 对话、在线翻译、塔罗占卜、星座查询、开发者工具、教育学习、电竞优化。无需下载，注册即用。">
@@ -6545,6 +6545,7 @@ input, select, textarea, button {
 <link rel="stylesheet" href="./investors.css?v=1.0.0">
 <link rel="stylesheet" href="./onboarding-guide.css?v=1.0.1">
 <style id="mobile-dock-kill-switch">.bnt-mobile-dock{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}</style>
+  <link rel="stylesheet" href="./device-compat-v1.css?v=1.0.1">
 </head>
 <body>
 <style>
@@ -18005,7 +18006,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         // PWA Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js?v=4.0.3').then(function(registration) {
+                navigator.serviceWorker.register('./sw.js?v=4.0.4').then(function(registration) {
                     return registration.update();
                 }).catch(function() {});
             });
@@ -18222,7 +18223,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
 <script src="./investors-data.js?v=1.0.1"></script>
 <script src="./investors.js?v=1.0.1"></script>
-<script src="./onboarding-guide.js?v=1.0.1"></script>
+<script src="./onboarding-guide.js?v=1.0.2"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());
@@ -18231,4 +18232,5 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 })();
 </script>
 <script src="site-certification.js?v=1.0.1" defer></script>
+  <script src="./device-compat-v1.js?v=1.0.1" defer></script>
 </body></html>

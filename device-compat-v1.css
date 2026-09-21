@@ -1,0 +1,403 @@
+:root {
+  --bnt-vh: 100vh;
+  --bnt-dvh: 100vh;
+  --bnt-safe-top: env(safe-area-inset-top, 0px);
+  --bnt-safe-right: env(safe-area-inset-right, 0px);
+  --bnt-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bnt-safe-left: env(safe-area-inset-left, 0px);
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --bnt-dvh: 100dvh;
+  }
+}
+
+@supports (height: 100svh) {
+  :root {
+    --bnt-vh: 100svh;
+  }
+}
+
+html {
+  min-width: 0;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: max(18px, var(--bnt-safe-top));
+}
+
+@supports (overflow: clip) {
+  html {
+    overflow-x: clip;
+  }
+}
+
+body {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+body > main,
+body > section,
+body > footer,
+body > header {
+  max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+  min-width: 0;
+  max-width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+pre,
+code,
+kbd,
+samp {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+:where(a, button, input, select, textarea, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 3px;
+}
+
+:where(.bnt-search-panel, .ai-settings-card, .logout-confirm-card, .avatar-studio-card,
+  .legal-modal, .modal, .onboarding-card, .contact-modal__panel, [role="dialog"]) {
+  max-height: calc(var(--bnt-dvh) - max(24px, var(--bnt-safe-top) + var(--bnt-safe-bottom))) !important;
+  overscroll-behavior: contain;
+}
+
+:where(.bnt-search-overlay, .ai-settings-overlay, .modal-overlay, .legal-overlay) {
+  padding-top: max(12px, var(--bnt-safe-top)) !important;
+  padding-right: max(12px, var(--bnt-safe-right)) !important;
+  padding-bottom: max(12px, var(--bnt-safe-bottom)) !important;
+  padding-left: max(12px, var(--bnt-safe-left)) !important;
+  overscroll-behavior: contain;
+}
+
+:where(.bnt-table-scroll, .table-wrap, [class*="table-wrap"], [class*="table-scroll"]) {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+:where(table) {
+  max-width: 100%;
+}
+
+:where(th, td) {
+  overflow-wrap: anywhere;
+}
+
+html.device-ios :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  font-size: max(16px, 1em);
+}
+
+@media (hover: none), (pointer: coarse) {
+  :where(
+    button,
+    [role="button"],
+    .btn,
+    .nav-cta,
+    .nav-login-btn,
+    .modal-tab,
+    .site-nav a,
+    .profile-nav nav a,
+    .nav-links a,
+    .bnt-provider,
+    .bnt-filter-chip,
+    .bnt-license-mode,
+    .bnt-archive-action,
+    .bnt-search-trigger,
+    .bnt-search-submit,
+    .official-domain__open,
+    .official-domain__copy,
+    .profile-actions a,
+    .profile-actions button,
+    .api-endpoint button,
+    .contact-modal__primary
+  ) {
+    min-height: 44px !important;
+  }
+
+  :where(.site-nav a, .profile-nav nav a, .nav-links a, .modal-tab) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :where(
+    .modal-close,
+    .nav-mobile-toggle,
+    #ai-fab,
+    #back-to-top,
+    .back-to-top,
+    #onboardingLauncher,
+    button[aria-label]
+  ) {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+
+  :where(
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea
+  ) {
+    min-height: 44px !important;
+    font-size: max(16px, 1em);
+  }
+
+  :where(a, button, input, select, textarea, [role="button"]) {
+    touch-action: manipulation;
+  }
+
+  :where(
+    .bnt-search-trigger:hover,
+    .bnt-provider:hover,
+    .bnt-site-slide:hover,
+    .bnt-search-chip:hover,
+    .lic-card:hover,
+    .featured-version:hover,
+    .version-card:hover,
+    .compact-version:hover,
+    .site-card:hover,
+    .profile-card:hover,
+    .official-domain:hover,
+    .tool-card:hover,
+    .glass-card:hover,
+    .quick-item:hover,
+    .mini-card:hover,
+    .hot-tool-card:hover,
+    .preview-row:hover,
+    .nav-cta:hover,
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .social-link:hover,
+    .back-to-top:hover,
+    .search-btn:hover
+  ) {
+    transform: none !important;
+  }
+
+  :where(
+    .bnt-spotlight:hover::before,
+    .bnt-search-submit:hover::after,
+    .nav-cta:hover::after,
+    .btn-primary:hover::after
+  ) {
+    opacity: 0 !important;
+    transform: none !important;
+  }
+}
+
+html.device-touch :where(.bnt-magnetic, .bnt-tilt) {
+  transform: none !important;
+}
+
+html.device-touch :where(
+  button,
+  [role="button"],
+  .btn,
+  .nav-cta,
+  .nav-login-btn,
+  .modal-tab,
+  .site-nav a,
+  .profile-nav nav a,
+  .nav-links a,
+  .bnt-provider,
+  .bnt-filter-chip,
+  .bnt-license-mode,
+  .bnt-archive-action,
+  .bnt-search-trigger,
+  .bnt-search-submit,
+  .official-domain__open,
+  .official-domain__copy,
+  .profile-actions a,
+  .profile-actions button,
+  .api-endpoint button,
+  .contact-modal__primary
+) {
+  min-height: 44px !important;
+}
+
+html.device-touch :where(.site-nav a, .profile-nav nav a, .nav-links a, .modal-tab) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+html.device-touch :where(
+  .modal-close,
+  .nav-mobile-toggle,
+  #ai-fab,
+  #back-to-top,
+  .back-to-top,
+  #onboardingLauncher,
+  button[aria-label]
+) {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
+html.device-touch :where(
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea
+) {
+  min-height: 44px !important;
+}
+
+html.device-touch :where(a, button, input, select, textarea, [role="button"]) {
+  touch-action: manipulation;
+}
+
+html.device-touch :where(
+  .bnt-search-trigger:hover,
+  .bnt-provider:hover,
+  .bnt-site-slide:hover,
+  .bnt-search-chip:hover,
+  .lic-card:hover,
+  .featured-version:hover,
+  .version-card:hover,
+  .compact-version:hover,
+  .site-card:hover,
+  .profile-card:hover,
+  .official-domain:hover,
+  .tool-card:hover,
+  .glass-card:hover,
+  .quick-item:hover,
+  .mini-card:hover,
+  .hot-tool-card:hover,
+  .preview-row:hover,
+  .nav-cta:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .social-link:hover,
+  .back-to-top:hover,
+  .search-btn:hover
+) {
+  transform: none !important;
+}
+
+html.device-touch :where(
+  .bnt-spotlight:hover::before,
+  .bnt-search-submit:hover::after,
+  .nav-cta:hover::after,
+  .btn-primary:hover::after
+) {
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+html.device-ios :where(.site-topbar, .profile-nav) {
+  top: max(10px, var(--bnt-safe-top));
+}
+
+html.device-whiteboard :where(.site-topbar, .profile-nav) {
+  width: min(calc(100% - 48px), 1480px);
+}
+
+html.device-whiteboard .site-topbar__inner {
+  min-height: 68px;
+  padding-right: 18px;
+  padding-left: 20px;
+}
+
+html.device-whiteboard :where(.site-nav a, .profile-nav nav a) {
+  min-height: 48px;
+  padding-right: 17px;
+  padding-left: 17px;
+  font-size: 13px;
+}
+
+html.device-whiteboard :where(.nav-links a, .nav-login-btn, .nav-cta) {
+  min-height: 48px !important;
+  padding-right: clamp(12px, 1.2vw, 20px);
+  padding-left: clamp(12px, 1.2vw, 20px);
+  font-size: 14px;
+}
+
+html.device-whiteboard :where(.bnt-search-trigger, .nav-cta, .nav-login-btn, .btn) {
+  min-height: 48px;
+}
+
+html.device-whiteboard :where(.modal, .ai-settings-card, .legal-modal, .contact-modal__panel) {
+  max-height: calc(var(--bnt-dvh) - 48px) !important;
+  overflow-y: auto;
+}
+
+html.device-whiteboard :where(.bnt-search-overlay, .ai-settings-overlay, .modal-overlay, .legal-overlay) {
+  padding-right: max(24px, var(--bnt-safe-right)) !important;
+  padding-left: max(24px, var(--bnt-safe-left)) !important;
+}
+
+html.device-mac :where(.site-topbar, .profile-nav, .bnt-search-panel, .modal, .ai-settings-card) {
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+@media (max-width: 900px) {
+  :where(.bnt-search-panel, .ai-settings-card, .modal, .legal-modal, .onboarding-card) {
+    overflow-y: auto;
+  }
+
+  :where(.site-topbar, .profile-nav) {
+    width: min(calc(100% - 20px), 1120px);
+  }
+
+  :where(.site-shell, .profile-shell) {
+    width: min(calc(100% - 24px), 1120px);
+  }
+
+  :where(table) {
+    width: 100%;
+  }
+
+  :where(th, td) {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  :where(.bnt-search-overlay, .ai-settings-overlay, .modal-overlay, .legal-overlay) {
+    padding-top: max(8px, var(--bnt-safe-top)) !important;
+    padding-right: max(8px, var(--bnt-safe-right)) !important;
+    padding-bottom: max(8px, var(--bnt-safe-bottom)) !important;
+    padding-left: max(8px, var(--bnt-safe-left)) !important;
+  }
+
+  :where(.bnt-search-panel, .ai-settings-card, .modal, .legal-modal) {
+    width: 100% !important;
+    max-height: calc(var(--bnt-dvh) - max(16px, var(--bnt-safe-top) + var(--bnt-safe-bottom))) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}

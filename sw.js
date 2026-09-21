@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.10-onboarding-v2';
+const CACHE_NAME = 'bantan-static-v4.0.11-device-compat';
 const CORE_ASSETS = [
   '/',
   '/landing.html',
@@ -36,6 +36,8 @@ const CORE_ASSETS = [
   '/ui-interactions-v4.js',
   '/onboarding-guide.css',
   '/onboarding-guide.js',
+  '/device-compat-v1.css',
+  '/device-compat-v1.js',
   '/site-certification.js',
   '/investors.css',
   '/investors-data.js',

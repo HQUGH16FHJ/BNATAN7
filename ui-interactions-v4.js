@@ -2,6 +2,7 @@
   'use strict';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   let preview = null;
   let tooltip = null;
 
@@ -12,7 +13,7 @@
   }
 
   function addClickCore() {
-    if (reduced) return;
+    if (reduced || coarse) return;
     document.addEventListener('pointerdown', event => {
       if (!event.target.closest('button, a, .tool-card, .mini-card, .bento-cell, .version-card, .lic-card')) return;
       const core = document.createElement('span');
@@ -25,6 +26,7 @@
   }
 
   function addFocusGrids() {
+    if (coarse) return;
     document.querySelectorAll('.tool-grid, .mini-grid, .bento-grid').forEach(grid => {
       grid.classList.add('ui-focus-grid');
       grid.addEventListener('pointerover', event => {
