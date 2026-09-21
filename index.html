@@ -6542,6 +6542,7 @@ input, select, textarea, button {
 <link rel="stylesheet" href="./ui-interactions-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./about-v4.css">
 <link rel="stylesheet" href="./premium-finish-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./investors.css?v=1.0.0">
 <style id="mobile-dock-kill-switch">.bnt-mobile-dock{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}</style>
 </head>
 <body>
@@ -9432,6 +9433,25 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <div style="font-size:clamp(10px,1vw,12px);color:var(--sub);line-height:1.7;opacity:.8;">本站仅适合熟人、小圈子朋友内部分享使用，不允许公开引流、大规模网络转发传播。访问外部链接请自行甄别风险，若遇到异常、违规链接可反馈站长进行处理。请自觉远离各类违法违规内容。</div>
             </div>
         </section>
+        <section class="investor-section" id="investors" aria-labelledby="investors-title">
+            <div class="container">
+                <div class="section-head">
+                    <div class="eyebrow"><span class="eyebrow-dot"></span> 项目投资记录</div>
+                    <h2 id="investors-title">感谢每一位<span class="accent">支持绊谈的人</span></h2>
+                    <p>投资人姓名和金额由统一数据接口渲染，页面只展示已提供的数据。</p>
+                </div>
+                <div class="investor-summary" aria-label="投资记录汇总">
+                    <article><span>已记录投资金额</span><strong id="investorTotal">0 元</strong></article>
+                    <article><span>投资人记录</span><strong id="investorCount">0 位</strong></article>
+                </div>
+                <div class="investor-grid" id="investorGrid" aria-live="polite"></div>
+                <p class="investor-note">本模块仅用于记录支持与项目投入信息，不构成股权、收益承诺或任何形式的投资担保。</p>
+                <div class="investor-page-actions">
+                    <a href="investors.html">打开投资人专属页面</a>
+                </div>
+            </div>
+        </section>
+
         <div class="footer">
             <div class="footer-statusbar">
                 <span class="status-dot" data-status="online"></span>
@@ -9451,6 +9471,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <a href="changelog.html" style="color:inherit;text-decoration:none;">更新日志</a> &nbsp;|&nbsp;
                 <a href="releases.html" style="color:inherit;text-decoration:none;">版本发布</a> &nbsp;|&nbsp;
                 <a href="badge.html" style="color:inherit;text-decoration:none;">认证徽章</a> &nbsp;|&nbsp;
+                <a href="investors.html" style="color:inherit;text-decoration:none;">投资人</a> &nbsp;|&nbsp;
                 <kbd>Ctrl+H</kbd> 快捷键 &nbsp;|&nbsp;
                 <kbd>空格</kbd> 换名言 &nbsp;|&nbsp;
                 <kbd>F</kbd> 搜索 &nbsp;|&nbsp;
@@ -18189,6 +18210,8 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
 <script src="./advanced-motion-v4.js"></script>
 <script src="./mascot-state.js"></script>
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
+<script src="./investors-data.js"></script>
+<script src="./investors.js"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());

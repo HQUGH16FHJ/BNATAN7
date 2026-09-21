@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0805">
+<meta name="description" content="绊谈项目投资记录：查看投资人姓名与投资金额，数据由统一投资人接口渲染。">
+<title>投资人记录 · 绊谈 Bantan</title>
+<link rel="canonical" href="https://bantan.online/investors.html">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="stylesheet" href="./investors.css?v=1.0.0">
+<style>
+:root {
+  --bg: #0a0805;
+  --text: #fff7ed;
+  --sub: #d6c7b8;
+  --sub-2: #8a7e72;
+  --accent: #f59e0b;
+  --accent-2: #fb7185;
+  --blue: #38bdf8;
+  --border: rgba(245,158,11,.14);
+  --card-bg: rgba(20,15,10,.58);
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark; background: var(--bg); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: var(--bg);
+  font-family: "Outfit", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="investor-page-shell">
+  <div class="investor-page-inner">
+    <header class="investor-page-head">
+      <a class="investor-page-brand" href="./landing.html"><i>绊</i><span>绊谈 · 投资人记录</span></a>
+      <nav class="investor-page-nav" aria-label="投资人页导航">
+        <a href="./landing.html">返回 landing</a>
+        <a href="./index.html">进入万能枢纽</a>
+      </nav>
+    </header>
+
+    <section class="investor-page-hero">
+      <span>PROJECT INVESTMENT REGISTRY</span>
+      <h1>谢谢每一份<br><em>真实的支持</em></h1>
+      <p>这里记录当前项目投资人与投资金额。页面只负责展示已提供的数据，不构成股权、收益承诺或其他投资担保。</p>
+    </section>
+
+    <div class="investor-summary" aria-label="投资数据汇总">
+      <article><span>已记录投资金额</span><strong id="investorTotal">0 元</strong></article>
+      <article><span>投资人记录</span><strong id="investorCount">0 位</strong></article>
+    </div>
+
+    <div class="investor-grid" id="investorGrid" aria-live="polite"></div>
+
+    <p class="investor-note">姓名和金额严格按提供的数据录入，不遗漏、不合并、不修改。后续更新请统一修改投资人数据源。</p>
+    <div class="investor-page-actions">
+      <a href="./landing.html#investors">回到 landing 投资人模块</a>
+      <a href="./index.html">打开万能枢纽</a>
+    </div>
+  </div>
+</div>
+
+<script src="./investors-data.js"></script>
+<script src="./investors.js"></script>
+</body>
+</html>

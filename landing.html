@@ -1968,103 +1968,6 @@ nav#navbar {
     display: none;
   }
 }
-.investor-summary {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  max-width: 1100px;
-  margin: 0 auto 16px;
-}
-.investor-summary article {
-  padding: 17px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background:
-    radial-gradient(circle at 100% 0, rgba(56,189,248,.08), transparent 42%),
-    var(--card-bg);
-}
-.investor-summary span {
-  display: block;
-  color: var(--sub-2);
-  font-size: 10px;
-}
-.investor-summary strong {
-  display: block;
-  margin-top: 7px;
-  color: var(--accent);
-  font-size: 24px;
-}
-.investor-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.investor-card {
-  position: relative;
-  display: grid;
-  min-height: 126px;
-  place-items: center;
-  align-content: center;
-  gap: 7px;
-  padding: 18px 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  background: var(--card-bg);
-  text-align: center;
-}
-.investor-card::after {
-  position: absolute;
-  inset: auto 18% 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(245,158,11,.55), transparent);
-  content: "";
-}
-.investor-rank {
-  position: absolute;
-  top: 12px;
-  right: 13px;
-  color: var(--sub-2);
-  font-family: ui-monospace, monospace;
-  font-size: 9px;
-}
-.investor-avatar {
-  display: grid;
-  width: 38px;
-  height: 38px;
-  place-items: center;
-  border-radius: 12px;
-  color: #071019;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  font-size: 15px;
-  font-weight: 900;
-}
-.investor-name {
-  color: var(--text);
-  font-size: 14px;
-}
-.investor-amount {
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 800;
-}
-.investor-amount.is-intention { color: var(--blue, #38bdf8); }
-.investor-note {
-  max-width: 780px;
-  margin: 16px auto 0;
-  color: var(--sub-2);
-  font-size: 10px;
-  line-height: 1.7;
-  text-align: center;
-}
-@media (max-width: 900px) {
-  .investor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 620px) {
-  .investor-summary { grid-template-columns: 1fr; }
-}
 </style>
 <link rel="stylesheet" href="./confirm-dialog.css">
 <link rel="stylesheet" href="./experience-v4.css?v=4.0.2">
@@ -2074,6 +1977,7 @@ nav#navbar {
 <link rel="stylesheet" href="./mascot-state.css">
 <link rel="stylesheet" href="./ui-interactions-v4.css?v=4.0.2">
 <link rel="stylesheet" href="./premium-finish-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./investors.css?v=1.0.0">
 <style id="mobile-dock-kill-switch">.bnt-mobile-dock{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}</style>
 </head>
 <body>
@@ -2591,6 +2495,10 @@ nav#navbar {
     </div>
     <div class="investor-grid reveal-stagger visible" id="investorGrid" aria-live="polite"></div>
     <p class="investor-note">本模块仅用于记录支持与项目投入信息，不构成股权、收益承诺或任何形式的投资担保。</p>
+    <div class="investor-page-actions">
+      <a href="investors.html">打开投资人专属页面</a>
+      <a href="#home">返回首页</a>
+    </div>
   </div>
 </section>
 

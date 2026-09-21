@@ -31,6 +31,7 @@
 - /index.html：登录后主应用
 - /changelog.html：版本更新日志
 - /about.html：关于绊谈与小绊谈的个人播客主页
+- /investors.html：绊谈项目投资人姓名与投资金额记录页
 - /license.html：使用许可、版权声明与免责声明
 - /explore.html：信任、工具合集、指南、故事和开发文档总入口
 - /trust.html：许可证、隐私、安全、域名和版本信息的信任中心
