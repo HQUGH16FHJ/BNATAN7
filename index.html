@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark"><head>
+<html lang="zh-CN" data-theme="dark" style="background:#0a0805"><head>
 <meta charset="UTF-8">
+<style id="critical-first-paint">html,body{background:#0a0805;color:#fff7ed}html{color-scheme:dark}#boot-screen{background:#0a0805}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="baidu-site-verification" content="codeva-B7zYgqNLsM" />
 <title>绊谈 · 万能枢纽 - 600+ 免费在线工具一站直达 | bantan.online</title>
@@ -26,6 +27,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preload" as="image" href="./xiaobantan-v2.svg" fetchpriority="high">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='48' fill='%230a0a1a'/%3E%3Ctext x='96' y='130' font-size='120' text-anchor='middle' fill='%2300f5ff'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
@@ -351,6 +353,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            contain: paint;
+            transform: translateZ(0);
+            backface-visibility: hidden;
             transition: opacity 1.8s ease, transform 1.8s ease;
         }
         #boot-screen.hidden {
@@ -6692,12 +6697,12 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
             <div class="ring"></div>
             <div class="ring"></div>
             <div class="ring"></div>
-            <img class="boot-mascot" src="xiaobantan-v2.svg" alt="">
+            <img class="boot-mascot" src="xiaobantan-v2.svg" width="120" height="120" decoding="async" fetchpriority="high" alt="">
         </div>
     </div>
 
     <!-- UnicornStudio 交互背景 (登录后) -->
-    <div class="unicorn-bg" data-us-project="vcWiYF2t5QrebGQEPFzm" data-us-scale="1" data-us-dpi="1" data-us-lazyload="true" data-us-production="true" data-us-fps="30" style="width:100vw;height:100vh;"></div>
+    <div class="unicorn-bg" data-us-project-src="./unicorn-index.json" data-us-scale="1" data-us-dpi="1" data-us-lazyload="true" data-us-production="true" data-us-fps="30" style="width:100vw;height:100vh;"></div>
     <div class="bg-warm-overlay"></div>
 
     <!-- 空间站轨道环装饰 -->

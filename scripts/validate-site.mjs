@@ -7,6 +7,9 @@ const failures = [];
 const requiredFiles = [
   'index.html',
   'landing.html',
+  'unicorn-index.json',
+  'investors-data.js',
+  'investors.js',
   'changelog.html',
   'license.html',
   'explore.html',

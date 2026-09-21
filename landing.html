@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="js-animate"><head>
+<html lang="zh-CN" class="js-animate" style="background:#0a0805"><head>
 <meta charset="UTF-8">
+<style id="critical-first-paint">html,body{background:#0a0805;color:#fff7ed}html{color-scheme:dark}.page-loader{position:fixed;inset:0;z-index:99999;background:#0a0805}</style>
 <meta name="baidu-site-verification" content="codeva-YLjTyR5ttz" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>绊谈 · 万能枢纽 - 600+ 免费在线工具一站直达 | bantan.online</title>
@@ -27,6 +28,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preload" as="image" href="./xiaobantan-v2.svg" fetchpriority="high">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1328,12 +1330,15 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: var(--bg);
+  background: #0a0805 !important;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 20px;
+  contain: paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 .page-loader.hidden { opacity: 0; visibility: hidden; }
@@ -1347,6 +1352,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
   font-size: 32px;
   font-weight: 800;
   color: #ffffff;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   animation: loaderPulse 1.2s ease-in-out infinite;
 }
 @keyframes loaderPulse {
@@ -1356,6 +1363,18 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; position: re
 .loader-bar { width: 120px; height: 3px; background: rgba(245,158,11,0.12); border-radius: 3px; overflow: hidden; }
 .loader-bar-fill { height: 100%; width: 30%; background: var(--grad-accent); border-radius: 3px; animation: loaderBar 1.2s ease-in-out infinite; }
 @keyframes loaderBar { 0% { width: 10%; margin-left: -10%; } 50% { width: 60%; } 100% { width: 10%; margin-left: 100%; } }
+@keyframes loaderPulseMobile {
+  0%, 100% { transform: translateZ(0) scale(1); opacity: 0.92; }
+  50% { transform: translateZ(0) scale(1.04); opacity: 1; }
+}
+@media (max-width: 720px) {
+  .loader-logo { animation: loaderPulseMobile 1.4s ease-in-out infinite; }
+  .loader-bar-fill { animation-duration: 1.4s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-logo,
+  .loader-bar-fill { animation: none !important; }
+}
 
 /* Keyboard Shortcut Hints */
 .kbd-hints {
@@ -1949,6 +1968,103 @@ nav#navbar {
     display: none;
   }
 }
+.investor-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto 16px;
+}
+.investor-summary article {
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(56,189,248,.08), transparent 42%),
+    var(--card-bg);
+}
+.investor-summary span {
+  display: block;
+  color: var(--sub-2);
+  font-size: 10px;
+}
+.investor-summary strong {
+  display: block;
+  margin-top: 7px;
+  color: var(--accent);
+  font-size: 24px;
+}
+.investor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.investor-card {
+  position: relative;
+  display: grid;
+  min-height: 126px;
+  place-items: center;
+  align-content: center;
+  gap: 7px;
+  padding: 18px 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--card-bg);
+  text-align: center;
+}
+.investor-card::after {
+  position: absolute;
+  inset: auto 18% 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245,158,11,.55), transparent);
+  content: "";
+}
+.investor-rank {
+  position: absolute;
+  top: 12px;
+  right: 13px;
+  color: var(--sub-2);
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+}
+.investor-avatar {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 12px;
+  color: #071019;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  font-size: 15px;
+  font-weight: 900;
+}
+.investor-name {
+  color: var(--text);
+  font-size: 14px;
+}
+.investor-amount {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+}
+.investor-amount.is-intention { color: var(--blue, #38bdf8); }
+.investor-note {
+  max-width: 780px;
+  margin: 16px auto 0;
+  color: var(--sub-2);
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .investor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .investor-summary { grid-template-columns: 1fr; }
+}
 </style>
 <link rel="stylesheet" href="./confirm-dialog.css">
 <link rel="stylesheet" href="./experience-v4.css?v=4.0.2">
@@ -1964,7 +2080,7 @@ nav#navbar {
 
 <!-- Page Loader -->
 <div class="page-loader" id="pageLoader">
-  <div class="loader-logo"><img src="xiaobantan-v2.svg" alt="小绊谈正在加载"></div>
+  <div class="loader-logo"><img src="xiaobantan-v2.svg" width="64" height="64" decoding="async" fetchpriority="high" alt="小绊谈正在加载"></div>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
 </div>
 
@@ -1993,6 +2109,7 @@ nav#navbar {
     <ul class="nav-links">
       <li><a href="#tools">精选工具</a></li>
       <li><a href="#categories">全部分类</a></li>
+      <li><a href="#investors">投资人</a></li>
       <li><a href="#faq">常见问题</a></li>
     </ul>
     <button class="nav-cta" onclick="openAuthModal()">立即体验</button>
@@ -2141,6 +2258,24 @@ nav#navbar {
         </div>
       </div>
     </div>
+</section>
+
+<!-- Investor Registry -->
+<section class="section sr-hidden investor-section" id="investors" aria-labelledby="investors-title">
+  <div class="container">
+    <div class="section-head reveal visible">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> 项目投资记录</div>
+      <h2 id="investors-title">感谢每一位<span class="accent">支持绊谈的人</span></h2>
+      <p>以下为当前记录的投资人与投资意愿信息，姓名和金额按原始数据完整保留。</p>
+    </div>
+    <div class="investor-summary reveal visible" aria-label="投资记录汇总">
+      <article><span>已记录投资金额</span><strong id="investorTotal">0 元</strong></article>
+      <article><span>投资人 / 意愿记录</span><strong id="investorCount">0 位</strong></article>
+      <article><span>投资意愿</span><strong id="investorIntention">0 位</strong></article>
+    </div>
+    <div class="investor-grid reveal-stagger visible" id="investorGrid" aria-live="polite"></div>
+    <p class="investor-note">本模块仅用于记录支持与项目投入信息，不构成股权、收益承诺或任何形式的投资担保。</p>
+  </div>
 </section>
 
 <!-- Featured Tools Bento -->
@@ -2476,6 +2611,7 @@ nav#navbar {
         <ul>
           <li><a href="explore.html">探索绊谈</a></li>
           <li><a href="#tools">精选工具</a></li>
+          <li><a href="#investors">投资人</a></li>
           <li><a href="#categories">全部分类</a></li>
           <li><a href="changelog.html">更新日志</a></li>
           <li><a href="releases.html">版本发布</a></li>
@@ -3651,18 +3787,36 @@ document.addEventListener('keydown', function(e) {
 
 // ========== New Features JS ==========
 
-// --- Page Loader ---
-window.addEventListener('load', function() {
-  setTimeout(function() {
+// --- Page Loader: wait for font readiness, then hide after two paint frames ---
+(function() {
+  var hidden = false;
+  function hideLoader() {
+    if (hidden) return;
     var loader = document.getElementById('pageLoader');
-    if (loader) loader.classList.add('hidden');
-    setTimeout(function() {
-      var hints = document.getElementById('kbdHints');
-      if (hints) hints.classList.add('visible');
-      setTimeout(function() { if (hints) hints.classList.remove('visible'); }, 5000);
-    }, 800);
-  }, 300);
-});
+    if (!loader) return;
+    hidden = true;
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        loader.classList.add('hidden');
+        setTimeout(function() {
+          var hints = document.getElementById('kbdHints');
+          if (hints) hints.classList.add('visible');
+          setTimeout(function() { if (hints) hints.classList.remove('visible'); }, 5000);
+        }, 800);
+      });
+    });
+  }
+  window.addEventListener('load', function() {
+    var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    Promise.race([
+      fontsReady.catch(function() {}),
+      new Promise(function(resolve) { setTimeout(resolve, 1200); })
+    ]).then(function() {
+      setTimeout(hideLoader, 120);
+    });
+    setTimeout(hideLoader, 2600);
+  }, { once: true });
+})();
 
 // --- Real-time Clock ---
 function updateClock() {
@@ -4204,6 +4358,8 @@ function showContact(type) {
 <script src="./advanced-motion-v4.js"></script>
 <script src="./mascot-state.js"></script>
 <script src="./ui-interactions-v4.js?v=4.0.2"></script>
+<script src="./investors-data.js"></script>
+<script src="./investors.js"></script>
 <script>
 (() => {
     const removeMobileDock = () => document.querySelectorAll('.bnt-mobile-dock').forEach(node => node.remove());
