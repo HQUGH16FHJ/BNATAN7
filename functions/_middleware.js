@@ -10,6 +10,10 @@ export async function onRequest(context) {
     return context.next();
   }
 
+  if (url.pathname === '/device-compat-v1.css' || url.pathname === '/device-compat-v1.js') {
+    return context.next();
+  }
+
   const assetUrl = new URL(request.url);
   if (url.pathname.startsWith('/copyright/')) {
     assetUrl.pathname = url.pathname;
