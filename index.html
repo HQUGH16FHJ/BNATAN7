@@ -6096,7 +6096,7 @@
         .rt-status-widget {
             position: fixed;
             left: 16px;
-            bottom: 16px;
+            bottom: max(138px, calc(130px + env(safe-area-inset-bottom)));
             right: auto;
             z-index: 9998;
             display: flex;
@@ -6160,7 +6160,7 @@
         @media (max-width: 768px) {
             .rt-status-widget {
                 left: 10px;
-                bottom: 10px;
+                bottom: max(62px, calc(58px + env(safe-area-inset-bottom)));
                 padding: 6px 10px;
                 font-size: 11px;
             }
@@ -6806,6 +6806,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                     </div>
                 </div>
                 <button class="theme-toggle" onclick="openCmd()" aria-label="命令面板" title="Ctrl+K 命令面板" style="font-size:15px;">⌘</button>
+                <button class="theme-toggle" type="button" onclick="if(window.BantanOnboarding)window.BantanOnboarding.start()" aria-label="打开新手指导" title="新手指导" style="font-size:15px;">?</button>
                 <button class="hamburger" onclick="toggleMenu()" aria-label="切换菜单" id="hamburgerBtn">☰</button>
             </div>
             <div class="nav-links" id="navLinks">
@@ -9470,6 +9471,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
                 <a href="uses.html" id="footer-uses-link" style="color:inherit;text-decoration:none;">工具栈</a>
                 <a href="portfolio.html" id="footer-portfolio-link" style="color:inherit;text-decoration:none;">作品集</a>
                 <a href="license.html" id="footer-license-link" style="color:inherit;text-decoration:none;">许可证</a>
+                <button type="button" onclick="if(window.BantanOnboarding)window.BantanOnboarding.start()" style="padding:0;border:0;color:inherit;background:none;font:inherit;cursor:pointer;">新手指导</button>
             </div>
             <div class="footer-main" id="footer-main">
                 © 2026 绊谈 · 终极版 &nbsp;|&nbsp;

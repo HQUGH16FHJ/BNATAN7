@@ -2,7 +2,7 @@
   if (document.getElementById('onboardingRoot')) return;
 
   const isIndex = Boolean(document.getElementById('search_input') && !document.getElementById('heroSearch'));
-  const storageKey = `bantan_onboarding_v1_${isIndex ? 'index' : 'landing'}`;
+  const storageKey = `bantan_onboarding_v2_${isIndex ? 'index' : 'landing'}`;
   const forceStart = new URLSearchParams(location.search).get('guide') === '1';
 
   const steps = isIndex ? [
@@ -184,6 +184,8 @@
   function start() {
     showStep(0);
   }
+
+  window.BantanOnboarding = { start, close };
 
   launch.addEventListener('click', start);
   root.querySelectorAll('[data-onboarding-close]').forEach((element) => {
