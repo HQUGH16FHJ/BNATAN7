@@ -58,6 +58,10 @@
   opacity: 0.4;
 }
 
+.objection-preview-actions [hidden] {
+  display: none !important;
+}
+
 .objection-preview-actions a {
   display: inline-flex;
   align-items: center;
