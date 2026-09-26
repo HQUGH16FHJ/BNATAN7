@@ -6,6 +6,19 @@
   const code = isRights ? 'BNT-SITE-2026-003' : 'BNT-SITE-2026-001';
   const domain = isRights ? 'rights.bantan.online' : 'bantan.online';
   const label = isRights ? '版权中心官网编号' : '官网编号';
+  const theme = isRights
+    ? {
+        border: 'rgba(36, 87, 214, .18)',
+        text: '#4d5967',
+        background: 'rgba(247, 244, 237, .94)',
+        accent: '#2457d6'
+      }
+    : {
+        border: 'rgba(245, 158, 11, .13)',
+        text: '#d6c7b8',
+        background: 'rgba(12, 10, 8, .72)',
+        accent: '#f59e0b'
+      };
 
   const existing = Array.from(document.querySelectorAll('a')).some((link) => {
     const href = link.getAttribute('href') || '';
@@ -27,10 +40,10 @@
         width: min(calc(100% - 32px), 1140px);
         margin: 26px auto 0;
         padding: 13px 16px calc(13px + env(safe-area-inset-bottom));
-        border: 1px solid rgba(245, 158, 11, .13);
+        border: 1px solid ${theme.border};
         border-radius: 14px;
-        color: #d6c7b8;
-        background: rgba(12, 10, 8, .72);
+        color: ${theme.text};
+        background: ${theme.background};
         font: 10px/1.5 system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
       }
       #site-certification a {
@@ -46,7 +59,7 @@
         height: 34px;
         vertical-align: middle;
       }
-      #site-certification strong { color: #f59e0b; }
+      #site-certification strong { color: ${theme.accent}; }
       @media (max-width: 560px) {
         #site-certification {
           align-items: flex-start;

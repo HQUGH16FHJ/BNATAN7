@@ -18007,7 +18007,7 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
         // PWA Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js?v=4.0.14').then(function(registration) {
+                navigator.serviceWorker.register('./sw.js?v=4.0.15').then(function(registration) {
                     return registration.update();
                 }).catch(function() {});
             });
@@ -18232,6 +18232,6 @@ var isCrawler = /Baiduspider|Googlebot|bingbot|YandexBot|DuckDuckBot|Applebot|So
     new MutationObserver(removeMobileDock).observe(document.body, { childList: true, subtree: true });
 })();
 </script>
-<script src="site-certification.js?v=1.0.1" defer></script>
+<script src="site-certification.js?v=1.0.2" defer></script>
   <script src="./device-compat-v1.js?v=1.1.3" defer></script>
 </body></html>
