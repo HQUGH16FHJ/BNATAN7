@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.20-center-borders';
+const CACHE_NAME = 'bantan-static-v4.0.21-center-theme-v2';
 const CORE_ASSETS = [
   '/',
   '/landing.html',

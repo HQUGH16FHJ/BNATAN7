@@ -310,7 +310,7 @@ html.archive-page body :where(.ai-settings-card, .logout-confirm-card, .modal, .
 }
 
 /* The rights center becomes a light registry desk inside the same system. */
-html.archive-center body {
+html.archive-center body.archive-center {
   --bg: #ebe7de;
   --panel: #f7f4ed;
   --panel-strong: #fffdf8;
@@ -337,28 +337,29 @@ html.archive-center body {
     #ebe7de !important;
 }
 
-html.archive-center body::before,
-html.archive-center body::after {
+html.archive-center body.archive-center::before,
+html.archive-center body.archive-center::after {
   display: none !important;
 }
 
-html.archive-center body :where(.rights-header, .certificate-toolbar) {
+html.archive-center body.archive-center :where(.rights-header, .certificate-toolbar) {
   color: #10151c;
+  border-color: rgba(36, 87, 214, 0.18) !important;
   border-bottom-color: rgba(36, 87, 214, 0.26);
   background: rgba(247, 244, 237, 0.94);
   box-shadow: 0 16px 42px rgba(40, 47, 58, 0.12);
 }
 
-html.archive-center body :where(.rights-brand, .rights-header nav a, .certificate-toolbar a) {
+html.archive-center body.archive-center :where(.rights-brand, .rights-header nav a, .certificate-toolbar a) {
   color: #10151c;
 }
 
-html.archive-center body :where(.rights-header nav a:hover) {
+html.archive-center body.archive-center :where(.rights-header nav a:hover) {
   color: #10151c;
   background: rgba(36, 87, 214, 0.1);
 }
 
-html.archive-center body :where(
+html.archive-center body.archive-center :where(
   .rights-hero,
   .console-hero__main,
   .tracking-hero,
@@ -388,7 +389,7 @@ html.archive-center body :where(
   box-shadow: 0 18px 50px rgba(40, 47, 58, 0.08);
 }
 
-html.archive-center body :where(
+html.archive-center body.archive-center :where(
   h1,
   h2,
   h3,
@@ -405,21 +406,44 @@ html.archive-center body :where(
   color: inherit;
 }
 
-html.archive-center body :where(.rights-hero__copy > p, .rights-notice p, .registry-card p, .directory-card p) {
+html.archive-center body.archive-center :where(
+  .tracking-hero__copy,
+  .tracking-guide,
+  .tracking-console,
+  .tracking-search,
+  .status-result,
+  .tracking-case,
+  .tracking-review,
+  .tracking-site-code,
+  .tracking-domain-verify,
+  .tracking-privacy,
+  .registration-actions,
+  .form-checkboxes,
+  .status-lookup-form,
+  .site-lookup-form,
+  .tracking-facts
+) {
+  color: #10151c;
+  border-color: rgba(36, 87, 214, 0.18) !important;
+  background: rgba(255, 253, 248, 0.84) !important;
+  box-shadow: 0 18px 50px rgba(40, 47, 58, 0.08);
+}
+
+html.archive-center body.archive-center :where(.rights-hero__copy > p, .rights-notice p, .registry-card p, .directory-card p) {
   color: #4d5967;
 }
 
-html.archive-center body :where(input, select, textarea) {
+html.archive-center body.archive-center :where(input, select, textarea) {
   color: #10151c;
   border-color: rgba(36, 87, 214, 0.24);
   background: #fffdf9;
 }
 
-html.archive-center body :where(input::placeholder, textarea::placeholder) {
+html.archive-center body.archive-center :where(input::placeholder, textarea::placeholder) {
   color: #78828e;
 }
 
-html.archive-center body :where(.contact-modal__panel) {
+html.archive-center body.archive-center :where(.contact-modal__panel) {
   color: #10151c;
   background: #fffdf8;
 }

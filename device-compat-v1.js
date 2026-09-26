@@ -32,11 +32,17 @@
     pageFile === 'og-image.html' ||
     isRightsAdmin;
 
+  const addArchiveClass = (className) => {
+    root.classList.add(className);
+    if (document.body) document.body.classList.add(className);
+  };
+
   if (!excludedFromArchive) {
-    root.classList.add('archive-page');
+    addArchiveClass('archive-page');
   }
   if (isRightsSurface && !isRightsAdmin) {
-    root.classList.add('archive-page', 'archive-center');
+    addArchiveClass('archive-page');
+    addArchiveClass('archive-center');
   }
 
   function updateViewport() {

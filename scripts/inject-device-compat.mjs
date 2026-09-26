@@ -3,7 +3,7 @@ import { join, relative, sep } from 'node:path';
 
 const root = process.cwd();
 const cssTag = name => `<link rel="stylesheet" href="${name}device-compat-v1.css?v=1.1.2">`;
-const jsTag = name => `<script src="${name}device-compat-v1.js?v=1.1.2" defer></script>`;
+const jsTag = name => `<script src="${name}device-compat-v1.js?v=1.1.3" defer></script>`;
 const viewportTag = '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">';
 
 async function collectHtml(directory) {
