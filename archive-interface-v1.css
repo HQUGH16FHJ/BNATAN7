@@ -317,7 +317,7 @@ html.archive-center body {
   --text: #10151c;
   --sub: #44505f;
   --muted: #687382;
-  --line: rgba(16, 21, 28, 0.15);
+  --line: rgba(36, 87, 214, 0.18);
   --amber: #2457d6;
   --coral: #2457d6;
   --blue: #2457d6;
@@ -328,7 +328,8 @@ html.archive-center body {
   --archive-green: #0f7a57;
   --archive-blue: #2457d6;
   --archive-coral: #2457d6;
-  --archive-line: rgba(16, 21, 28, 0.14);
+  --archive-line: rgba(36, 87, 214, 0.16);
+  --archive-line-strong: rgba(36, 87, 214, 0.3);
   --archive-panel: #fffdf8;
   color: #10151c;
   background:
@@ -343,7 +344,7 @@ html.archive-center body::after {
 
 html.archive-center body :where(.rights-header, .certificate-toolbar) {
   color: #10151c;
-  border-bottom-color: rgba(16, 21, 28, 0.18);
+  border-bottom-color: rgba(36, 87, 214, 0.26);
   background: rgba(247, 244, 237, 0.94);
   box-shadow: 0 16px 42px rgba(40, 47, 58, 0.12);
 }
@@ -382,7 +383,7 @@ html.archive-center body :where(
   .ops-check
 ) {
   color: #10151c;
-  border-color: rgba(16, 21, 28, 0.15) !important;
+  border-color: rgba(36, 87, 214, 0.18) !important;
   background: rgba(255, 253, 248, 0.84) !important;
   box-shadow: 0 18px 50px rgba(40, 47, 58, 0.08);
 }
@@ -410,7 +411,7 @@ html.archive-center body :where(.rights-hero__copy > p, .rights-notice p, .regis
 
 html.archive-center body :where(input, select, textarea) {
   color: #10151c;
-  border-color: rgba(16, 21, 28, 0.2);
+  border-color: rgba(36, 87, 214, 0.24);
   background: #fffdf9;
 }
 
