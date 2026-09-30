@@ -172,5 +172,56 @@
     document.addEventListener('keydown', scheduleSync);
   }
 
+  function addBirthdayBanner() {
+    try {
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Shanghai',
+        month: '2-digit',
+        day: '2-digit'
+      }).formatToParts(new Date());
+      const month = parts.find(part => part.type === 'month')?.value;
+      const day = parts.find(part => part.type === 'day')?.value;
+      if (month !== '10' || day !== '01') return;
+      if (sessionStorage.getItem('bantan_birthday_banner_dismissed') === '1') return;
+    } catch (error) {
+      return;
+    }
+
+    const mount = () => {
+      if (document.querySelector('.bnt-birthday-banner')) return;
+      const banner = document.createElement('div');
+      banner.className = 'bnt-birthday-banner';
+      banner.setAttribute('role', 'status');
+      banner.innerHTML = [
+        '<span class="bnt-birthday-banner__date">10.01</span>',
+        '<strong>国庆节快乐</strong>',
+        '<span class="bnt-birthday-banner__note">祝站长生日快乐 · 与绊谈一起继续前进</span>',
+        '<button class="bnt-birthday-banner__close" type="button" aria-label="关闭生日祝福">×</button>'
+      ].join('');
+      document.body.insertBefore(banner, document.body.firstChild);
+      root.classList.add('bnt-birthday-active');
+      const syncBannerOffset = () => {
+        root.style.setProperty('--bnt-birthday-height', `${Math.ceil(banner.getBoundingClientRect().height)}px`);
+      };
+      syncBannerOffset();
+      window.addEventListener('resize', syncBannerOffset, { passive: true });
+      banner.querySelector('.bnt-birthday-banner__close').addEventListener('click', () => {
+        try {
+          sessionStorage.setItem('bantan_birthday_banner_dismissed', '1');
+        } catch (error) {
+          // Storage may be unavailable in privacy mode.
+        }
+        window.removeEventListener('resize', syncBannerOffset);
+        banner.remove();
+        root.classList.remove('bnt-birthday-active');
+        root.style.removeProperty('--bnt-birthday-height');
+      });
+    };
+
+    if (document.body) mount();
+    else document.addEventListener('DOMContentLoaded', mount, { once: true });
+  }
+
+  addBirthdayBanner();
   installScrollRecovery();
 })();

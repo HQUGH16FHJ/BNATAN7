@@ -24,6 +24,7 @@
     setText('role', profile.role);
     setText('tagline', profile.tagline);
     setText('status', profile.status);
+    setText('birthday', profile.birthday);
 
     renderList('now', profile.now, (item, index) => `
       <article>
@@ -79,7 +80,7 @@
     }
   }
 
-  fetch('./profile.json?v=1.0.1', { headers: { accept: 'application/json' }, cache: 'no-cache' })
+  fetch('./profile.json?v=1.0.2', { headers: { accept: 'application/json' }, cache: 'no-cache' })
     .then((response) => response.json())
     .then(init)
     .catch(() => {});

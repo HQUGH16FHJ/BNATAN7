@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bantan-static-v4.0.23-admin-theme';
+const CACHE_NAME = 'bantan-static-v4.0.27-birthday-offset';
 const CORE_ASSETS = [
   '/',
   '/landing.html',

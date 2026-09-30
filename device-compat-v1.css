@@ -1,6 +1,7 @@
 :root {
   --bnt-vh: 100vh;
   --bnt-dvh: 100vh;
+  --bnt-birthday-height: 44px;
   --bnt-safe-top: env(safe-area-inset-top, 0px);
   --bnt-safe-right: env(safe-area-inset-right, 0px);
   --bnt-safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -37,6 +38,74 @@ body {
   min-width: 0;
   max-width: 100%;
   overflow-wrap: break-word;
+}
+
+.bnt-birthday-banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10200;
+  display: flex;
+  min-height: var(--bnt-birthday-height);
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 7px 48px;
+  color: #fffaf0;
+  border-bottom: 1px solid rgba(255, 255, 255, .28);
+  background:
+    linear-gradient(90deg, rgba(170, 25, 25, .96), rgba(211, 94, 22, .96) 48%, rgba(183, 48, 48, .96)),
+    #b52b2b;
+  box-shadow: 0 8px 24px rgba(92, 21, 21, .2);
+  font: 700 12px/1.45 "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+  text-align: center;
+}
+
+.bnt-birthday-banner__date {
+  padding: 4px 7px;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+
+.bnt-birthday-banner strong {
+  font-size: 13px;
+  letter-spacing: .03em;
+}
+
+.bnt-birthday-banner__note {
+  color: rgba(255, 250, 240, .82);
+  font-weight: 600;
+}
+
+.bnt-birthday-banner__close {
+  position: absolute;
+  top: 50%;
+  right: max(12px, env(safe-area-inset-right));
+  display: grid;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: 50%;
+  color: #fffaf0;
+  background: rgba(0, 0, 0, .12);
+  font: 700 18px/1 system-ui, sans-serif;
+  transform: translateY(-50%);
+}
+
+html.bnt-birthday-active body {
+  padding-top: var(--bnt-birthday-height) !important;
+}
+
+html.bnt-birthday-active :where(#navbar, .site-topbar, .profile-nav, .rights-header, .certificate-toolbar) {
+  top: var(--bnt-birthday-height) !important;
 }
 
 html.device-compat-ready,
@@ -395,6 +464,21 @@ html.device-mac :where(.site-topbar, .profile-nav, .bnt-search-panel, .modal, .a
 }
 
 @media (max-width: 640px) {
+  :root {
+    --bnt-birthday-height: 62px;
+  }
+
+  .bnt-birthday-banner {
+    flex-wrap: wrap;
+    gap: 3px 8px;
+    padding: 8px 42px;
+  }
+
+  .bnt-birthday-banner__note {
+    flex-basis: 100%;
+    font-size: 10px;
+  }
+
   :where(.bnt-search-overlay, .ai-settings-overlay, .modal-overlay, .legal-overlay) {
     padding-top: max(8px, var(--bnt-safe-top)) !important;
     padding-right: max(8px, var(--bnt-safe-right)) !important;
