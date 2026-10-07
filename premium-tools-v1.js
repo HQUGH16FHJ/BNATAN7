@@ -184,8 +184,22 @@
   }
 
   if (tool === 'status') {
-    runStatus();
-    setInterval(runStatus, 60000);
+    let statusRunning = false;
+    const runStatusSafely = async () => {
+      if (document.hidden || statusRunning) return;
+      statusRunning = true;
+      try {
+        await runStatus();
+      } finally {
+        statusRunning = false;
+      }
+    };
+
+    runStatusSafely();
+    setInterval(runStatusSafely, 300000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) runStatusSafely();
+    });
   }
   if (tool === 'verify') runVerify();
   if (tool === 'offline') runOffline();
