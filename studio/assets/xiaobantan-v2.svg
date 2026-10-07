@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">小绊谈</title>
+  <desc id="desc">绊谈万能枢纽的智能助手品牌形象</desc>
+  <defs>
+    <linearGradient id="body" x1="34" y1="28" x2="210" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fde68a"/><stop offset=".42" stop-color="#f59e0b"/><stop offset=".76" stop-color="#fb7185"/><stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="visor" x1="60" y1="73" x2="180" y2="155" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/><stop offset=".55" stop-color="#0b1020"/><stop offset="1" stop-color="#07131c"/>
+    </linearGradient>
+    <radialGradient id="eye" cx="0" cy="0" r="1" gradientTransform="translate(96 108) rotate(45) scale(25)">
+      <stop stop-color="#d9fbff"/><stop offset=".45" stop-color="#38bdf8"/><stop offset="1" stop-color="#0ea5e9"/>
+    </radialGradient>
+    <filter id="glow" x="-35%" y="-35%" width="170%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#f59e0b" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <g filter="url(#glow)">
+    <circle cx="120" cy="18" r="11" fill="#38bdf8"/><circle cx="120" cy="18" r="4.5" fill="#fff"/>
+    <path d="M120 28v18" stroke="#fbbf24" stroke-width="8" stroke-linecap="round"/>
+    <path d="M50 66c7-25 31-42 70-42s63 17 70 42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="9" stroke-linecap="round"/>
+    <rect x="32" y="40" width="176" height="168" rx="58" fill="url(#body)"/>
+    <rect x="43" y="51" width="154" height="146" rx="49" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="3"/>
+    <rect x="57" y="73" width="126" height="84" rx="39" fill="url(#visor)"/>
+    <ellipse cx="96" cy="109" rx="14" ry="18" fill="url(#eye)"/><ellipse cx="144" cy="109" rx="14" ry="18" fill="url(#eye)"/>
+    <ellipse cx="101" cy="102" rx="4.7" ry="5.8" fill="#fff"/><ellipse cx="149" cy="102" rx="4.7" ry="5.8" fill="#fff"/>
+    <path d="M101 137c12 11 26 11 38 0" fill="none" stroke="#fb7185" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="47" cy="116" r="11" fill="#fb7185"/><circle cx="193" cy="116" r="11" fill="#38bdf8"/>
+    <path d="M66 181h108" stroke="rgba(255,255,255,.34)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M82 198h76" stroke="rgba(255,255,255,.19)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="120" cy="180" r="13" fill="#0a0805"/>
+    <text x="120" y="185" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="15" font-weight="800" fill="#fbbf24">绊</text>
+    <path d="M38 152c-12 6-20 16-22 29" stroke="#fbbf24" stroke-width="8" stroke-linecap="round"/>
+    <path d="M202 152c12 6 20 16 22 29" stroke="#38bdf8" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>
