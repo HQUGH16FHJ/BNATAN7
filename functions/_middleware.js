@@ -6,6 +6,31 @@ export async function onRequest(context) {
     return context.next();
   }
 
+  if (url.hostname === 'studio.bantan.online') {
+    const assetUrl = new URL(request.url);
+    const cleanPath = url.pathname.replace(/\/+$/, '');
+
+    if (cleanPath === '' || cleanPath === '/') {
+      assetUrl.pathname = '/studio/';
+    } else {
+      const mappedPath = '/studio' + cleanPath;
+      assetUrl.pathname = /\.[a-z0-9]+$/i.test(cleanPath) ? mappedPath : mappedPath + '.html';
+    }
+
+    const assetRequest = new Request(assetUrl.toString(), request);
+    if (context.env.ASSETS?.fetch) {
+      const response = await context.env.ASSETS.fetch(assetRequest);
+      if ([301, 302, 307, 308].includes(response.status)) {
+        const location = response.headers.get('Location');
+        if (location) {
+          return context.env.ASSETS.fetch(new Request(new URL(location, request.url).toString(), request));
+        }
+      }
+      return response;
+    }
+    return context.next(assetRequest);
+  }
+
   if (url.hostname !== 'rights.bantan.online') {
     return context.next();
   }
