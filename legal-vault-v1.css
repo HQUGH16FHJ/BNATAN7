@@ -1,0 +1,303 @@
+:root {
+  --legal-gold: #f59e0b;
+  --legal-coral: #fb7185;
+  --legal-blue: #38bdf8;
+  --legal-green: #34d399;
+  --legal-ink: #0a0805;
+  --legal-text: #fff7ed;
+  --legal-muted: #d6c7b8;
+  --legal-faint: #8a7e72;
+  --legal-line: rgba(245, 158, 11, 0.14);
+  --legal-glass: rgba(20, 15, 10, 0.72);
+}
+
+body.legal-vault-page {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 16% 0%, rgba(56, 189, 248, 0.08), transparent 38rem),
+    radial-gradient(ellipse at 84% 12%, rgba(245, 158, 11, 0.09), transparent 36rem),
+    #0a0805;
+}
+
+body.legal-vault-page::before {
+  background-image:
+    linear-gradient(rgba(245, 158, 11, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.018) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: .82;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000, transparent 72%);
+}
+
+.legal-vault-page .site-topbar,
+.legal-vault-page .lic-nav-inner {
+  border-color: var(--legal-line);
+  background: rgba(10, 8, 5, 0.78);
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.legal-vault-page .site-shell,
+.legal-vault-page .lic-container {
+  position: relative;
+}
+
+.legal-vault-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--legal-line);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(245, 158, 11, 0.13), transparent 34%),
+    radial-gradient(circle at 12% 90%, rgba(56, 189, 248, 0.08), transparent 36%),
+    var(--legal-glass);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.legal-vault-hero::before {
+  position: absolute;
+  top: 0;
+  right: 8%;
+  left: 8%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--legal-blue), var(--legal-gold), var(--legal-coral), transparent);
+}
+
+.legal-vault-hero::after {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  z-index: -1;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(245, 158, 11, 0.12);
+  border-radius: 50%;
+  content: "";
+  box-shadow: inset 0 0 0 18px rgba(245, 158, 11, 0.025), inset 0 0 0 44px rgba(245, 158, 11, 0.018);
+  opacity: .8;
+}
+
+.legal-vault-seal {
+  display: grid;
+  width: min(100%, 540px);
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 15px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  border-radius: 16px;
+  background: rgba(8, 7, 5, 0.62);
+}
+
+.legal-vault-seal__mark {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 50%;
+  color: var(--legal-gold);
+  background: rgba(245, 158, 11, 0.08);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.legal-vault-seal span,
+.legal-vault-seal strong,
+.legal-vault-seal small {
+  display: block;
+}
+
+.legal-vault-seal span {
+  color: var(--legal-blue);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.legal-vault-seal strong {
+  margin-top: 4px;
+  color: var(--legal-text);
+  font-size: 14px;
+}
+
+.legal-vault-seal small {
+  margin-top: 3px;
+  color: var(--legal-faint);
+  font-size: 10px;
+}
+
+.legal-vault-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.legal-vault-meta div {
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.legal-vault-meta span,
+.legal-vault-meta strong {
+  display: block;
+}
+
+.legal-vault-meta span {
+  color: var(--legal-faint);
+  font-size: 9px;
+}
+
+.legal-vault-meta strong {
+  margin-top: 5px;
+  color: var(--legal-text);
+  font-size: 12px;
+}
+
+.legal-vault-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.legal-vault-toolbar button,
+.legal-vault-toolbar a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  border-radius: 12px;
+  color: var(--legal-text);
+  background: rgba(245, 158, 11, 0.055);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.legal-vault-toolbar button:hover,
+.legal-vault-toolbar a:hover {
+  color: #160b03;
+  border-color: var(--legal-gold);
+  background: linear-gradient(135deg, var(--legal-gold), #fbbf24);
+}
+
+.legal-vault-page .lic-card,
+.legal-vault-page .official-domains,
+.legal-vault-page .site-card,
+.legal-vault-page .site-row,
+.legal-vault-page .site-prose {
+  border-color: rgba(245, 158, 11, 0.14);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.035), transparent 32%),
+    rgba(20, 15, 10, 0.72);
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.legal-vault-page .lic-card {
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.legal-vault-page .lic-card:hover,
+.legal-vault-page .site-card:hover,
+.legal-vault-page .site-row:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+}
+
+.legal-vault-page .lic-card-icon,
+.legal-vault-page .site-card__icon {
+  border-radius: 14px;
+  box-shadow: 0 0 26px rgba(245, 158, 11, 0.08);
+}
+
+.legal-vault-page .lic-card-title,
+.legal-vault-page .site-card h3,
+.legal-vault-page .site-row h3 {
+  letter-spacing: -.02em;
+}
+
+.legal-vault-page .lic-card-subtitle,
+.legal-vault-page .site-card__meta,
+.legal-vault-page .site-row p {
+  color: var(--legal-faint);
+}
+
+.legal-vault-page .site-hero,
+.legal-vault-page .lic-hero {
+  padding: clamp(52px, 8vw, 84px) clamp(22px, 6vw, 64px);
+}
+
+.legal-vault-page .site-title,
+.legal-vault-page .lic-hero h1 {
+  letter-spacing: -.04em;
+}
+
+.legal-vault-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .65s ease, transform .65s ease, border-color .25s ease;
+}
+
+.legal-vault-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.legal-vault-page .lic-table th {
+  color: var(--legal-text);
+  background: rgba(245, 158, 11, 0.07);
+}
+
+.legal-vault-page .lic-table td {
+  color: var(--legal-muted);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.legal-vault-page .site-prose h2 {
+  padding-left: 18px;
+  border-left: 2px solid var(--legal-gold);
+}
+
+.legal-vault-page .site-prose p {
+  color: var(--legal-muted);
+}
+
+@media (max-width: 720px) {
+  .legal-vault-hero::after {
+    width: 120px;
+    height: 120px;
+    opacity: .45;
+  }
+
+  .legal-vault-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .legal-vault-seal {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-vault-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
