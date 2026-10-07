@@ -216,7 +216,185 @@
       infoList.insertAdjacentElement('afterend', localCard);
     }
 
+    injectUnifiedCenter(card);
     card.querySelector('#profile-open-avatar').addEventListener('click', openAvatarStudio);
+  }
+
+  function readLocalJson(key, fallback) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || 'null');
+      return value ?? fallback;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function escapeProfileHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+  }
+
+  function getLocalDataSummary() {
+    const favorites = readLocalJson('favTools', []);
+    const chats = readLocalJson('ai_chat_history', []);
+    const clipboard = readLocalJson('clipboardHistory', []);
+    const tarot = readLocalJson('dailyTarotHistory', []);
+    let bytes = 0;
+    try {
+      for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index);
+        bytes += String(key || '').length + String(localStorage.getItem(key) || '').length;
+      }
+    } catch (error) {}
+    return {
+      favorites,
+      chatCount: Array.isArray(chats) ? chats.length : 0,
+      clipboardCount: Array.isArray(clipboard) ? clipboard.length : 0,
+      tarotCount: Array.isArray(tarot) ? tarot.length : 0,
+      storageKb: Math.max(0, Math.round(bytes / 1024))
+    };
+  }
+
+  function downloadLocalTools() {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      user: getUser(),
+      settings: loadSettings(),
+      favorites: readLocalJson('favTools', []),
+      clipboard: readLocalJson('clipboardHistory', []),
+      tarot: readLocalJson('dailyTarotHistory', []),
+      chatHistory: readLocalJson('ai_chat_history', [])
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'bantan-personal-center.json';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function clearLocalTools() {
+    ['favTools', 'clipboardHistory', 'dailyTarotHistory', 'ai_chat_history'].forEach((key) => {
+      try { localStorage.removeItem(key); } catch (error) {}
+    });
+    if (window.showToast) window.showToast('本地工具数据已清理');
+  }
+
+  function setCenterPanel(hub, name) {
+    hub.querySelectorAll('[data-center-tab]').forEach((button) => {
+      button.classList.toggle('is-active', button.dataset.centerTab === name);
+      button.setAttribute('aria-selected', String(button.dataset.centerTab === name));
+    });
+    hub.querySelectorAll('[data-center-panel]').forEach((panel) => {
+      panel.classList.toggle('is-active', panel.dataset.centerPanel === name);
+    });
+  }
+
+  function refreshUnifiedCenter(hub) {
+    const summary = getLocalDataSummary();
+    const token = (() => {
+      try { return localStorage.getItem('bantan_user_token') || ''; } catch (error) { return ''; }
+    })();
+    const favoriteList = hub.querySelector('[data-center-favorites]');
+    if (favoriteList) {
+      favoriteList.innerHTML = summary.favorites.length
+        ? summary.favorites.slice(0, 10).map((item) => `
+          <a href="${escapeProfileHtml(item.href || '#')}" target="_blank" rel="noopener">
+            <span>${escapeProfileHtml(item.icon || '☆')}</span>
+            <strong>${escapeProfileHtml(item.name || '未命名工具')}</strong>
+            <b>打开 →</b>
+          </a>
+        `).join('')
+        : '<div class="profile-center-empty">还没有收藏工具。去工具箱点击 ★ 添加常用入口。</div>';
+    }
+    const setText = (selector, value) => {
+      const node = hub.querySelector(selector);
+      if (node) node.textContent = value;
+    };
+    setText('[data-center-favorite-count]', String(summary.favorites.length));
+    setText('[data-center-chat-count]', String(summary.chatCount));
+    setText('[data-center-clipboard-count]', String(summary.clipboardCount));
+    setText('[data-center-storage]', summary.storageKb + ' KB');
+    setText('[data-center-uid]', getUid());
+    setText('[data-center-auth]', token ? (token.startsWith('demo_') ? '演示会话' : '已登录') : '未登录');
+    setText('[data-center-online]', navigator.onLine ? '在线' : '离线');
+    setText('[data-center-device]', /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? '移动设备' : '桌面设备');
+  }
+
+  function injectUnifiedCenter(card) {
+    if (card.querySelector('.profile-center-hub')) return;
+    const hub = document.createElement('section');
+    hub.className = 'profile-center-hub';
+    hub.innerHTML = [
+      '<div class="profile-center-tabs" role="tablist" aria-label="个人中心功能">',
+      '  <button type="button" data-center-tab="overview" class="is-active" role="tab" aria-selected="true">概览</button>',
+      '  <button type="button" data-center-tab="favorites" role="tab" aria-selected="false">收藏</button>',
+      '  <button type="button" data-center-tab="data" role="tab" aria-selected="false">数据</button>',
+      '  <button type="button" data-center-tab="security" role="tab" aria-selected="false">安全</button>',
+      '</div>',
+      '<div class="profile-center-panels">',
+      '  <section class="profile-center-panel is-active" data-center-panel="overview">',
+      '    <div class="profile-center-metrics">',
+      '      <div><strong data-center-favorite-count>0</strong><span>收藏</span></div>',
+      '      <div><strong data-center-chat-count>0</strong><span>AI 对话</span></div>',
+      '      <div><strong data-center-clipboard-count>0</strong><span>剪贴记录</span></div>',
+      '      <div><strong data-center-storage>0 KB</strong><span>本地数据</span></div>',
+      '    </div>',
+      '    <p>所有工具数据优先保存在当前浏览器。账号状态、收藏和数据导出集中在这里处理。</p>',
+      '  </section>',
+      '  <section class="profile-center-panel" data-center-panel="favorites">',
+      '    <div class="profile-center-list" data-center-favorites></div>',
+      '  </section>',
+      '  <section class="profile-center-panel" data-center-panel="data">',
+      '    <div class="profile-center-actions">',
+      '      <button type="button" data-center-export>导出个人数据</button>',
+      '      <button type="button" data-center-clear>清理本地工具数据</button>',
+      '    </div>',
+      '    <p>导出内容包含收藏、剪贴板、塔罗记录和 AI 对话历史，不包含账号密码。</p>',
+      '  </section>',
+      '  <section class="profile-center-panel" data-center-panel="security">',
+      '    <dl class="profile-center-facts">',
+      '      <div><dt>UID</dt><dd data-center-uid>--</dd></div>',
+      '      <div><dt>会话状态</dt><dd data-center-auth>--</dd></div>',
+      '      <div><dt>网络</dt><dd data-center-online>--</dd></div>',
+      '      <div><dt>设备类型</dt><dd data-center-device>--</dd></div>',
+      '    </dl>',
+      '    <p>本站不会在个人中心显示或复制登录 Token。退出账号请使用统一退出入口。</p>',
+      '    <button type="button" class="profile-center-signout" data-center-signout>退出当前账号</button>',
+      '  </section>',
+      '</div>'
+    ].join('');
+    card.appendChild(hub);
+
+    hub.addEventListener('click', (event) => {
+      const tab = event.target.closest('[data-center-tab]');
+      if (tab) {
+        setCenterPanel(hub, tab.dataset.centerTab);
+        return;
+      }
+      if (event.target.closest('[data-center-export]')) {
+        downloadLocalTools();
+        return;
+      }
+      if (event.target.closest('[data-center-clear]')) {
+        if (window.confirm('确定清理收藏、剪贴板、塔罗和 AI 对话本地数据吗？')) {
+          clearLocalTools();
+          refreshUnifiedCenter(hub);
+        }
+        return;
+      }
+      if (event.target.closest('[data-center-signout]')) {
+        if (typeof window.openLogoutConfirm === 'function') window.openLogoutConfirm();
+        closeProfileModal();
+      }
+    });
+    refreshUnifiedCenter(hub);
   }
 
   function populateProfile() {

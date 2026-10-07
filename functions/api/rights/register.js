@@ -1,11 +1,16 @@
+import { enforceRateLimit, isAllowedOrigin } from './rate-limit.js';
+
 const MAX_BODY_SIZE = 32 * 1024;
 
-function json(data, status = 200) {
+function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
-      'cache-control': 'no-store'
+      'cache-control': 'no-store',
+      'x-content-type-options': 'nosniff',
+      'referrer-policy': 'no-referrer',
+      ...extraHeaders
     }
   });
 }
@@ -68,9 +73,23 @@ async function sendNotification(context, data, registrationCode) {
 export async function onRequestPost(context) {
   const db = context.env.RIGHTS_DB;
   if (!db) return json({ ok: false, error: '数据库尚未绑定。' }, 500);
+  if (!isAllowedOrigin(context)) return json({ ok: false, error: '请求来源未获授权。' }, 403);
 
   const contentLength = Number(context.request.headers.get('content-length') || 0);
   if (contentLength > MAX_BODY_SIZE) return json({ ok: false, error: '提交内容过大。' }, 413);
+
+  const rateLimit = await enforceRateLimit(db, context, {
+    scope: 'rights-register',
+    limit: 5,
+    windowSeconds: 3600
+  });
+  if (!rateLimit.allowed) {
+    return json(
+      { ok: false, error: '提交过于频繁，请稍后再试。' },
+      429,
+      { 'retry-after': String(rateLimit.retryAfter) }
+    );
+  }
 
   let body;
   try {
@@ -86,6 +105,9 @@ export async function onRequestPost(context) {
 
   if (!projectName || !owner || !declared) {
     return json({ ok: false, error: '请填写项目名称、版权所有者并确认声明。' }, 400);
+  }
+  if (contact && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
+    return json({ ok: false, error: '联系邮箱格式不正确。' }, 400);
   }
 
   const now = new Date().toISOString();

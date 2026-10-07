@@ -185,10 +185,11 @@
     const email = document.getElementById('statusEmail').value.trim();
     loading();
     try {
-      const url = new URL('/api/rights/status', location.origin);
-      url.searchParams.set('code', code);
-      url.searchParams.set('email', email);
-      const response = await fetch(url);
+      const response = await fetch('/api/rights/status', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ code, email })
+      });
       const data = await response.json();
       if (!response.ok || !data.ok) throw new Error(data.error || '查询失败');
       render(data.item);

@@ -132,6 +132,205 @@
   color: #fff7ed;
 }
 
+.profile-center-hub {
+  margin-top: 14px;
+}
+
+.profile-center-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  padding: 5px;
+  border: 1px solid rgba(245, 158, 11, 0.12);
+  border-radius: 14px;
+  background: rgba(10, 8, 5, 0.46);
+}
+
+.profile-center-tabs button {
+  min-height: 36px;
+  border: 0;
+  border-radius: 10px;
+  color: #8a7e72;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.profile-center-tabs button.is-active {
+  color: #1a0d02;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+.profile-center-panel {
+  display: none;
+  padding: 14px;
+  margin-top: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.profile-center-panel.is-active {
+  display: block;
+}
+
+.profile-center-panel > p {
+  margin: 12px 0 0;
+  color: #8a7e72;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.profile-center-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.profile-center-metrics div {
+  padding: 12px 8px;
+  border: 1px solid rgba(245, 158, 11, 0.1);
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.035);
+  text-align: center;
+}
+
+.profile-center-metrics strong,
+.profile-center-metrics span {
+  display: block;
+}
+
+.profile-center-metrics strong {
+  color: #fff7ed;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.profile-center-metrics span {
+  margin-top: 3px;
+  color: #8a7e72;
+  font-size: 9px;
+}
+
+.profile-center-list {
+  display: grid;
+  gap: 7px;
+}
+
+.profile-center-list a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  color: #fff7ed;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.profile-center-list a:hover {
+  border-color: rgba(245, 158, 11, 0.28);
+}
+
+.profile-center-list a > span {
+  font-size: 17px;
+}
+
+.profile-center-list a > strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-center-list a > b {
+  color: #f59e0b;
+  font-size: 10px;
+}
+
+.profile-center-empty {
+  padding: 24px 14px;
+  color: #8a7e72;
+  border: 1px dashed rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.profile-center-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.profile-center-actions button,
+.profile-center-signout {
+  min-height: 42px;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  border-radius: 12px;
+  color: #fff7ed;
+  background: rgba(245, 158, 11, 0.06);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.profile-center-actions button:hover,
+.profile-center-signout:hover {
+  border-color: rgba(245, 158, 11, 0.42);
+  background: rgba(245, 158, 11, 0.11);
+}
+
+.profile-center-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin: 0;
+}
+
+.profile-center-facts div {
+  padding: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.profile-center-facts dt {
+  color: #8a7e72;
+  font-size: 9px;
+}
+
+.profile-center-facts dd {
+  margin: 4px 0 0;
+  color: #fff7ed;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.profile-center-signout {
+  width: 100%;
+  margin-top: 12px;
+  color: #fb7185;
+  border-color: rgba(251, 113, 133, 0.2);
+  background: rgba(251, 113, 133, 0.055);
+}
+
+.profile-center-signout:hover {
+  border-color: rgba(251, 113, 133, 0.45);
+  background: rgba(251, 113, 133, 0.1);
+}
+
+@media (max-width: 560px) {
+  .profile-center-metrics,
+  .profile-center-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .bantan-avatar-applied {
   position: relative;
   overflow: visible !important;

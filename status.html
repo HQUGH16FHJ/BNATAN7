@@ -9,7 +9,7 @@
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="stylesheet" href="./site-pages-v1.css?v=1.1.0">
-<link rel="stylesheet" href="./premium-tools-v1.css?v=1.0.0">
+<link rel="stylesheet" href="./premium-tools-v1.css?v=1.1.0">
 <link rel="stylesheet" href="./premium-finish-v1.css?v=1.0.0">
 <title>系统状态控制台 - 绊谈 Bantan</title>
   <link rel="stylesheet" href="./device-compat-v1.css?v=1.1.4">
@@ -39,6 +39,35 @@
     </div>
   </section>
   <section class="site-section">
+    <div class="status-service-grid">
+      <article class="status-service-card" data-service-card="web"><span>WEB SURFACE</span><i data-service-dot></i><h2>主站与页面</h2><p data-service-copy>正在检查主站页面。</p><strong data-service-latency>--</strong></article>
+      <article class="status-service-card" data-service-card="rights"><span>RIGHTS SYSTEM</span><i data-service-dot></i><h2>版权与授权</h2><p data-service-copy>正在检查版权数据库。</p><strong data-service-latency>--</strong></article>
+      <article class="status-service-card" data-service-card="api"><span>PUBLIC API</span><i data-service-dot></i><h2>公开开发者接口</h2><p data-service-copy>正在检查 OpenAPI 与健康接口。</p><strong data-service-latency>--</strong></article>
+      <article class="status-service-card" data-service-card="network"><span>EDGE NETWORK</span><i data-service-dot></i><h2>DNS 与边缘网络</h2><p data-service-copy>正在读取当前 Cloudflare 接入节点。</p><strong data-service-latency>--</strong></article>
+    </div>
+  </section>
+  <section class="site-section">
+    <div class="status-node-panel">
+      <div>
+        <span>YOUR EDGE ROUTE</span>
+        <h2>当前访问节点</h2>
+        <p>浏览器从 Cloudflare 读取本次连接使用的边缘节点与地区，不显示 IP 地址。</p>
+      </div>
+      <dl>
+        <div><dt>节点</dt><dd data-edge-colo>--</dd></div>
+        <div><dt>地区</dt><dd data-edge-country>--</dd></div>
+        <div><dt>最近检查</dt><dd data-edge-updated>--</dd></div>
+        <div><dt>近期可用率</dt><dd data-status-uptime>--</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="site-section">
+    <div class="status-incident-panel">
+      <div><span>INCIDENT TIMELINE</span><h2>事件记录</h2></div>
+      <article><i></i><div><strong>当前没有已知服务中断</strong><p>所有状态均来自浏览器公开探测，不读取后台管理数据。历史波动不会自动等同于服务事故。</p></div></article>
+    </div>
+  </section>
+  <section class="site-section">
     <div class="site-stats">
       <div class="site-stat"><strong>v4.0.6</strong><span>公开版本</span></div>
       <div class="site-stat"><strong>main</strong><span>生产分支</span></div>
@@ -49,7 +78,7 @@
   </section>
 </main>
 <footer class="site-footer"><div class="site-footer__inner"><span>© 2026 绊谈 Bantan</span><span><a href="./domain.html">官方域名</a> · <a href="./verify.html">链接验证</a> · <a href="./explore.html">探索</a></span></div></footer>
-<script src="./premium-tools-v1.js?v=1.0.0"></script>
+<script src="./premium-tools-v1.js?v=1.1.0"></script>
 <script src="./site-pages-v1.js?v=1.2.0"></script>
 <script src="site-certification.js?v=1.0.2" defer></script>
   <script src="./device-compat-v1.js?v=1.1.6" defer></script>
